@@ -291,7 +291,7 @@
      - document
    summary: Purge document
    description: |
-     When an application deletes a document a tombstone revision is created, over time the number of tombstones can become significant. Tombstones allow document deletions to be propagated to other clients via replication. For some applications the replication of a tombstone may not be useful after a period of time. The purge command provides a way to remove the tombstones from a Sync Gateway database, recovering storage space and reducing the amount of data replicated to clients. Other clients are not notified when a revision has been purged; so in order to purge a revision from the system it must be done from all databases (on Couchbase Lite and Sync Gateway).
+     The purge command provides a way to remove a document from the bucket itself. The operation removes all the revisions (active and tombstones) for the specified document(s). A common usage of this endpoint is to remove tombstone documents that are no longer needed, thus recovering storage space and reducing data replicated to clients. Other clients are not notified when a revision has been purged; so in order to purge a revision from the system it must be done from all databases (on Couchbase Lite and Sync Gateway).
    parameters:
      - in: body
        name: body

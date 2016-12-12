@@ -171,7 +171,7 @@ PurgeBody:
   properties:
    a_doc_id:
      type: array
-     description: List containing the revision numbers to purge for the given docID. Passing "*" as an item in the array will remove all the revisions for that document.
+     description: Passing "*" as an item in the array will remove all the revisions for that document. Removing specific revisions from a document is not supported.
      items:
        type: string
        description: Revision ID to delete or "*" to delete all the revisions of the document.
