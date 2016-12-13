@@ -18,7 +18,7 @@ The application code doesn't have to pay attention to the details: it just knows
 - **One-shot vs Continuous:** By default a replication runs long enough to transfer all the changes from the source to the target database, then quits. A continuous replication, on the other hand, will stay active indefinitely, watching for further changes to occur and transferring them.
 - **Filtered:** Replications can have filters that restrict what documents they'll transfer. This can be useful to limit the amount of a large remote database that's downloaded to a device, or to keep some local documents private. A special type of filter used with the Couchbase Sync Gateway is the set of **channels** that a pull replication will download from. It's also possible to limit a replication to an explicit set of document IDs.
 
-## Creating and configuring replications
+## Creating replications
 
 You create a Replication object by calling the Database methods `createPullReplication` or `createPushReplication`. Both of these take a single parameter, the URL of the remote database to sync with. As the names imply, each method creates a replication that transfers changes in one direction only; if you want bidirectional sync, as most apps do, you should create one of each.
 
@@ -268,6 +268,42 @@ Other non-Couchbase databases that Couchbase Lite can replicate with don't suppo
 To use such a filter function in a pull replication, set the Replication object's filter property to a string of the form designDocName/filterName. For example, if the server-side design document is named _design/access and you want to use its filter function called byYear, you would set the Replication.filter property to "access/byYear".
 
 (The same example from the previous section applies here too; the difference is on the remote server, where the byOwner filter would be defined as a JavaScript function stored in a design document.)
+
+### Filtering by document IDs
+
+In one-shot **pull** replications with Sync Gateway, it's possible to specify a list of document IDs (this feature is not available for replications in continuous mode, see [1703](https://github.com/couchbase/sync_gateway/issues/1703)). The code below pulls the documents with ID "123" and "xyz" if they exist and the user has access to them.
+
+<div class="tabs"></div>
+
+```objective-c+
+CBLReplication* pull = [database createPullReplication:kSyncGatewayUrl];
+pull.documentIDs = @[@"123", @"xyz"];
+[pull start];
+```
+
+```swift+
+let pull = database.createPullReplication(kSyncGatewayUrl)
+pull.documentIDs = ["123", "xyz"]
+pull.start()
+```
+
+```java+android+
+List<String> docIDs = new ArrayList<>();
+docIDs.add("123");
+docIDs.add("xyz");
+
+Replication pull = database.createPullReplication(mSyncGatewayUrl);
+pull.setDocIds(docIDs);
+pull.start();
+```
+
+```c+
+var pull = database.CreatePullReplication(SyncGatewayUrl);
+pull.DocIds = new string[] {"123", "xyz"};
+pull.Start();
+```
+
+For **push** replications with Sync Gateway, this functionality is available in one-shot and continuous replications.
 
 ## Observing and monitoring replications
 
