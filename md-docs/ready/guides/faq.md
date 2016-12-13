@@ -42,3 +42,9 @@ If you don't know the channels (and just want to get all documents available for
       ```
 
     - With user authentication, you can verify that the user has access to those documents by issuing a GET `http://{user}:{password}@localhost:4984/{db}/_changes?include_docs=true` and checking if they are present in the response.
+
+### Can I specify the order in which documents get replicated?
+
+As a distributed system, Couchbase Mobile can't preserve ordering of updates, nor can it provide transactions.
+
+A common scenario where this has to be handled specifically is when a document (doc A) references another one (doc B). If you're writing reactive code that updates the UI (or other dependent state) as documents change, then your app will be eventually-consistent. In the case you describe, if a leaf document hasn't been pulled yet, your code will see an empty document at first; then when the leaf arrives, you'll update it with the pulled revision and display the correct data.
