@@ -48,3 +48,13 @@ If you don't know the channels (and just want to get all documents available for
 As a distributed system, Couchbase Mobile can't preserve ordering of updates, nor can it provide transactions.
 
 A common scenario where this has to be handled specifically is when a document (doc A) references another one (doc B). If you're writing reactive code that updates the UI (or other dependent state) as documents change, then your app will be eventually-consistent. In the case you describe, if a leaf document hasn't been pulled yet, your code will see an empty document at first; then when the leaf arrives, you'll update it with the pulled revision and display the correct data.
+
+### How can I remove revisions to free up space on the server?
+
+The right API to use depends on what you wish to achieve. The table below outlines the different APIs depending on the goal.
+
+|Motivation|Sync Gateway API|Couchbase Lite API|
+|:--|:--|:--|
+|Configure the length of the revision tree for all documents.|`revs_limit`|`database.maxRevTreeDepth`|
+|Remove a single document from a database based on abitrary logic.|`/{db}/_purge`|`database.purgeDocument`|
+|Remove a single document after a certain amount of time.|`/{db}/{id}`|`document.setExpirationDate`|
