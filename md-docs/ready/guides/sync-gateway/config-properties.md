@@ -85,6 +85,16 @@ Following are configuration properties for configuration of the Sync Gateway ser
 |`SSLCert`|`string`|Absolute or relative path on the filesystem to the TLS certificate file, if TLS is used to secure Sync Gateway connections, or `"nil"` for plaintext. A relative path is from the directory that contains the Sync Gateway executable file. There is no default. For more information, see Transport Layer Security (HTTPS).|
 |`SSLKey`|`string`|Absolute or relative path on the filesystem to the TLS private key file, if TLS is used to secure Sync Gateway connections, or `"nil"` for plaintext. A relative path is from the directory that contains the Sync Gateway executable file. There is no default.|
 
+### Sync Gateway Accelerator Configuration
+
+To configure SG Accel you must specify where the data bucket resides. This can be done under the `cluster_config` key.
+
+|Property|Type|Description an default|
+|:-------|:---|:---------------------|
+|`cluster_config.server`|`string`|The hostname of the Couchbase Server cluster.|
+|`cluster_config.bucket`|`string`|The bucket name where the data is stored (i.e the one specified in the database configuration.)|
+|`cluster_config.data_dir`|`string`|Path to the data directory.|
+
 ## Log keys
 
 Log keys specify functional areas. Enabling logging for a log key provides additional diagnostic information for that area.
@@ -144,6 +154,14 @@ Following are the configuration properties for a specific database:
 |`sync`|`string`|Sync function, which defines which users can read, update, or delete which documents. The default is a default sync function. For more information, see the section Sync function API.|
 |`username`|`string`|Bucket username for authenticating to Couchbase Server. There is no default.|
 |`users`|Users to create|Array of initial user accounts with their properties. There is no default.|
+
+The `channel_index` section specifies your channel bucket connection information.
+
+|Property|Type|Description and default|
+|:-------|:---|:----------------------|
+|`channel_index.writer`|`boolean`|Whether the channel index node can write to the bucket.|
+|`channel_index.server`|`string`|Hostname to the Couchbase Server cluster.|
+|`channel_index.bucket`|`string`|Bucket name for channel indexing. A common name is "channel_index".|
 
 ## Authentication configuration
 
