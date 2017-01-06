@@ -71,7 +71,6 @@
       - in: header
         name: cookie
         description: The cookie of the logged-in session.
-        required: true
         type: string
     responses:
       200:
