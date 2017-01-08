@@ -81,6 +81,14 @@ Some items to note:
     sync_gateway /path/to/sync-gateway-config.json
     ```
 
+### Configuring the number of shards
+
+In the Sync Gateway config, `num_shards` represents the maximum number of concurrent sg_accel nodes that can be supported by the index, as in the maximum scenario each node would only receive one shard.
+
+However, higher num_shards values also result in a more fragmented index, as entries in the index are grouped by shard. This means that a higher num_shards results in more work for index reads that scan all shards (e.g. large backfills, etc).
+
+Based on this tradeoff, the default num_shards value should be reduced from 64 to 16 - this is a more appropriate value for accel users (max 16 accel nodes). Users who want to use a larger cluster can still set num_shards explicitly in the config.
+
 Feedback:
 - Capitalization of Sync Gateway accel. Sync Gateway accel vs sg-accel.
 - "(For 1.4 we'll be able to provide more detailed sizing recommendations)"
