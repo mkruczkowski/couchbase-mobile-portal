@@ -46,7 +46,11 @@ bulkget:
       docs:
         type: array
         items:
-          type: string
+          type: object
+          properties:
+            id:
+              type: string
+              description: Document ID.
 channels:
   in: query
   name: channels
