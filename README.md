@@ -65,6 +65,14 @@ REST APIs are documented using Swagger. Read more in the [readme of the swagger 
 
 API references are documented in [https://github.com/couchbaselabs/couchbase-lite-api](https://github.com/couchbaselabs/couchbase-lite-api).
 
+### Local preview (wip)
+
+- Clone the repository.
+- From the **md-docs** folder run `jekyll serve`. The docs are served on `localhost:4000`.
+- Open a browser to preview the page (i.e [http://localhost:4000/ready/installation/ios/index.html](http://localhost:4000/ready/installation/ios/index.html)).
+
+> **Note:** The left navigation is not available in the local preview currently. To find the location of other pages, refer to the `permalink` property in the front matter of the **.md** file.
+
 ### Ingestion hacks
 
 - [Code tabs in markdown](https://github.com/couchbaselabs/couchbase-mobile-portal/issues/398)
