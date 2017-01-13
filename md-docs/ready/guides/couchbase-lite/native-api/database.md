@@ -1,8 +1,14 @@
 ---
 id: database
 title: Database
-permalink: ready/guides/couchbase-lite/native-api/database/index.html
+permalink: guides/couchbase-lite/native-api/database/index.html
 ---
+
+{% if site.version == "1.4" %}
+
+This is 1.4 content.
+
+{% endif %}
 
 A Database is a container and a namespace for documents, a scope for queries, and the source and target of replication. Databases are represented by the `Database` class.
 

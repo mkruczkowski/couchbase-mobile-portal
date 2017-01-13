@@ -1,7 +1,7 @@
 ---
 id: os-level-tuning
 title: OS Level Tuning
-permalink: ready/guides/sync-gateway/os-level-tuning/index.html
+permalink: guides/sync-gateway/os-level-tuning/index.html
 ---
 
 To get the most out of Sync Gateway, it may be necessary to tune a few parameters of the OS.

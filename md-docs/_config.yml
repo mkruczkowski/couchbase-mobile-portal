@@ -40,3 +40,5 @@ redcarpet:
 
 exclude:
   - "*.screenflow"
+
+version: "1.3"

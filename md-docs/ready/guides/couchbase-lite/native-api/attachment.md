@@ -1,7 +1,7 @@
 ---
 id: attachment
 title: Attachment
-permalink: ready/guides/couchbase-lite/native-api/attachment/index.html
+permalink: guides/couchbase-lite/native-api/attachment/index.html
 ---
 
 Attachments store data associated with a document, but are not part of the document's JSON object. Their primary purpose is to make it efficient to store large binary data in a document. Binary data stored in JSON has to be base64-encoded into a string, which inflates its size by 33%. Also, binary data blobs are often large (think of camera images or audio files), and big JSON documents are slow to parse.

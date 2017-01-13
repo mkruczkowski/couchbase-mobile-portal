@@ -1,7 +1,7 @@
 ---
 id: revision
 title: Revision
-permalink: ready/guides/couchbase-lite/native-api/revision/index.html
+permalink: guides/couchbase-lite/native-api/revision/index.html
 ---
 
 Couchbase Lite uses revisions to resolve conflicts detected during replication. One significant difference from other databases is document versioning. Couchbase Lite uses a technique called Multiversion Concurrency Control (MVCC) to manage conflicts between multiple writers. This is the same technique used by version-control systems like Git or Subversion, and by WebDAV. Document versioning is similar to the check-and-set mechanism (CAS) of Couchbase Server, except that in Couchbase Lite versioning is required rather than optional and the token is a UUID rather than an integer.

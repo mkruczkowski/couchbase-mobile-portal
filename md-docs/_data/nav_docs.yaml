@@ -1,85 +1,138 @@
-- title: Getting Started
-  items:
-  - id: tutorial
-    title: Tutorial
-    subitems:
-    - id: using-the-database
-      title: Using the Database
-    - id: adding-synchronization
-      title: Adding Synchronization
-    - id: adding-security
-      title: Adding Security
 - title: Installation
+  path: installation/index.html
   items:
-    - id: ios
-      title: iOS
-    - id: android
-      title: Android
-    - id: net
-      title: .NET
-    - id: java
-      title: Java
-    - id: phonegap
-      title: PhoneGap
-    - id: xamarin
-      title: Xamarin
-    - id: sg
-      title: Sync Gateway
-- title: Developer Preview
+    - title: iOS
+      path: installation/ios/index.html
+    - title: Android
+      path: installation/android/index.html
+    - title: .NET
+      path: installation/net/index.html
+    - title: Java
+      path: installation/java/index.html
+    - title: PhoneGap
+      path: installation/phonegap/index.html
+    - title: Sync Gateway
+      path: installation/sync-gateway/index.html
+- title: Training
+  path: training/index.html
   items:
-  - id: openid-connect
-    title: OpenID Connect
+    - title: Design
+      items:
+        - title: Data Modeling
+          path: training/design/data-modeling/index.html
+        - title: Access Control
+          path: training/design/security/index.html
+    - title: Develop
+      items:
+        - title: Create a Database
+          path: training/develop/create-database/index.html
+        - title: Using the Database
+          path: training/develop/using-the-database/index.html
+        - title: Adding Sync
+          path: training/develop/adding-synchronization/index.html
+        - title: Adding Security
+          path: training/develop/adding-security/index.html
+        - title: Integration
+          path: training/develop/integration/index.html
+    - title: Deploy
+      items:
+        - title: Install
+          path: training/deploy/install/index.html
+        - title: Upgrade
+          path: training/deploy/upgrade/index.html
+        - title: Scale
+          path: training/deploy/scale/index.html
 - title: Guides
   items:
-  - title: Couchbase Lite
-    path: develop/guides/index.html
-    subitems:
-    - title: Manager
-      path: develop/guides/couchbase-lite/native-api/manager/index.html
-    - title: Database
-      path: develop/guides/couchbase-lite/native-api/database/index.html
-    - title: Document
-      path: develop/guides/couchbase-lite/native-api/document/index.html
-    - title: Revision
-      path: develop/guides/couchbase-lite/native-api/revision/index.html
-    - title: Attachment
-      path: develop/guides/couchbase-lite/native-api/attachment/index.html
-    - title: View
-      path: develop/guides/couchbase-lite/native-api/view/index.html
-    - title: Query
-      path: develop/guides/couchbase-lite/native-api/query/index.html
-    - title: Replication
-      path: develop/guides/couchbase-lite/native-api/replication/index.html
-    - title: Model (iOS only)
-      path: develop/guides/couchbase-lite/native-api/model/index.html
-  - title: Sync Gateway
-    subitems:
-    - title: Running Sync Gateway
-    - title: Configuration
-    - title: Administration
-    - title: Data routing with channels
-    - title: Sync Function API
-    - title: Server integration
-    - title: Deployment considerations
-    - title: Using a reverse proxy
-    - title: Upgrading Sync Gateway
-    - title: Accessing Couchbase Server views
-    - title: OS Level tuning
-    - title: Resolving conflicts
+    - title: Data Modeling
+      path: guides/couchbase-lite/native-api/data-modeling/index.html
+    - title: Couchbase Lite
+      items:
+        - title: Native API
+          items:
+            - title: Manager
+              path: guides/couchbase-lite/native-api/manager/index.html
+            - title: Database
+              path: guides/couchbase-lite/native-api/database/index.html
+            - title: Document
+              path: guides/couchbase-lite/native-api/document/index.html
+            - title: Revision
+              path: guides/couchbase-lite/native-api/revision/index.html
+            - title: Attachment
+              path: guides/couchbase-lite/native-api/attachment/index.html
+            - title: View
+              path: guides/couchbase-lite/native-api/view/index.html
+            - title: Query
+              path: guides/couchbase-lite/native-api/query/index.html
+            - title: Replication
+              path: guides/couchbase-lite/native-api/replication/index.html
+    - title: Sync Gateway
+      items:
+        - title: Configuration file
+          path: guides/sync-gateway/config-properties/index.html
+        - title: Command line options
+          path: guides/sync-gateway/command-line-options/index.html
+        - title: Authorizing Users
+          path: guides/sync-gateway/authorizing-users/index.html
+        - title: Data Routing
+          path: guides/sync-gateway/channels/index.html
+        - title: Sync Function API
+          path: guides/sync-gateway/sync-function-api-guide/index.html
+        - title: Webhooks and changes feed
+          path: guides/sync-gateway/server-integration/index.html
+        - title: Deployment considerations
+          path: guides/sync-gateway/deployment/index.html
+        - title: NGINX
+          path: guides/sync-gateway/nginx/index.html
+        - title: Taking databases offline and online
+          path: guides/sync-gateway/database-offline/index.html
+        - title: Creating and querying a View
+          path: guides/sync-gateway/views/index.html
+        - title: OS Level Tuning
+          path: guides/sync-gateway/os-level-tuning/index.html
+        - title: Resolving Conflicts
+          path: guides/sync-gateway/resolving-conflicts/index.html
+        - title: Integrating External Stores
+          path: guides/sync-gateway/integrating-external-stores/index.html
+        - title: Running replications
+          path: guides/sync-gateway/running-replications/index.html
+        - title: REST API Client
+          path: guides/sync-gateway/rest-api-client/index.html
+        - title: SGCollect Info
+          path: guides/sync-gateway/sgcollect-info/index.html
+        - title: Configuring SSL
+          path: guides/sync-gateway/configuring-ssl/index.html
+        - title: Bucket Shadowing
+          path: guides/sync-gateway/bucket-shadowing/index.html
+    - title: Authentication
+      path: guides/authentication/index.html
+      items:
+        - title: Basic Authentication
+          path: guides/authentication/basic-authentication/index.html
+        - title: OpenID Connect
+          path: guides/authentication/openid/index.html
+          items:
+            - title: Configuration Options
+              path: guides/authentication/openid/configuration-options/index.html
+            - title: Advanced Topics
+              path: guides/authentication/openid/advanced-topics/index.html
+            - title: "How-To: Google"
+              path: guides/authentication/openid/google/index.html
+            - title: "How-To: Active Directory"
+              path: guides/authentication/openid/active-directory/index.html
+        - title: Custom Authentication
+          path: guides/authentication/custom-authentication/index.html
+        - title: Static Providers
+          path: guides/authentication/static-providers/index.html
 - title: API References
   items:
-    - title: Native API
-      subitems:
-      - title: Manager
-      - title: Database
-      - title: Document
-      - title: Revision
-      - title: Attachment
-      - title: View
-      - title: Query
-      - title: Replication
-    - title: REST API
-      subitems:
-      - title: Couchbase Lite
-      - title: Sync Gateway (Public)
-      - title: Sync Gateway (Admin)
+    - title: Couchbase Lite
+      items:
+        - title: REST API
+          path: references/couchbase-lite/rest-api/index.html
+    - title: Sync Gateway
+      items:
+        - title: Public REST API
+          path: references/sync-gateway/rest-api/index.html
+        - title: Admin REST API
+          path: references/sync-gateway/admin-rest-api/index.html

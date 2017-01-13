@@ -1,7 +1,7 @@
 ---
 id: rest-api-client
 title: REST API Client
-permalink: ready/guides/sync-gateway/rest-api-client/index.html
+permalink: guides/sync-gateway/rest-api-client/index.html
 ---
 
 Whether you're developing a web application getting data from the Sync Gateway API or a cross-platform application that uses the Couchbase Lite Listener you will almost certainly need an HTTP library to consume those REST APIs. The documentation for the Couchbase Lite and Sync Gateway REST API is using Swagger. In addition to being a great toolkit for writing REST API documentation, Swagger can also generate HTTP libraries. This guide will walk you through how to start using those libraries in the following scenarios:

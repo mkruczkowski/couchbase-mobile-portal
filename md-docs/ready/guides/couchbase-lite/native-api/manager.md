@@ -1,7 +1,7 @@
 ---
 id: manager
 title: Manager
-permalink: ready/guides/couchbase-lite/native-api/manager/index.html
+permalink: guides/couchbase-lite/native-api/manager/index.html
 ---
 
 A `Manager` is the top-level object that manages a collection of Couchbase Lite `Database` instances. You need to create a `Manager` instance before you can work with Couchbase Lite objects in your Application.

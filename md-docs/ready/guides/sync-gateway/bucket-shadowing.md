@@ -1,7 +1,7 @@
 ---
 id: bucket-shadowing
 title: Bucket shadowing
-permalink: ready/guides/sync-gateway/bucket-shadowing/index.html
+permalink: guides/sync-gateway/bucket-shadowing/index.html
 ---
 
 > **Warning:** The Bucket Shadowing feature exists in order to allow Couchbase Mobile to integrate with some Couchbase Server-based applications that are already in production. This feature comes with many limitations and constraints on its usage, and is not suitable for many of the scenarios where one may be tempted to use it.

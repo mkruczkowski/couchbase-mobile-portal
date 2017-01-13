@@ -1,7 +1,7 @@
 ---
 id: how-to-google
 title: How-To Google
-permalink: ready/guides/authentication/openid/google/index.html
+permalink: guides/authentication/openid/google/index.html
 ---
 
 In this guide, we will use Google with Auth Code Flow as an example for the OpenID Provider (abbreviated OP) but similar steps apply for any other OP that you intend to use.

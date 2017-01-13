@@ -1,7 +1,7 @@
 ---
 id: how-to-azure
 title: How-To Azure
-permalink: ready/guides/authentication/openid/active-directory/index.html
+permalink: guides/authentication/openid/active-directory/index.html
 ---
 
 In this guide, we will use Active Directory with Auth Code Flow as an example for the OpenID Provider (abbreviated OP) but similar steps apply for any other OP that you intend to use.

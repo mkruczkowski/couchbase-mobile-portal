@@ -1,7 +1,7 @@
 ---
 id: rn
 title: React Native
-permalink: ready/installation/react-native/index.html
+permalink: installation/react-native/index.html
 ---
 
 ## Prerequisites

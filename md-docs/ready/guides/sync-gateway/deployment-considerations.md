@@ -1,7 +1,7 @@
 ---
 id: deployment-considerations
 title: Deployment considerations
-permalink: ready/guides/sync-gateway/deployment/index.html
+permalink: guides/sync-gateway/deployment/index.html
 ---
 
 In this guide we'll cover deploying Sync Gateway in the two major phases of your application development: during development, and in production.

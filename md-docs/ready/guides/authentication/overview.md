@@ -1,7 +1,7 @@
 ---
 id: authentication-overview
 title: Authentication Overview
-permalink: ready/guides/authentication/index.html
+permalink: guides/authentication/index.html
 ---
 
 Most of the time the remote server will not allow guest access (especially for uploads), so the replicator will need to authenticate itself to it. The replication protocol runs over HTTP — it's an extension of the Sync Gateway and CouchDB REST API — so the authentication mechanisms are pretty standard ones. First, you need to configure Sync Gateway for the authentication required in your application. Sync Gateway supports the following authentication methods:

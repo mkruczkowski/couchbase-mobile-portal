@@ -1,7 +1,7 @@
 ---
 id: sync-function-api
 title: Sync Function API
-permalink: ready/guides/sync-gateway/sync-function-api-guide/index.html
+permalink: guides/sync-gateway/sync-function-api-guide/index.html
 ---
 
 The sync function is the core API you interact with on Sync Gateway. This article explains its functionality, and how you write and configure it.

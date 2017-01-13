@@ -1,7 +1,7 @@
 ---
 id: authorizing-users
 title: Authorizing Users
-permalink: ready/guides/sync-gateway/authorizing-users/index.html
+permalink: guides/sync-gateway/authorizing-users/index.html
 ---
 
 Sync Gateway provides the following REST APIs:

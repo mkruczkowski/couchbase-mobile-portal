@@ -1,7 +1,7 @@
 ---
 id: xamarin
 title: Xamarin
-permalink: ready/installation/xamarin/index.html
+permalink: installation/xamarin/index.html
 ---
 
 ## NuGet

@@ -1,7 +1,7 @@
 ---
 id: basic-authentication
 title: Basic Authentication
-permalink: ready/guides/authentication/basic-authentication/index.html
+permalink: guides/authentication/basic-authentication/index.html
 ---
 
 By default, Sync Gateway does not enable authentication. This is to make it easier to get up and running with synchronization. You can enable authentication with the following properties in the configuration file:

@@ -1,7 +1,7 @@
 ---
 id: tutorial-overview
 title: Tutorial Overview
-permalink: ready/training/index.html
+permalink: training/index.html
 ---
 
 Couchbase Mobile brings the power of NoSQL to mobile. It is comprised of three different components: Couchbase Lite, an embedded NoSQL database, Sync Gateway, an internet-facing synchronization mechanism that securely syncs data between device and cloud, and Couchbase Server, a highly scalable and performant NoSQL database in the cloud. 

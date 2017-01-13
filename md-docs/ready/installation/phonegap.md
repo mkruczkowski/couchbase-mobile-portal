@@ -1,7 +1,7 @@
 ---
 id: phonegap
 title: PhoneGap
-permalink: ready/installation/phonegap/index.html
+permalink: installation/phonegap/index.html
 ---
 
 You will install Couchbase Lite using the PhoneGap CLI module.

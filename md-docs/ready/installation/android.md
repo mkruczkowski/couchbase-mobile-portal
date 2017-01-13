@@ -1,7 +1,7 @@
 ---
 id: android
 title: Android
-permalink: ready/installation/android/index.html
+permalink: installation/android/index.html
 ---
 
 ## Using Gradle

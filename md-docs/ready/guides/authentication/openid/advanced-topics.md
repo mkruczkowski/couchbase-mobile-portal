@@ -1,7 +1,7 @@
 ---
 id: openid-connect
 title: OpenID Connect
-permalink: ready/guides/authentication/openid/advanced-topics/index.html
+permalink: guides/authentication/openid/advanced-topics/index.html
 ---
 
 This page covers advanced topics of OpenID Connect for Couchbase Mobile that are useful during testing and debugging.

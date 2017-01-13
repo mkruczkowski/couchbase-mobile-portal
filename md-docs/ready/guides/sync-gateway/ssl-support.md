@@ -1,7 +1,7 @@
 ---
 id: configuring-ssl
 title: Configuring SSL
-permalink: ready/guides/sync-gateway/configuring-ssl/index.html
+permalink: guides/sync-gateway/configuring-ssl/index.html
 ---
 
 Sync Gateway supports serving SSL. To enable SSL, you need to add two properties to the config file:

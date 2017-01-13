@@ -1,7 +1,7 @@
 ---
 id: server-integration
 title: Server integration
-permalink: ready/guides/sync-gateway/server-integration/index.html
+permalink: guides/sync-gateway/server-integration/index.html
 ---
 
 This guide describe two approaches for integrating Sync Gateway with other servers. These approaches can be used to build services that react to changes in documents. Examples of use cases include:

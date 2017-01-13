@@ -1,7 +1,7 @@
 ---
 id: net
 title: .NET
-permalink: ready/installation/net/index.html
+permalink: installation/net/index.html
 ---
 
 ## NuGet

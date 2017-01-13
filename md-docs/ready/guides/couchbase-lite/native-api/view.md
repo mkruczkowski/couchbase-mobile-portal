@@ -1,7 +1,7 @@
 ---
 id: view
 title: View
-permalink: ready/guides/couchbase-lite/native-api/view/index.html
+permalink: guides/couchbase-lite/native-api/view/index.html
 ---
 
 A View is a persistent index of documents in a database, which you then query to find data. Couchbase Lite doesn't have a query language like SQL; instead, it uses a technique called map/reduce to generate indexes (views) according to arbitrary app-defined criteria. Queries can then look up a range of rows from a view, and either use the rows' keys and values directly or get the documents they came from.

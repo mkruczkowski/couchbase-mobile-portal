@@ -1,7 +1,7 @@
 ---
 id: other-providers
 title: Other Providers
-permalink: ready/guides/authentication/static-providers/index.html
+permalink: guides/authentication/static-providers/index.html
 ---
 
 ### Facebook authentication

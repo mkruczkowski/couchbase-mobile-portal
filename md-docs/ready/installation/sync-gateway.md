@@ -1,7 +1,7 @@
 ---
 id: sg
 title: Sync Gateway
-permalink: ready/installation/sync-gateway/index.html
+permalink: installation/sync-gateway/index.html
 ---
 
 Install Sync Gateway on premise or on a cloud provider. You can download Sync Gateway from the [Couchbase download page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile) or download it directly to a Linux system by using the `wget` or `curl` command.

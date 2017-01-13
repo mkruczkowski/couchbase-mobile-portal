@@ -1,7 +1,7 @@
 ---
 id: query
 title: Query
-permalink: ready/guides/couchbase-lite/native-api/query/index.html
+permalink: guides/couchbase-lite/native-api/query/index.html
 ---
 
 A **query** is the action of looking up results from a view's index. In Couchbase Lite, queries are objects of the `Query` class. To perform a query you create one of these, customize its properties (such as the key range or the maximum number of rows) and then run it. The result is a `QueryEnumerator`, which provides a list of `QueryRow` objects, each one describing one row from the view's index.

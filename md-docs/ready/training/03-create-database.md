@@ -1,7 +1,7 @@
 ---
 id: create-database
 title: Create a Database
-permalink: ready/training/develop/create-database/index.html
+permalink: training/develop/create-database/index.html
 ---
 
 In this lesson you’ll be introduced to Couchbase Lite, our embedded NoSQL database. You’ll learn how to create a new embedded database and optionally use databases pre-packaged in your application.
@@ -154,7 +154,7 @@ Here you're using the `openDatabaseNamed` method where the database is the user 
 1. Build and run.
 2. Create a new list on the application's 'Task lists' screen.
 3. The task list is persisted to the database.
-    
+
 <block class="ios" />
 
 <img src="img/image40.png" class="portrait" />

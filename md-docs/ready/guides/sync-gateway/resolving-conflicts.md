@@ -1,7 +1,7 @@
 ---
 id: resolving-conflicts
 title: Resolving Conflicts
-permalink: ready/guides/sync-gateway/resolving-conflicts/index.html
+permalink: guides/sync-gateway/resolving-conflicts/index.html
 ---
 
 A conflict usually occurs when two writers are offline and save a different revision of the same document. Couchbase Mobile provides features to resolve these conflicts, the resolution rules are written in the application to keep full control over which edit (also called a revision) should be picked. The [revision guide](http://developer.couchbase.com/documentation/mobile/current/develop/guides/couchbase-lite/native-api/revision/index.html) and [documents conflicts FAQ](http://developer.couchbase.com/documentation/mobile/current/develop/guides/couchbase-lite/native-api/document/index.html#document-conflict-faq) 

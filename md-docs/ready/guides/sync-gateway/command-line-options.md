@@ -1,7 +1,7 @@
 ---
 id: command-line-options
 title: Command line options
-permalink: ready/guides/sync-gateway/command-line-options/index.html
+permalink: guides/sync-gateway/command-line-options/index.html
 ---
 
 To configure Sync Gateway, you can specify command-line options when you start Sync Gateway. Command-line options can only specify a limited set of configuration properties, and cannot be used to configure multiple databases. For more comprehensive configuration, use a JSON configuration file. For information about using a configuration file, see the configuration file guide.

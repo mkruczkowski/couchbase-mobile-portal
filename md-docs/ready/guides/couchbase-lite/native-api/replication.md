@@ -1,7 +1,7 @@
 ---
 id: replication
 title: Replication
-permalink: ready/guides/couchbase-lite/native-api/replication/index.html
+permalink: guides/couchbase-lite/native-api/replication/index.html
 ---
 
 A Replication object represents a replication (or "sync") task that transfers changes between a local database and a remote one. To replicate, you first get a new Replication object from a Database, then configure its settings, then tell it to start. The actual replication runs asynchronously on a background thread; you can monitor its progress by observing notifications posted by the Replication object when its state changes, as well as notifications posted by the database when documents are changed by the replicator.

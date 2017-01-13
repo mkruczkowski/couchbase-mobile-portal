@@ -1,7 +1,7 @@
 ---
 id: document
 title: Document
-permalink: ready/guides/couchbase-lite/native-api/document/index.html
+permalink: guides/couchbase-lite/native-api/document/index.html
 ---
 
 In a _document database_ such as Couchbase Lite, the primary entity stored in a database is called a **document** instead of a "row" or "record". This reflects the fact that a document can store more data, with more structure, than its equivalent in other databases.

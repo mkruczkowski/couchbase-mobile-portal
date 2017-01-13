@@ -1,7 +1,7 @@
 ---
 id: sync-gateway-public
 title: Sync Gateway Public REST API
-permalink: ready/references/sync-gateway/rest-api/index.html
+permalink: references/sync-gateway/rest-api/index.html
 ---
 
 The API explorer below groups all the endpoints by functionality. You can click on a label to expand the list of endpoints.

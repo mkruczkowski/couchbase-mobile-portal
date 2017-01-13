@@ -1,7 +1,7 @@
 ---
 id: database-offline
 title: Taking databases offline and online
-permalink: ready/guides/sync-gateway/database-offline/index.html
+permalink: guides/sync-gateway/database-offline/index.html
 ---
 
 While running, a Sync Gateway instance usually maintains connections with all of the databases that are defined in the configuration file that was used when the Sync Gateway instance was started. These databases are referred to as being online. When a database is online, Sync gateway serves both Public REST API and Admin REST API requests for the database.

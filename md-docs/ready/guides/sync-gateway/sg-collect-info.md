@@ -1,7 +1,7 @@
 ---
 id: sgcollect-info
 title: SG Collect Info
-permalink: ready/guides/sync-gateway/sgcollect-info/index.html
+permalink: guides/sync-gateway/sgcollect-info/index.html
 ---
 
 With this release comes a new command line utility called `sgcollect_info` that provides us with detailed statistics for a specific node. Run `sgcollect_info` on each node individually, not on all simultaneously.

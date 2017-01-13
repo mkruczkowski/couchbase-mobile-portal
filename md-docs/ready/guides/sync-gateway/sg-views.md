@@ -1,7 +1,7 @@
 ---
 id: sg-views
 title: Creating and querying a View
-permalink: ready/guides/sync-gateway/views/index.html
+permalink: guides/sync-gateway/views/index.html
 ---
 
 Sync Gateway has a feature that allows clients to directly query Couchbase Views via the Sync Gateway REST API.

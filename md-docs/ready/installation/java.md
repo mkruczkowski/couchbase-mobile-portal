@@ -1,7 +1,7 @@
 ---
 id: java
 title: Java
-permalink: ready/installation/java/index.html
+permalink: installation/java/index.html
 ---
 
 ## Requirements

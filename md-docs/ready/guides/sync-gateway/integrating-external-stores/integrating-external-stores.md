@@ -1,7 +1,7 @@
 ---
 id: Integrating External Stores
 title: Integrating External Stores
-permalink: ready/guides/sync-gateway/integrating-external-stores/index.html
+permalink: guides/sync-gateway/integrating-external-stores/index.html
 ---
 
 The Sync Gateway REST API is divided in two categories: the Public REST API available on port 4984 and the Admin REST API accessible on port 4985. Those are the default ports and they can be changed in the configuration file of Sync Gateway. 
