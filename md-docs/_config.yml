@@ -41,7 +41,7 @@ redcarpet:
 exclude:
   - "*.screenflow"
 
-version: "1.3"
+version: "1.4"
 
 keep_files:
   - "references/couchbase-lite/couchbase-lite"
