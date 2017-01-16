@@ -32,6 +32,5 @@
         <xi:include href="sgcollect-info.xml"/>
         <xi:include href="ssl.xml"/>
         <xi:include href="bucket-shadowing.xml"/>
-        <xi:include href="sg-accel.xml"/>
     </items>
 </set>
