@@ -66,6 +66,8 @@
               path: guides/couchbase-lite/native-api/query/index.html
             - title: Replication
               path: guides/couchbase-lite/native-api/replication/index.html
+            - title: Model (iOS only)
+              path: guides/couchbase-lite/native-api/model/index.html
     - title: Sync Gateway
       items:
         - title: Configuration file
@@ -128,11 +130,111 @@
   items:
     - title: Couchbase Lite
       items:
+        - title: Native API
+          items:
+            - title: Manager
+              path: references/couchbase-lite/couchbase-lite/manager/index.html
+              items:
+                - title: Manager
+                  path: references/couchbase-lite/couchbase-lite/manager/manager/index.html
+                - title: ManagerOptions
+                  path: references/couchbase-lite/couchbase-lite/manager/manager-options/index.html
+                - title: DatabaseOptions
+                  path: references/couchbase-lite/couchbase-lite/manager/database-options/index.html
+            - title: Database
+              path: references/couchbase-lite/couchbase-lite/database/index.html
+              items:
+                - title: Database
+                  path: references/couchbase-lite/couchbase-lite/database/database/index.html
+                - title: ValidationContext
+                  path: references/couchbase-lite/couchbase-lite/database/validation-context/index.html
+            - title: Document
+              path: references/couchbase-lite/couchbase-lite/document/index.html
+              items:
+                - title: Document
+                  path: references/couchbase-lite/couchbase-lite/document/document/index.html
+                - title: Document Change
+                  path: references/couchbase-lite/couchbase-lite/document/document-change/index.html
+            - title: Revision
+              path: references/couchbase-lite/couchbase-lite/revision/index.html
+              items:
+                - title: Revision
+                  path: references/couchbase-lite/couchbase-lite/revision/revision/index.html
+                - title: Saved Revision
+                  path: references/couchbase-lite/couchbase-lite/revision/saved-revision/index.html
+                - title: Unsaved Revision
+                  path: references/couchbase-lite/couchbase-lite/revision/unsaved-revision/index.html
+            - title: Attachment
+              path: references/couchbase-lite/couchbase-lite/attachment/index.html
+              items:
+                - title: Attachment
+                  path: references/couchbase-lite/couchbase-lite/attachment/attachment/index.html
+            - title: View
+              path: references/couchbase-lite/couchbase-lite/view/index.html
+              items:
+                - title: View
+                  path: references/couchbase-lite/couchbase-lite/view/view/index.html
+                - title: View Compiler
+                  path: references/couchbase-lite/couchbase-lite/view/view-compiler/index.html
+            - title: Query
+              path: references/couchbase-lite/couchbase-lite/query/index.html
+              items:
+                - title: Query
+                  path: references/couchbase-lite/couchbase-lite/query/query/index.html
+                - title: Live Query
+                  path: references/couchbase-lite/couchbase-lite/query/live-query/index.html
+                - title: QueryEnumerator
+                  path: references/couchbase-lite/couchbase-lite/query/query-enumerator/index.html
+                - title: QueryRow
+                  path: references/couchbase-lite/couchbase-lite/query/query-row/index.html
+            - title: Replication
+              path: references/couchbase-lite/couchbase-lite/replication/index.html
+              items:
+                - title: Replication
+                  path: references/couchbase-lite/couchbase-lite/replication/replication/index.html
+                - title: Authenticator
+                  path: references/couchbase-lite/couchbase-lite/replication/authenticator/index.html
+                - title: AuthenticatorFactory
+                  path: references/couchbase-lite/couchbase-lite/replication/authenticator-factory/index.html
         - title: REST API
           path: references/couchbase-lite/rest-api/index.html
+        - title: Release notes
+          items:
+            - title: iOS
+              path: references/couchbase-lite/release-notes/iOS/index.html
+            - title: Android
+              path: references/couchbase-lite/release-notes/Android/index.html
+            - title: Java
+              path: references/couchbase-lite/release-notes/Java/index.html
+            - title: .NET
+              path: references/couchbase-lite/release-notes/Dot-Net/index.html
     - title: Sync Gateway
       items:
         - title: Public REST API
           path: references/sync-gateway/rest-api/index.html
         - title: Admin REST API
           path: references/sync-gateway/admin-rest-api/index.html
+        - title: Release notes
+          items:
+            - title: 1.3.1 Wednesday, September 14, 2016
+              path: references/sync-gateway/release-notes/1.3.1/index.html
+            - title: 1.3 Thursday, August 3, 2016
+              path: references/sync-gateway/release-notes/1.3/index.html
+            - title: 1.2.1 Thursday, April 21, 2016
+              path: references/sync-gateway/release-notes/1.2.1/index.html
+            - title: 1.2 February 3, 2016
+              path: references/sync-gateway/release-notes/1.2/index.html
+            - title: 1.1.1 September 15, 2015
+              path: references/sync-gateway/release-notes/1.1.1/index.html
+            - title: 1.1.0 June 17, 2015
+              path: references/sync-gateway/release-notes/1.1.0/index.html
+            - title: 1.0.4, March 5, 2015
+              path: references/sync-gateway/release-notes/1.0.4/index.html
+            - title: 1.0.3, October 29, 2014
+              path: references/sync-gateway/release-notes/1.0.3/index.html
+            - title: 1.0.2, August 27, 2014
+              path: references/sync-gateway/release-notes/1.0.2/index.html
+            - title: 1.0.1, July 28, 2014
+              path: references/sync-gateway/release-notes/1.0.1/index.html
+            - title: 1.0.0, May 21, 2014
+              path: references/sync-gateway/release-notes/1.0.0/index.html
