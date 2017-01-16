@@ -1,0 +1,142 @@
+properties:
+  adminInterface:
+    description: Port or TCP network address (IP address and the port) that the Admin REST API listens on. The default is 127.0.0.1:4985.
+    type: string
+    default: "127.0.0.1:4985"
+  adminUI:
+    description: URL of the Sync Gateway Admin Console HTML page. The default is the bundled Sync Gateway Admin Console at localhost:4985/_admin/.
+    type: string
+  compressResponses:
+    description: Whether to compress HTTP responses. Set to false to disable compression of HTTP responses. The default is true.
+    type: boolean
+  configServer:
+    description: URL of a Couchbase database-configuration server (for dynamic database discovery). A database-configuration server allows Sync Gateway to load a database configuration dynamically from a remote endpoint. If a database configuration server is defined, when Sync Gateway gets a request for a database that it doesn't know about, then Sync Gateway will attempt to retrieve the database configuration properties from the URL ConfigServer/DBname, where DBname is the database name. There is no default.
+    type: string
+  CORS:
+    description: Configuration object to enable CORS.
+    type: object
+    properties:
+      Origin:
+        type: string
+        description: Comma-separated list of allowed origins; use an asterisk (*) to allow access from everywhere. There is no default.
+      LoginOrigin:
+        type: string
+        description: Comma-separated list of allowed login origins. There is no default.
+      Headers:
+        type: string
+        description: Comma-separated list of allowed HTTP headers. There is no default.
+      MaxAge:
+        type: integer
+        description: Value for the Access-Control-Max-Age header. This is the the number of seconds that the response to a CORS preflight request can be cached before sending another preflight request. There is no default.
+  CouchbaseKeepaliveInterval:
+    description: TCP keep-alive interval in seconds between Sync Gateway and Couchbase Server. There is no default.
+    type: integer
+  databases:
+    description: Database settings.
+    type: object
+    properties:
+      foo_db:
+        type: object
+        description: The database name is stored as a key.
+        properties:
+          allow_empty_password:
+            type: boolean
+            description: Whether to allow empty passwords for Couchbase Server authentication. The default is false.
+          bucket:
+            type: string
+            description: Bucket name on Couchbase Server or a Walrus bucket. The default is the value of the property Name.
+          cache:
+            type: object
+            description: Database cache configuration.
+            properties:
+              max_wait_pending:
+                type: integer
+                description: Maximum wait time in milliseconds for a pending sequence before skipping sequences. The default is 5000 (five seconds).
+              max_num_pending:
+                type: integer
+                description: Maximum number of pending sequences before skipping the sequence. The default is 10000.
+              max_wait_skipped:
+                type: integer
+                description: Maximum wait time in milliseconds for a skipped sequence before abandoning the sequence. The default is 3600000 (60 minutes).
+              enable_star_channel:
+                type: boolean
+                description: Enable the star (*) channel. The default is true.
+              channel_cache_max_length:
+                type: integer
+                description: Maximum number of entries maintained in cache per channel. The default is 500.
+              channel_cache_min_length:
+                type: integer
+                description: Minimum number of entries maintained in cache per channel. The default is 50.
+              channel_cache_expiry:
+                type: integer
+                description: Time (seconds) to keep entries in cache beyond the minimum retained. The default is 60 seconds.
+          event_handlers:
+            type: object
+            properties:
+              max_processes:
+                type: integer
+                description: Maximum concurrent event handling goroutines. The default is 500.
+              wait_for_process:
+                type: integer
+                description: Maximum wait time in milliseconds when the event queue is full. The default is 5.
+          feed_type:
+            type: string
+            description: Feed type DCP or TAP. The default is TAP.
+          offline:
+            type: string
+            description: Whether the database if kept offline when Sync Gateway starts. Specifying the value true results in the database being kept offline. The default (if the property is omitted) is to bring the database online when Sync Gateway starts. For more information, see Taking databases offline and bringing them online.
+          password:
+            type: string
+            description: Bucket password for authenticating to Couchbase Server. There is no default.
+          pool:
+            type: string
+            description: Couchbase pool name. The default is the string default.
+          rev_cache_size:
+            type: integer
+            description: Size of the revision cache, specified as the total number of document revisions to cache in memory for all recently accessed documents. When the revision cache is full, Sync Gateway removes less recent document revisions to make room for new document revisions. Adjust this property to tune memory consumption by Sync Gateway, for example on servers with less memory and in cases when Sync Gateway creates many new documents and/or updates many documents relative to the number of read operations. The default is 5000.
+          revs_limit:
+            type: integer
+            description: Maximum depth to which a document's revision tree can grow. The default is 1000.
+          roles:
+            type: string
+            description: Admin roles
+          server:
+            type: string
+            description: Couchbase Server (or Walrus) URL. The default is walrus.
+          sync:
+            type: string
+            description: Sync function, which defines which users can read, update, or delete which documents. The default is a default sync function. For more information, see the section Sync function API.
+          username:
+            type: string
+            description: Bucket username for authenticating to Couchbase Server. There is no default.
+          users:
+            type: object
+            properties:
+              foo_user:
+                type: object
+                properties:
+                  password:
+                    type: string
+                    description: The user's password.
+                  admin_channels:
+                    type: array
+                    items:
+                      description: Channel name.
+                      type: string
+                  admin_roles:
+                    type: array
+                    items:
+                      description: Role name.
+                      type: string
+                  disabled:
+                    type: boolean
+                    description: Whether this user account is disabled.
+  interface:
+    description: Public REST API port.
+    type: boolean
+  log:
+    description: Comma-separated list of log keys to enable for diagnostic logging. Use ["*"] to enable logging for all log keys. See Log keys. The default is HTTP.
+    type: string
+  logFilePath:
+    description: Absolute or relative path on the filesystem to the log file. A relative path is from the directory that contains the Sync Gateway executable file. The default is stderr.
+    type: string

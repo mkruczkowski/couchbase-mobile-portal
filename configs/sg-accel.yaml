@@ -1,0 +1,40 @@
+properties:
+  cluster_config:
+    type: object
+    description: The configuration to specify where the data bucket resides.
+    properties:
+      server:
+        type: string
+        description: The hostname of the Couchbase Server cluster.
+      bucket:
+        type: string
+        description: The bucket name where the data is stored (i.e the one specified in the database configuration.)
+      data_dir:
+        type: string
+        description: Path to the data directory.
+  databases:
+      description: Database settings.
+      type: object
+      properties:
+        foo_db:
+          type: object
+          description: The database name is stored as a key.
+          properties:
+            bucket:
+              type: string
+              description: Bucket name on Couchbase Server or a Walrus bucket. The default is the value of the property Name.
+            server:
+              type: string
+              description: Couchbase Server (or Walrus) URL. The default is walrus.
+            channel_index:
+              type: object
+              properties:
+                writer:
+                  type: boolean
+                  description: Whether the channel index node can write to the bucket.
+                server:
+                  type: string
+                  description: Hostname to the Couchbase Server cluster.
+                bucket:
+                  type: string
+                  description: Bucket name for channel indexing. A common name is "channel_index".
