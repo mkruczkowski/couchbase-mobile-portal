@@ -21,66 +21,6 @@
   <head>
   </head>
   <site-map>
-    <top>
-      <xi:include href="home-hippo.xml"/>
-    </top>
-    <set id="installation">
-      <title>Installation</title>
-      <description></description>
-      <introduction></introduction>
-      <items>
-        <xi:include href="../../docs/src/installation/ios/guide.xml"/>
-        <xi:include href="../../docs/src/installation/android/guide.xml"/>
-        <xi:include href="../../docs/src/installation/net/guide.xml"/>
-        <xi:include href="../../docs/src/installation/java/guide.xml"/>
-        <xi:include href="../../docs/src/installation/phonegap/guide.xml"/>
-        <xi:include href="../../docs/src/installation/sync-gateway/guide.xml"/>
-      </items>
-    </set>
-    <set id="training">
-      <title>Training</title>
-      <description></description>
-      <items>
-        <set id="design">
-          <title>Design</title>
-          <description></description>
-          <items>
-            <xi:include href="../../docs/src/training/data-modeling.xml"/>
-            <xi:include href="../../docs/src/training/security.xml"/>
-          </items>
-        </set>
-        <set id="develop">
-          <title>Develop</title>
-          <description></description>
-          <items>
-            <xi:include href="../../docs/src/training/create-database.xml"/>
-            <xi:include href="../../docs/src/training/using-database.xml"/>
-            <xi:include href="../../docs/src/training/adding-sync.xml"/>
-            <xi:include href="../../docs/src/training/adding-security.xml"/>
-            <xi:include href="../../docs/src/training/integration.xml"/>
-          </items>
-        </set>
-        <set id="deploy">
-          <title>Deploy</title>
-          <description></description>
-          <items>
-            <xi:include href="../../docs/src/training/install.xml"/>
-            <xi:include href="../../docs/src/training/upgrade.xml"/>
-            <xi:include href="../../docs/src/training/scale.xml"/>
-          </items>
-        </set>
-      </items>
-    </set>
-    <set id="guides">
-      <title>Guides</title>
-      <description></description>
-      <items>
-        <xi:include href="../../docs/src/guides/modeling/guide.xml"/>
-        <xi:include href="../../docs/src/guides/couchbase-lite/set.xml"/>
-        <xi:include href="../../docs/src/guides/sync-gateway/set.xml"/>
-        <xi:include href="../../docs/src/guides/authentication/set.xml"/>
-      </items>
-    </set>
     <set id="references">
       <title>API references</title>
       <description></description>
@@ -96,7 +36,6 @@
           </introduction>
           <items>
             <xi:include href="../../apis/couchbase-lite/src/api.xml"/>
-            <xi:include href="../../docs/src/guides/couchbase-lite/rest-api/guide.xml"/>
             <xi:include href="../../docs/src/guides/couchbase-lite/release-notes.xml"/>
           </items>
         </set>
@@ -110,9 +49,6 @@
             </paragraph>
           </introduction>
           <items>
-            <xi:include href="../../docs/src/guides/sync-gateway/rest-apis/rest-common/guide.xml"/>
-            <xi:include href="../../docs/src/guides/sync-gateway/rest-apis/public-rest-api/guide.xml"/>
-            <xi:include href="../../docs/src/guides/sync-gateway/rest-apis/admin-rest-api/guide.xml"/>
             <xi:include href="../../docs/src/guides/sync-gateway/release-notes.xml"/>
           </items>
         </set>
