@@ -221,7 +221,11 @@ ChangesFeedRow:
       type: array
       description: List of the document’s leafs. Each leaf object contains one field, rev.
       items:
-        type: string
+        type: object
+        properties:
+          rev:
+            type: string
+            description: Identifier of the document revision that changed.
     id:
       type: string
       description: Document identifier
