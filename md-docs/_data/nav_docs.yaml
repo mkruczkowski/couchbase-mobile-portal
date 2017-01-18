@@ -43,12 +43,15 @@
         - title: Scale
           path: training/deploy/scale/index.html
 - title: Guides
+  path: guides/index.html
   items:
     - title: Data Modeling
       path: guides/couchbase-lite/native-api/data-modeling/index.html
     - title: Couchbase Lite
+      path: guides/couchbase-lite/index.html
       items:
         - title: Native API
+          path: guides/couchbase-lite/native-api/index.html
           items:
             - title: Manager
               path: guides/couchbase-lite/native-api/manager/index.html
@@ -69,6 +72,7 @@
             - title: Model (iOS only)
               path: guides/couchbase-lite/native-api/model/index.html
     - title: Sync Gateway
+      path: guides/sync-gateway/index.html
       items:
         - title: Configuration file
           path: guides/sync-gateway/config-properties/index.html
@@ -127,10 +131,13 @@
         - title: Static Providers
           path: guides/authentication/static-providers/index.html
 - title: API References
+  path: references/index.html
   items:
     - title: Couchbase Lite
+      path: references/couchbase-lite/index.html
       items:
         - title: Native API
+          path: references/couchbase-lite/couchbase-lite/index.html
           items:
             - title: Manager
               path: references/couchbase-lite/couchbase-lite/manager/index.html
@@ -199,6 +206,7 @@
         - title: REST API
           path: references/couchbase-lite/rest-api/index.html
         - title: Release notes
+          path: references/couchbase-lite/release-notes/index.html
           items:
             - title: iOS
               path: references/couchbase-lite/release-notes/iOS/index.html
@@ -209,12 +217,14 @@
             - title: .NET
               path: references/couchbase-lite/release-notes/Dot-Net/index.html
     - title: Sync Gateway
+      path: references/sync-gateway/index.html
       items:
         - title: Public REST API
           path: references/sync-gateway/rest-api/index.html
         - title: Admin REST API
           path: references/sync-gateway/admin-rest-api/index.html
         - title: Release notes
+          path: references/sync-gateway/release-notes/index.html
           items:
             - title: 1.3.1 Wednesday, September 14, 2016
               path: references/sync-gateway/release-notes/1.3.1/index.html
