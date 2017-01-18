@@ -1,3 +1,25 @@
+- title: 1.4 DP
+  path: dp/index.html
+  items:
+    - title: Couchbase Lite
+      items:
+        - title: Release notes
+          items:
+            - title: iOS
+            - title: Android
+            - title: Java
+            - title: .NET
+    - title: Sync Gateway
+      items:
+        - title: SG Accel
+          items:
+            - title: Overview
+              path: guides/sync-gateway/accelerator/index.html
+            - title: Configuration
+              path: guides/sync-gateway/accelerator/config/index.html
+            - title: Example
+              path: guides/sync-gateway/accelerator/example/index.html
+        - title: Release notes
 - title: Installation
   path: installation/index.html
   items:

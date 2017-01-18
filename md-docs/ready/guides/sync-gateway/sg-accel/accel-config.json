@@ -1,0 +1,19 @@
+{
+  "log": ["HTTP+"],
+  "cluster_config":{
+    "server":"http://localhost:8091",
+    "bucket":"data_bucket",
+    "data_dir":"."
+  },
+  "databases": {
+    "app_name": {
+      "server": "http://localhost:8091",
+      "bucket": "data_bucket",
+      "channel_index": {
+        "writer": true,
+        "server":"http://localhost:8091",
+        "bucket":"channel_bucket"
+      }
+    }
+  }
+}
