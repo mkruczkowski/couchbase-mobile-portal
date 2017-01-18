@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 
 {% include head.html %}
 
@@ -10,7 +10,7 @@
 <main id="global-content" class="global-content" role="main">
   <!-- LEFT NAV assets -->
   <!-- LOCAL JS Libs -->
-  <script src="http://developer.couchbase.com/webfiles/1478017450376/js/collapse.js"></script>
+  <script src="http://localhost:9000/webfiles/1484262819972/js/collapse.js"></script>
 
   <div id="page-template-attributes" data-template-id="" data-template-class="learn-support-sec article-tpl"></div>
 
@@ -22,9 +22,7 @@
         <aside class="col one-fifth section-nav left-rail">
           <nav role="navigation" aria-label="Secondary" style="width: 100%;">
             <div class="toc collapsible" style="display: block;">
-              {% if page.url == '/' %}
                 {% include sidebar.html %}
-              {% endif %}
             </div>
           </nav>
         </aside>
