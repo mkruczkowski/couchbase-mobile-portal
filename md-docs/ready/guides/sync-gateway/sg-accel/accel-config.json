@@ -1,9 +1,10 @@
 {
   "log": ["HTTP+"],
+  "adminInterface": ":4986",
   "cluster_config":{
     "server":"http://localhost:8091",
     "bucket":"data_bucket",
-    "data_dir":"."
+    "data_dir":"./tmp"
   },
   "databases": {
     "app_name": {

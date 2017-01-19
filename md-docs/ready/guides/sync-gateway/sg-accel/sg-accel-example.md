@@ -4,17 +4,14 @@ title: Example
 permalink: guides/sync-gateway/accelerator/example/index.html
 ---
 
-In this guide, we will setup a Sync Gateway and Sync Gateway Accelerator with the basic configurations.
+Prior to installing Sync Gateway Accelerator you must have a running instance of Sync Gateway persisting documents to Couchbase Server. In this guide, we will assume the following components have already been configured.
 
-## Prerequisites
-
-Prior to installing Sync Gateway Accelerator you must have a running instance of Sync Gateway persisting documents to Couchbase Server. We will assume the following components have already been configured.
-
-- A Couchbase Server cluster is up and running with a bucket called "data_bucket". A bucket cannot be renamed so if you already have a bucket with a different name that's ok. You'll have to make sure to write down the correct name in the following steps of this guide.
+- A Couchbase Server cluster is up and running with a bucket called "data_bucket". A bucket cannot be renamed so if you already have a bucket with a different name that's ok. You'll have to replace it with your bucket name where applicable in the following steps of this guide.
 
     ![](img/sg-accel-data-bucket.png)
 
-    This bucket contains a few thousand documents that were added through the Sync Gateway REST API.
+    As you can see on this image, the bucket contains a few thousand documents that were added through the Sync Gateway
+    REST API.
 
 - A Sync Gateway instance persisting the documents to the data bucket.
 
@@ -47,6 +44,7 @@ Prior to installing Sync Gateway Accelerator you must have a running instance of
     ```javascript
     {
       "log": ["HTTP+"],
+      "adminInterface": ":4986",
       "cluster_config":{
         "server":"http://localhost:8091",
         "bucket":"data_bucket",
@@ -66,13 +64,17 @@ Prior to installing Sync Gateway Accelerator you must have a running instance of
     }
     ```
 
+    The default listening port for Sync Gateway Accelerator is `4985`. In this configuration file, you're setting it to `4986` because Sync Gateway also defaults to `4985`.
+
 4. Start the Sync Gateway Accelerator node.
 
     ```bash
-    ~/Downloads/couchbase-sg-accel/bin/sync_gateway accel-config.json
+    ~/Downloads/couchbase-sg-accel/bin/sg_accel accel-config.json
     ```
 
-    Notice the document count is now increasing in the `channel_bucket` because the channel index is being stored there instead of in the data bucket.
+    Notice the document count is now increasing in `channel_bucket` because the channel assignment data is being stored there instead of in `data_bucket`.
+
+    ![](img/channel-bucket.png)
 
 ## Sync Gateway
 
