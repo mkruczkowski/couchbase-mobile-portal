@@ -71,6 +71,11 @@
               path: guides/couchbase-lite/native-api/replication/index.html
             - title: Model (iOS only)
               path: guides/couchbase-lite/native-api/model/index.html
+        - title: Technical Notes
+          path: guides/couchbase-lite/tech-notes/index.html
+          items:
+            - title: Encrypting Databases
+              path: guides/couchbase-lite/tech-notes/cbl-encryption/index.html
     - title: Sync Gateway
       path: guides/sync-gateway/index.html
       items:
