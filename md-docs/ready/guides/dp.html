@@ -1,0 +1,152 @@
+---
+id: dp
+title: 1.4 DP
+permalink: dp/index.html
+noedit: true
+---
+
+<style>
+  .dp {
+    display: block;
+  }
+  .dp .box {
+    margin: 0 10px 15px 0;
+    display: inline-block;
+    border-radius: 4px;
+    color: #f2f2f2;
+    background-color: rgba(0, 0, 0, 0.05);
+    width: calc(100% - 10px);
+  }
+  .dp .box:hover {
+    -webkit-box-shadow: 3px 3px 6px #aaa;
+    -moz-box-shadow: 3px 3px 6px #aaa;
+    box-shadow: 3px 3px 6px #aaa;
+  }
+  .dp .box {
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+    transition-timing-function: linear;
+  }
+  .dp .column {
+    float: left;
+  }
+  .dp .size-1of3 {
+    width: 33.33333%;
+  }
+  .dp .size-2of3 {
+    width: 66.66666%;
+  }
+  .dp .size-1of4 {
+    width: 25%;
+  }
+  .dp .container a {
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    display: flex;
+    height: 40px;
+  }
+  .dp .box .feat-image {
+    max-width: 100%;
+    border-radius: 4px 4px 0 0;
+    vertical-align: middle;
+  }
+  .dp .container a img {
+    width: 25px;
+  }
+  .dp .preview-link {
+    background-color: #ec1e2c;
+    color: #fff;
+    border: none;
+    font-size: .9em;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 12px 1em;
+    border-radius: 3px;
+    line-height: 1em;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    width: 300px;
+    font-family: "Kievit OT",sans-serif;
+  }
+  .dp .tiles {
+    margin: 0 auto;
+    display: block;
+  }
+  .dp p {
+    padding: 5px 5px;
+    margin: 0;
+    color: black;
+  }
+  .dp .description {
+    line-height: 1.2em;
+    text-align: justify;
+    height: 100px;
+    color: black;
+    border-right: 2px solid #f2f2f2;
+    border-bottom: 2px solid #f2f2f2;
+    border-left: 2px solid #f2f2f2;
+    background-color: white;
+    font-size: 16px;
+  }
+</style>
+
+<div class="dp">
+  <h3>Couchbase Lite</h3>
+  <h4>Release notes</h4>
+  <div class="tiles">
+    {% for item0 in site.data.nav_docs[0].items[0].items[0].items %}
+    <div class="column size-1of4">
+      <div class="box">
+        <div class="container">
+          <a href="/documentation/mobile/current/{{item0.path}}">
+            <img src="/img/{{item0.img}}.png" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <h3>Sync Gateway</h3>
+  <div class="tiles">
+    {% for item0 in site.data.nav_docs[0].items[1].items limit: 1 %}
+    <div class="column size-{{item0.size}}of3">
+      <div class="box">
+        <a href="/documentation/mobile/current/{{item0.path}}" alt="">
+          <p>{{ item0.title }}</p>
+          <p class="description">With Couchbase Mobile 1.4, it's now possible to delegate the task of applying security filtering (access control) to a separate component called Sync Gateway Accelerator. Sync Gateway nodes support your applications (Web, Mobile, IoT) as it normally would while Sync Gateway Accelerator handles channel indexing.</p>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+    {% for item0 in site.data.nav_docs[0].items[1].items limit: 1 offset: 1 %}
+    <div class="column size-{{item0.size}}of3">
+      <div class="box">
+        <a href="/documentation/mobile/current/{{item0.path}}" alt="">
+          <img class="feat-image" src="/img/{{item0.img}}.png" alt="">
+          <p>{{ item0.title }}</p>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <h4>Release notes</h4>
+  <div class="tiles">
+    {% for item0 in site.data.nav_docs[0].items[1].items limit: 1 offset: 2 %}
+    <div class="column size-1of4">
+      <div class="box">
+        <div class="container">
+          <a href="/documentation/mobile/current/{{item0.path}}">
+            <p>SG</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

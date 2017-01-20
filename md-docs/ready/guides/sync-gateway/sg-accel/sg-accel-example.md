@@ -103,7 +103,3 @@ The Sync Gateway configuration must be updated with the information regarding th
     ```bash
     ~/Downloads/couchbase-sync-gateway/bin/sync_gateway sync-gateway-config.json
     ```
-
-## Verifying the installation
-
-You will insert 100 documents through the REST API. If they are outputted in the changes feed then it means the installation was successful.

@@ -1,6 +1,6 @@
 ---
 id: sg-accel
-title: SG Accelerator
+title: Accelerator
 permalink: guides/sync-gateway/accelerator/index.html
 ---
 

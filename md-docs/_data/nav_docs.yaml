@@ -6,22 +6,36 @@
         - title: Release notes
           items:
             - title: iOS
+              img: ios
+              path: references/couchbase-lite/release-notes/iOS/index.html
             - title: Android
+              img: android
+              path: references/couchbase-lite/release-notes/Android/index.html
             - title: Java
-            - title: .NET
+              img: java
+              path: references/couchbase-lite/release-notes/Java/index.html
+            - title: Dot-NET
+              img: dot-net
+              path: references/couchbase-lite/release-notes/Dot-Net/index.html
     - title: Sync Gateway
       items:
-        - title: SG Accel
+        - title: Accelerator
+          size: 2
+          path: guides/sync-gateway/accelerator/index.html
+          img: data_flow_overview
           items:
-            - title: Overview
-              path: guides/sync-gateway/accelerator/index.html
             - title: Configuration
               path: guides/sync-gateway/accelerator/config/index.html
             - title: Example
               path: guides/sync-gateway/accelerator/example/index.html
         - title: Log Rotation
+          size: 1
+          img: logs
           path: guides/sync-gateway/log-rotation/index.html
         - title: Release notes
+          size: 0
+          img: release-notes
+          path: references/sync-gateway/release-notes/1.4.0/index.html
 - title: Installation
   path: installation/index.html
   items:
