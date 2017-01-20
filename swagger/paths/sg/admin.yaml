@@ -40,9 +40,15 @@
       Log keys specify functional areas. Enabling logging for a log key provides additional diagnostic information for that area.
       
       Following are descriptions of the log keys that you can specify as a comma-separated list in the Log property. In some cases, a log key has two forms, one with a plus sign (+) suffix and one without, for example CRUD+ and CRUD. The log key with the plus sign logs more verbosely. For example for CRUD+, the log contains all of the messages for CRUD and additional ones for CRUD+.
+    parameters:
+      - in: body
+        name: LoggingBody
+        description: The request body.
+        schema:
+          $ref: '#/definitions/LogTags'
     responses:
       200:
-        description: yoo
+        description: The logging tags were successfully updated.
 /_replicate:
   post:
     tags:
