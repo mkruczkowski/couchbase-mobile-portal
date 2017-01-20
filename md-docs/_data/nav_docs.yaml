@@ -19,6 +19,8 @@
               path: guides/sync-gateway/accelerator/config/index.html
             - title: Example
               path: guides/sync-gateway/accelerator/example/index.html
+        - title: Log Rotation
+          path: guides/sync-gateway/log-rotation/index.html
         - title: Release notes
 - title: Installation
   path: installation/index.html
