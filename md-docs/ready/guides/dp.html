@@ -94,7 +94,7 @@ noedit: true
     border-bottom: 2px solid #f2f2f2;
     border-left: 2px solid #f2f2f2;
     background-color: white;
-    font-size: 16px;
+    font-size: 15px;
     text-overflow: ellipsis;
   }
 </style>
@@ -122,7 +122,7 @@ noedit: true
       <div class="box">
         <a href="/documentation/mobile/current/{{item0.path}}" alt="">
           <p>{{ item0.title }}</p>
-          <p class="description">With Couchbase Mobile 1.4, it's now possible to delegate the task of applying security filtering (access control) to a separate component called Sync Gateway Accelerator. Sync Gateway nodes support your applications (Web, Mobile, IoT) as it normally would while Sync Gateway Accelerator handles channel indexing.</p>
+          <p class="description">With Couchbase Mobile 1.4, it's now possible to delegate the task of applying security filtering (access control) to a separate component called Sync Gateway Accelerator. In this configuration, Sync Gateway nodes support your applications (Web, Mobile, IoT) as it normally would while Sync Gateway Accelerator handles channel indexing.</p>
         </a>
       </div>
     </div>
@@ -139,7 +139,7 @@ noedit: true
     {% endfor %}
   </div>
   <div class="note">
-    <strong>Deprecation notice:</strong> Bucket shadowing is being deprecated in 1.4. The recommended approach for performing operations on the data bucket is to use the Sync Gateway REST API.
+    <strong>Deprecation notice:</strong> Bucket shadowing is being deprecated in 1.4. The recommended approach for performing operations on the bucket dedicated to Couchbase Mobile is to use the Sync Gateway REST API.
   </div>
   <h4>Release notes</h4>
   <div class="tiles">
