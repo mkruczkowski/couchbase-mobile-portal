@@ -54,6 +54,8 @@ noedit: true
     max-width: 100%;
     border-radius: 4px 4px 0 0;
     vertical-align: middle;
+    height: 100px;
+    min-width: 100%;
   }
   .dp .container a img {
     width: 25px;
@@ -87,12 +89,13 @@ noedit: true
     line-height: 1.2em;
     text-align: justify;
     height: 100px;
-    color: black;
+    color: rgba(27, 26, 25, 0.62);
     border-right: 2px solid #f2f2f2;
     border-bottom: 2px solid #f2f2f2;
     border-left: 2px solid #f2f2f2;
     background-color: white;
     font-size: 16px;
+    text-overflow: ellipsis;
   }
 </style>
 
@@ -101,7 +104,7 @@ noedit: true
   <h4>Release notes</h4>
   <div class="tiles">
     {% for item0 in site.data.nav_docs[0].items[0].items[0].items %}
-    <div class="column size-1of4">
+    <div class="column size-1of3">
       <div class="box">
         <div class="container">
           <a href="/documentation/mobile/current/{{item0.path}}">
@@ -135,10 +138,13 @@ noedit: true
     </div>
     {% endfor %}
   </div>
+  <div class="note">
+    <strong>Deprecation notice:</strong> Bucket shadowing is being deprecated in 1.4. The recommended approach for performing operations on the data bucket is to use the Sync Gateway REST API.
+  </div>
   <h4>Release notes</h4>
   <div class="tiles">
     {% for item0 in site.data.nav_docs[0].items[1].items limit: 1 offset: 2 %}
-    <div class="column size-1of4">
+    <div class="column size-1of3">
       <div class="box">
         <div class="container">
           <a href="/documentation/mobile/current/{{item0.path}}">

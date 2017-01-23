@@ -7,16 +7,13 @@
           items:
             - title: iOS
               img: ios
-              path: references/couchbase-lite/release-notes/iOS/index.html
-            - title: Android
-              img: android
-              path: references/couchbase-lite/release-notes/Android/index.html
+              path: dp/references/couchbase-lite/release-notes/iOS/index.html
             - title: Java
-              img: java
-              path: references/couchbase-lite/release-notes/Java/index.html
+              img: android
+              path: dp/references/couchbase-lite/release-notes/Java/index.html
             - title: Dot-NET
               img: dot-net
-              path: references/couchbase-lite/release-notes/Dot-Net/index.html
+              path: dp/references/couchbase-lite/release-notes/Dot-Net/index.html
     - title: Sync Gateway
       items:
         - title: Accelerator
