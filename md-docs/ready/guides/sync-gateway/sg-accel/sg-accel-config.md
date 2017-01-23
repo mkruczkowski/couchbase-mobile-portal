@@ -4,10 +4,10 @@ title: Config
 permalink: guides/sync-gateway/accelerator/config/index.html
 ---
 
-You can specify the runtime behavior of a Sync Gateway Accelerator node in a configuration file. Most of the properties in the Sync Gateway configuration also apply to Sync Gateway Accelerator. There are two places in the configuration file that specific to a deployment that uses Sync Gateway Accelerator.
+The runtime behavior of a Sync Gateway Accelerator node can be specified in the configuration file. The following information must be provided:
 
-  - Cluster information
-  - Channel index
+  - **Cluster information:** the location of the data bucket used by the Sync Gateway nodes.
+  - **Channel index information:** the location of the channel bucket used by the Sync Gateway Accelerator nodes.
 
 The following configuration contains both of these.
 
@@ -48,7 +48,7 @@ The `cluster_config` section is required to manage communication between your Sy
 
 ## Channel index information
 
-The `channel_index` section specifies your channel bucket connection information.
+The `channel_index` section specifies your channel bucket connection information. This is the bucket used by Sync Gateway Accelerator to persist the channel index.
 
 |Property|Type|Description and default|
 |:-------|:---|:----------------------|

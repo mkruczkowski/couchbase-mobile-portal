@@ -29,7 +29,7 @@ Prior to installing Sync Gateway Accelerator you must have a running instance of
 
     Again, if you are following this guide with an existing system already running, your configuration may differ slightly.
 
-## Installing Sync Gateway Accelerator
+## Sync Gateway Accelerator
 
 1. Download Sync Gateway Accelerator from the [Couchbase Downloads page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile).
 
@@ -64,7 +64,7 @@ Prior to installing Sync Gateway Accelerator you must have a running instance of
     }
     ```
 
-    The default listening port for Sync Gateway Accelerator is `4985`. In this configuration file, you're setting it to `4986` because Sync Gateway also defaults to `4985`.
+    The default listening port for Sync Gateway Accelerator is `4985`. Here, you're setting it to `4986` to avoid using a port that conflicts with Sync Gateway.
 
 4. Start the Sync Gateway Accelerator node.
 
