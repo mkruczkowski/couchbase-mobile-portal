@@ -8,13 +8,13 @@ echo "Building..."
 jekyll build --source "md-docs/" --destination "${TMP}"
 java -jar site/gtor/saxon9.jar -xi -l:on -s:site/src/site-hippo.xml -xsl:site/gtor/hippo.xslt output-directory="${TMP}/"
 
-echo "Building release notes..."
-mono ~/Developer/GitHubReleaseNotes/src/App/bin/Debug/ReleaseNotesCompiler.CLI.exe create --owner couchbase --repository couchbase-lite-ios --targetcommitish master -u jamiltz -p Robobo12! -m 1.4.0 --exportmd
-mono ~/Developer/GitHubReleaseNotes/src/App/bin/Debug/ReleaseNotesCompiler.CLI.exe create --owner couchbase --repository couchbase-lite-java-core --targetcommitish master -u jamiltz -p Robobo12! -m 1.4.0 --exportmd
-mono ~/Developer/GitHubReleaseNotes/src/App/bin/Debug/ReleaseNotesCompiler.CLI.exe create --owner couchbase --repository couchbase-lite-net --targetcommitish master -u jamiltz -p Robobo12! -m 1.4.0 --exportmd
-mono ~/Developer/GitHubReleaseNotes/src/App/bin/Debug/ReleaseNotesCompiler.CLI.exe create --owner couchbase --repository sync_gateway --targetcommitish master -u jamiltz -p Robobo12! -m 1.4.0 --exportmd
-
 if [ -z {1} ]; then
+	echo "Building release notes..."
+	mono ~/Developer/GitHubReleaseNotes/src/App/bin/Debug/ReleaseNotesCompiler.CLI.exe create --owner couchbase --repository couchbase-lite-ios --targetcommitish master -u jamiltz -p Robobo12! -m 1.4.0 --exportmd
+	mono ~/Developer/GitHubReleaseNotes/src/App/bin/Debug/ReleaseNotesCompiler.CLI.exe create --owner couchbase --repository couchbase-lite-java-core --targetcommitish master -u jamiltz -p Robobo12! -m 1.4.0 --exportmd
+	mono ~/Developer/GitHubReleaseNotes/src/App/bin/Debug/ReleaseNotesCompiler.CLI.exe create --owner couchbase --repository couchbase-lite-net --targetcommitish master -u jamiltz -p Robobo12! -m 1.4.0 --exportmd
+	mono ~/Developer/GitHubReleaseNotes/src/App/bin/Debug/ReleaseNotesCompiler.CLI.exe create --owner couchbase --repository sync_gateway --targetcommitish master -u jamiltz -p Robobo12! -m 1.4.0 --exportmd
+
 	echo "Zipping..."	
 	ditto -c -k --sequesterRsrc --keepParent "${1}" "tmp.zip"
 	
