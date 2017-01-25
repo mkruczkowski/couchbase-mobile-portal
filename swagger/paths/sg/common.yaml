@@ -272,7 +272,7 @@
     - $ref: '#/parameters/db'
   get:
     tags:
-     - query
+     - database
     summary: All docs
     description: |
       This request returns a built-in view of all the documents in the database.
@@ -293,7 +293,7 @@
           $ref: '#/definitions/QueryResult'
   post:
     tags:
-      - query
+      - database
     summary: All docs
     description: |
       This request retrieves specified documents from the database.
