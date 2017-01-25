@@ -1,9 +1,15 @@
+{% assign url = page.url | remove_first: '/' %}
+
 <nav style="width: 100%;" role="navigation" aria-label="Secondary" class="toc collapsible">
   <ul class="main collapsed">
     {% for item0 in site.data.nav_docs %}
       <li>
       {% if item0.path %}
-        <a href="{% if page.url != '/'%}/{% endif %}{{ item0.path }}">{{ item0.title }}</a>
+        {% if item0.path == url %}
+          <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item0.path }}">{{ item0.title }}</a>
+        {% else %}
+          <a href="{% if page.url != '/'%}/{% endif %}{{ item0.path }}">{{ item0.title }}</a>
+        {% endif %}
       {% else %}
         <a href="#" class="static">{{ item0.title }}</a>
       {% endif %}
@@ -12,7 +18,11 @@
           {% for item1 in item0.items %}
           <li>
             {% if item1.path %}
-              <a href="{% if page.url != '/'%}/{% endif %}{{ item1.path }}">{{ item1.title }}</a>
+              {% if item1.path == url %}
+                <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item1.path }}">{{ item1.title }}</a>
+              {% else %}
+                <a href="{% if page.url != '/'%}/{% endif %}{{ item1.path }}">{{ item1.title }}</a>
+              {% endif %}
             {% else %}
               <a href="#" class="static">{{ item1.title }}</a>
             {% endif %}
@@ -21,7 +31,11 @@
               {% for item2 in item1.items %}
               <li>
                 {% if item2.path %}
-                <a href="{% if page.url != '/'%}/{% endif %}{{ item2.path }}">{{ item2.title }}</a>
+                  {% if item2.path == url %}
+                    <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item2.path }}">{{ item2.title }}</a>
+                  {% else %}
+                    <a href="{% if page.url != '/'%}/{% endif %}{{ item2.path }}">{{ item2.title }}</a>
+                  {% endif %}
                 {% else %}
                   <a href="#" class="static">{{ item2.title }}</a>
                 {% endif %}
@@ -30,7 +44,11 @@
                   {% for item3 in item2.items %}
                   <li>
                     {% if item3.path %}
-                    <a href="{% if page.url != '/'%}/{% endif %}{{ item3.path }}">{{ item3.title }}</a>
+                      {% if item3.path == url %}
+                      <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item3.path }}">{{ item3.title}}</a>
+                      {% else %}
+                      <a href="{% if page.url != '/'%}/{% endif %}{{ item3.path }}">{{ item3.title }}</a>
+                      {% endif %}
                     {% else %}
                       <a href="#" class="static">{{ item3.title }}</a>
                     {% endif %}
@@ -39,7 +57,11 @@
                       {% for item4 in item3.items %}
                       <li>
                         {% if item4.path %}
-                        <a href="{% if page.url != '/'%}/{% endif %}{{ item4.path }}">{{ item4.title }}</a>
+                          {% if item4.path == url %}
+                          <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item4.path }}">{{ item4.title }}</a>
+                          {% else %}
+                          <a href="{% if page.url != '/'%}/{% endif %}{{ item4.path }}">{{ item4.title }}</a>
+                          {% endif %}
                         {% else %}
                           <a href="#" class="static">{{ item4.title }}</a>
                         {% endif %}
