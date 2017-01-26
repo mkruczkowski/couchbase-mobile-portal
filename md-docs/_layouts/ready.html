@@ -29,6 +29,11 @@
         <div class="col four-fifths article">
           <div class="story">
             <div class="body">
+              
+              {% if site.version == '1.3' %}
+                {% include developer-preview.html %}  
+              {% endif %}
+              
               <link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/cb-docs-assets/styles.css">
               {% if page.noedit != true %}
               <a class="edit-page-link" href="https://github.com/couchbaselabs/couchbase-mobile-portal/tree/dev/md-docs/{{ page.path }}" target="_blank">Edit on GitHub</a>

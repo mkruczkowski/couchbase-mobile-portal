@@ -1,9 +1,15 @@
 {% assign url = page.url | remove_first: '/' %}
 
+{% if site.version == '1.3' %}
+  {% assign nav_docs = site.data.1x %}
+{% else if site.version == '1.4' %}
+  {% assign nav_docs = site.data.14 %}
+{% endif %}
+
 <nav style="width: 100%;" role="navigation" aria-label="Secondary" class="toc collapsible">
   <ul class="main collapsed">
-    {% for item0 in site.data.nav_docs %}
-      <li>
+    {% for item0 in nav_docs %}
+      <li class="{% if item0.open == true%}open{% endif %}">
       {% if item0.path %}
         {% if item0.path == url %}
           <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item0.path }}">{{ item0.title }}</a>
@@ -16,7 +22,7 @@
       {% if item0.items %}
         <ul>
           {% for item1 in item0.items %}
-          <li>
+          <li class="{% if item1.open == true%}open{% endif %}">
             {% if item1.path %}
               {% if item1.path == url %}
                 <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item1.path }}">{{ item1.title }}</a>
@@ -29,7 +35,7 @@
             {% if item1.items %}
             <ul>
               {% for item2 in item1.items %}
-              <li>
+              <li class="{% if item2.open == true%}open{% endif %}">
                 {% if item2.path %}
                   {% if item2.path == url %}
                     <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item2.path }}">{{ item2.title }}</a>

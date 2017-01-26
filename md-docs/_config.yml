@@ -10,26 +10,21 @@ assets:
   dirname: img
 
 defaults:
-- scope:
-    path: ''
-    type: post
-  value:
-    layout: post
-- scope:
-    path: docs
-    type: page
-  values:
-    layout: docs
-- scope:
-    path: ready
-    type: page
-  values:
-    layout: ready
-- scope:
-    path: 'ready/swagger'
-    type: page
-  values:
-    layout: swagger
+  - scope:
+      path: ''
+      type: 1x
+    values:
+      layout: ready
+  - scope:
+      path: 'ready/swagger'
+      type: page
+    values:
+      layout: swagger
+  - scope:
+      path: ''
+      type: '14'
+    values:
+      layout: ready
 
 # Build settings
 #markdown: kramdown
@@ -42,8 +37,6 @@ redcarpet:
 
 exclude:
   - "*.screenflow"
-
-version: "1.3"
 
 keep_files:
   - "references"

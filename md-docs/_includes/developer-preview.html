@@ -1,0 +1,25 @@
+<style>
+  #preview-text {
+    text-align: center;
+    background-color: rgba(0, 191, 255, 0.11);
+    padding: 4px;
+  }
+  #preview-text.hide {
+    display: none;
+  }
+</style>
+<script>
+  setTimeout(moveDPMessage, 1000);
+  function moveDPMessage() {
+    var parent = document.getElementsByClassName('learn-support-sec article-tpl')[1];
+    var message = document.getElementById('preview-text');
+    parent.insertBefore(message, parent.firstChild);
+    message.classList.toggle('hide');
+  }
+</script>
+<div id="preview-text" class="hide">
+  Click here to learn about the
+  <a href="/documentation/mobile/1.4/whatsnew/index.html">
+    1.4 Developer Preview
+  </a>
+</div>

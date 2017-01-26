@@ -1,7 +1,6 @@
 ---
 id: log-rotation
 title: Log Rotation
-permalink: guides/sync-gateway/log-rotation/index.html
 ---
 
 By default, Sync Gateway outputs the logs to standard out with the "HTTP" log key and can also output logs to a file. Prior to 1.4, the two main configuration options were `log` and `logFilePath` at the root of the configuration file.
