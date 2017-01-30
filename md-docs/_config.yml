@@ -16,15 +16,20 @@ defaults:
     values:
       layout: ready
   - scope:
-      path: 'ready/swagger'
-      type: page
+      path: ''
+      type: '13'
     values:
-      layout: swagger
+      layout: ready
   - scope:
       path: ''
       type: '14'
     values:
       layout: ready
+  - scope:
+      path: 'ready/swagger'
+      type: page
+    values:
+      layout: swagger
 
 # Build settings
 #markdown: kramdown
