@@ -6,6 +6,13 @@ title: iOS release notes
 As part of this release we had [16 issues](https://github.com/couchbase/couchbase-lite-ios/issues?milestone=18&state=closed) closed.
 Early-2017 update focusing mostly on bug-fixes.
 
+__Deprecation notice__
+
+|   |iOS 8|ForestDB|Geo query|
+|:--|:----|:-------|:--------|
+|1.4|Announce deprecation|Announce deprecation|Announce deprecation|
+|2.0|Removed|Removed|Removed|
+
 __Performance Improvements__
 
 - [__#1389__](https://github.com/couchbase/couchbase-lite-ios/issues/1389) Allow SQLite reads concurrently with writer

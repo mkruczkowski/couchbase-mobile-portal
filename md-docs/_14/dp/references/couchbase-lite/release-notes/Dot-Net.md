@@ -5,6 +5,12 @@ title: .NET release notes
 
 As part of this release we had [118 commits](https://github.com/couchbase/couchbase-lite-net/compare/1.3.1...1.4.0) which resulted in [37 issues](https://github.com/couchbase/couchbase-lite-net/issues?milestone=15&state=closed) being closed.
 
+__Deprecation notice__
+
+|   |.NET 3.5|ForestDB|
+|:--|:------|:-------------|
+|1.4|Announce deprecation|Announce deprecation|
+|2.0|Removed|Removed|
 
 __Enhancements__
 

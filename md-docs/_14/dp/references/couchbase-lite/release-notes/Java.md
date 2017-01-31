@@ -5,6 +5,16 @@ title: Java release notes
 
 As part of this release we had [96 commits](https://github.com/couchbase/couchbase-lite-java-core/compare/1.3.1...1.4.0) which resulted in [24 issues](https://github.com/couchbase/couchbase-lite-java-core/issues?milestone=13&state=closed) being closed.
 
+__Android Support notice__
+
+In 1.4, Couchbase Lite Android will support API Level 16 and above.
+
+__Deprecation notice__
+
+|   |ForestDB|
+|:--|:----|:-------|
+|1.4|Announce deprecation|
+|2.0|Removed|
 
 __Enhancements__
 
