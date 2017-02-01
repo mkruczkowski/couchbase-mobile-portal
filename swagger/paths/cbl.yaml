@@ -174,6 +174,7 @@
       - $ref: '#/parameters/include_docs'
       - $ref: '#/parameters/inclusive_end'
       - $ref: '#/parameters/key'
+      - $ref: '#/parameters/keys'
       - $ref: '#/parameters/limit'
       - $ref: '#/parameters/skip'
       - $ref: '#/parameters/stale'
