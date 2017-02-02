@@ -57,14 +57,14 @@ Once you have set up the Listener as an endpoint for other peers to replicate to
 
 This section covers two ways to discover peers:
 
-- Using a QR code to encode the peer's URL.
+- Using a QR code to encode the peer's remote URL.
 - Bonjour.
 
 ### QR code
 
 #### PhotoDrop
 
-[PhotoDrop](https://github.com/couchbaselabs/photo-drop) is a P2P sharing app similar to the iOS AirDrop feature that you can use to send photos across devices. The source code is available for iOS and Android and it uses a QR code for peer discovery. The QR code is used for advertising an adhoc endpoint URL that a sender can scan and send photos to.
+[PhotoDrop](https://github.com/couchbaselabs/photo-drop) is a P2P sharing app similar to the iOS AirDrop feature that you can use to send photos across devices. The source code is available for iOS and Android. The QR code is used for advertising an adhoc endpoint URL that a sender can scan and send photos to.
 
 ### Bonjour
 
@@ -121,11 +121,11 @@ No code example is currently available.
 
 #### Subscriber
 
-To browse for peers on the network, each implementation has an asynchronous API to get notified as peers go online and offline from the network. First, you must implement the protocol or interface before starting the network discovery:
+To browse for peers on the network, each implementation has an asynchronous API to get notified as peers go online and offline from the network. You must implement the protocol or interface before starting the network discovery.
 
-- Bonjour: Implement the NSNetServiceBrowserDelegate protocol
-- NSD: Create a new instance of the NsdManager.DiscoveryListener class
-- JmDNS: Implement the ServiceListener interface
+- Bonjour: Implement the `NSNetServiceBrowserDelegate` protocol
+- NSD: Create a new instance of the `NsdManager.DiscoveryListener` class
+- JmDNS: Implement the `ServiceListener` interface
 
 After setting the listener or delegate, create a new instance of the discovery object.
 
@@ -302,7 +302,8 @@ Once the IP address of another device is known you can start replicating data to
 
 ### Filter functions
 
-It may be desirable to use filter functions to replicate only the documents of interest to another peer. Filter functions in a peer-to-peer context are executed when the start method on the replication object is called. This is a major difference with the Sync Function available on Sync Gateway that builds the access rules when documents are saved to the Sync Gateway database.
+It may be desirable to use [filter functions](./../native-api/replication/index.html#filtered-replications) to replicate only the documents
+ of interest to another peer. Filter functions in a peer-to-peer context are executed when the start method on the replication object is called. This is a major difference with the Sync Function available on Sync Gateway that builds the access rules when documents are saved to the Sync Gateway database.
 
 ### Port allocation
 
