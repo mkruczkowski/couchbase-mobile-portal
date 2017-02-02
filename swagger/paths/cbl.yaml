@@ -462,12 +462,15 @@
       Executes the specified view function from the specified design document. Unlike GET /{db}/{design-doc-id}/_view/{view} for accessing views, the POST method supports the specification of explicit keys to be retrieved from the view results. The remainder of the POST view functionality is identical to the GET /{db}/{design-doc-id}/_view/{view} API.
     parameters:
       - in: body
-        name: keys
+        name: body
         description: List of identifiers of the documents to retrieve
         schema:
-          type: array
-          items:
-            type: string
+          type: object
+          properties:
+            keys:
+              type: array
+              items:
+                type: string
     responses:
       200:
         description: 200 OK
