@@ -1,7 +1,6 @@
 ---
-id: 2.0-developer-preview
-title: 2.0 Developer Preview
-permalink: 2.0-developer-preview/index.html
+id: developer-preview
+title: Developer Preview
 ---
 
 # 1. About Couchbase Lite 2.0

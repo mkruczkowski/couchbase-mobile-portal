@@ -1,0 +1,5 @@
+collections:
+  '20':
+    output: true
+    permalink: /:path/index:output_ext
+version: '2.0'

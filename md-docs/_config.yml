@@ -26,6 +26,11 @@ defaults:
     values:
       layout: ready
   - scope:
+      path: ''
+      type: '20'
+    values:
+      layout: ready
+  - scope:
       path: 'ready/swagger'
       type: page
     values:
