@@ -56,4 +56,5 @@ __Bugs__
 - [__#806__](https://github.com/couchbase/couchbase-lite-net/issues/806) 1.4 SQLite returns incorrect reason on REST API Get to purged doc
 
 ## Where to get it
-You can download this release from [Couchbase.com](http://www.couchbase.com/nosql-databases/downloads#Couchbase_Mobile)
+
+You can download this release from the [downloads page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile).

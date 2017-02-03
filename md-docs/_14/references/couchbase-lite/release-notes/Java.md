@@ -46,4 +46,5 @@ __Bugs__
 - [__#1564__](https://github.com/couchbase/couchbase-lite-java-core/issues/1564) P2P sanity test failing
 
 ## Where to get it
-You can download this release from [Couchbase.com](http://www.couchbase.com/nosql-databases/downloads#Couchbase_Mobile)
+
+You can download this release from the [downloads page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile).

@@ -33,4 +33,5 @@ __Bugs__
 - [__#2139__](https://github.com/couchbase/sync_gateway/issues/2139) Sg_accel packages should use example config from sync-gateway-accel repo
 
 ## Where to get it
-You can download this release from [Couchbase.com](http://www.couchbase.com/nosql-databases/downloads#Couchbase_Mobile)
+
+You can download this release from the [downloads page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile).

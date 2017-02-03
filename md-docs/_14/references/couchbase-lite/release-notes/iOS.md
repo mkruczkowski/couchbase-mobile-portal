@@ -38,4 +38,5 @@ __Bugs__
 - [__#1467__](https://github.com/couchbase/couchbase-lite-ios/issues/1467) Memory leak caused by ref cycle between replicator and CBLRemoteSession
 
 ## Where to get it
-You can download this release from [Couchbase.com](http://www.couchbase.com/nosql-databases/downloads#Couchbase_Mobile)
+
+You can download this release from the [downloads page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile).
