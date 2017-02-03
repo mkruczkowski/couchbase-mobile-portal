@@ -140,14 +140,7 @@ Follow the steps below to update the Sync Gateway configuration file. It must be
 
 The installation of Sync Gateway with Accelerator is now complete. Couchbase Lite clients can continue replicating to the same endpoint as if nothing changed.
 
-## Running a re-sync operation
-
-In this release, Sync Gateway Accelerator does not have automated support for the `/{db}/_resync` operation.
-
-Use the following steps to run a re-sync operation on a single database on a cluster running with Sync Gateway Accelerator.
-
-1. Use the `/{db}/_offline` operation on all Sync Gateway nodes in the cluster to block incoming API requests.
-2. Stop all Sync Gateway Accelerator nodes in the cluster.
-3. Flush the index-bucket in the backing Couchbase Server cluster.
-4. Start all the Sync Gateway Accelerator nodes in the cluster.
-5. Use the `/{db}/_online` operation on all Sync Gateway nodes in the cluster to accept incoming API requests.
+<script>
+	window.configurl = 'https://s3.amazonaws.com/cb-mobile/mobile/1.4/configs/sg-accel.json';
+</script>
+<div id="root"></div>
