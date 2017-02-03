@@ -1,5 +1,5 @@
 - title: Whats New
-  path: whatsnew/index.html
+  path: whatsnew.html
   open: true
   items:
     - title: Couchbase Lite
@@ -10,25 +10,25 @@
           items:
             - title: iOS
               img: ios
-              path: dp/references/couchbase-lite/release-notes/iOS/index.html
+              path: references/couchbase-lite/release-notes/iOS.html
             - title: Java
               img: android
-              path: dp/references/couchbase-lite/release-notes/Java/index.html
+              path: references/couchbase-lite/release-notes/Java.html
             - title: Dot-NET
               img: dot-net
-              path: dp/references/couchbase-lite/release-notes/Dot-Net/index.html
+              path: references/couchbase-lite/release-notes/Dot-Net.html
     - title: Sync Gateway
       open: true
       items:
         - title: Accelerator
           size: 2
-          path: guides/sync-gateway/accelerator/index.html
+          path: guides/sync-gateway/accelerator.html
           img: data_flow_overview
         - title: Log Rotation
           size: 1
           img: logs
-          path: guides/sync-gateway/log-rotation/index.html
+          path: guides/sync-gateway/log-rotation.html
         - title: Release notes
           size: 0
           img: release-notes
-          path: references/sync-gateway/release-notes/1.4.0/index.html
+          path: references/sync-gateway/release-notes.html

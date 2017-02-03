@@ -1,5 +1,5 @@
 collections:
   '14':
     output: true
-    permalink: /:path/index:output_ext
+    permalink: /:path:output_ext
 version: '1.4'

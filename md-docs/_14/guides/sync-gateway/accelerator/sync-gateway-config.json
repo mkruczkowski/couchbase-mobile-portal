@@ -1,9 +1,0 @@
-{
-  "log": ["HTTP+"],
-  "databases": {
-    "app_name": {
-      "server": "http://localhost:8091",
-      "bucket": "data_bucket"
-    }
-  }
-}
