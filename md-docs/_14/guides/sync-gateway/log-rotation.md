@@ -63,7 +63,7 @@ The following table lists the available properties under the `rotation` object.
 
 ## Example Output
 
-If Sync Gateway is run with the configuration shown above, after a total of 3.5MBytes of log data has been generated, the contents of the `/var/log/sync_gateway` directory would look similar to:
+If Sync Gateway is running with the configuration shown above, after a total of 3.5 MB of log data, the contents of the `/var/log/sync_gateway` directory would have 3 files because `maxsize` is set to 1 MB.
 
 ```bash
 /var/log/sync_gateway
