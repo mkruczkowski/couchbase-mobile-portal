@@ -72,7 +72,7 @@
             - title: Model (iOS only)
               path: guides/couchbase-lite/native-api/model/index.html
         - title: Peer-to-peer
-          path: guides/couchbase-lite/peer-to-peer/index.html
+          path: guides/couchbase-lite/peer-to-peer.html
         - title: Technical Notes
           path: guides/couchbase-lite/tech-notes/index.html
           items:

@@ -1,13 +1,14 @@
 ---
 id: android
 title: Android
+permalink: installation/android/index.html
 ---
 
 ## Using Gradle
 
 Expand the **app** folder and open the **build.gradle** file.
 
-![](img/android-build-gradle.png)
+![](../img/android-build-gradle.png)
 
 Add the following to the **android** section of the application's **build.gradle** (the one in the **app** folder).
 
@@ -82,13 +83,13 @@ The SDK contains other dependencies that are optional. Here's what each one does
 
 Create a new project in Android Studio.
 
-![](img/new-proj-android.png)
+![](../img/new-proj-android.png)
 
 Add Couchbase Lite Android as a dependency using the instructions above.
 
 Open **com.couchbase.UntitledApp/MainActivity.java** in Android Studio. 
 
-![](img/open-main-activity.png)
+![](../img/open-main-activity.png)
 
 Add the following in the `onCreate` method.
 

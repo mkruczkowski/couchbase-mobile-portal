@@ -7,9 +7,9 @@ permalink: installation/net/index.html
 ## NuGet
 
 1. In **Solution Explorer**, right-click on your project and click **Select NuGet Packages...**.
-    ![](img/wpf-nuget.png)
+    ![](../img/wpf-nuget.png)
 2. Search for 'Couchbase Lite' and select the latest version of Couchbase Lite.
-    ![](img/wpf-nuget-cbl.png)
+    ![](../img/wpf-nuget-cbl.png)
 
 Once the Couchbase Lite NuGet package is installed you should see that Couchbase.Lite.Storage.SystemSQLite is also installed. That's because SQLite is the default storage type used by Couchbase Lite. You can install additional components as required by the application.
 
@@ -50,4 +50,4 @@ This section describes how to use a build of Couchbase Lite .NET from the CI ser
 2. Download all the `.nupkg` files to a folder on your machine.
 3. Create a Nuget local feed [https://docs.nuget.org/create/hosting-your-own-nuget-feeds#creating-local-feeds](https://docs.nuget.org/create/hosting-your-own-nuget-feeds#creating-local-feeds).
 4. Select the local feed in the Nuget package manager inside Visual Studio to install the components.
-    ![](img/local-feed-net.png)
+    ![](../img/local-feed-net.png)

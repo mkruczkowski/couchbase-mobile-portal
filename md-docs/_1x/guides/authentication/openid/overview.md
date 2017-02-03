@@ -177,7 +177,7 @@ Here is a sample Sync Gateway config file, configured to use the Implicit Flow.
 
 With the implicit flow, the mechanism to refresh the token and Sync Gateway session must be handled in the application code. On launch, the application should check if the token has expired. If it has then you must request a new token (Google SignIn for iOS has method called `signInSilently` for this purpose). By doing this, the application can then use the token to create a Sync Gateway session.
 
-![](./img/images.003.png)
+![](img/images.003.png)
 
 1. The Google SignIn SDK prompts the user to login and if successful it returns an ID token to the application.
 2. The ID token is used to create a Sync Gateway session by sending a POST `/{db}/_session` request.

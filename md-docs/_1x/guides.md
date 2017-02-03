@@ -1,6 +1,7 @@
 ---
 id: guides
 title: Guides
+permalink: guides/index.html
 ---
 
 ### Couchbase Lite

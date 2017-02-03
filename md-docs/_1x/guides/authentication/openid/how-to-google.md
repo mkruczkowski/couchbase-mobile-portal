@@ -12,16 +12,16 @@ Follow the instructions below to create a new project in the Google API manager:
 
 1. Go to the [API Manager](https://console.developers.google.com/iam-admin/projects).
 2. Select the **Create a project...** menu.
-	![](img/api-manager-create-project.png)
+	![](../img/api-manager-create-project.png)
 3. Provide a name for your project.
 4. Enable the **OAuth consent screen**.
-	![](img/consent-screen.png)
+	![](../img/consent-screen.png)
 5. Create a new **OAuth client ID** from the **Credentials** menu.
-	![](img/oauth-client-id.png)
+	![](../img/oauth-client-id.png)
 6. On the next page, select **Web application** to enable the authorization code flow.  Select **iOS** or **Android** to enable the implicit flow (Google Sign-In) and specify the origin and callback URLs for your Sync Gateway: 
   - `http://localhost:4984` is the origin of your Sync Gateway instance.
   - `http://localhost:4984/dbname/_oidc_callback` is the callback URL endpoint for your database.
-	![](img/create-credential.png)
+	![](../img/create-credential.png)
 7. Click **Create** and note the generated client id and client secret - they need to be included in your Sync Gateway config.
 
 ## Setting Up Sync Gateway
@@ -69,7 +69,7 @@ With the Google API project you created in the previous section you can now conf
 
 To test that everything is setup correctly open a web browser at [http://localhost:4984/untitledapp/_oidc](http://localhost:4984/untitledapp/_oidc). You are then redirected to login and to the consent screen.
 
-![](img/consent-screen-testing.png)
+![](../img/consent-screen-testing.png)
 
 The browser is then redirected to [http://localhost:4984/untitledapp/\_oidc_callback](http://localhost:4984/untitledapp/_oidc_callback) with additional parameters in the querystring, and Sync Gateway returns the response:
 
@@ -105,11 +105,11 @@ The [openid branch of Grocery Sync iOS](https://github.com/couchbaselabs/Grocery
 
 You can login with your Google+ account using the Auth Code Flow.
 
-![](img/images.001.png)
+![](../img/images.001.png)
 
 Then, open the `Users` tab of the Admin UI at [http://localhost:4985/_admin/db/untitledapp/users](http://localhost:4985/_admin/db/untitledapp/users). Notice a new user is registed:
 
-![](img/user-auth-code-flow.png)
+![](../img/user-auth-code-flow.png)
 
 ### Android
 
@@ -123,12 +123,12 @@ The [feature/openid branch of Grocery Sync Android](https://github.com/couchbase
 
 You can login with your Google+ account using the Auth Code Flow.
 
-![](img/images.004.png)
+![](../img/images.004.png)
 
 Then, open the `Users` tab of the Admin UI at [http://localhost:4985/_admin/db/untitledapp/users](http://localhost:4985/_admin/db/untitledapp/users).. Notice a new user is registered:
 
-![](img/user-auth-code-flow.png)
+![](../img/user-auth-code-flow.png)
 
 > If you ran the app on both platforms and logged in with the same Google account then list items should sync across devices/emulators. 
 
-![](img/sync-platforms.png)
+![](../img/sync-platforms.png)

@@ -6,7 +6,7 @@ permalink: guides/authentication/custom-authentication/index.html
 
 It's possible for an application server associated with a remote Couchbase Sync Gateway to provide its own custom form of authentication. Generally this will involve a particular URL that the app needs to post some form of credentials to; the App Server will verify those, then tell the Sync Gateway to create a new session for the corresponding user, and return session credentials in its response to the client app. The following diagram shows an example architecture to support Google SignIn in a Couchbase Mobile application, the client sends an access token to the App Server where a server side validation is done with the Google API and a corresponding Sync Gateway user is then created if it's the first time the user logs in. The last request creates a session:
 
-![](img/custom-auth-flow.png)
+![](../img/custom-auth-flow.png)
 
 The request on the Admin REST API to create a new session given a user name is the following:
 

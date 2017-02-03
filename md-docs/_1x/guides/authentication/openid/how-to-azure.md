@@ -59,7 +59,7 @@ With the Azure app you created in the previous section you can now configure Syn
 
 To test that everything is setup correctly open a web browser at [http://localhost:4984/grocery-sync/_oidc](http://localhost:4984/grocery-sync/_oidc). You are then redirected to login and to the login screen.
 
-![](img/azure-login.png)
+![](../img/azure-login.png)
 
 The browser is then redirected to [http://localhost:4984/grocery-sync/\_oidc_callback](http://localhost:4984/grocery-sync/_oidc_callback) with additional parameters in the querystring, and Sync Gateway returns the response:
 

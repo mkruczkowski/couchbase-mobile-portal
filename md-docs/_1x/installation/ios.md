@@ -45,7 +45,7 @@ For a Mac OS target, you'll need to make sure the framework is copied to your ap
 3. In the **Linking** section, edit **Runpath Search Paths** and add `@loader_path/../Frameworks/`.
 4. Now switch to the **Build Phases**.
 5. Press the **Add Build Phase** button at the top of the window and create a new **Copy Files** phase.
-    ![](img/ios-copy-files-phase.png)
+    ![](../img/ios-copy-files-phase.png)
 6. Set the phase's destination to **Frameworks**.
 7. Press the **+** button below the phases' file list and select CouchbaseLite.framework to add it.
 
@@ -79,7 +79,7 @@ For a Mac OS target, you'll need to make sure the framework is copied to your ap
 ## Optional packages
 
 The SDK contains other dependencies that are optional.
-![](img/ios-download.png)
+![](../img/ios-download.png)
 Here's what each one does:
 
 - **CouchbaseLiteListener.framework**: To access the database through HTTP (often used for hybrid development and peer-to-peer sync). Add it to your Xcode project by draging CouchbaseLiteListener.framework to the project navigator. This component has a dependency on JavaScriptCore.framework, make sure to add this framework as well if you're planning on using it.

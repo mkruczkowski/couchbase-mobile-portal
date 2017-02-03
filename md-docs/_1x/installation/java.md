@@ -12,11 +12,11 @@ If you don't have IntelliJ IDEA already installed you can download the community
 
 Open IntelliJ IDEA and choose the Create New Project menu. On the left pane, select the Java application template and set the Project SDK to 1.8.
 
-![](img/cbl-java-new-proj.png)
+![](../img/cbl-java-new-proj.png)
 
 Then click Next. Choose Command Line App for the project template.
 
-![](img/cbl-java-project-template.png)
+![](../img/cbl-java-project-template.png)
 
 Click Next. Fill in the Project name, Project location and Base package.
 
