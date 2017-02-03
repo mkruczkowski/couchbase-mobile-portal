@@ -8,7 +8,7 @@ By default, Sync Gateway outputs the logs to standard out with the "HTTP" log ke
 ```javascript
 {
 	"log": ["*"],
-	"logFilePath": "/var/tmp/sglogfile.log"
+	"logFilePath": "/var/log/sync_gateway/sglogfile.log"
 }
 ```
 
@@ -22,7 +22,7 @@ The log rotation configuration is specified under the `logging` key. The followi
 {
   "logging": {
     "default": {
-      "logFilePath": "/var/tmp/sglogfile.log",
+      "logFilePath": "/var/log/sync_gateway/sglogfile.log",
       "logKeys": ["*"],
       "logLevel": "debug",
       "rotation": {
@@ -61,6 +61,27 @@ The following table lists the available properties under the `rotation` object.
 |maxbackups|`integer`|The maximum number of old log files to retain. Defaults to all log files.|
 |localtime|`boolean`|If `true`, it uses the computer's local time to format the backup timestamp. Defaults to UTC.|
 
+## Example Output
+
+If Sync Gateway is run with the configuration shown above, after a total of 3.5MBytes of log data has been generated, the contents of the `/var/log/sync_gateway` directory would look similar to:
+
+```bash
+/var/log/sync_gateway
+├── sglogfile.log
+├── sglogfile-2017-01-25T23-35-23.671.log
+└── sglogfile-2017-01-25T22-25-39.662.log
+```
+
+## Windows Configuration
+
+On MS Windows `logFilePath` supports the following path formats.
+
+```javascript
+"C:/var/tmp/sglogfile.log"
+`C:\var\tmp\sglogfile.log`
+`/var/tmp/sglogfile.log`
+"/var/tmp/sglogfile.log"
+```
 ## Deprecation notice
 
 The current proposal is to remove the top level `log` and `logFilePath` properties in Sync Gateway 2.0. For users that want to migrate to the new logging config to write to a log file but do not need log rotation they should use a default logger similar to the following:
@@ -69,7 +90,7 @@ The current proposal is to remove the top level `log` and `logFilePath` properti
 {
 	"logging": {
 		"default": {
-			"logFilePath": "/var/tmp/sglogfile.log",
+			"logFilePath": "/var/log/sync_gateway/sglogfile.log",
 			"logKeys": ["*"],
 			"logLevel": "debug"
 		}
