@@ -36,6 +36,29 @@ cd couchbase-mobile-portal
 git submodule init && git submodule update
 ```
 
+## Generate local preview
+
+Install Jekyll and the local dependencies.
+
+```bash
+$ sudo gem install jekyll
+$ cd md-docs
+$ gem install
+```
+
+Generate a local preview.
+
+```bash
+$ cd md-docs
+$ jekyll serve --config _config.yml,_config.13.yml
+// or
+$ jekyll serve --config _config.yml,_config.14.yml
+// or
+$ jekyll serve --config _config.yml,_config.20.yml
+```
+
+## Writing guide
+
 To contribute to Guides, API references or REST APIs, read the following. You don't need to build the site locally. Just find the content that needs editing and submit a pull request.
 
 ### Code tabs
@@ -64,14 +87,6 @@ REST APIs are documented using Swagger. Read more in the [readme of the swagger 
 ### API References
 
 API references are documented in [https://github.com/couchbaselabs/couchbase-lite-api](https://github.com/couchbaselabs/couchbase-lite-api).
-
-### Local preview (wip)
-
-- Clone the repository.
-- From the **md-docs** folder run `jekyll serve`. The docs are served on `localhost:4000`.
-- Open a browser to preview the page (i.e [http://localhost:4000/ready/installation/ios/index.html](http://localhost:4000/ready/installation/ios/index.html)).
-
-> **Note:** The left navigation is not available in the local preview currently. To find the location of other pages, refer to the `permalink` property in the front matter of the **.md** file.
 
 ### Ingestion hacks
 
