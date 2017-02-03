@@ -6,12 +6,9 @@ title: iOS release notes
 As part of this release we had [16 issues](https://github.com/couchbase/couchbase-lite-ios/issues?milestone=18&state=closed) closed.
 Early-2017 update focusing mostly on bug-fixes.
 
-__Deprecation notice__
+__API change__
 
-|   |iOS 8|ForestDB|Geo query|
-|:--|:----|:-------|:--------|
-|1.4|Announce deprecation|Announce deprecation|Announce deprecation|
-|2.0|Removed|Removed|Removed|
+- An `isDeletion` property is now available on the `DatabaseChange` object to identify if a change is tombstone document.
 
 __Performance Improvements__
 
@@ -36,6 +33,17 @@ __Bugs__
 - [__#1443__](https://github.com/couchbase/couchbase-lite-ios/issues/1443) Handle iOS file protection gracefully when in background
 - [__#1461__](https://github.com/couchbase/couchbase-lite-ios/issues/1461) ForestDB: Assertion failure in -[MYBackgroundMonitor beginBackgroundTaskNamed:]() MYBackgroundMonitor.m:66
 - [__#1467__](https://github.com/couchbase/couchbase-lite-ios/issues/1467) Memory leak caused by ref cycle between replicator and CBLRemoteSession
+
+__Deprecation notices__
+
+The following features are being deprecated and will be removed in a future version of Couchbase Mobile.
+
+- ForestDB
+- Geo queries
+
+The following platforms are being deprecated and will be unsupported in a future version of Couchbase Mobile.
+
+- iOS 8
 
 ## Where to get it
 

@@ -5,12 +5,9 @@ title: .NET release notes
 
 As part of this release we had [118 commits](https://github.com/couchbase/couchbase-lite-net/compare/1.3.1...1.4.0) which resulted in [37 issues](https://github.com/couchbase/couchbase-lite-net/issues?milestone=15&state=closed) being closed.
 
-__Deprecation notice__
+__API change__
 
-|   |.NET 3.5|ForestDB|
-|:--|:------|:-------------|
-|1.4|Announce deprecation|Announce deprecation|
-|2.0|Removed|Removed|
+- An `isDeletion` property is now available on the `DatabaseChange` object to identify if a change is tombstone document.
 
 __Enhancements__
 
@@ -54,6 +51,16 @@ __Bugs__
 - [__#803__](https://github.com/couchbase/couchbase-lite-net/issues/803) NullReferenceException in WebSocketChangeTracker
 - [__#804__](https://github.com/couchbase/couchbase-lite-net/issues/804) Attachment doesn't handle non-seekable streams gracefully
 - [__#806__](https://github.com/couchbase/couchbase-lite-net/issues/806) 1.4 SQLite returns incorrect reason on REST API Get to purged doc
+
+__Deprecation notices__
+
+The following features are being deprecated and will be removed in a future version of Couchbase Mobile.
+
+- ForestDB
+
+The following platforms are being deprecated and will be unsupported in a future version of Couchbase Mobile.
+
+- .NET 3.5
 
 ## Where to get it
 

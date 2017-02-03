@@ -5,12 +5,10 @@ title: SG release notes
 
 As part of this release we had [78 commits](https://github.com/couchbase/sync_gateway/compare/1.3.1...1.4.0) which resulted in [19 issues](https://github.com/couchbase/sync_gateway/issues?milestone=19&state=closed) being closed.
 
-__Deprecation notice__
+__New features__
 
-|   |Bucket shadowing|
-|:--|:----|:-------|
-|1.4|Announce deprecation|
-|2.0|Removed|
+- [Sync Gateway Accelerator](../../guides/sync-gateway/accelerator.html)
+- [Log rotation](../../guides/sync-gateway/log-rotation.html)
 
 __Enhancements__
 
@@ -31,6 +29,12 @@ __Bugs__
 - [__#1865__](https://github.com/couchbase/sync_gateway/issues/1865) One shot replication of granting access doc can lead to miss documents
 - [__#2080__](https://github.com/couchbase/sync_gateway/issues/2080) Startup error when config includes unsupported/user_views
 - [__#2139__](https://github.com/couchbase/sync_gateway/issues/2139) Sg_accel packages should use example config from sync-gateway-accel repo
+
+__Deprecation notices__
+
+The following features are being deprecated and will be removed in a future version of Couchbase Mobile.
+
+- Bucket Shadowing
 
 ## Where to get it
 

@@ -14,7 +14,7 @@ noedit: true
     <div class="column size-1of3">
       <div class="box">
         <div class="container">
-          <a href="/documentation/mobile/1.4/{{item0.path}}">
+          <a href="{{item0.path}}">
             <img src="/img/{{item0.img}}.png" alt="">
           </a>
         </div>
@@ -22,14 +22,26 @@ noedit: true
     </div>
     {% endfor %}
   </div>
+  <h4>Deprecation notices</h4>
+  <ul>
+    <li>
+      <strong>iOS:</strong> iOS 8, ForestDB, Geo Queries
+    </li>
+    <li>
+      <strong>Java:</strong> API Level < 16, ForestDB
+    </li>
+    <li>
+      <strong>.NET:</strong> .NET 3.5, ForestDB
+    </li>
+  </ul>
   <h3>Sync Gateway</h3>
+  <h4>New Features</h4>
   <div class="tiles">
     {% for item0 in site.data.14[0].items[1].items limit: 1 %}
     <div class="column size-{{item0.size}}of3">
-      <div class="box">
-        <a href="/documentation/mobile/1.4/{{item0.path}}" alt="">
-          <p>{{ item0.title }}</p>
-          <p class="description">With Couchbase Mobile 1.4, it's now possible to delegate the task of applying security filtering (access control) to a separate component called Sync Gateway Accelerator. In this configuration, Sync Gateway nodes support your applications (Web, Mobile, IoT) as it normally would while Sync Gateway Accelerator handles channel indexing.</p>
+      <div class="box" style="border-radius: 0;">
+        <a href="{{item0.path}}" alt="">
+          <img class="feat-image-accel" src="/img/accelerator.png" alt="" />
         </a>
       </div>
     </div>
@@ -37,24 +49,27 @@ noedit: true
     {% for item0 in site.data.14[0].items[1].items limit: 1 offset: 1 %}
     <div class="column size-{{item0.size}}of3">
       <div class="box">
-        <a href="/documentation/mobile/1.4/{{item0.path}}" alt="">
-          <img class="feat-image" src="/img/{{item0.img}}.png" alt="">
+        <a href="{{item0.path}}" alt="">
           <p>{{ item0.title }}</p>
+          <img class="feat-image" src="/img/{{item0.img}}.png" alt="">
         </a>
       </div>
     </div>
     {% endfor %}
   </div>
-  <div class="note">
-    <strong>Deprecation notice:</strong> Bucket shadowing is being deprecated in 1.4. The recommended approach for performing operations on the bucket dedicated to Couchbase Mobile is to use the Sync Gateway REST API.
-  </div>
+  <h4>Deprecation notices</h4>
+  <ul>
+    <li>
+      <strong>Bucket shadowing:</strong> Bucket shadowing is being deprecated in 1.4. The recommended approach for performing operations on the bucket dedicated to Couchbase Mobile is to use the Sync Gateway REST API.
+    </li>
+  </ul>
   <h4>Release notes</h4>
   <div class="tiles">
     {% for item0 in site.data.14[0].items[1].items limit: 1 offset: 2 %}
     <div class="column size-1of3">
       <div class="box">
         <div class="container">
-          <a href="/documentation/mobile/1.4/{{item0.path}}">
+          <a href="{{item0.path}}">
             <p>SG</p>
           </a>
         </div>
