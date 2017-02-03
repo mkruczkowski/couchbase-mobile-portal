@@ -39,7 +39,7 @@ noedit: true
   <div class="tiles">
     {% for item0 in site.data.14[0].items[1].items limit: 1 %}
     <div class="column size-{{item0.size}}of3">
-      <div class="box" style="border-radius: 0;">
+      <div class="box">
         <a href="{{item0.path}}" alt="">
           <img class="feat-image-accel" src="/img/accelerator.png" alt="" />
         </a>
@@ -60,7 +60,7 @@ noedit: true
   <h4>Deprecation notices</h4>
   <ul>
     <li>
-      <strong>Bucket shadowing:</strong> Bucket shadowing is being deprecated in 1.4. The recommended approach for performing operations on the bucket dedicated to Couchbase Mobile is to use the Sync Gateway REST API.
+      <strong>Bucket shadowing</strong> is being deprecated in 1.4. The recommended approach for performing operations on the bucket dedicated to Couchbase Mobile is to use the Sync Gateway REST API.
     </li>
   </ul>
   <h4>Release notes</h4>
