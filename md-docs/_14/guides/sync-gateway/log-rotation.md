@@ -82,6 +82,13 @@ On MS Windows `logFilePath` supports the following path formats.
 `/var/tmp/sglogfile.log`
 "/var/tmp/sglogfile.log"
 ```
+Log rotation will not work if `logFilePath` is set to the path below as it is reserved for use by the Sync Gateway Windows service wrapper.
+
+```bash
+C:\Program Files (x86)\Couchbase\var\lib\couchbase\logs\sync_gateway_error.log
+```
+
+
 ## Deprecation notice
 
 The current proposal is to remove the top level `log` and `logFilePath` properties in Sync Gateway 2.0. For users that want to migrate to the new logging config to write to a log file but do not need log rotation they should use a default logger similar to the following:
