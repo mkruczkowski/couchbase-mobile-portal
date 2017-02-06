@@ -41,20 +41,20 @@ git submodule init && git submodule update
 Install Jekyll and the local dependencies.
 
 ```bash
-$ sudo gem install jekyll
 $ cd md-docs
-$ gem install
+$ gem install bundler
+$ bundle install
 ```
 
 Generate a local preview.
 
 ```bash
 $ cd md-docs
-$ jekyll serve --config _config.yml,_config.13.yml
+$ bundle exec jekyll serve --config _config.yml,_config.13.yml
 // or
-$ jekyll serve --config _config.yml,_config.14.yml
+$ bundle exec jekyll serve --config _config.yml,_config.14.yml
 // or
-$ jekyll serve --config _config.yml,_config.20.yml
+$ bundle exec jekyll serve --config _config.yml,_config.20.yml
 ```
 
 ## Writing guide
