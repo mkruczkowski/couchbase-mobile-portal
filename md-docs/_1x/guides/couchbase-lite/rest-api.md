@@ -17,5 +17,5 @@ The code below shows you how to:
 
 {% include java-codepen.html %}
 
-<p data-height="265" data-theme-id="0" data-slug-hash="ggejro" data-default-tab="result" data-user="Jamiltz" data-embed-version="2" data-pen-title="Get docs by keys" data-preview="true" class="codepen">See the Pen <a href="http://codepen.io/Jamiltz/pen/ggejro/">Get docs by keys</a> by Jamiltz (<a href="http://codepen.io/Jamiltz">@Jamiltz</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<p data-height="300" data-theme-id="27686" data-slug-hash="zNLqyL" data-default-tab="js,result" data-user="Jamiltz" data-embed-version="2" data-pen-title="Get docs by keys" class="codepen">See the Pen <a href="http://codepen.io/Jamiltz/pen/zNLqyL/">Get docs by keys</a> by Jamiltz (<a href="http://codepen.io/Jamiltz">@Jamiltz</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
