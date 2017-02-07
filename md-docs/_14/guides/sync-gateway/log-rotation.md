@@ -57,7 +57,7 @@ The following table lists the available properties under the `rotation` object.
 |Property|Type|Description|
 |:-------|:---|:----------|
 |maxsize|`integer`|The maximum size in MB of the log file before it gets rotated. Defaults to 100 MB.|
-|maxage|`integer`|The maximum number of days to retain old log files.|
+|maxage|`integer`|The maximum number of days to retain old log files. Defaults to not remove old log files.|
 |maxbackups|`integer`|The maximum number of old log files to retain. Defaults to all log files.|
 |localtime|`boolean`|If `true`, it uses the computer's local time to format the backup timestamp. Defaults to UTC.|
 
