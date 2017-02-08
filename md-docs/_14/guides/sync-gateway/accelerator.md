@@ -2,9 +2,19 @@
 title: Accelerator
 ---
 
-As your user base grows, Sync Gateway and Couchbase Server must handle an increase in throughput. Both components can be scaled horizontally (i.e by adding more nodes) to meet the desired load and lower the time it takes to complete a replication with Couchbase Lite. This is covered in the [Install, Upgrade, Scale](../../../current/training/deploy/install/index.html) lesson in which 2 Sync Gateway nodes are deployed behind a load balancer and then a 3rd node is added to the cluster. This method of scaling is well suited for a scenario with a large amount of **read traffic**. However, there is a limit to how much **write traffic** a standard Sync Gateway cluster can handle.
+In this guide, you will learn how to scale a Couchbase Mobile deployment with Sync Gateway Accelerator. Before going into the details, it's important to identify if you wish to scale the **read** or **write** throughput of your application's back-end infrastructure.
 
-Sync Gateway needs to monitor changes happening in the backing Couchbase Server bucket, apply security filtering (access control) and stream those changes to users. To optimize this process, Sync Gateway maintains an in-memory cache of recent changes in each channel which is used to serve the `GET/POST \_changes` requests. So as write throughput increases, the cache for a particular document is invalidated more frequently and Sync Gateway needs to retrieve the change from Couchbase Server. Each node will end up doing this work to maintain the in-memory cache.
+As a distributed database system, Sync Gateway and Couchbase Server can already be scaled horizontally. Horizontal scaling is achieved by adding more nodes behind a load balancer which distributes the traffic evenly between each one (see the [Install, Upgrade, Scale](../../../current/training/deploy/install/index.html) lesson). This method of scaling is particularly well suited for a scenario with a large amount of **read traffic**. On the other hand, it wouldn't suit a scenario where only the **write traffic** increases.
+
+Sync Gateway Accelerator is designed to cover the second aspect of highly scalable server infrastructure for your application, **write traffic**.
+
+## How does it work?
+
+Part of Sync Gateway's role in a Couchbase Mobile deployment is to monitor changes happening in the backing Couchbase Server bucket, apply security filtering (access control) and stream the results to users.
+
+![](img/channel-access-accelerator.png)
+
+To optimize this process, Sync Gateway maintains an in-memory cache of recent changes in each channel (steps 2 and 3) which is used to serve the `GET/POST /{db}/_changes` requests (step 4). So as write throughput increases, the cache for a particular document is invalidated more frequently and Sync Gateway needs to retrieve the change from Couchbase Server. Each node will end up doing this work to maintain the in-memory cache.
 
 With Couchbase Mobile 1.4, it's now possible to delegate the task of applying security filtering (access control) to a separate component called Sync Gateway Accelerator. This component can also be scaled horizontally and persists the channel index to a different bucket. In this configuration, the Sync Gateway nodes support your applications (Web, Mobile, IoT) as it normally does while Sync Gateway Accelerator handles the channel indexing. Separating the two workloads in distinct entities makes it possible to scale both Sync Gateway and Sync Gateway Accelerator to handle much larger write throughput. The diagram below represents the architecture differences with and without Sync Gateway Accelerator.
 
