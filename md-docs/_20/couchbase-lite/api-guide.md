@@ -1,6 +1,6 @@
 ---
-id: developer-preview
-title: Developer Preview
+id: api-guide
+title: API Guide
 ---
 
 # 1. About Couchbase Lite 2.0

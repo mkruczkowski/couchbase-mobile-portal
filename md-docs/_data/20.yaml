@@ -1,2 +1,6 @@
 - title: Couchbase Lite
-  path: couchbase-lite/index.html
+  items:
+    - title: API Guide
+      path: couchbase-lite/api-guide.html
+    - title: API References
+      path: http://google.com
