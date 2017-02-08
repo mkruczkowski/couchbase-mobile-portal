@@ -10,17 +10,15 @@ Sync Gateway Accelerator is designed to cover the second aspect of highly scalab
 
 ## How does it work?
 
-Part of Sync Gateway's role in a Couchbase Mobile deployment is to monitor changes happening in the backing Couchbase Server bucket, apply security filtering (access control) and stream the results to users.
+Part of Sync Gateway's role in a Couchbase Mobile deployment is to query the documents in a given channel from Couchbase Server and stream the results to users.
 
 ![](img/channel-access-accelerator.png)
 
-To optimize this process, Sync Gateway maintains an in-memory cache of recent changes in each channel (steps 2 and 3) which is used to serve the `GET/POST /{db}/_changes` requests (step 4). So as write throughput increases, the cache for a particular document is invalidated more frequently and Sync Gateway needs to retrieve the change from Couchbase Server. Each node will end up doing this work to maintain the in-memory cache.
+To optimize this process, Sync Gateway maintains an in-memory cache of recent changes in each channel (step 3) which is used to serve the `GET/POST /{db}/_changes` requests (step 4). So as write throughput increases, the cache for a particular channel is invalidated more frequently and Sync Gateway needs to update its channel cache. Each Sync Gateway instance will end up doing this work to maintain the in-memory cache.
 
 With Couchbase Mobile 1.4, it's now possible to delegate the task of applying security filtering (access control) to a separate component called Sync Gateway Accelerator. This component can also be scaled horizontally and persists the channel index to a different bucket. In this configuration, the Sync Gateway nodes support your applications (Web, Mobile, IoT) as it normally does while Sync Gateway Accelerator handles the channel indexing. Separating the two workloads in distinct entities makes it possible to scale both Sync Gateway and Sync Gateway Accelerator to handle much larger write throughput. The diagram below represents the architecture differences with and without Sync Gateway Accelerator.
 
 ![](img/accelerator-comparison.png)
-
-![](img/data_flow_overview.png)
 
 ## Configuration
 
