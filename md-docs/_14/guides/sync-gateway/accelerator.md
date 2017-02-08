@@ -18,6 +18,8 @@ To optimize this process, Sync Gateway maintains an in-memory cache of recent ch
 
 With Couchbase Mobile 1.4, it's now possible to delegate the task of applying security filtering (access control) to a separate component called Sync Gateway Accelerator. This component can also be scaled horizontally and persists the channel index to a different bucket. In this configuration, the Sync Gateway nodes support your applications (Web, Mobile, IoT) as it normally does while Sync Gateway Accelerator handles the channel indexing. Separating the two workloads in distinct entities makes it possible to scale both Sync Gateway and Sync Gateway Accelerator to handle much larger write throughput. The diagram below represents the architecture differences with and without Sync Gateway Accelerator.
 
+![](img/accelerator-comparison.png)
+
 ![](img/data_flow_overview.png)
 
 ## Configuration
