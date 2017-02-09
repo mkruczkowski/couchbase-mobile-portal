@@ -20,72 +20,18 @@ With Couchbase Mobile 1.4, it's now possible to delegate the task of applying se
 
 ![](img/accelerator-comparison.png)
 
-## Configuration
-
-The runtime behavior of a Sync Gateway Accelerator node can be specified in the configuration file. The following information must be provided:
-
-  - **Cluster information:** the location of the data bucket used by the Sync Gateway nodes.
-  - **Channel index information:** the location of the channel bucket used by the Sync Gateway Accelerator nodes.
-
-The following configuration contains both of these.
-
-```javascript
-{
-  "log": ["HTTP+"],
-  "cluster_config": {
-    "server": "http://localhost:8091",
-    "bucket": "default",
-    "data_dir": "."
-  },
-  "databases": {
-    "app_name": {
-      "server": "http://localhost:8091",
-      "bucket": "data_bucket",
-      "channel_index": {
-        "writer": true,
-        "server": "http://localhost:8091",
-        "bucket": "channel_bucket"
-      }
-    }
-  }
-}
-```
-
-Let's take a look at each one in more detail.
-
-### Cluster configuration
-
-The `cluster_config` section is required to manage communication between your Sync Gateway Accelerator nodes. The `server` property is your Couchbase Server address, and `bucket` is the name of your data bucket.
-
-|Property|Type|Description an default|
-|:-------|:---|:---------------------|
-|`server`|`string`|The hostname of the Couchbase Server cluster.|
-|`bucket`|`string`|The bucket name where the data is stored (i.e the one specified in the database configuration.)|
-|`data_dir`|`string`|Path to the data directory.|
-|`heartbeat_interval_seconds`|`string`|TODO.|
-
-### Channel index information
-
-The `channel_index` section specifies your channel bucket connection information. This is the bucket used by Sync Gateway Accelerator to persist the channel index.
-
-|Property|Type|Description and default|
-|:-------|:---|:----------------------|
-|`writer`|`boolean`|Whether the channel index node can write to the bucket.|
-|`server`|`string`|Hostname to the Couchbase Server cluster.|
-|`bucket`|`string`|Bucket name for channel indexing. A common name is "channel_index".|
-
 ## Example
 
 Prior to installing Sync Gateway Accelerator you must have a running instance of Sync Gateway persisting documents to Couchbase Server. In this guide, we will assume the following components have already been configured.
 
-- A Couchbase Server cluster is up and running with a bucket called "data_bucket". A bucket cannot be renamed so if you already have a bucket with a different name that's ok. You'll have to replace it with your bucket name where applicable in the following steps of this guide.
+- A Couchbase Server cluster is up and running with a bucket called "data_bucket". A bucket cannot be renamed so if you already have a bucket with a different name that's ok. You'll have to replace it with your bucket name where applicable in the following steps of this section.
 
     ![](img/sg-accel-data-bucket.png)
 
     As you can see on this image, the bucket contains a few thousand documents that were added through the Sync Gateway
     REST API.
 
-- A Sync Gateway instance persisting the documents to the data bucket.
+- A Sync Gateway instance persisting the documents to the data bucket with the following configuration file.
 
     ```javascript
     {
@@ -109,6 +55,8 @@ Prior to installing Sync Gateway Accelerator you must have a running instance of
 
 2. Create a new bucket called "channel_bucket" in the Couchbase Server cluster.
 
+    ![](img/sg-accel-create-bucket.png)
+
     ![](img/sg-accel-channel-bucket.png)
 
 3. Next, create a new file called **accel-config.json**. That's where you must specify the location of the channel and data buckets.
@@ -117,10 +65,10 @@ Prior to installing Sync Gateway Accelerator you must have a running instance of
     {
       "log": ["HTTP+"],
       "adminInterface": ":4986",
-      "cluster_config":{
-        "server":"http://localhost:8091",
-        "bucket":"data_bucket",
-        "data_dir":"."
+      "cluster_config": {
+        "server": "http://localhost:8091",
+        "bucket": "data_bucket",
+        "data_dir": "."
       },
       "databases": {
         "app_name": {
@@ -128,40 +76,6 @@ Prior to installing Sync Gateway Accelerator you must have a running instance of
           "bucket": "data_bucket",
           "channel_index": {
             "writer": true,
-            "server":"http://localhost:8091",
-            "bucket":"channel_bucket"
-          }
-        }
-      }
-    }
-    ```
-
-    The default listening port for Sync Gateway Accelerator is `4985`. Here, you're setting it to `4986` to avoid using a port that conflicts with Sync Gateway.
-
-4. Start the Sync Gateway Accelerator node.
-
-    ```bash
-    ~/Downloads/couchbase-sg-accel/bin/sg_accel accel-config.json
-    ```
-
-    Notice the document count is now increasing in `channel_bucket` because the channel assignment data is being stored there instead of in `data_bucket`.
-
-    ![](img/channel-bucket.png)
-
-### Sync Gateway
-
-The Sync Gateway configuration must be updated with the information regarding the location of the channel index.
-
-1. Update your **sync-gateway-config.json** with the following.
-
-    ```javascript
-    {
-      "log": ["HTTP+"],
-      "databases": {
-        "app_name": {
-          "server": "http://localhost:8091",
-          "bucket": "data_bucket",
-          "channel_index": {
             "server": "http://localhost:8091",
             "bucket": "channel_bucket"
           }
@@ -170,8 +84,56 @@ The Sync Gateway configuration must be updated with the information regarding th
     }
     ```
 
+    In the configuration file, there are two points worth noting:
+    - The default listening port for Sync Gateway Accelerator is `4985`. Here, you're setting it to `4986` to avoid using a port that conflicts with Sync Gateway.
+    - The `"writer": true` property specifies that this Accelerator instance can persist the channel index to the Couchbase Server bucket.
+
+4. Start the Sync Gateway Accelerator node.
+
+    ```bash
+    ~/Downloads/couchbase-sg-accel/bin/sg_accel accel-config.json
+    ```
+
+    Notice the document count is now increasing in `channel_bucket` because the channel index data is being stored there.
+
+    ![](img/channel-bucket.png)
+
+    To complete the installation, the Sync Gateway configuration file must be updated to reflect the new location of the channel index (i.e `channel_bucket`).
+
+### Sync Gateway
+
+Follow the steps below to update the Sync Gateway configuration file. It must be updated for every instance that was previously running without Sync Gateway Accelerator.
+
+1. Update your **sync-gateway-config.json** with the following.
+
+    ```javascript
+    {
+      "log": ["HTTP+"],
+      "cluster_config": {
+        "server": "http://localhost:8091",
+        "data_dir": ".",
+        "bucket": "data_bucket"
+      },
+      "databases": {
+        "app_name": {
+          "server": "http://localhost:8091",
+          "bucket": "data_bucket",
+          "channel_index": {
+            "server": "http://localhost:8091",
+            "bucket": "channel_bucket",
+            "writer": false
+          }
+        }
+      }
+    }
+    ```
+
+    Here, the `"writer": false` property specifies that this Sync Gateway instance doesn't persist the channel index to the Couchbase Server bucket. Indeed, this task is already performed by the Accelerator instance. 
+
 2. Restart Sync Gateway with the updated configuration file.
 
     ```bash
     ~/Downloads/couchbase-sync-gateway/bin/sync_gateway sync-gateway-config.json
     ```
+
+The installation of Sync Gateway with Accelerator is now complete. Couchbase Lite clients can continue replicating to the same endpoint as if nothing changed.
