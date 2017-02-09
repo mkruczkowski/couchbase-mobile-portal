@@ -85,4 +85,4 @@ log.info(String.format("Learning %s with %s", (String) document.getProperty("tit
 
 Click the Debug button. Notice the document ID and properties are logged to the console.
 
-![](img/cbljava-log.png)
+![](../img/cbljava-log.png)
