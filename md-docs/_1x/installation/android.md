@@ -25,7 +25,7 @@ packagingOptions {
 Next, add the following to the **dependencies** section.
 
 ```groovy
-compile 'com.couchbase.lite:couchbase-lite-android:+'
+compile 'com.couchbase.lite:couchbase-lite-android:{{site.package_version}}'
 ```
 
 The **dependencies** section should look similar to this.
@@ -34,7 +34,7 @@ The **dependencies** section should look similar to this.
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.couchbase.lite:couchbase-lite-android:+'
+    compile 'com.couchbase.lite:couchbase-lite-android:{{site.package_version}}'
 }
 ```
 
@@ -62,7 +62,7 @@ The SDK contains other dependencies that are optional. Here's what each one does
 - **couchbase-lite-java-listener:** To access the database through HTTP (often used for hybrid development and peer-to-peer sync). Add it to your Android Studio project using Gradle.
 
     ```groovy
-    compile 'com.couchbase.lite:couchbase-lite-java-listener:+'
+    compile 'com.couchbase.lite:couchbase-lite-java-listener:{{site.package_version}}'
     ```
 
     > **Note:** Android emulators run as separate VMs with a different network interface. You can use the `adb forward tcp:5984 tcp:5984` command to access the Listener running on the Android emulator from the host machine.
@@ -70,13 +70,13 @@ The SDK contains other dependencies that are optional. Here's what each one does
 - **couchbase-lite-android-forestdb:** To use the ForestDB storage type.
 
     ```groovy
-    compile 'com.couchbase.lite:couchbase-lite-android-forestdb:+'
+    compile 'com.couchbase.lite:couchbase-lite-android-forestdb:{{site.package_version}}'
     ```
 
 - **couchbase-lite-android-sqlcipher:** To enable encryption on SQLite databases.
 
     ```groovy
-    compile 'com.couchbase.lite:couchbase-lite-android-sqlcipher:+'
+    compile 'com.couchbase.lite:couchbase-lite-android-sqlcipher:{{site.package_version}}'
     ```
 
 ## Getting Started

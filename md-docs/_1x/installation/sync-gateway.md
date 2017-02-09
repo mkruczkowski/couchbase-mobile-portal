@@ -7,20 +7,21 @@ permalink: installation/sync-gateway/index.html
 Install Sync Gateway on premise or on a cloud provider. You can download Sync Gateway from the [Couchbase download page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile) or download it directly to a Linux system by using the `wget` or `curl` command.
 
 ```bash
-wget http://latestbuilds.hq.couchbase.com/couchbase-sync-gateway/1.3.0/1.3.0-274/couchbase-sync-gateway-community_1.3.0-274_x86_64.deb
+wget {{ site.sg_download_link }}{{ site.sg_package_name }}.deb
 ```
 
-All downloads follow the naming convention:
+All download links follow the naming convention:
 
 ```bash
-couchbase-sync-gateway-community_<REL>-<BUILDNUM><ARCH>.deb
+couchbase-sync-gateway-community_<VERSION>-<BUILDNUM>_<ARCHITECTURE>.<EXT>
 ```
 
-Where 
+where
 
-- `REL` is the release number.
-- `BUILDNUM` is the specific build number of the release.
-- `ARCH` is the target architecture of the installer.
+- `VERSION` is the release version.
+- `BUILDNUM` is the specific build number.
+- `ARCHITECTURE` is the target architecture of the installer.
+- `EXT` is the file extension.
 
 ## Requirements
 
@@ -44,7 +45,7 @@ Once you have downloaded Sync Gateway on the distribution of your choice you are
 Install sync_gateway with the dpkg package manager e.g:
 
 ```bash
-dpkg -i couchbase-sync-gateway-community_1.3.0-274_x86_64.deb
+dpkg -i {{ site.sg_package_name }}.deb
 ```
 
 When the installation is complete sync_gateway will be running as a service.
@@ -63,7 +64,7 @@ The config file and logs are located in `/home/sync_gateway`.
 Install sync_gateway with the rpm package manager e.g:
 
 ```bash
-rpm -i couchbase-sync-gateway-community_1.3.0-274_x86_64.rpm
+rpm -i {{ site.sg_package_name }}.rpm
 ```
 
 When the installation is complete sync_gateway will be running as a service.
@@ -96,7 +97,7 @@ The config file and logs are located in `/home/sync_gateway`.
 Install sync_gateway with the dpkg package manager e.g:
 
 ```bash
-dpkg -i couchbase-sync-gateway-community_1.3.0-274_x86_64.deb
+dpkg -i {{ site.sg_package_name }}.deb
 ```
 
 When the installation is complete sync_gateway will be running as a service.
@@ -113,7 +114,7 @@ The config file and logs are located in `/home/sync_gateway`.
 Install sync_gateway on Windows by running the .exe file from the desktop.
 
 ```bash
-couchbase-sync-gateway-community_1.3.0-274_x86_64.exe
+{{ site.sg_package_name }}.exe
 ```
 
 When the installation is complete sync_gateway will be installed as a service but not running.
@@ -127,7 +128,7 @@ The config file and logs are located in ``.
 Install sync_gateway by unpacking the tar.gz installer.
 
 ```bash
-sudo tar --zxvf couchbase-sync-gateway-community_1.3.0-274_x86_64.tar.gz --directory /opt
+sudo tar --zxvf {{ site.sg_package_name }}.tar.gz --directory /opt
 ```
 
 Create the sync_gateway service.
@@ -164,7 +165,7 @@ To connect Sync Gateway to Couchbase Server:
 - Open the Couchbase Server Admin Console on [http://localhost:8091](http://localhost:8091) and log on using your 
 administrator credentials.
 - In the toolbar, select the **Data Buckets** tab and click the **Create New Data Bucket** button.
-		![](/ready/installation/img/cb-create-bucket.png)
+		![](../img/cb-create-bucket.png)
 - Provide a bucket name, for example **mobile_bucket**, and leave the other options to their defaults.
 - Specify the bucket name and Couchbase Server host name in the Sync Gateway configuration.
 
