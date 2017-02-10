@@ -63,3 +63,7 @@ The right API to use depends on what you wish to achieve. The table below outlin
 <img src="img/pagination.png" width="25%" />
 
 Paginating a list view is a good pattern when the data source is fairly large and is retrieved over the Sync Gateway REST API. If you wish to display the documents in a channel for example, it's recommended to use the `/{db}/_changes` endpoint with the `limit` and `since` querystring parameters. If you wish to display the documents in a logical order by key then you can use the `/{db}/_all_docs` endpoint with the `startkey` and `limit` querystring parameters.
+
+### How can I access functionalities that are only supported in the native API.
+
+As with all hybrid frameworks, to access native functionalities you need to bridge native API methods (`getFilesDir()`) to the framework code (https://forums.couchbase.com/t/update-ionic-2-couchbase-lite-app-without-loss-of-data/11657).
