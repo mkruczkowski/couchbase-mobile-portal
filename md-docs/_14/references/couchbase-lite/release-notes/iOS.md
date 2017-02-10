@@ -36,12 +36,12 @@ __Bugs__
 
 __Deprecation notices__
 
-The following features are being deprecated and will be removed in a future version of Couchbase Mobile.
+The following features are being deprecated in Couchbase Mobile 1.4 and will be unsupported in 2.0.
 
 - ForestDB
 - Geo queries
 
-The following platforms are being deprecated and will be unsupported in a future version of Couchbase Mobile.
+The following platforms are being deprecated in Couchbase Mobile 1.4 and will be unsupported in 2.0.
 
 - iOS 8
 

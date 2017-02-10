@@ -32,7 +32,8 @@ __Bugs__
 
 __Deprecation notices__
 
-The following features are being deprecated and will be removed in a future version of Couchbase Mobile.
+The following features are being deprecated in 1.4 and will be unsupported in an upcoming version (2.x) of Couchbase 
+Mobile.
 
 - Bucket Shadowing
 
