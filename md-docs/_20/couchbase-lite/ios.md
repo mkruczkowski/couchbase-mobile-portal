@@ -3,13 +3,11 @@ id: api-guide
 title: API Guide
 ---
 
-# 1. About Couchbase Lite 2.0
+{% include landing.html %}
 
-This document gives an overview of the current Developer Preview build of Couchbase Lite 2.0. This preview release is pre-alpha; we're making it available well before it's feature-complete, so you have a chance to kick the tires and give us feedback.
+### What's New?
 
-## 1.1. What's New?
-
-What *isn't* new? Most of Couchbase Lite has been rewritten, based on what we've learned from implementing a lightweight cross-platform NoSQL database.
+Most of Couchbase Lite has been rewritten, based on what we've learned from implementing a lightweight cross-platform NoSQL database.
 
 * The core functionality is implemented in a C++ library known as Couchbase Lite Core, or LiteCore. This library is used on all platforms, eliminating a lot of code duplication. The result is more consistent behavior across platforms, and faster development of new features.
 * Much higher performance, thanks to LiteCore. Efficient code, and better algorithms and data storage schema, mean that Couchbase Lite 2.0 runs many times faster than 1.x. Performance will vary by platform and by operation, but we've seen large database insertion and query tasks run 5x faster on iOS.
@@ -19,11 +17,11 @@ What *isn't* new? Most of Couchbase Lite has been rewritten, based on what we've
 * Conflict handling is much more direct. You provide conflict-resolver callbacks to control what happens when a save conflicts with a new change, or when the replicator pulls a new revision. Conflicts won't pile up invisibly causing scalability problems. (We will be providing canned conflict resolvers for common algorithms.)
 * We've made the API's concurrency rules explicit, and consistent, across all platforms. All Couchbase Lite objects are now bound to the thread they're created on; they can't be called re-entrantly. (This has always been the case in Objective-C.) This makes our code more efficient by avoiding the need for expensive synchronization/locking, and also prevents a lot of tricky concurrency bugs.
 
-## 1.2. What's Missing?
+### What's Missing?
 
 Some of the new features aren't implemented yet, and some existing features are temporarily missing because they have yet to be adapted to the new core engine and APIs. Pardon our dust! We will be releasing new previews often, so if this one is too incomplete for you to evaluate or use, please check back later.
 
-In developer preview #1:
+In developer build #1:
 
 * The replicator is unavailable. It needs to be adapted to the LiteCore APIs.
 * The REST API (Listener) is unavailable.
@@ -33,17 +31,74 @@ In developer preview #1:
 * The query engine doesn't support joins (querying across multiple documents) yet.
 * Object modeling (mapping documents to native objects) isn't implemented yet.
 
-# 2. The New API
+## Getting Started
 
-Here are the highlights of the new API. We assume you're already familiar with Couchbase Lite 1.x. This isn't an exhaustive description; please refer to the Doxygen-generated API docs, or to the framework's header files, for details.
+<div class="dp">
+	<div class="tiles">
+		<div class="column size-1of2">
+			<div class="box">
+				<div class="container">
+					<a href="https://www.couchbase.com/nosql-databases/downloads#couchbase-mobile" taget="_blank">
+						<p>Download Developer Build</p>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="column size-1of2">
+			<div class="box">
+				<div class="container">
+					<a href="http://cb-mobile.s3.amazonaws.com/api-references/couchbase-lite-2.0DB1/index.html" taget="_blank">
+						<p>API References</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+### iOS
+
+<img width=600 src="img/download-screenshot.png" style="margin: 0 auto;display: block;" />
+
+Couchbase Lite 2 for iOS is built as a dynamic library, not a static library. (It *looks* the same, a directory named “`CouchbaseLite.framework`”, but the library file inside is different.) This isolates it more from your app's build process, since the linker doesn't have to deal with all the internals of the Couchbase Lite code.
+
+The build process is mostly the same as in 1.x:
+
+- Drag the framework into your Xcode project's left-hand navigator pane (probably into the Frameworks group, but it doesn't really matter).
+- Make sure it appears in the “Link Binary With Libraries” group in your target's Build Phases.
+
+Unlike 1.x, you do not need to add any extra libraries like libsqlite3 or libc++.
+
+> Note: If you're replacing CBL 1.x in an app target, remove the old framework from the Xcode project first, then add the new one. If you just overwrite the framework in the filesystem, Xcode may be confused because it still thinks it's linking with a static library, but the library is now dynamic.
+
+<!---
+TBD: Add information about stripping the simulator binaries out of the framework during a release build
+--->
+
+### macOS
+
+Nothing's changed in the macOS build process. Couchbase Lite 1.x was already a dynamic framework. Just build the same way you would with 1.x.
+
+<!---
+### Using CocoaPods or Carthage
+
+Couchbase Lite 2's Xcode project has a simpler build system, which makes it more easily compatible with the package managers CocoaPods and Carthage.
+
+**CocoaPods:** TBD
+**Carthage:** Just add this line to your project's Cartfile: `github "couchbase/couchbase-lite-ios" "feature/2.0"`
+--->
+
+## The New API
+
+Here are the highlights of the new API. We assume you're already familiar with Couchbase Lite 1.x. This isn't an exhaustive description; please refer to the [Doxygen-generated API docs](http://cb-mobile.s3.amazonaws.com/api-references/couchbase-lite-2.0DB1/index.html), or to the framework's header files, for details.
 
 > Note: The rest of this document uses Objective-C to describe the details of the API. The API concepts (except for platform-specific bindings like NSPredicate) are applicable to all platforms.
 
-## 2.1. No More Manager
+### No Manager
 
 You'll notice that CBLManager is gone. Instead, databases are the top-level entities in the API. The main function of CBLManager was to act as a collection of databases, both conceptually and in the filesystem, but it turned out not to be worth the added complexity. Instead, in 2.0 you create and manage databases individually, the way you'd manage files.
 
-## 2.2. Databases
+## Databases
 
 ### Creating Databases
 
@@ -59,7 +114,7 @@ In 2.0 we've renamed the method, to `-inBatch:do:`, to emphasize that Couchbase 
  At the *local* level this operation is still transactional: no other CBLDatabase instances, including ones managed by the replicator or HTTP listener, can make changes during the execution of the block, and other instances will not see partial changes. But Couchbase Mobile is a *distributed* system, and due to the way replication works, there's no guarantee that Sync Gateway or other devices will receive your changes all at once.
 Again, the behavior of the method hasn't changed, just its name.
 
-## 2.3. Documents
+## Documents
 
 CBLDocument has changed a lot. The data model is still the same — a JSON object with a fixed ID string — but the API has absorbed ideas from CBLModel to make it easier to work with.
 
@@ -81,7 +136,7 @@ In addition, as a convenience we offer NSDate accessors. Dates are a common data
 
 ### Subdocuments
 
->**NOTE:** Subdocuments aren't available yet in the first developer preview. Instead, nested JSON objects are exposed as NSDictionaries, as they were in 1.x. But expect this to change soon, hopefully in DP2.
+>Note: Subdocuments aren't available yet in the first developer preview. Instead, nested JSON objects are exposed as NSDictionaries, as they were in 1.x. But expect this to change soon, hopefully in DP2.
 
 A *subdocument* is a nested document with its own set of named properties. In JSON terms it's a nested object. This isn't a new feature of the document model; it's just that we're exposing it in a more structured form. In Couchbase Lite 1.x you would see a nested object as a nested NSDictionary. In 2.0 we expose it as a CBLSubDocument object instead.
 
@@ -106,7 +161,7 @@ The resolver is responsible for returning the resulting properties that should b
 
 A resolver can be specified either at the database or the document level. If a document doesn't have its own, the database's resolver will be used. If the database doesn't have one either (the default situation), a default algorithm is used that picks the revision with the larger number of changes in its history.
 
-## 2.4. Queries
+## Queries
 
 Database queries have changed significantly. Instead of the map/reduce algorithm used in 1.x, they're now based on expressions, of the form “*return ____ from documents where ____, ordered by ____*”, with semantics based on Couchbase Server's N1QL query language. If you've used Core Data, or other query APIs based on SQL, you'll find this familiar.
 
@@ -128,7 +183,7 @@ These each have defaults:
 
 ### The Query API
 
-We are still designing the cross-platform query API; it will appear in a future preview release. But we also offer platform-specific APIs that are integrated with existing query mechanisms. 
+We are still designing the cross-platform query API; it will appear in a future preview release. But we also offer platform-specific APIs that are integrated with existing query mechanisms.
 
 In Objective-C and Swift we support the same core Foundation classes used by Core Data:
 
@@ -182,7 +237,8 @@ It's very common to sort full-text results in descending order of relevance. Thi
 
 For the time being, the Objective-C query API also allows you to compose queries using the underlying [JSON-based query syntax](https://github.com/couchbase/couchbase-lite-core/wiki/JSON-Query-Schema) recognized by LiteCore. This can be useful as a workaround if you run into limitations or bugs in the NSPredicate/NSExpression-based API. (But if so, please report the issue to us so we can fix it.)
 
->**DISCLAIMER:** This low-level query syntax is not part of Couchbase Lite's public API. We will probably remove this access to it before the final release of Couchbase Lite 2.0. By then the public API should be robust enough to handle your needs.
+>Disclaimer: This low-level query syntax is not part of Couchbase Lite's public API. We will probably remove this
+ access to it before the final release of Couchbase Lite 2.0. By then the public API should be robust enough to handle your needs.
 
 Using the JSON query syntax is very simple: just construct a JSON object tree out of Foundation objects, in accordance with the [spec](https://github.com/couchbase/couchbase-lite-core/wiki/JSON-Query-Schema), then pass the top level NSArray or NSDictionary to the CBLDatabase method that creates a query or creates/deletes an index:
 
@@ -193,28 +249,3 @@ Using the JSON query syntax is very simple: just construct a JSON object tree ou
 * `-deleteIndexOn:type:error:` — Same as above.
 
 **Troubleshooting:** If LiteCore doesn't like your JSON, the call will return with an error. More usefully, LiteCore will log an error message to the console, so check that. (For internal reasons these messages don't propagate all the way up to the NSError yet.) If you're still stuck, it may help to set an Xcode breakpoint on all C++ exceptions; this will get hit when the parser gives up, and the stack backtrace _might_ give a clue. A common mistake is to pass an expression where an _array of_ expressions is expected; this is easy to do since expressions themselves are arrays. For example, `returning: @[@".", @"x"]` won't work; instead use `returning: @[@[@".", @"x"]]`.
-
-# 3. Building Your App
-
-## 3.1. iOS
-
-Couchbase Lite 2 for iOS is built as a dynamic library, not a static library. (It *looks* the same, a directory named “`CouchbaseLite.framework`”, but the library file inside is different.) This isolates it more from your app's build process, since the linker doesn't have to deal with all the internals of the Couchbase Lite code.
-
-The build process is mostly the same as in 1.x: Drag the framework into your Xcode project's left-hand navigator pane (probably into the Frameworks group, but it doesn't really matter), and make sure it appears in the “Link Binary With Libraries” group in your target's Build Phases.
-
-Unlike 1.x, you do not need to add any extra libraries like libsqlite3 or libc++.
-
-> Note: If you're replacing CBL 1.x in an app target, remove the old framework from the Xcode project first, then add the new one. If you just overwrite the framework in the filesystem, Xcode may be confused because it still thinks it's linking with a static library, but the library is now dynamic.
-
-TBD: Add information about stripping the simulator binaries out of the framework during a release build
-
-## 3.2. macOS
-
-Nothing's changed in the macOS build process. Couchbase Lite 1.x was already a dynamic framework. Just build the same way you would with 1.x.
-
-## 3.3. Using CocoaPods or Carthage
-
-Couchbase Lite 2's Xcode project has a simpler build system, which makes it more easily compatible with the package managers CocoaPods and Carthage.
-
-**CocoaPods:** TBD
-**Carthage:** Just add this line to your project's Cartfile: `github "couchbase/couchbase-lite-ios" "feature/2.0"`

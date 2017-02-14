@@ -1,6 +1,4 @@
 - title: Couchbase Lite
   items:
-    - title: API Guide
-      path: couchbase-lite/api-guide.html
-    - title: API References
-      path: http://google.com
+    - title: iOS
+      path: couchbase-lite/ios.html
