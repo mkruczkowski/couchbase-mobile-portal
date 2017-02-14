@@ -27,8 +27,8 @@ In developer build #1:
 * The REST API (Listener) is unavailable.
 * Map/reduce queries aren't supported. We are still evaluating whether to support them in 2.0; your feedback is welcome.
 * The database file format has changed, and there is not yet any support for upgrading/migrating 1.x databases. (The format is likely to change again, incompatibly, in future preview releases until we implement migration.)
-* The query engine doesn't support aggregation or grouping yet.
 * The query engine doesn't support joins (querying across multiple documents) yet.
+* The query engine is missing a lot of N1QL functions.
 * Object modeling (mapping documents to native objects) isn't implemented yet.
 
 ## Getting Started
@@ -108,10 +108,10 @@ You can instantiate multiple CBLDatabases with the same name and directory; thes
 
 ### Transactions / batch operations
 
-As before, if you're making multiple changes to a database at once, it's *much* faster to group them together. (Otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability.)
-In 2.0 we've renamed the method, to `-inBatch:do:`, to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions.
+As before, if you're making multiple changes to a database at once, it's *much* faster to group them together. (Otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability.) In 2.0 we've renamed the method, to `-inBatch:do:`, to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions.
 
- At the *local* level this operation is still transactional: no other CBLDatabase instances, including ones managed by the replicator or HTTP listener, can make changes during the execution of the block, and other instances will not see partial changes. But Couchbase Mobile is a *distributed* system, and due to the way replication works, there's no guarantee that Sync Gateway or other devices will receive your changes all at once.
+At the *local* level this operation is still transactional: no other CBLDatabase instances, including ones managed by the replicator or HTTP listener, can make changes during the execution of the block, and other instances will not see partial changes. But Couchbase Mobile is a *distributed* system, and due to the way replication works, there's no guarantee that Sync Gateway or other devices will receive your changes all at once.
+
 Again, the behavior of the method hasn't changed, just its name.
 
 ## Documents
@@ -167,19 +167,23 @@ Database queries have changed significantly. Instead of the map/reduce algorithm
 
 > Note: We're still evaluating whether to support map/reduce in 2.0. We recognize that, although it has a learning curve, it can be very powerful. We would appreciate feedback on this.
 
-There are three parts to specifying a query:
+There are several parts to specifying a query:
 
 1. What document criteria to match (corresponding to the “`WHERE …`” clause in N1QL or SQL)
-2. The sort order (“`ORDER BY …`”)
-3. What properties (JSON or derived) of the documents to return (“`SELECT …`”)
+2. What properties (JSON or derived) of the documents to return (“`SELECT …`”)
+3. What criteria to group rows together by (“`GROUP BY …`”)
+4. Which grouped rows to include (“`HAVING …`”)
+3. The sort order (“`ORDER BY …`”)
 
-> Note: The query API does not yet support aggregation, i.e. functions like `AVG()` or operators like `GROUP BY`. This will be added in a future preview release.
-
-These each have defaults:
+These all have defaults:
 
 * If you don't specify criteria, all documents are returned
-* If you don't specify a sort order, they're sorted by ascending document ID
-* If you don't specify properties, you just get the document ID and sequence number
+* If you don't specify properties to return, you just get the document ID and sequence number
+* If you don't specify grouping, rows are not grouped
+* If you don't specify what groups to include, all are included
+* If you don't specify a sort order, the order is undefined
+
+> Note: The query API does not yet support joins. This feature will be added in a future preview release.
 
 ### The Query API
 
@@ -194,34 +198,43 @@ In Objective-C and Swift we support the same core Foundation classes used by Cor
 > Note: If you're not familiar with these Foundation classes, you'll need to read Apple's documentation first.
 
 For convenience, you can provide these as NSStrings: document criteria will be interpreted as NSPredicate format strings, properties to return as NSExpression format strings, and sort orders as key-paths (optionally prefixed with “-” to indicate descending order.)
-As before, queries are CBLQuery objects, which you create by calling `-createQuery…` methods on CBLDatabase.
+
+As before, queries are CBLQuery objects, which you create by calling `-createQuery…` methods on CBLDatabase. After creating a query you can set additional attributes like grouping and ordering before running it.
 
 ### Parameters
 
 A query can have placeholder parameters that are filled in when it's run. This makes the query more flexible, and it improves performance since the query only has to be compiled once (see below.)
+
 Parameters are specified in the usual way when constructing the NSPredicate. In the string-based syntax they're written as “`$`”-prefixed identifiers, like “`$MinPrice`”. (The “`$`” is not considered part of the parameter name.) If constructing the predicate as an object tree, you call `+[NSExpression expressionForVariable:]`.
 
 The compiled CBLQuery has a property `parameters` , an NSDictionary that maps parameter names (minus the “`$`”!) to values. The values need to be JSON-compatible types. All parameters specified in the query need to be given values via the `parameters` property before running the query, otherwise you'll get an error.
 
 ### Return Values
 
-As in 1.x, running a CBLQuery returns an enumeration of CBLQueryRow objects, and each row indicates the ID of the associated document, and has a `document` property through which you can load the document object (at the cost of an extra database lookup.) But a query row can also return values directly, and the way that's done has changed in 2.0.
+As in 1.x, running a CBLQuery returns an enumeration of CBLQueryRow objects. Each row's `documentID` property gives the ID of the associated document, and its `document` property loads the document object (at the cost of an extra database lookup.) But a query row can also return values directly, which is often faster than having to load the whole document.
 
-To return values directly from a query row, use the `returning:` parameter when creating the query. If non-nil, this should be an array of NSExpressions, or of strings that parse to NSExpressions. It's common to use key-paths, to return document properties directly, but you can add logic or computation .
+To return values directly from query rows, set the query object's `returning:` property to an array of NSExpressions (or strings that parse to NSExpressions.) It's common to use key-paths, to return document properties directly, but you can add logic or computation.
 
 To access the values returned by a CBLQueryRow, call any of the methods `-objectAtIndex:`, `integerAtIndex:`, etc., where the index corresponds to the index in the query's `returning:` array. Use the most appropriate method for the type of value returned; the numeric/boolean accessors are more efficient, as well as more convenient, because they avoid allocating NSNumber objects. `-stringAtIndex:` will return nil if the value is not a string (avoiding the possibility of an exception), and `-dateAtIndex:` additionally converts an ISO-8601 date string into an NSDate for you.
 
-### Performance
+### Aggregation and Grouping
+
+If the return values of a query include calls to aggregate functions like `count()`, `min()` or `max()`, all of its rows will be combined together into one, with the aggregate functions operating on their parameters from all the rows.
+
+If you set the query's `groupBy` property, all rows that have the same values of the expressions given in that property will be grouped together. In this case, aggregate functions will operate on the rows in a group, not all the rows of the query.
+
+### Query Performance
 
 Queries have to be parsed and compiled into an optimized form for the underlying database to execute. This doesn't take long, but it's best to create a CBLQuery once and then reuse it, instead of recreating it every time. (Of course, only reuse a CBLQuery on the same thread/queue you created it on!)
 
 Expression-based queries have different performance-vs-flexibility tradeoffs than map/reduce queries. Map functions can be unintuitive to design, and an individual map function isn't very flexible (all you can control is the range of keys.) But any map/reduce query will be fast because, by definition, it's just a single traversal of an index.
 
-On the other hand, expression-based queries are easier to design and more flexible, but there's no guarantee of performance. In fact, by default *all* queries will be slow, because they have to make a linear scan of the entire database, testing every document against the criteria! So how do you make a query fast? By creating any necessary indexes.
+On the other hand, expression-based queries are easier to design and more flexible, but there's no guarantee of performance. In fact, by default *all* queries will be unoptimized, because they have to make a linear scan of the entire database, testing every document against the criteria! In a small database you might not notice, but as the database grows, query time will increase linearly. So how do you make a query faster? By creating any necessary indexes.
 
 ### Indexing
 
 A query can only be fast if there's a pre-existing database index it can search to narrow down the set of documents to examine. On the other hand, every index has to be updated whenever a document is updated, so too many indexes can hurt performance. Thus, good performance depends on designing and creating the *right* indexes to go along with your queries.
+
 To create an index, call -[CBLDatabase createIndexOn:error:]. (This is a no-op if the index already exists, so it's OK to call it every time the app runs.) The parameter is an array of one or more NSExpressions, or NSStrings that compile to NSExpressions. These are most often key-paths, but they don't have to be. If there are multiple expressions, the first one will be the primary key, the second the secondary key, etc.
 
 ### Full-Text Search
@@ -231,6 +244,7 @@ Queries can perform a full-text search (FTS), powered by SQLite's FTS4 engine, b
 But hold on! *Before* issuing a query that uses `MATCHES`, you *must* have created a full-text index on the expression being matched. Unlike regular queries, the index is not optional. The index's (single) expression should be the expression you'll use on the left-hand side of the `MATCHES` operator, and its type must be `kCBLFullTextIndex`.
 
 When you run a full-text query, the resulting rows are instances of CBLFullTextQueryRow. This subclass has extra API that lets you access the full string that was matched, and the character range(s) in that string where the match(es) occur.
+
 It's very common to sort full-text results in descending order of relevance. This can be a very difficult heuristic to define, but Couchbase Lite comes with a fairly simple ranking function you can use. In the `orderBy:` array, use a string of the form `rank(X)`, where `X` is the property or expression being searched, to represent the ranking of the result. Since higher rankings are better, you'll probably want to reverse the order by prefixing the string with a `-`.
 
 ### Under The Hood
