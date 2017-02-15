@@ -57,6 +57,7 @@ __Deprecation notices__
 The following features are being deprecated in Couchbase Mobile 1.4 and will be unsupported in 2.0.
 
 - ForestDB
+- Bonjour P2P Discovery Service
 
 The following platforms are being deprecated in Couchbase Mobile 1.4 and will be unsupported in 2.0.
 
