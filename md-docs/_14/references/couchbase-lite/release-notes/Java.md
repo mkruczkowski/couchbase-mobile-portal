@@ -3,7 +3,7 @@ id: java-release-notes
 title: Java release notes
 ---
 
-As part of this release we had [96 commits](https://github.com/couchbase/couchbase-lite-java-core/compare/1.3.1...1.4.0) which resulted in [24 issues](https://github.com/couchbase/couchbase-lite-java-core/issues?milestone=13&state=closed) being closed.
+As part of this release we had [110 commits](https://github.com/couchbase/couchbase-lite-java-core/compare/1.3.1...1.4.0) which resulted in [30 issues](https://github.com/couchbase/couchbase-lite-java-core/issues?milestone=13&state=closed) being closed.
 
 __API change__
 
@@ -24,6 +24,7 @@ __Bugs__
 - [__#1471__](https://github.com/couchbase/couchbase-lite-java-core/issues/1471) Attachments failed to replicate when deleted and recreated
 - [__#1481__](https://github.com/couchbase/couchbase-lite-java-core/issues/1481) ConnectionError: ('Connection aborted.', error(54, 'Connection reset by peer'))
 - [__#1493__](https://github.com/couchbase/couchbase-lite-java-core/issues/1493) Test failure ViewsTest.failingTestAllDocumentsLiveQuery on Jenkins
+- [__#1495__](https://github.com/couchbase/couchbase-lite-java-core/issues/1495) Changes feed skipping changes on rapid long poll
 - [__#1498__](https://github.com/couchbase/couchbase-lite-java-core/issues/1498) Was not able to delete the database directory, Status: 500 (HTTP 500 Internal Server Error)
 - [__#1510__](https://github.com/couchbase/couchbase-lite-java-core/issues/1510) Mixing HashMap and TreeMap for properties in Document. HashMap allows to generate non-canonical JSON.
 - [__#1534__](https://github.com/couchbase/couchbase-lite-java-core/issues/1534) Push Replication Fails With createTarget Set
@@ -37,6 +38,12 @@ __Bugs__
 - [__#1558__](https://github.com/couchbase/couchbase-lite-java-core/issues/1558) Listener returning different error codes for negative tests 1.3.1 vs 1.4
 - [__#1563__](https://github.com/couchbase/couchbase-lite-java-core/issues/1563) Database deletion failing with 1.4-25
 - [__#1564__](https://github.com/couchbase/couchbase-lite-java-core/issues/1564) P2P sanity test failing
+- [__#1575__](https://github.com/couchbase/couchbase-lite-java-core/issues/1575) SSL with allowSelfSignedSSLCertificates() method
+- [__#1581__](https://github.com/couchbase/couchbase-lite-java-core/issues/1581) Replication failures when running Sync Gateway in distributed index
+- [__#1589__](https://github.com/couchbase/couchbase-lite-java-core/issues/1589) Investigate possible push replication issue
+- [__#1593__](https://github.com/couchbase/couchbase-lite-java-core/issues/1593) Missing changes on changes feed (Mac <- Android) pull replication
+- [__#1595__](https://github.com/couchbase/couchbase-lite-java-core/issues/1595) Database error with peer-2-peer-sanity test
+- [__#1597__](https://github.com/couchbase/couchbase-lite-java-core/issues/1597) P2P - ForestDB Error: forceInsert()
 
 __Deprecation notices__
 

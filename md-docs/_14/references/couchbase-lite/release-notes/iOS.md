@@ -3,7 +3,7 @@ id: ios-release-notes
 title: iOS release notes
 ---
 
-As part of this release we had [16 issues](https://github.com/couchbase/couchbase-lite-ios/issues?milestone=18&state=closed) closed.
+As part of this release we had [17 issues](https://github.com/couchbase/couchbase-lite-ios/issues?milestone=18&state=closed) closed.
 Early-2017 update focusing mostly on bug-fixes.
 
 __API change__
