@@ -59,7 +59,7 @@ phonegap run android
 
 The Couchbase Lite endpoint is displayed on the screen and you can start making RESTful queries to it using the HTTP library of your choice.
 
-![](img/phonegap-ios-android.png)
+![](../img/phonegap-ios-android.png)
 
 ## Listener API
 
@@ -135,4 +135,4 @@ phonegap run android
 
 You should see the alert dialog displaying the number of documents.
 
-<img src="img/swagger-phonegap.png" class="portrait" />
+<img src="../img/swagger-phonegap.png" class="portrait" />
