@@ -31,8 +31,8 @@ defaults:
     values:
       layout: ready
   - scope:
-      path: 'ready/swagger'
-      type: page
+      path: '_1x/swagger'
+      type: 1x
     values:
       layout: swagger
 
