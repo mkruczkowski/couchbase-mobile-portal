@@ -302,7 +302,7 @@ Once the IP address of another device is known you can start replicating data to
 
 ### Filter functions
 
-It may be desirable to use [filter functions](./../native-api/replication/index.html#filtered-replications) to replicate only the documents
+It may be desirable to use [filter functions](native-api/replication/index.html#filtered-replications) to replicate only the documents
  of interest to another peer. Filter functions in a peer-to-peer context are executed when the start method on the replication object is called. This is a major difference with the Sync Function available on Sync Gateway that builds the access rules when documents are saved to the Sync Gateway database.
 
 ### Port allocation

@@ -20,7 +20,7 @@ Revisions form a tree data structure since they can have multiple branches.
 
 Here is an example of a revision tree which depicts the act of resolving a conflict by deleting one branch of the revision tree by adding a tombstone revision, and then adding a new rev to the winning branch.
 
-![](img/revtree.png)
+![](../img/revtree.png)
 
 ### Tombstoning
 

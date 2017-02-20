@@ -6,7 +6,7 @@ permalink: guides/sync-gateway/running-replications/index.html
 
 Sync Gateway has the ability to run active one way replications between two Sync Gateway databases. Documents go through the Sync Function on the target Sync Gateway instance which ensures that access permissions are updated. On the architecture diagram below, any changes that users/systems make on either Sync Gateway instance will be replicated to the other Sync Gateway instance.
 
-![](img/running-replications.png)
+![](../img/running-replications.png)
 
 **Note:** A _Sync Gateway database_ can also be referred to as a namespace for documents, the data is **always** stored in Couchbase Server.
 

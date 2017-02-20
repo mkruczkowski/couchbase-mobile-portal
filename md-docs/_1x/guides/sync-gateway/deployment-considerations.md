@@ -179,7 +179,7 @@ sync_gateway -logFilePath=sg_error.log sync_gateway.json
 ```
 
 [//]: # "TODO: Link can break."
-The **logFilePath** property can also be set in the configuration file at the [server level](../configuring-sync-gateway/config-properties/index.html#server-configuration).
+The **logFilePath** property can also be set in the configuration file at the [server level](../config-properties/index.html#server-configuration).
 
 If the option is not used then Sync Gateway uses the existing stderr logging behaviour. When the option is passed Sync Gateway will attempt to open and write to a log file at the path provided. If a Sync Gateway process is sent the SIGHUP signal it will close the open log file and then reopen it, on linux the SIGHUP signal can be manually sent using the following command:
 

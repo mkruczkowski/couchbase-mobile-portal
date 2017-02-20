@@ -110,7 +110,7 @@ Following are state diagrams that represent the states for Sync Gateway, and for
 
 This state diagram represents the states for Sync Gateway, and for the connection between Sync Gateway and a Couchbase Server database, in Sync Gateway 1.1. Numbers identify key points that are explained below the state diagram.
 
-![](img/state-diagram-offline-11.png)
+![](../img/state-diagram-offline-11.png)
 
 In the state diagram:
 
@@ -121,7 +121,7 @@ In the state diagram:
 
 This state diagram represents the states for Sync Gateway and for the connection between Sync Gateway and a Couchbase Server database, in Sync Gateway 1.2. Numbers identify key points that are explained below the state diagram.
 
-![](img/state-diagram-offline-12.png)
+![](../img/state-diagram-offline-12.png)
 
 In the state diagram:
 

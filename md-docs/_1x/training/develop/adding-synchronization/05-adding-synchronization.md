@@ -744,7 +744,6 @@ Notice that for 'task' documents, the `nWayMergeConflicts()` method is called to
 **iOS**
 ![](img/image03.png)
 **Android**
-![](img/image03xa.png)
 
 <block class="android" />
 

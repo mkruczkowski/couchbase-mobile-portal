@@ -90,13 +90,13 @@ Here you're initializing the Swagger library with the Sync Gateway public REST A
 
 In this working directory, start a web server with the command `python -m SimpleHTTPServer 8000` and navigate to [http://localhost:8000/index.html](http://localhost:8000/index.html) in a browser. Open the dev tools to access the console and you should see the list of operations available on the `client` object.
 
-![](img/swagger-browser.png)
+![](../img/swagger-browser.png)
 
 All the endpoints are grouped by tag. A tag represents a certain functionality of the API (i.e database, query, authentication).
 
 The `client.help()` method is a helper function that prints all the tags available. In this case we'd like to query all documents in the database so we'll use the `get_db_all_docs` method on the database tag to perform this operation. The helper function is available on any node of the API, so you can write `client.database.get_db_all_docs.help()` to print the documentation for that endpoint as shown below.
 
-![](img/swagger-all-docs.png)
+![](../img/swagger-all-docs.png)
 
 Copy the following below the existing code in **index.js** to query all the documents in the database and display them
  in the list.
@@ -119,4 +119,4 @@ client.query.get_db_all_docs({db: 'todo', include_docs: true})
 
 The **include_docs** option is used to retrieve the document properties (the text to display on the screen is located on the `doc.task` field). A promise can either be fulfilled with a value (the successful response) or rejected with a reason (the error response). Reload the browser and you should see the list of tasks.
 
-![](img/task-list.png)
+![](../img/task-list.png)
