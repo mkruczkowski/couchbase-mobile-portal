@@ -4,135 +4,197 @@ title: PhoneGap
 permalink: installation/phonegap/index.html
 ---
 
-You will install Couchbase Lite using the PhoneGap CLI module.
+## Add Couchbase Lite to your app
 
-```bash
-npm install -g phonegap
-phonegap create UntitledApp
-cd UntitledApp/
-phonegap local plugin add https://github.com/couchbaselabs/Couchbase-Lite-PhoneGap-Plugin.git
-```
+### PhoneGap plugin registry
 
-On iOS, you must have the **ios-sim** module installed globally to start the emulator from the command line.
+1. Navigate to the root of an existing PhoneGap project.
+2. Run the following command to install the plugin.
 
-```bash
-npm install -g ios-sim
-phonegap run ios
-```
+	```bash
+	phonegap local plugin add https://github.com/couchbaselabs/Couchbase-Lite-PhoneGap-Plugin.git
+	```
+	
+3. You can access the Couchbase Lite Listener URL in the `receivedEvent` lifecycle method with the following.
+
+	```javascript
+	if (window.cblite) {
+		window.cblite.getURL(function (err, url) {
+			if (err) {
+				console.log("error launching Couchbase Lite: " + err)
+			} else {
+				console.log("Couchbase Lite running at " + url);
+			}
+		});
+	} else {
+		console.log("error, Couchbase Lite plugin not found.");
+	}
+	```
+
+4. Build and run.
 
 ## Getting Started
 
-Open **www/js/index.js** and add the following in the `onDeviceReady` lifecycle method.
+### Creating a new project
 
-```javascript
-app.receivedEvent('deviceready');
-if (window.cblite) {
-  window.cblite.getURL(function (err, url) {
-    if (err) {
-      app.logMessage("error launching Couchbase Lite: " + err)
-    } else {
-      app.logMessage("Couchbase Lite running at " + url);
-    }
-  });
-} else {
-  app.logMessage("error, Couchbase Lite plugin not found.")
-}
-```
-
-Below the `onDeviceReady` method, add a new method called `logMessage`.
-
-```javascript
-logMessage: function(message) {
-  var p = document.createElement("p");
-  p.innerHTML = message;
-  document.body.getElementsByClassName('app')[0].appendChild(p);
-  console.log(message);
-},
-```
-
-Build & run.
+Create a new PhoneGap project using the PhoneGap CLI. Then, install the Couchbase Lite plugin.
 
 ```bash
-phonegap run ios
-phonegap run android
+npm install -g phonegap
+phonegap create PhoneGap-Example
+cd PhoneGap-Example
+phonegap local plugin add https://github.com/couchbaselabs/Couchbase-Lite-PhoneGap-Plugin.git
 ```
 
-The Couchbase Lite endpoint is displayed on the screen and you can start making RESTful queries to it using the HTTP library of your choice.
+Add the platforms where you plan to have the application running.
 
-![](../img/phonegap-ios-android.png)
+```bash
+phonegap platform add android
+phonegap platform add ios
+```
 
-## Listener API
+> Note: On iOS, you must have the **ios-sim** module installed globally to start the emulator from the command line `npm install -g ios-sim && phonegap run ios`.
 
-The Couchbase Lite Listener exposes the same functionality as the native SDKs through a common RESTful API. You can perform the same operations on the database by sending HTTP requests to it.
+### Adding Couchbase Lite
 
-The Swagger JS client allows us to leverage the Couchbase Lite REST API Swagger spec in hybrid mobile frameworks such as PhoneGap. To install the Swagger JS library in your project do the following:
+The Couchbase Lite Listener exposes the same functionality as the native SDKs through a common RESTful API. You can perform the same operations on the database by sending HTTP requests to it. In this example, you'll use the Swagger JS client with the Couchbase Lite REST API spec to perform various operations.
 
-- [Download the Swagger JS client](http://couchbase-docs.s3.amazonaws.com/assets/swagger-js/2.x/swagger-client.min.js) to a new file **www/js/swagger-client.min.js**.
-- [Download the Couchbase Lite Swagger spec](http://developer.couchbase.com/mobile/swagger/couchbase-lite/spec.json) to a new file **www/js/spec.js**. Your IDE might show an error because you've copied a JSON object into a JavaScript file but don't worry, prepend the following to set the spec on the `window` object.
+- [Download the Swagger JS client](http://couchbase-docs.s3.amazonaws.com/assets/swagger-js/2.x/swagger-client.min.js) to a new file under **www/js/swagger-client.min.js**.
+- [Download the Couchbase Lite REST API spec]({{ site.swagger_url }}) to a new file **www/js/couchbase-lite.js**. Your IDE might show an error because you've copied a JSON object into a JavaScript file but don't worry, prepend the content with the following to set the spec on the `window` object as you will need a reference to it later to initialize the Swagger client.
 
-  ```javascript
-  window.spec = {
-    "swagger": "2.0",
-    "info": {
-      "title": "Couchbase Lite",
-      ...
-    }
-  }
-  ```
-  
+	```javascript
+	window.spec = {
+		"swagger": "2.0",
+		"info": {
+			"title": "Couchbase Lite",
+			...
+		}
+	}
+	```
   Here, you're embedding the API spec as part of the application so that the JS library can also work offline.
-
-Reference both files in **www/index.html** before `app.initialize()` is executed.
+- Create an new file under **www/js/data-manager.js**. You will shortly add the code to create the database and insert a document.
+  
+Reference the 3 files you created above in **www/index.html** before `app.initialize()` is executed.
 
 ```html
 <script type="text/javascript" src="js/swagger-client.min.js"></script>
-<script type="text/javascript" src="js/spec.js"></script>
+<script type="text/javascript" src="js/couchbase-lite.js"></script>
+<script type="text/javascript" src="js/data-manager.js"></script>
 <script type="text/javascript">
     app.initialize();
 </script>
 ```
 
-Then, open **www/js/index.js** and add the following in the `onDeviceReady` lifecycle method.
+Then, open **www/js/data-manager.js** and add the following.
 
 ```javascript
-var client = new SwaggerClient({
-  spec: window.spec,
-  usePromise: true,
-})
-  .then(function (client) {
-    client.setHost(url.split('/')[2]);
-    client.server.get_all_dbs()
-      .then(function (res) {
-        var dbs = res.obj;
-        if (dbs.indexOf('todo') == -1) {
-          return client.database.put_db({db: 'todo'});
-        }
-        return client.database.get_db({db: 'todo'});
-      })
-      .then(function (res) {
-        return client.document.post({db: 'todo', body: {task: 'Groceries'}});
-      })
-      .then(function (res) {
-        return client.query.get_db_all_docs({db: 'todo'});
-      })
-      .then(function (res) {
-        alert(res.obj.rows.length + ' document(s) in the database');
-      })
-      .catch(function (err) {
-        console.log(err)
-      });
-  });
+var DB_NAME = 'todo';
+
+function initRESTClient(url) {
+  var client = new SwaggerClient({
+    spec: window.spec,
+    usePromise: true,
+  })
+    .then(function (client) {
+      client.setHost(url);
+      if (device.platform == 'android') {
+        var encodedCredentials = "Basic " + window.btoa(url.split('/')[1].split('@')[0]);
+        client.clientAuthorizations.add("auth", new SwaggerClient.ApiKeyAuthorization('Authorization', encodedCredentials, 'header'));
+      }
+      client.server.get_all_dbs()
+        .then(function (res) {
+          var dbs = res.obj;
+          if (dbs.indexOf(DB_NAME) == -1) {
+            return client.database.put_db({db: DB_NAME});
+          }
+          return client.database.get_db({db: DB_NAME});
+        })
+        .then(function (res) {
+          return client.document.post({db: DB_NAME, body: {title: 'Couchbase Mobile', sdk: 'PhoneGap'}});
+        })
+        .then(function (res) {
+          console.log('Document ID :: ' + res.obj.id);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    });
+
+}
 ```
 
-First you set the host of the Swagger JS client to the url provided in the callback (it is of the form `lite.couchbase.` on iOS and `localhost:5984` on Android). The chain of promises creates the database, inserts a document and displays the total number of documents in an alert window using the `/{db}/_all_docs` endpoint.
+This code initializes the REST API client with the url passed as a parameter. The promise chaining then creates the database and inserts a document. To find out what the available methods are, use the `help()` method to print the list of parameters for each endpoint (for example, `client.help()`, `client.database.help()` etc.)
 
-Build and run.
+In the next section, you will write some code to detect if the app is running on a desktop browser (i.e during development) or on the device/emulator.
+
+To call this method, open **www/js/index.js** and append the following in the `onDeviceReady` method.
+
+```javascript
+if (window.cblite && window.cordova.platformId == 'browser') { // desktop browser, development only.
+	initRESTClient('localhost:59840');
+} else if (window.cblite) {
+	window.cblite.getURL(function (err, url) {
+		if (err) {
+			console.log("error launching Couchbase Lite: " + err)
+		} else {
+			console.log("Couchbase Lite running at " + url);
+			initRESTClient(url.split('/')[2]);
+		}
+	});
+} else {
+	console.log("error, Couchbase Lite plugin not found.");
+}
+```
+
+The code above initializes the application by calling the `initRESTClient` with the URL to access the Couchbase Lite Listener.
+
+### Development environment
+
+While the application will usually run on a device, it is useful to know how to run it in a desktop browser. This is useful during development because you won't have to re-deploy the application to a device or emulator on every change.
+
+Download [LiteServ for macOS](https://cl.ly/1d1k261T3d2s/LiteServ.zip), unzip the folder and start it from the command line with the CORS flag.
 
 ```bash
-phonegap run ios
+cd LiteServ
+./LiteServ.app/Contents/Tools/LiteServ --cors
+```
+
+Run the following command to serve the PhoneGap application from a static web server.
+
+```bash
+phonegap serve --browser
+```
+
+Open [localhost:3000](http://localhost:3000/) in a web browser and notice that the document is successfully persisted to the database.
+
+![](../img/web-browser.png)
+
+### Deploying
+
+Build and run for Android.
+
+```bash
 phonegap run android
 ```
 
-You should see the alert dialog displaying the number of documents.
+Open [chrome://inspect](chrome://inspect) in Chrome and select the Android device where the app is running. Notice the document ID and property are printed to the console. The document was successfully persisted to the database.
 
-<img src="../img/swagger-phonegap.png" class="portrait" />
+![](../img/phonegap-console-android.png)
+
+The application won't run as is on iOS just yet. You will need to modify the `Content-Security-Policy` header. Open **www/index.html** and replace the `<meta http-equiv="Content-Security-Policy" ...` header with the following.
+
+```html
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' gap://ready file://* *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+```
+ 
+Build and run for iOS.
+
+```bash
+phonegap run ios
+```
+
+Open Safari and select the **Develop\Simulator\index.html** menu to open the console. It will be empty because the code already ran but you can enter `window.location.reload()` to re-run it. Notice the document ID and property are printed to the console. The document was successfully persisted to the database.
+
+![](../img/phonegap-console-ios.png)
+
+{% include next.html %}

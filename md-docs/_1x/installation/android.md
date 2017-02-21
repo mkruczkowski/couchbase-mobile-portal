@@ -4,45 +4,54 @@ title: Android
 permalink: installation/android/index.html
 ---
 
-## Using Gradle
+## Add Couchbase Lite to your app
 
-Expand the **app** folder and open the **build.gradle** file.
+### Gradle
 
-![](../img/android-build-gradle.png)
+1. Expand the **app** folder and open the **build.gradle** file.
 
-Add the following to the **android** section of the application's **build.gradle** (the one in the **app** folder).
+    <img src="../img/android-build-gradle.png" class=portrait />
 
-```groovy
-// workaround for "duplicate files during packaging of APK" issue
-// see https://groups.google.com/d/msg/adt-dev/bl5Rc4Szpzg/wC8cylTWuIEJ
-packagingOptions {
-    exclude 'META-INF/ASL2.0'
-    exclude 'META-INF/LICENSE'
-    exclude 'META-INF/NOTICE'
-}
-```
+2. Add some required rules in the **android** section of the application's Gradle file (usually at **app/build.gradle**).
 
-Next, add the following to the **dependencies** section.
+    ```groovy
+    android {
+      // ...
+      // workaround for "duplicate files during packaging of APK" issue
+      // see https://groups.google.com/d/msg/adt-dev/bl5Rc4Szpzg/wC8cylTWuIEJ
+      packagingOptions {
+          exclude 'META-INF/ASL2.0'
+          exclude 'META-INF/LICENSE'
+          exclude 'META-INF/NOTICE'
+      }
+    }
+    ```
 
-```groovy
-compile 'com.couchbase.lite:couchbase-lite-android:{{site.package_version}}'
-```
+3. Next, add Couchbase Lite as a dependency in the **dependencies** section.
 
-The **dependencies** section should look similar to this.
+    ```groovy
+    dependencies {
+      // ...
+      compile 'com.couchbase.lite:couchbase-lite-android:{{site.package_version}}'
+    }
+    ```
 
-```groovy
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.couchbase.lite:couchbase-lite-android:{{site.package_version}}'
-}
-```
+4. In the Android Studio tool bar, click **Sync Project with Gradle Files**.
 
-In the Android Studio tool bar, click **Sync Project with Gradle Files**.
+#### Available libraries
 
-### Supported architectures
+The following libraries can be used in an Android Studio project to import different components.
 
-The list of supported Android architectures depends on the storage type (i.e. SQLite or ForestDB).
+|Gradle Dependency Line|Service|
+|:---------------------|:------|
+|`com.couchbase.lite:couchbase-lite-java-listener:{{site.package_version}}`|To access the database through HTTP (often used for hybrid development and peer-to-peer sync).|
+|`com.couchbase.lite:couchbase-lite-android-forestdb:{{site.package_version}}`|To use ForestDB as the storage type.|
+|`com.couchbase.lite:couchbase-lite-android-sqlcipher:{{site.package_version}}`|To enable encryption on SQLite databases.|
+|`com.couchbase.lite:couchbase-lite-java-javascript:{{site.package_version}}`|JavaScript view (map/reduce) engine for the REST API.|
+
+#### Supported architectures
+
+The list of supported Android architectures depends on the storage type (i.e. SQLite or ForestDB) you are using.
 For SQLite databases, all architectures are supported:
 
 | armeabi-v7a | x86 | arm64-v8a | x86_64 | mips64 | armeabi | mips |
@@ -55,43 +64,13 @@ For ForestDB databases, the supported architectures are:
 |:------------|:----|:----------|:-------|:-------|:--------|:-----|
 | Yes         | Yes | Yes       | Yes    | Yes    | No      | No   |
 
-## Optional packages
-
-The SDK contains other dependencies that are optional. Here's what each one does:
-
-- **couchbase-lite-java-listener:** To access the database through HTTP (often used for hybrid development and peer-to-peer sync). Add it to your Android Studio project using Gradle.
-
-    ```groovy
-    compile 'com.couchbase.lite:couchbase-lite-java-listener:{{site.package_version}}'
-    ```
-
-    > **Note:** Android emulators run as separate VMs with a different network interface. You can use the `adb forward tcp:5984 tcp:5984` command to access the Listener running on the Android emulator from the host machine.
-
-- **couchbase-lite-android-forestdb:** To use the ForestDB storage type.
-
-    ```groovy
-    compile 'com.couchbase.lite:couchbase-lite-android-forestdb:{{site.package_version}}'
-    ```
-
-- **couchbase-lite-android-sqlcipher:** To enable encryption on SQLite databases.
-
-    ```groovy
-    compile 'com.couchbase.lite:couchbase-lite-android-sqlcipher:{{site.package_version}}'
-    ```
-
 ## Getting Started
 
-Create a new project in Android Studio.
+Create a new Android Studio project and install Couchbase Lite by following one of the methods above.
 
-![](../img/new-proj-android.png)
+<img src="../img/android-studio-new-project.png" class=center-image />
 
-Add Couchbase Lite Android as a dependency using the instructions above.
-
-Open **com.couchbase.UntitledApp/MainActivity.java** in Android Studio. 
-
-![](../img/open-main-activity.png)
-
-Add the following in the `onCreate` method.
+Open **MainActivity.java** in Android Studio and add the following in the `onCreate` method.
 
 ```java
 // Create a manager
@@ -111,7 +90,7 @@ try {
 // The properties that will be saved on the document
 Map<String, Object> properties = new HashMap<String, Object>();
 properties.put("title", "Couchbase Mobile");
-properties.put("sdk", "Java");
+properties.put("sdk", "Android");
 // Create a new document
 Document document = database.createDocument();
 // Save the document to the database
@@ -124,6 +103,26 @@ try {
 // and properties
 Log.d("app", String.format("Document ID :: %s", document.getId()));
 Log.d("app", String.format("Learning %s with %s", (String) document.getProperty("title"), (String) document.getProperty("sdk")));
+
+// Create replicators to push & pull changes to & from Sync Gateway.
+URL url = null;
+try {
+    url = new URL("http://10.0.2.2:4984/hello");
+} catch (MalformedURLException e) {
+    e.printStackTrace();
+}
+Replication push = database.createPushReplication(url);
+Replication pull = database.createPullReplication(url);
+push.setContinuous(true);
+pull.setContinuous(true);
+
+// Start replicators
+push.start();
+pull.start();
 ```
 
-Click the Debug button. The document ID and properties are logged in LogCat.
+Build and run. Filter on the term `"D/app"` in LogCat and you should see the document ID and property printed to the console. The document was successfully persisted to the database.
+
+<img src="../img/android-studio-logging.png" class=center-image />
+
+{% include next.html %}

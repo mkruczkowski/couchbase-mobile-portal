@@ -4,47 +4,62 @@ title: Java
 permalink: installation/java/index.html
 ---
 
-## Requirements
+## Add Couchbase Lite to your app
 
-- JDK 1.7+
+### Maven
 
-If you don't have IntelliJ IDEA already installed you can download the community edition from [here](https://www.jetbrains.com/idea/download/)
+1. Open **pom.xml** in the IDE of your choice.
+2. Add the following inside the `dependencies` XML tag.
 
-Open IntelliJ IDEA and choose the Create New Project menu. On the left pane, select the Java application template and set the Project SDK to 1.8.
+	```xml
+	<dependency>
+			<groupId>com.couchbase.lite</groupId>
+			<artifactId>couchbase-lite-java</artifactId>
+			<version>{{ site.package_version }}</version>
+	</dependency>
+	```
 
-![](../img/cbl-java-new-proj.png)
+3. Sync the dependencies and start using Couchbase Lite in your project.
 
-Then click Next. Choose Command Line App for the project template.
+#### Available artifacts
 
-![](../img/cbl-java-project-template.png)
+The following libraries can be used in a Java project to import different components.
 
-Click Next. Fill in the Project name, Project location and Base package.
+|Artifact name|Service|
+|:---------------------|:------|
+|`couchbase-lite-java-listener`|To access the database through HTTP (often used for hybrid development and peer-to-peer sync).|
+|`couchbase-lite-java-forestdb`|To use ForestDB as the storage type.|
+|`couchbase-lite-java-sqlcipher`|To enable encryption on SQLite databases.|
+|`couchbase-lite-java-javascript`|JavaScript view (map/reduce) engine for the REST API.|
 
-![](../img/cbl-java-project-detail.png)
+### Other options
 
-Click Finish. A new project window will open in IntelliJ.
-
-## Couchbase Lite JAR files
-
-Follow the steps below to add Couchbase Lite as a dependency to your project:
-
-1. Download the Couchbase Lite Java SDK from [here](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile).
-2. Open the File/Project Structure menu.
-	![](../img/cbljava-project-structure.png)
-3. A new window will open. Select the Modules tab and add a new Library from Java.
-	![](../img/cbljava-addlib.png)
-4. Select the directory where you downloaded the Couchbase Lite Java SDK, then click OK.
-	![](../img/cbljava-dir.png)
-
-Run the application in Debug mode. The console window will open.
-
-![](../img/cbljava-debug-mode.png)
-
-In the next section you will add some code to create a document and save it to the database.
+You can find instructions for other build systems (Gradle etc.) on the [Maven repository page](https://mvnrepository.com/artifact/com.couchbase.lite/couchbase-lite-java/{{ site.package_version }}).
 
 ## Getting Started
 
-Open **src/com.couchbase/Main.java** in IntelliJ and add the following in the main method.
+Create a new command line app in the IDE of your choice (in this example we'll use IntelliJ IDEA CE). By default, new 
+projects in IntelliJ are not setup to download dependencies from Maven. Right-click on the project and select the **Add Framework Support** menu.
+
+<img src="../img/intellij-maven-support.png" class=center-image />
+
+In the pop-up window, select Maven as the build system to add it to the project.
+
+<img src="../img/maven-popup.png" class=center-image />
+
+This step will create a new **pom.xml** file. Add the following inside the `<project>` XML tag.
+
+```xml
+<dependencies>
+		<dependency>
+				<groupId>com.couchbase.lite</groupId>
+				<artifactId>couchbase-lite-java</artifactId>
+				<version>{{ site.package_version }}</version>
+		</dependency>
+</dependencies>
+```
+
+Open **Main.java** and add the following in the `main` method.
 
 ```java
 // Enable logging
@@ -81,8 +96,26 @@ try {
 // and properties
 log.info(String.format("Document ID :: %s", document.getId()));
 log.info(String.format("Learning %s with %s", (String) document.getProperty("title"), (String) document.getProperty("sdk")));
+
+// Create replicators to push & pull changes to & from Sync Gateway.
+URL url = null;
+try {
+		url = new URL("http://localhost:4984/hello");
+} catch (MalformedURLException e) {
+		e.printStackTrace();
+}
+Replication push = database.createPushReplication(url);
+Replication pull = database.createPullReplication(url);
+push.setContinuous(true);
+pull.setContinuous(true);
+
+// Start replicators
+push.start();
+pull.start();
 ```
 
-Click the Debug button. Notice the document ID and properties are logged to the console.
+Build and run. Notice the document ID and property are printed to the console. The document was successfully persisted to the database.
 
-![](../img/cbljava-log.png)
+<img src="../img/java-log-results.png" class=center-image />
+
+{% include next.html %}

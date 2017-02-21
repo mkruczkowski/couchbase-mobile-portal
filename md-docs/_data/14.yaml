@@ -4,12 +4,14 @@
 - title: Getting Started
   path: installation/index.html
   items:
-    - title: iOS
+    - title: iOS/tvOS/macOS
       path: installation/ios/index.html
     - title: Android
       path: installation/android/index.html
     - title: .NET
       path: installation/net/index.html
+    - title: Xamarin
+      path: installation/xamarin/index.html
     - title: Java
       path: installation/java/index.html
     - title: PhoneGap
