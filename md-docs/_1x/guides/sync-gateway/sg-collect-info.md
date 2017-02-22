@@ -24,7 +24,10 @@ Outputs:
 |:------------|:----|
 | 1.3.0 | 1.5.3 |
 | 1.3.1 | 1.6.3 |
-| 1.4.0 | 1.7.1 | 
+{% if site.version == '1.4' %}
+   | 1.4.0 | 1.7.1 | 
+{% endif %}
+
 Note: If go is not installed, sgcollect_info will print the following error message, you can ignore this message and there is no need to report it.
 
 `Exception during compression: [Error 2] The system cannot find the file specified
@@ -45,8 +48,11 @@ The tool creates the following log files in the ouput file.
 |`sg_accel_access.log`|The http access log for sg_accel (i.e which GETs and PUTs it has received and from which IPs)|
 |`sg_accel_error.log`|The error log (all logging sent to stderr by sg\_accel) for the sg_accel process|
 |`sync_gateway_error.log`|The error log (all logging sent to stderr by sync_gateway) for the sync\_gateway process|
-|`<USER_DEFINED_LOGGER>.log`|The current log file as defined in the 1.4 ```logging``` config section (all logging sent to stderr by sync_gateway) for the sync\_gateway process|
-|`<USER_DEFINED_LOGGER>-<DATE_STAMP>.log`|A timestamped historical log when log rotation has been configured in the 1.4 ```logging``` config section |
+{% if site.version == '1.4' %}
+  |`<USER_DEFINED_LOGGER>.log`|The current log file as defined in the 1.4 ```logging``` config section (all logging sent to stderr by sync_gateway) for the sync\_gateway process|
+|`<USER_DEFINED_LOGGER>-<DATE_STAMP>.log`|A timestamped historical log when log rotation has been configured in the 1.4 ```logging``` config section | 
+{% endif %}
+
 |`server_status.log`|The output of http://localhost:4895 for the running sync gateway|
 |`db_db_name_status.log`|The output of http://localhost:4895/db\_name for the running sync gateway|
 |`sync_gateway.json`|The on-disk configuration file used by sync\_gateway when it was launched|
