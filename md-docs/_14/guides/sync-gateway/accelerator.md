@@ -47,6 +47,8 @@ Prior to installing Sync Gateway Accelerator you must have a running instance of
 
     Again, if you are following this guide with an existing system already running, your configuration may differ slightly.
 
+    Note that Sync Gateway Accelerator doesn't provide further scalability to deployments that use bucket shadowing. Bucket shadowing is being deprecated in 1.4 and will be removed in an upcoming version of Couchbase Mobile (2.x).
+
 ### Sync Gateway Accelerator
 
 1. Download Sync Gateway Accelerator from the [Couchbase Downloads page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile).
