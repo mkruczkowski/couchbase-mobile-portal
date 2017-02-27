@@ -141,6 +141,6 @@ Follow the steps below to update the Sync Gateway configuration file. It must be
 The installation of Sync Gateway with Accelerator is now complete. Couchbase Lite clients can continue replicating to the same endpoint as if nothing changed.
 
 <script>
-	window.configurl = 'https://s3.amazonaws.com/cb-mobile/mobile/1.4/configs/sg-accel.json';
+	window.configurl = 'https://cb-mobile.s3.amazonaws.com/mobile/1.4/configs/sg-accel.json';
 </script>
 <div id="root"></div>

@@ -6,6 +6,6 @@ noedit: true
 ---
 
 <script>
-	window.configurl = 'https://s3.amazonaws.com/cb-mobile/mobile/1.4/configs/sg.json';
+	window.configurl = 'https://cb-mobile.s3.amazonaws.com/mobile/1.4/configs/sg.json';
 </script>
 <div id="root"></div>
