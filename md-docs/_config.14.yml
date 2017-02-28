@@ -1,4 +1,7 @@
 collections:
+  '1x':
+    output: true
+    permalink: /:path:output_ext
   '14':
     output: true
     permalink: /:path:output_ext

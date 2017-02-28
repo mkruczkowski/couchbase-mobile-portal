@@ -1,34 +1,239 @@
-- title: What's New
-  path: whatsnew.html
+- title: Introduction
   open: true
   items:
-    - title: Couchbase Lite
-      open: true
+    - title: What's new in version 1.4?
+      path: introduction/whats-new.html
+- title: Getting Started
+  path: installation/index.html
+  items:
+    - title: iOS
+      path: installation/ios/index.html
+    - title: Android
+      path: installation/android/index.html
+    - title: .NET
+      path: installation/net/index.html
+    - title: Java
+      path: installation/java/index.html
+    - title: PhoneGap
+      path: installation/phonegap/index.html
+    - title: Sync Gateway
+      path: installation/sync-gateway/index.html
+- title: Training
+  path: training/index.html
+  items:
+    - title: Design
       items:
+        - title: Data Modeling
+          path: training/design/data-modeling/index.html
+        - title: Access Control
+          path: training/design/security/index.html
+    - title: Develop
+      items:
+        - title: Create a Database
+          path: training/develop/create-database/index.html
+        - title: Using the Database
+          path: training/develop/using-the-database/index.html
+        - title: Adding Sync
+          path: training/develop/adding-synchronization/index.html
+        - title: Adding Security
+          path: training/develop/adding-security/index.html
+        - title: Integration
+          path: training/develop/integration/index.html
+    - title: Deploy
+      items:
+        - title: Install
+          path: training/deploy/install/index.html
+        - title: Upgrade
+          path: training/deploy/upgrade/index.html
+        - title: Scale
+          path: training/deploy/scale/index.html
+- title: Guides
+  path: guides/index.html
+  items:
+    - title: Data Modeling
+      path: guides/couchbase-lite/native-api/data-modeling/index.html
+    - title: Couchbase Lite
+      path: guides/couchbase-lite/index.html
+      items:
+        - title: Native API
+          path: guides/couchbase-lite/native-api/index.html
+          items:
+            - title: Manager
+              path: guides/couchbase-lite/native-api/manager/index.html
+            - title: Database
+              path: guides/couchbase-lite/native-api/database/index.html
+            - title: Document
+              path: guides/couchbase-lite/native-api/document/index.html
+            - title: Revision
+              path: guides/couchbase-lite/native-api/revision/index.html
+            - title: Attachment
+              path: guides/couchbase-lite/native-api/attachment/index.html
+            - title: View
+              path: guides/couchbase-lite/native-api/view/index.html
+            - title: Query
+              path: guides/couchbase-lite/native-api/query/index.html
+            - title: Replication
+              path: guides/couchbase-lite/native-api/replication/index.html
+            - title: Model (iOS only)
+              path: guides/couchbase-lite/native-api/model/index.html
+        - title: Technical Notes
+          path: guides/couchbase-lite/tech-notes/index.html
+          items:
+            - title: Encrypting Databases
+              path: guides/couchbase-lite/tech-notes/cbl-encryption/index.html
+    - title: Sync Gateway
+      path: guides/sync-gateway/index.html
+      items:
+        - title: Configuration file
+          path: guides/sync-gateway/config-properties/index.html
+        - title: Command line options
+          path: guides/sync-gateway/command-line-options/index.html
+        - title: Authorizing Users
+          path: guides/sync-gateway/authorizing-users/index.html
+        - title: Data Routing
+          path: guides/sync-gateway/channels/index.html
+        - title: Sync Function API
+          path: guides/sync-gateway/sync-function-api-guide/index.html
+        - title: Webhooks and changes feed
+          path: guides/sync-gateway/server-integration/index.html
+        - title: Deployment considerations
+          path: guides/sync-gateway/deployment/index.html
+        - title: NGINX
+          path: guides/sync-gateway/nginx/index.html
+        - title: Taking databases offline and online
+          path: guides/sync-gateway/database-offline/index.html
+        - title: Creating and querying a View
+          path: guides/sync-gateway/views/index.html
+        - title: OS Level Tuning
+          path: guides/sync-gateway/os-level-tuning/index.html
+        - title: Resolving Conflicts
+          path: guides/sync-gateway/resolving-conflicts/index.html
+        - title: Integrating External Stores
+          path: guides/sync-gateway/integrating-external-stores/index.html
+        - title: Running replications
+          path: guides/sync-gateway/running-replications/index.html
+        - title: REST API Client
+          path: guides/sync-gateway/rest-api-client/index.html
+        - title: SGCollect Info
+          path: guides/sync-gateway/sgcollect-info/index.html
+        - title: Configuring SSL
+          path: guides/sync-gateway/configuring-ssl/index.html
+        - title: Bucket Shadowing
+          path: guides/sync-gateway/bucket-shadowing/index.html
+        - title: Accelerator
+          path: guides/sync-gateway/accelerator.html
+    - title: Authentication
+      path: guides/authentication/index.html
+      items:
+        - title: Basic Authentication
+          path: guides/authentication/basic-authentication/index.html
+        - title: OpenID Connect
+          path: guides/authentication/openid/index.html
+          items:
+            - title: Configuration Options
+              path: guides/authentication/openid/configuration-options/index.html
+            - title: Advanced Topics
+              path: guides/authentication/openid/advanced-topics/index.html
+            - title: "How-To: Google"
+              path: guides/authentication/openid/google/index.html
+            - title: "How-To: Active Directory"
+              path: guides/authentication/openid/active-directory/index.html
+        - title: Custom Authentication
+          path: guides/authentication/custom-authentication/index.html
+        - title: Static Providers
+          path: guides/authentication/static-providers/index.html
+- title: API References
+  path: references/index.html
+  items:
+    - title: Couchbase Lite
+      path: references/couchbase-lite/index.html
+      items:
+        - title: Native API
+          path: references/couchbase-lite/couchbase-lite/index.html
+          items:
+            - title: Manager
+              path: references/couchbase-lite/couchbase-lite/manager/index.html
+              items:
+                - title: Manager
+                  path: references/couchbase-lite/couchbase-lite/manager/manager/index.html
+                - title: ManagerOptions
+                  path: references/couchbase-lite/couchbase-lite/manager/manager-options/index.html
+                - title: DatabaseOptions
+                  path: references/couchbase-lite/couchbase-lite/manager/database-options/index.html
+            - title: Database
+              path: references/couchbase-lite/couchbase-lite/database/index.html
+              items:
+                - title: Database
+                  path: references/couchbase-lite/couchbase-lite/database/database/index.html
+                - title: ValidationContext
+                  path: references/couchbase-lite/couchbase-lite/database/validation-context/index.html
+            - title: Document
+              path: references/couchbase-lite/couchbase-lite/document/index.html
+              items:
+                - title: Document
+                  path: references/couchbase-lite/couchbase-lite/document/document/index.html
+                - title: Document Change
+                  path: references/couchbase-lite/couchbase-lite/document/document-change/index.html
+            - title: Revision
+              path: references/couchbase-lite/couchbase-lite/revision/index.html
+              items:
+                - title: Revision
+                  path: references/couchbase-lite/couchbase-lite/revision/revision/index.html
+                - title: Saved Revision
+                  path: references/couchbase-lite/couchbase-lite/revision/saved-revision/index.html
+                - title: Unsaved Revision
+                  path: references/couchbase-lite/couchbase-lite/revision/unsaved-revision/index.html
+            - title: Attachment
+              path: references/couchbase-lite/couchbase-lite/attachment/index.html
+              items:
+                - title: Attachment
+                  path: references/couchbase-lite/couchbase-lite/attachment/attachment/index.html
+            - title: View
+              path: references/couchbase-lite/couchbase-lite/view/index.html
+              items:
+                - title: View
+                  path: references/couchbase-lite/couchbase-lite/view/view/index.html
+                - title: View Compiler
+                  path: references/couchbase-lite/couchbase-lite/view/view-compiler/index.html
+            - title: Query
+              path: references/couchbase-lite/couchbase-lite/query/index.html
+              items:
+                - title: Query
+                  path: references/couchbase-lite/couchbase-lite/query/query/index.html
+                - title: Live Query
+                  path: references/couchbase-lite/couchbase-lite/query/live-query/index.html
+                - title: QueryEnumerator
+                  path: references/couchbase-lite/couchbase-lite/query/query-enumerator/index.html
+                - title: QueryRow
+                  path: references/couchbase-lite/couchbase-lite/query/query-row/index.html
+            - title: Replication
+              path: references/couchbase-lite/couchbase-lite/replication/index.html
+              items:
+                - title: Replication
+                  path: references/couchbase-lite/couchbase-lite/replication/replication/index.html
+                - title: Authenticator
+                  path: references/couchbase-lite/couchbase-lite/replication/authenticator/index.html
+                - title: AuthenticatorFactory
+                  path: references/couchbase-lite/couchbase-lite/replication/authenticator-factory/index.html
+        - title: REST API
+          path: references/couchbase-lite/rest-api/index.html
         - title: Release notes
-          open: true
+          path: references/couchbase-lite/release-notes/index.html
           items:
             - title: iOS
-              img: ios
               path: references/couchbase-lite/release-notes/iOS.html
+            - title: Android
+              path: references/couchbase-lite/release-notes/Android.html
             - title: Java
-              img: android
               path: references/couchbase-lite/release-notes/Java.html
-            - title: Dot-NET
-              img: dot-net
+            - title: .NET
               path: references/couchbase-lite/release-notes/Dot-Net.html
     - title: Sync Gateway
-      open: true
+      path: references/sync-gateway/index.html
       items:
-        - title: Accelerator
-          size: 2
-          path: guides/sync-gateway/accelerator.html
-          img: data_flow_overview
-        - title: Log Rotation
-          size: 1
-          img: logs
-          path: guides/sync-gateway/log-rotation.html
+        - title: Public REST API
+          path: references/sync-gateway/rest-api/index.html
+        - title: Admin REST API
+          path: references/sync-gateway/admin-rest-api/index.html
         - title: Release notes
-          size: 0
-          img: release-notes
           path: references/sync-gateway/release-notes.html
