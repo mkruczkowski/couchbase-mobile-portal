@@ -405,6 +405,8 @@
             all_channels:
               type: array
               description: All the channels that this role has access to.
+              items:
+                type: string
   put:
     tags:
       - role
