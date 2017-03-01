@@ -28,6 +28,9 @@
         When uploading an attachment using an existing attachment name, the corresponding stored content of the database will be updated. Because you must supply the revision information to add an attachment to the document, this serves as validation to update the existing attachment.
 
         Uploading an attachment updates the corresponding document revision. Revisions are tracked for the parent document, not individual attachments.
+    parameters:
+      - $ref: '#/parameters/rev'
+      - $ref: '#/parameters/body'
     responses:
       200:
         description: Operation completed successfully
