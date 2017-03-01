@@ -128,12 +128,14 @@ The config file and logs are located in ``.
 Install sync_gateway by unpacking the tar.gz installer.
 
 ```bash
-sudo tar --zxvf {{ site.sg_package_name }}.tar.gz --directory /opt
+sudo tar -zxvf {{ site.sg_package_name }}.tar.gz --directory /opt
 ```
 
 Create the sync_gateway service.
 
 ```bash
+$ sudo mkdir /Users/sync_gateway
+
 $ cd /opt/couchbase-sync-gateway/service
 
 $ sudo ./sync_gateway_service_install.sh
