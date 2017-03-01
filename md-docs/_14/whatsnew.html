@@ -10,17 +10,33 @@ noedit: true
   <h3>Couchbase Lite</h3>
   <h4>Release notes</h4>
   <div class="tiles">
-    {% for item0 in site.data.14[0].items[0].items[0].items %}
     <div class="column size-1of3">
       <div class="box">
         <div class="container">
-          <a href="{{item0.path}}">
-            <img src="/img/{{item0.img}}.png" alt="">
+          <a href="../references/couchbase-lite/release-notes/iOS.html">
+            <img src="img/ios.png" alt="">
           </a>
         </div>
       </div>
     </div>
-    {% endfor %}
+    <div class="column size-1of3">
+      <div class="box">
+        <div class="container">
+          <a href="../references/couchbase-lite/release-notes/Java.html">
+            <img src="img/android.png" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="column size-1of3">
+      <div class="box">
+        <div class="container">
+          <a href="../references/couchbase-lite/release-notes/Dot-Net.html">
+            <img src="img/dot-net.png" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
   <h4>Deprecation notices</h4>
   <p>The following items are being deprecated in Couchbase Mobile 1.4 and will be unsupported in 2.0.</p>
@@ -38,25 +54,21 @@ noedit: true
   <h3>Sync Gateway</h3>
   <h4>New Features</h4>
   <div class="tiles">
-    {% for item0 in site.data.14[0].items[1].items limit: 1 %}
-    <div class="column size-{{item0.size}}of3">
+    <div class="column size-2of3">
       <div class="box">
-        <a href="{{item0.path}}" alt="">
-          <img class="feat-image-accel" src="/img/accelerator.png" alt="" />
+        <a href="../guides/sync-gateway/accelerator.html" alt="">
+          <img class="feat-image-accel" src="img/accelerator.png" alt="" />
         </a>
       </div>
     </div>
-    {% endfor %}
-    {% for item0 in site.data.14[0].items[1].items limit: 1 offset: 1 %}
-    <div class="column size-{{item0.size}}of3">
+    <div class="column size-1of3">
       <div class="box">
-        <a href="{{item0.path}}" alt="">
-          <p>{{ item0.title }}</p>
-          <img class="feat-image" src="/img/{{item0.img}}.png" alt="">
+        <a href="../guides/sync-gateway/deployment/index.html#built-in-log-rotation" alt="">
+          <p>Log rotation</p>
+          <img class="feat-image" src="img/logs.png" alt="">
         </a>
       </div>
     </div>
-    {% endfor %}
   </div>
   <h4>Deprecation notices</h4>
   <ul>
@@ -66,16 +78,14 @@ noedit: true
   </ul>
   <h4>Release notes</h4>
   <div class="tiles">
-    {% for item0 in site.data.14[0].items[1].items limit: 1 offset: 2 %}
     <div class="column size-1of3">
       <div class="box">
         <div class="container">
-          <a href="{{item0.path}}">
+          <a href="../references/sync-gateway/release-notes.html">
             <p>SG</p>
           </a>
         </div>
       </div>
     </div>
-    {% endfor %}
   </div>
 </div>

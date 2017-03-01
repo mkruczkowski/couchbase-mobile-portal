@@ -1,8 +1,6 @@
-- title: Introduction
+- title: What's new in 1.4
   open: true
-  items:
-    - title: What's new in version 1.4?
-      path: introduction/whats-new.html
+  path: whatsnew.html
 - title: Getting Started
   path: installation/index.html
   items:
@@ -222,8 +220,6 @@
           items:
             - title: iOS
               path: references/couchbase-lite/release-notes/iOS.html
-            - title: Android
-              path: references/couchbase-lite/release-notes/Android.html
             - title: Java
               path: references/couchbase-lite/release-notes/Java.html
             - title: .NET
