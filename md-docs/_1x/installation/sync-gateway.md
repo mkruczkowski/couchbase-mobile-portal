@@ -125,6 +125,12 @@ The config file and logs are located in ``.
 
 ## macOS
 
+Download the **tar.gz** file using `wget` or `curl`.
+
+```bash
+wget {{ site.sg_download_link }}{{ site.sg_package_name }}.tar.gz
+```
+
 Install sync_gateway by unpacking the tar.gz installer.
 
 ```bash
