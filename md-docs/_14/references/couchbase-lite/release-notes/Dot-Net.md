@@ -3,8 +3,6 @@ id: dot-net-release-notes
 title: .NET release notes
 ---
 
-As part of this release we had [128 commits](https://github.com/couchbase/couchbase-lite-net/compare/1.3.1...1.4.0) which resulted in [40 issues](https://github.com/couchbase/couchbase-lite-net/issues?milestone=15&state=closed) being closed.
-
 __API change__
 
 - An `isDeletion` property is now available on the `DatabaseChange` object to identify if a change is tombstone document.

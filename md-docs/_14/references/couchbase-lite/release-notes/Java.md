@@ -3,8 +3,6 @@ id: java-release-notes
 title: Java release notes
 ---
 
-As part of this release we had [110 commits](https://github.com/couchbase/couchbase-lite-java-core/compare/1.3.1...1.4.0) which resulted in [30 issues](https://github.com/couchbase/couchbase-lite-java-core/issues?milestone=13&state=closed) being closed.
-
 __API change__
 
 - An `isDeletion` property is now available on the `DatabaseChange` object to identify if a change is tombstone document.

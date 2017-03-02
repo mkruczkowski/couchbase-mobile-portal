@@ -3,8 +3,6 @@ id: sg-release-notes
 title: SG release notes
 ---
 
-As part of this release we had [120 commits](https://github.com/couchbase/sync_gateway/compare/1.3.1...1.4.0) which resulted in [34 issues](https://github.com/couchbase/sync_gateway/issues?milestone=19&state=closed) being closed.
-
 __New features__
 
 - [Sync Gateway Accelerator](../../guides/sync-gateway/accelerator.html)
