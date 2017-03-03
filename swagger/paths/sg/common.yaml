@@ -36,6 +36,20 @@
               type: array
               items:
                 $ref: '#/definitions/Success'
+      301:
+        description: Request failed with a forbidden error. This usually happens because the user requesting that document doesn't have access to it. Access to documents is granted to users through channels.
+        schema:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: The document ID that was requested
+            _removed:
+              type: boolean
+              default: true
+            _rev:
+              type: string
+              description: The revision number that was requested
 /{db}/_local/{local_doc}:
   parameters:
     - $ref: '#/parameters/db'
