@@ -11,6 +11,7 @@ host: localhost:4984
 # array of all schemes that your API supports
 schemes:
   - http
+  - https
 # will be prefixed to all paths
 basePath: /
 produces:
