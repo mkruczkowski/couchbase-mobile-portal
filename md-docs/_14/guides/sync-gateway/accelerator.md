@@ -140,6 +140,16 @@ Follow the steps below to update the Sync Gateway configuration file. It must be
 
 The installation of Sync Gateway with Accelerator is now complete. Couchbase Lite clients can continue replicating to the same endpoint as if nothing changed.
 
+## Configuration Reference
+
+A configuration file determines the runtime behavior of Sync Gateway Accelerator. Using a configuration file is the recommended approach for configuring Sync Gateway Accelerator, because you can provide values for all configuration properties.
+
+When specifying a configuration file, the command to run Sync Gateway Accelerator is:
+
+```
+$ sg_accel accel-config.json
+```
+
 <script>
 	window.configurl = 'https://cb-mobile.s3.amazonaws.com/mobile/1.4/configs/sg-accel.json';
 </script>

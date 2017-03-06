@@ -4,19 +4,20 @@ title: Bucket shadowing
 permalink: guides/sync-gateway/bucket-shadowing/index.html
 ---
 
+{% if site.version == '1.4' %}
+> **Deprecation notice:** Bucket shadowing is being deprecated in 1.4 and will be unsupported in an upcoming version (2.x) of Couchbase 
+Mobile. The recommended approach to perform operations on the bucket dedicated to Couchbase Mobile is to use the Sync Gateway REST API.
+{% else %}
 > **Warning:** The Bucket Shadowing feature exists in order to allow Couchbase Mobile to integrate with some Couchbase Server-based applications that are already in production. This feature comes with many limitations and constraints on its usage, and is not suitable for many of the scenarios where one may be tempted to use it.
+{% endif %}
 
-We **strongly** recommended using the Sync Gateway REST API for most --if not all-- integration use cases.
+We **strongly** recommended using the Sync Gateway REST API for most, if not all, integration use cases.
 
 ## Bucket Shadowing
 
 **Bucket Shadowing** allows the Sync Gateway to serve an existing Couchbase Server bucket, making the contents of that bucket syncable with mobile clients. Actually this isn't completely true -- rather than directly serving the bucket, the gateway manages its own "shadow" bucket that contains the same documents but with the extra revision history metadata it needs. (For complicated reasons it can't store that metadata directly in the original bucket, because your Couchbase app already writes to those documents and the changes would conflict.)
 
 Bucket shadowing is actually a different style of sync that operates between your app bucket and the gateway's shadow bucket. Every time your app changes a document, the gateway detects that and copies the change into its bucket as a new revision of the version-tracked document. And every time a mobile client revises a gateway document, the current revision is saved to your app bucket.
-
-## Availability
-
-Bucket shadowing was added on Jan 9 2014 (commit 70f92fd). It is _not_ available in beta 2.
 
 ## Configuration
 
@@ -39,7 +40,7 @@ You may also want to add the key `"Shadow"` to the top-level configuration's `"l
 
 When you start the gateway, it will run through the app bucket's history (its tap feed) copying any new or changed documents into the gateway database. Depending on how large the bucket is, this may take a while. (Unfortunately there's no way to bypass this on subsequent launches of the gateway, due to limitations of the tap feed implementation.)
 
-If you shut down the gateway (or it crashes), and changes are subsequently made to the app bucket, the gateway will find and apply those changes when it next starts up. However, the reverse situation doesn't work yet: if the app bucket becomes unavailable while the gateway is running, changes made to the gateway's database won't get propagated to the app bucket when it comes back. (Hopefully we can fix this before GA.)
+If you shut down the gateway (or it crashes), and changes are subsequently made to the app bucket, the gateway will find and apply those changes when it next starts up. However, the reverse situation doesn't work yet: if the app bucket becomes unavailable while the gateway is running, changes made to the gateway's database won't get propagated to the app bucket when it comes back.
 
 ## Limitations
 

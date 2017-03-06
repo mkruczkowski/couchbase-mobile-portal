@@ -30,6 +30,13 @@ __Bugs__
 - [__#1443__](https://github.com/couchbase/couchbase-lite-ios/issues/1443) Handle iOS file protection gracefully when in background
 - [__#1461__](https://github.com/couchbase/couchbase-lite-ios/issues/1461) ForestDB: Assertion failure in -[MYBackgroundMonitor beginBackgroundTaskNamed:]() MYBackgroundMonitor.m:66
 - [__#1467__](https://github.com/couchbase/couchbase-lite-ios/issues/1467) Memory leak caused by ref cycle between replicator and CBLRemoteSession
+- [__#1556__](https://github.com/couchbase/couchbase-lite-ios/issues/1556) Assertion failed: (_changesTimeout > 0)
+- [__#1557__](https://github.com/couchbase/couchbase-lite-ios/issues/1557) Exception caught in CBLDatabase transaction
+- [__#1558__](https://github.com/couchbase/couchbase-lite-ios/issues/1558) Not all updates propagating while under load
+- [__#1568__](https://github.com/couchbase/couchbase-lite-ios/issues/1568) Attachments failing to push after delete / create (ForestDB)
+- [__#1579__](https://github.com/couchbase/couchbase-lite-ios/issues/1579) [NSLock lock]: deadlock when deleting database (ForestDB)
+- [__#1580__](https://github.com/couchbase/couchbase-lite-ios/issues/1580) Wrong "reason" response for GET on purged documents
+- [__#1621__](https://github.com/couchbase/couchbase-lite-ios/issues/1621) OIDC failing with Grocery Sync when creating new google project
 
 __Deprecation notices__
 

@@ -27,21 +27,30 @@ __Bugs__
 - [__#1510__](https://github.com/couchbase/couchbase-lite-java-core/issues/1510) Mixing HashMap and TreeMap for properties in Document. HashMap allows to generate non-canonical JSON.
 - [__#1534__](https://github.com/couchbase/couchbase-lite-java-core/issues/1534) Push Replication Fails With createTarget Set
 - [__#1535__](https://github.com/couchbase/couchbase-lite-java-core/issues/1535) ForestDB Views Issue :Router: Router unable to route request to do_GET_DesignDocument(java.lang.NullPointerException)
+- [__#1539__](https://github.com/couchbase/couchbase-lite-java-core/issues/1539) Small load - ConnectionError: ('Connection aborted.', error(54, 'Connection reset by peer'))
 - [__#1540__](https://github.com/couchbase/couchbase-lite-java-core/issues/1540) _replicate REST API with one-shot returns immediately.
 - [__#1549__](https://github.com/couchbase/couchbase-lite-java-core/issues/1549) 1.4-12 ConnectionError: ('Connection aborted.', error(54, 'Connection reset by peer')) during doc add
 - [__#1550__](https://github.com/couchbase/couchbase-lite-java-core/issues/1550) Test Failure: testAndroid2MLimit
 - [__#1551__](https://github.com/couchbase/couchbase-lite-java-core/issues/1551) Test failure: testMultipleLiveQueries
 - [__#1552__](https://github.com/couchbase/couchbase-lite-java-core/issues/1552) P2P fails between android and macosx
 - [__#1553__](https://github.com/couchbase/couchbase-lite-java-core/issues/1553) Test Failure: testGetDocumentWithLargeJSON
+- [__#1557__](https://github.com/couchbase/couchbase-lite-java-core/issues/1557) List not syncing during test fest (Need to reproduce).
 - [__#1558__](https://github.com/couchbase/couchbase-lite-java-core/issues/1558) Listener returning different error codes for negative tests 1.3.1 vs 1.4
 - [__#1563__](https://github.com/couchbase/couchbase-lite-java-core/issues/1563) Database deletion failing with 1.4-25
 - [__#1564__](https://github.com/couchbase/couchbase-lite-java-core/issues/1564) P2P sanity test failing
 - [__#1575__](https://github.com/couchbase/couchbase-lite-java-core/issues/1575) SSL with allowSelfSignedSSLCertificates() method
+- [__#1576__](https://github.com/couchbase/couchbase-lite-java-core/issues/1576) [Functional Test] Socket timeout when pushing docs to LiteServ
+- [__#1578__](https://github.com/couchbase/couchbase-lite-java-core/issues/1578) Image attachment not sync'ing from .NET to Android
 - [__#1581__](https://github.com/couchbase/couchbase-lite-java-core/issues/1581) Replication failures when running Sync Gateway in distributed index
+- [__#1585__](https://github.com/couchbase/couchbase-lite-java-core/issues/1585) ForestDB + Encryption - SIGSEGV during database deletion
+- [__#1588__](https://github.com/couchbase/couchbase-lite-java-core/issues/1588) Investigate test_verify_open_revs_with_revs_limit_push_conflict failure
 - [__#1589__](https://github.com/couchbase/couchbase-lite-java-core/issues/1589) Investigate possible push replication issue
+- [__#1590__](https://github.com/couchbase/couchbase-lite-java-core/issues/1590) Investigate failure at client.stop_replication()
+- [__#1592__](https://github.com/couchbase/couchbase-lite-java-core/issues/1592) Find root cause of ConnectionError: ('Connection aborted.', error(54, 'Connection reset by peer'))
 - [__#1593__](https://github.com/couchbase/couchbase-lite-java-core/issues/1593) Missing changes on changes feed (Mac <- Android) pull replication
 - [__#1595__](https://github.com/couchbase/couchbase-lite-java-core/issues/1595) Database error with peer-2-peer-sanity test
 - [__#1597__](https://github.com/couchbase/couchbase-lite-java-core/issues/1597) P2P - ForestDB Error: forceInsert()
+- [__#1599__](https://github.com/couchbase/couchbase-lite-java-core/issues/1599) Updates not propagating to SQLite Client
 
 __Deprecation notices__
 

@@ -38,6 +38,7 @@ __Bugs__
 - [__#756__](https://github.com/couchbase/couchbase-lite-net/issues/756) Pusher does not report "Forbidden" errors
 - [__#757__](https://github.com/couchbase/couchbase-lite-net/issues/757) Replicator should not assume LastSequence is an integer
 - [__#765__](https://github.com/couchbase/couchbase-lite-net/issues/765) Not all docs replicating with p2p .NET pull replication
+- [__#767__](https://github.com/couchbase/couchbase-lite-net/issues/767) Changes feed skipping changes on rapid long poll
 - [__#772__](https://github.com/couchbase/couchbase-lite-net/issues/772) ManagementException in GetWindowsName() of Platform.cs
 - [__#773__](https://github.com/couchbase/couchbase-lite-net/issues/773) BrowseService's Dispose crash fix not merged to Master?
 - [__#776__](https://github.com/couchbase/couchbase-lite-net/issues/776) Replication.Stop() doesn't release sockets
@@ -51,6 +52,8 @@ __Bugs__
 - [__#804__](https://github.com/couchbase/couchbase-lite-net/issues/804) Attachment doesn't handle non-seekable streams gracefully
 - [__#806__](https://github.com/couchbase/couchbase-lite-net/issues/806) 1.4 SQLite returns incorrect reason on REST API Get to purged doc
 - [__#807__](https://github.com/couchbase/couchbase-lite-net/issues/807) Handle closed web sockets by reconnecting
+- [__#825__](https://github.com/couchbase/couchbase-lite-net/issues/825) Pull replication doesn't restart with web sockets
+- [__#826__](https://github.com/couchbase/couchbase-lite-net/issues/826) .NET not sending all docs to a client pull replication (p2p, SSL)
 
 __Deprecation notices__
 

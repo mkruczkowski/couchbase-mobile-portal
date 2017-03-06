@@ -101,21 +101,8 @@ The log rotation configuration is specified under the `logging` key. The followi
 
 As shown above, the `logging` property must contain a single named logging appender called `default`. Note that if the "logging" property is specified, it will override the top level `log` and `logFilePath` properties.
 
-|Property|Type|Description|
-|:-------|:---|:----------|
-|logFilePath|`string`|The path to the file to which the logs should be saved. There is no default.|
-|logKeys|`string`|The list of logging keys. Defaults to "HTTP". The `*` symbol represents all tags.|
-|logLevel|`string`|The level of logging. Possible values are "debug", "info", "warn", "error", "panic", "fatal".|
-|rotation|`object`|The log file may be rotated by defining a "rotation" sub document. See details in the table below.|
-
-The following table lists the available properties under the `rotation` object.
-
-|Property|Type|Description|
-|:-------|:---|:----------|
-|maxsize|`integer`|The maximum size in MB of the log file before it gets rotated. Defaults to 100 MB.|
-|maxage|`integer`|The maximum number of days to retain old log files. Defaults to not remove old log files.|
-|maxbackups|`integer`|The maximum number of old log files to retain. Defaults to all log files.|
-|localtime|`boolean`|If `true`, it uses the computer's local time to format the backup timestamp. Defaults to UTC.|
+The descriptions and default values for each logging property can be found on the [Sync Gateway configuration](../config-properties/index.html) 
+page.
 
 #### Example Output
 
