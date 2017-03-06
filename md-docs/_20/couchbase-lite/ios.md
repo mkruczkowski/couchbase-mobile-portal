@@ -39,7 +39,7 @@ In developer build #1:
 			<div class="box">
 				<div class="container">
 					<a href="https://www.couchbase.com/nosql-databases/downloads#couchbase-mobile" taget="_blank">
-						<p>Download Developer Build</p>
+						<p style="text-align: center;">Download Developer Build</p>
 					</a>
 				</div>
 			</div>
@@ -48,7 +48,7 @@ In developer build #1:
 			<div class="box">
 				<div class="container">
 					<a href="http://cb-mobile.s3.amazonaws.com/api-references/couchbase-lite-2.0DB1/index.html" taget="_blank">
-						<p>API References</p>
+						<p style="text-align: center;">API References</p>
 					</a>
 				</div>
 			</div>

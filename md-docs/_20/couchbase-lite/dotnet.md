@@ -40,7 +40,7 @@ When a support assembly is required, your app must call the relevant `Activate()
 
 ### How can I get it quickly?
 
-Add http://nuget.mobile.couchbase.com/nuget/Developer/ to your Nuget package sources and expect a new build approximately every 2 weeks!
+Add `http://nuget.mobile.couchbase.com/nuget/Developer/` to your Nuget package sources and expect a new build approximately every 2 weeks!
 
 ## Getting Started
 
@@ -49,23 +49,15 @@ Add http://nuget.mobile.couchbase.com/nuget/Developer/ to your Nuget package sou
 		<div class="column size-1of2">
 			<div class="box">
 				<div class="container">
-					<a href="https://www.couchbase.com/nosql-databases/downloads#couchbase-mobile" taget="_blank">
-						<p>Download Developer Build</p>
-					</a>
-				</div>
-			</div>
-		</div>
-		<div class="column size-1of2">
-			<div class="box">
-				<div class="container">
-					<a href="http://cb-mobile.s3.amazonaws.com/api-references/couchbase-lite-2.0DB1/index.html" taget="_blank">
-						<p>API References</p>
+					<a href="https://github.com/couchbase/couchbase-lite-net/releases/tag/2.0.0-db002" taget="_blank">
+						<p style="text-align: center;">API References</p>
 					</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<br><br>
 
 Couchbase Lite 2 for .NET is a bit more complicated to build than 1.x because it makes heavy use of compiled native libraries.
 

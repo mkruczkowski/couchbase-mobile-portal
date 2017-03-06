@@ -2,3 +2,5 @@
   items:
     - title: iOS
       path: couchbase-lite/ios.html
+    - title: .NET
+      path: couchbase-lite/dotnet.html
