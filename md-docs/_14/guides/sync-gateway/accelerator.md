@@ -122,15 +122,12 @@ Follow the steps below to update the Sync Gateway configuration file. It must be
           "bucket": "data_bucket",
           "channel_index": {
             "server": "http://localhost:8091",
-            "bucket": "channel_bucket",
-            "writer": false
+            "bucket": "channel_bucket"
           }
         }
       }
     }
     ```
-
-    Here, the `"writer": false` property specifies that this Sync Gateway instance doesn't persist the channel index to the Couchbase Server bucket - this task is already performed by the Accelerator instance. 
 
 2. Restart Sync Gateway with the updated configuration file.
 
