@@ -16,7 +16,7 @@
       path: installation/phonegap/index.html
     - title: Sync Gateway
       path: installation/sync-gateway/index.html
-- title: Training
+- title: Tutorial
   path: training/index.html
   items:
     - title: Design
