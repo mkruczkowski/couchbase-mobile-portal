@@ -11,21 +11,24 @@ Most of Couchbase Lite has been rewritten, based on what we've learned from impl
 
 * The core functionality is implemented in a C++ library known as Couchbase Lite Core, or LiteCore. This library is used on all platforms, eliminating a lot of code duplication. The result is more consistent behavior across platforms, and faster development of new features.
 * Much higher performance, thanks to LiteCore. Efficient code, and better algorithms and data storage schema, mean that Couchbase Lite 2.0 runs many times faster than 1.x. Performance will vary by platform and by operation, but we've seen large database insertion and query tasks run 5x faster on iOS.
-* Queries are now based on expressions, with semantics based on Couchbase Server's N1QL query language. This reduces the learning curve, compared to map/reduce, and makes it easier to create flexible queries. It's also a better fit with platform query APIs like LINQ and NSPredicate.
+* Queries are now based on expressions, with semantics based on Couchbase Server's N1QL query language. This reduces the learning curve, compared to map/reduce, and makes it easier to create flexible queries. It's also a better fit with platform query APIs like LINQ and NSPredicate. Version 2.0 will not support map/reduce views.
 * Full-text search is now available on all platforms.
 * The document API has changed significantly, reflecting feedback from developers. Document objects are mutable, so you can update properties incrementally and then save changes. We provide efficient typed accessors so you can get and set numeric/boolean values without the overhead of conversion to objects. In later preview releases we'll add a cross-platform object modeling API (comparable to CBLModel in iOS 1.x) that lets you map documents to native objects.
 * Conflict handling is much more direct. You provide conflict-resolver callbacks to control what happens when a save conflicts with a new change, or when the replicator pulls a new revision. Conflicts won't pile up invisibly causing scalability problems. (We will be providing canned conflict resolvers for common algorithms.)
 * We've made the API's concurrency rules explicit, and consistent, across all platforms. All Couchbase Lite objects are now bound to the thread they're created on; they can't be called re-entrantly. (This has always been the case in Objective-C.) This makes our code more efficient by avoiding the need for expensive synchronization/locking, and also prevents a lot of tricky concurrency bugs.
 
+#### New in developer build 2:
+
+* Nested JSON objects in documents are now represented by `CBLSubdocument` objects instead of the platform's regular dictionary / map type (e.g. NSDictionary.)
+
 ### What's Missing?
 
 Some of the new features aren't implemented yet, and some existing features are temporarily missing because they have yet to be adapted to the new core engine and APIs. Pardon our dust! We will be releasing new previews often, so if this one is too incomplete for you to evaluate or use, please check back later.
 
-In developer build #1:
+In developer build 2:
 
 * The replicator is unavailable. It needs to be adapted to the LiteCore APIs.
 * The REST API (Listener) is unavailable.
-* Map/reduce queries aren't supported. We are still evaluating whether to support them in 2.0; your feedback is welcome.
 * The database file format has changed, and there is not yet any support for upgrading/migrating 1.x databases. (The format is likely to change again, incompatibly, in future preview releases until we implement migration.)
 * The query engine doesn't support joins (querying across multiple documents) yet.
 * The query engine is missing a lot of N1QL functions.
@@ -136,11 +139,9 @@ In addition, as a convenience we offer NSDate accessors. Dates are a common data
 
 ### Subdocuments
 
->Note: Subdocuments aren't available yet in the first developer preview. Instead, nested JSON objects are exposed as NSDictionaries, as they were in 1.x. But expect this to change soon, hopefully in DP2.
+A *subdocument* is a nested document with its own set of named properties. In JSON terms it's a nested object. This isn't a new feature of the document model; it's just that we're exposing it in a more structured form. In Couchbase Lite 1.x you would see a nested object as a nested NSDictionary. In 2.0 we expose it as a CBLSubdocument object instead.
 
-A *subdocument* is a nested document with its own set of named properties. In JSON terms it's a nested object. This isn't a new feature of the document model; it's just that we're exposing it in a more structured form. In Couchbase Lite 1.x you would see a nested object as a nested NSDictionary. In 2.0 we expose it as a CBLSubDocument object instead.
-
-CBLSubDocument, like CBLDocument, inherits from CBLProperties. That means it has the same set of type-specific accessors discussed in the previous section. Like CBLDocument, it's mutable, so you can make changes in-place. The difference is that a subdocument doesn't have its own ID. It's not a first-class entity in the database, it's just a nested object within the document's JSON. It can't be saved individually; changes are persisted when you save its document.
+CBLSubdocument, like CBLDocument, inherits from CBLProperties. That means it has the same set of type-specific accessors discussed in the previous section. Like CBLDocument, it's mutable, so you can make changes in-place. The difference is that a subdocument doesn't have its own ID. It's not a first-class entity in the database, it's just a nested object within the document's JSON. It can't be saved individually; changes are persisted when you save its document.
 
 ### Attachments, AKA Blobs
 
