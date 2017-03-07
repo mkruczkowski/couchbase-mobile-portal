@@ -19,6 +19,8 @@ Most of Couchbase Lite has been rewritten, based on what we've learned from impl
 
 #### New in developer build 2:
 
+* A .NET version with a C# API is now available.
+* For Mac/iOS/tvOS we've added a native Swift API, which is more idiomatic than the automatic translation of the Objective-C API.
 * Nested JSON objects in documents are now represented by `CBLSubdocument` objects instead of the platform's regular dictionary / map type (e.g. NSDictionary.)
 
 ### What's Missing?
