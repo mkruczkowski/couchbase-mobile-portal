@@ -56,14 +56,14 @@ For a Mac OS target, you'll need to make sure the framework is copied to your ap
 2. In your `Podfile`, add the following.
 
     ```ruby
-    pod 'couchbase-lite-ios', '~> 1.3.1'
+    pod 'couchbase-lite-ios', '~> {{ site.package_version }}'
     ```
 
     (Optional) To enable encryption with SQLite, add the following subspec.
 
     ```ruby
-    pod 'couchbase-lite-ios', '~> 1.3.1'
-    pod 'couchbase-lite-ios/SQLCipher', '1.3.1'
+    pod 'couchbase-lite-ios', '~> {{ site.package_version }}'
+    pod 'couchbase-lite-ios/SQLCipher', '{{ site.package_version }}'
     ```
 
 3. From the command line, run `pod install`.
