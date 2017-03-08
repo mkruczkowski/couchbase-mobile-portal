@@ -228,6 +228,14 @@
         description: Indicates whether the specified end key should be included in the result.
         type: boolean
       - in: query
+        name: group
+        description: Group the results using the reduce function to a group or single row.
+        type: boolean
+      - in: query
+        name: group_level
+        description: Specify the group level to be used.
+        type: integer
+      - in: query
         name: key
         description: If this parameter is provided, return only document that match the specified key.
         type: string

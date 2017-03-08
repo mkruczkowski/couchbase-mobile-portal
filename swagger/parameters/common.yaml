@@ -106,6 +106,18 @@ feed:
   description: Default is 'normal'. Specifies type of change feed. Valid values are normal, continuous, longpoll, websocket.
   type: string
   default: 'normal'
+group:
+  in: query
+  name: group
+  description: Group the results using the reduce function to a group or single row.
+  type: boolean
+  default: false
+group_level:
+  in: query
+  name: group_level
+  description: Specify the group level to be used.
+  type: integer
+  required: false
 heartbeat:
   in: query
   name: heartbeat

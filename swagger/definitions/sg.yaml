@@ -63,7 +63,7 @@ QueryResult:
     offset:
       type: string
       description: Starting index of the returned rows.
-    row:
+    rows:
       type: array
       items:
         $ref: '#/definitions/QueryRow'
