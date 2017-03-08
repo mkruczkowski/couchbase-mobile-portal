@@ -129,6 +129,19 @@ ExpVars:
       sequence_reserves:
         type: object
         description: Number of times the database's lastSequence was incremented
+Forbidden:
+  type: object
+  properties:
+    error:
+      type: string
+      default: conflict
+    id:
+      type: string
+    reason:
+      type: string
+    status:
+      type: integer
+      default: 409
 LogTags:
   type: object
   properties:
