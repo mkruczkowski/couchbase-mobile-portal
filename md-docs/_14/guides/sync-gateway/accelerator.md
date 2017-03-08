@@ -111,11 +111,6 @@ Follow the steps below to update the Sync Gateway configuration file. It must be
     ```javascript
     {
       "log": ["HTTP+"],
-      "cluster_config": {
-        "server": "http://localhost:8091",
-        "data_dir": ".",
-        "bucket": "data_bucket"
-      },
       "databases": {
         "app_name": {
           "server": "http://localhost:8091",
