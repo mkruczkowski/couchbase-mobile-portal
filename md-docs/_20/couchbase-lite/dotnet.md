@@ -40,7 +40,7 @@ When a support assembly is required, your app must call the relevant `Activate()
 
 ### How can I get it quickly?
 
-Add `http://nuget.mobile.couchbase.com/nuget/Developer/` to your Nuget package sources and expect a new build approximately every 2 weeks!
+Add `http://mobile.nuget.couchbase.com/nuget/Developer/` to your Nuget package sources and expect a new build approximately every 2 weeks!
 
 ## Getting Started
 
