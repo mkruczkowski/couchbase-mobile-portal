@@ -1,0 +1,78 @@
+/{db}/:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - database
+    summary: Database info
+    description: |
+      This request retrieves information about the database.
+    responses:
+      200:
+        description: Request completed successfully.
+        schema:
+          $ref: '#/definitions/Database'
+      401:
+        description: Unauthorized. Login required.
+      404:
+        description: Not Found. Requested database not found.
+  post:
+    tags:
+      - document
+    operationId: post
+    summary: Create document
+    description: |
+      This request creates a new document in the specified database. You can either specify the document ID by including the _id in the request message body (the value must be a string), or let the software generate an ID.
+    parameters:
+      - in: body
+        name: body
+        description: The document body
+        schema:
+          type: object
+    responses:
+      201:
+        description: The document was written successfully
+        schema:
+          $ref: '#/definitions/Success'
+/{db}/_session:
+  parameters:
+    - $ref: '#/parameters/db'
+  post:
+    tags:
+      - session
+    summary: Create a user session
+    description: |
+      This request creates a new session in the specified database.
+    parameters:
+      - in: body
+        name: SessionBody
+        description: The message body is a JSON document that contains the following objects.
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Username of the user the session will be associated to.
+            password:
+              type: string
+              description: User password.
+    responses:
+      200:
+        description: Session successfully created. The Set-Cookie response header contains the session credentials.
+        schema:
+          $ref: '#/definitions/Session'
+  delete:
+    tags:
+      - session
+    summary: Delete a user session
+    description: |
+      This request deletes the session that currently authenticates the requests.
+    parameters:
+      - in: header
+        name: cookie
+        description: The cookie of the logged-in session.
+        required: true
+        type: string
+    responses:
+      200:
+        description: The session was successfuly removed.

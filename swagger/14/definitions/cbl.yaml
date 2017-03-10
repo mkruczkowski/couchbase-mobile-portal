@@ -1,0 +1,55 @@
+ActiveTasks:
+  type: object
+  properties:
+    continuous:
+      type: boolean
+      description: Indicates whether the task is for a continuous replication
+    error:
+      type: string
+      description: Error information
+    progress:
+      type: integer
+      description: Percentage of task completed
+    source:
+      type: string
+      description: Name of source database
+    status:
+      type: string
+      description: Task status
+    target:
+      type: string
+      description: Name of target database
+    task:
+      type: string
+      description: Session identifier
+    type:
+      type: string
+      description: Type of task. The type is always Replication.
+    x_active_requests:
+      type: array
+      description: Active requests
+      items:
+        type: string
+Document:
+  type: object
+  properties:
+    _id:
+      type: string
+      description: The document ID.
+    _rev:
+      type: string
+      description: Revision identifier of the parent revision the new one should replace. (Not used when creating a new document.)
+    _attachments:
+      type: object
+      description: List of attachments.
+      properties:
+        my_attachment_name:
+          type: object
+          description: Attachment body
+          properties:
+            content-type:
+              type: string
+              description: Content type of the attachment (i.e. image/png, text/plain).
+            data:
+              type: string
+              description: Base64 encoded attachment.

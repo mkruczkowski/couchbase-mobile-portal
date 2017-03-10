@@ -1,0 +1,249 @@
+access:
+  name: access
+  in: query
+  description: Indicates whether to include in the response a list of what access this document grants (i.e. which users it allows to access which channels.) This option may only be used from the admin port.
+  type: boolean
+  default: false
+active_only:
+  name: active_only
+  in: query
+  description: Default is false. When true, the changes response doesn't include either deleted documents, or notification for documents that the user no longer has access to.
+  type: boolean
+  default: false
+attachment:
+  in: path
+  name: attachment
+  description: Attachment name
+  type: string
+  required: true
+attachments:
+  in: query
+  name: attachments
+  description: Default is false. Include attachment bodies in response.
+  type: boolean
+  default: false
+atts_since:
+  name: atts_since
+  in: query
+  description: Include attachments only since specified revisions. Does not include attachments for specified revisions.
+  type: array
+  items:
+    type: string
+  required: false
+body:
+  name: body
+  in: body
+  description: The request body
+  schema:
+    type: object
+bulkget:
+  in: body
+  name: BulkGetBody
+  description: List of documents being requested. Each array element is an object that must contain an id property giving the document ID. It may contain a rev property if a specific revision is desired. It may contain an atts_since property (as in a single-document GET) to limit which attachments are sent.
+  schema:
+    type: object
+    properties:
+      docs:
+        type: array
+        items:
+          type: string
+channels:
+  in: query
+  name: channels
+  description: Indicates whether to include in the response a channels property containing an array of channels this document is assigned to. (Channels not accessible by the user making the request will not be listed.)
+  type: boolean
+  default: false
+channels_list:
+  in: query
+  name: channels
+  description: A comma-separated list of channel names. The response will be filtered to only documents in these channels. (This parameter must be used with the sync_gateway/bychannel filter parameter; see below.)
+  type: string
+  required: false
+db:
+  name: db
+  in: path
+  description: Database name
+  type: string
+  required: true
+ddoc:
+  name: ddoc
+  in: path
+  description: Design document name
+  type: string
+  required: true
+descending:
+  name: descending
+  in: query
+  description: Default is false. Return documents in descending order.
+  type: boolean
+  required: false
+doc:
+  name: doc
+  in: path
+  description: Document ID
+  type: string
+  required: true
+doc_ids:
+  in: query
+  name: doc_ids
+  description: A list of document IDs as a valid JSON array. The response will be filtered to only documents with these IDs. (This parameter must be used with the _doc_ids filter parameter; see below.)
+  type: array
+  items:
+    type: string
+endkey:
+  name: endkey
+  in: query
+  description: If this parameter is provided, stop returning records when the specified key is reached.
+  type: string
+  required: false
+feed:
+  in: query
+  name: feed
+  description: Default is 'normal'. Specifies type of change feed. Valid values are normal, continuous, longpoll, websocket.
+  type: string
+  default: 'normal'
+heartbeat:
+  in: query
+  name: heartbeat
+  description: Default is 0. Interval in milliseconds at which an empty line (CRLF) is written to the response. This helps prevent gateways from deciding the socket is idle and closing it. Only applicable to longpoll or continuous feeds. Overrides any timeout to keep the feed alive indefinitely. Setting to 0 results in no heartbeat.
+  type: integer
+  default: 0
+include_docs:
+  in: query
+  name: include_docs
+  description: Default is false. Indicates whether to include the associated document with each result. If there are conflicts, only the winning revision is returned.
+  type: boolean
+  default: false
+keys:
+  in: query
+  name: keys
+  description: Specify a list of document IDs.
+  type: array
+  items:
+    type: string
+  required: false
+limit:
+  in: query
+  name: limit
+  description: Limits the number of result rows to the specified value. Using a value of 0 has the same effect as the value 1.
+  type: integer
+local_doc:
+  in: path
+  name: local_doc
+  description: Local document IDs begin with _local/.
+  type: string
+  required: true
+new_edits:
+  name: new_edits
+  in: query
+  description: Default is true. Setting this to false indicates that the request body is an already-existing revision that should be directly inserted into the database, instead of a modification to apply to the current document. (This mode is used by the replicato.)
+  type: boolean
+  default: true
+open_revs:
+  name: open_revs
+  in: query
+  description: 'Option to fetch specified revisions of the document. The value can be `all` to fetch all leaf revisions or an array of revision numbers (i.e. open_revs=["rev1", "rev2"]). If this option is specified the response will be in multipart format. Use the `Accept: application/json` request header to get the result as a JSON object.'
+  type: array
+  items:
+    type: string
+  required: false
+rev:
+  name: rev
+  in: query
+  description: Revision identifier of the parent revision the new one should replace. (Not used when creating a new document.)
+  type: string
+  required: false
+revs:
+  in: query
+  name: revs
+  description: Default is false. Indicates whether to include a _revisions property for each document in the response, which contains a revision history of the document.
+  type: boolean
+  default: false
+role:
+  in: body
+  name: role
+  description: The message body is a JSON document that contains the following objects.
+  schema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the role that will be created
+      admin_channels:
+        type: array
+        description: Array of channel names to give the role access to
+        items:
+          type: string
+sessionid:
+  name: sessionid
+  in: path
+  description: Session id
+  type: string
+  required: true
+startkey:
+  name: startkey
+  in: query
+  description: Returns records starting with the specified key.
+  type: string
+  required: false
+since:
+  in: query
+  name: since
+  description: Starts the results from the change immediately after the given sequence ID. Sequence IDs should be considered opaque; they come from the last_seq property of a prior response.
+  type: integer
+  required: false
+style:
+  in: query
+  name: style
+  description: Default is 'main_only'. Number of revisions to return in the changes array. main_only returns the current winning revision, all_docs returns all leaf revisions including conflicts and deleted former conflicts.
+  type: string
+  default: 'main_only'
+timeout:
+  in: query
+  name: timeout
+  description: Default is 300000. Maximum period in milliseconds to wait for a change before the response is sent, even if there are no results. Only applicable for longpoll or continuous feeds. Setting to 0 results in no timeout.
+  type: integer
+  default: 300000
+update_seq:
+  in: query
+  name: update_seq
+  description: Default is false. Indicates whether to include the update_seq (document sequence ID) property in the response.
+  type: boolean
+  default: false
+user:
+  in: body
+  name: body
+  description: Request body
+  schema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the user that will be created
+      password:
+        type: string
+        description: Password of the user that will be created. Required, unless the allow_empty_password Sync Gateway per-database configuration value is set to true, in which case the password can be omitted.
+      admin_channels:
+        type: array
+        description: Array of channel names to give the user access to
+        items:
+          type: string
+          description: Channel name
+      admin_roles:
+        type: array
+        description: Array of role names to assign to this user
+        items:
+          type: string
+          description: Role name
+      email:
+        type: string
+        description: Email of the user that will be created.
+      disabled:
+        type: boolean
+        description: Boolean property to disable this user. The user will not be able to login if this property is set to true.
+view:
+  name: view
+  in: path
+  description: View name
+  type: string
+  required: true

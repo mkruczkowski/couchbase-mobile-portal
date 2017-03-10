@@ -1,0 +1,500 @@
+/:
+  get:
+    tags:
+      - server
+    summary: summary
+    description: description
+    responses:
+      200:
+        description: hello
+/_active_tasks:
+  get:
+    tags:
+      - server
+    summary: List of running tasks
+    description: This request retrieves a list of all tasks running on the server.
+    responses:
+      200:
+        description: 200 OK – Request completed successfully
+        schema:
+          $ref: '#/definitions/ActiveTasks'
+/_all_dbs:
+  get:
+    tags:
+      - server
+    summary: Get database names
+    description: This request retrieves the list of databases on the server.
+    responses:
+      200:
+        description: Request completed successfully
+        schema:
+          type: array
+          description: List of databases
+          items:
+            type: string
+            description: Database name
+/_replicate:
+  post:
+    tags:
+      - server
+    summary: Starts or cancels a database replication operation
+    description: |
+      This request starts or cancels a database replication operation.
+      
+      You can cancel continuous replications by adding the cancel field to the JSON request object and setting the value to true. Note that the structure of the request must be identical to the original for the cancellation request to be honoured. For example, if you requested continuous replication, the cancellation request must also contain the continuous field.
+    parameters:
+      - $ref: '#/parameters/replication'
+    responses:
+      200:
+        description: 200 OK
+        schema:
+          type: object
+          properties:
+            ok:
+              type: boolean
+              description: Indicates whether the replication operation was successful
+            session_id:
+              type: string
+              description: Session identifier
+      404:
+        description: |
+          The replication with the specified parameters does not exist. If you're trying to cancel a running replication but encounter this response it means that the parameters do not match the ones in the request that started the replication. Or that such a replication is not running. Use the /_active_tasks endpoint to retrieve the list of replications in progress.
+/_session:
+  get:
+    tags:
+      - server
+    summary: Retrieve session information
+    description: This request retrieves session information. Even though Couchbase Lite doesn’t support user logins, it implements a generic response to the _session API for compatibility with apps that might call it.
+    responses:
+      200:
+        description: 200 OK
+/_uuids:
+  get:
+    tags:
+      - server
+    summary: List of database identifiers
+    description: This request retrieves a list of the database identifiers.
+    responses:
+      200:
+        description: List of UUIDs
+        schema:
+          type: object
+          properties:
+            uuids:
+              type: string
+/{db}/:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - database
+    summary: Database info
+    description: |
+      This request retrieves information about the database.
+    responses:
+      200:
+        description: Request completed successfully.
+        schema:
+          type: object
+          properties:
+            db_name:
+              type: string
+              description: Name of the database
+            db_uuid:
+              type: integer
+              description: Database identifier
+            disk_format_version:
+              type: integer
+              description: Database schema version
+            disk_size:
+              type: integer
+              description: Total amount of data stored on the disk (in bytes)
+            instance_start_time:
+              type: string
+              description: Date and time the database was opened (in microseconds since 1 January 1970)
+            update_seq:
+              type: string
+              description: Number of updates to the database
+      401:
+        description: Unauthorized. Login required.
+      404:
+        description: Not Found. Requested database not found.
+  put:
+    tags:
+      - database
+    summary: Create database
+    description: This request creates a database.
+    responses:
+      201:
+        description: The database was created successfully.
+  post:
+    tags:
+      - document
+    operationId: post
+    summary: Create document
+    description: |
+      This request creates a new document in the specified database. You can either specify the document ID by including the _id in the request message body (the value must be a string), or let the software generate an ID.
+    parameters:
+      - in: body
+        name: body
+        description: The document body
+        schema:
+          type: object
+    responses:
+      201:
+        description: The document was written successfully
+        schema:
+          $ref: '#/definitions/Success'
+  delete:
+    tags:
+      - database
+    summary: Delete database
+    description: Delete database
+    responses:
+      200:
+        description: Success
+        schema:
+          $ref: '#/definitions/Success'
+/{db}/_all_docs:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - query
+    summary: All docs
+    description: |
+      This request returns a built-in view of all the documents in the database.
+    parameters:
+      - $ref: '#/parameters/conflicts'
+      - $ref: '#/parameters/descending'
+      - $ref: '#/parameters/endkey'
+      - $ref: '#/parameters/end_key'
+      - $ref: '#/parameters/endkey_docid'
+      - $ref: '#/parameters/end_key_doc_id'
+      - $ref: '#/parameters/include_docs'
+      - $ref: '#/parameters/inclusive_end'
+      - $ref: '#/parameters/key'
+      - $ref: '#/parameters/limit'
+      - $ref: '#/parameters/skip'
+      - $ref: '#/parameters/stale'
+      - $ref: '#/parameters/startkey'
+      - $ref: '#/parameters/start_key'
+      - $ref: '#/parameters/startkey_docid'
+      - $ref: '#/parameters/update_seq'
+    responses:
+      200:
+        description: Request completed successfully
+        schema:
+          type: object
+          properties:
+            offset:
+              type: string
+              description: Starting index of the returned rows.
+            rows:
+              type: array
+              description: Array of row objects.
+              items:
+                $ref: '#/definitions/QueryRow'
+            total_rows:
+              type: integer
+              description: Number of documents in the database. This number is not the number of rows returned.
+            update_seq:
+              type: integer
+              description: Sequence identifier of the underlying database that the view reflects.
+/{db}/_changes:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - query
+    parameters:
+      - $ref: '#/parameters/include_docs'
+      - $ref: '#/parameters/style'
+      - $ref: '#/parameters/descending'
+      - $ref: '#/parameters/limit'
+      - $ref: '#/parameters/since'
+      - $ref: '#/parameters/filter'
+      - $ref: '#/parameters/feed'
+      - $ref: '#/parameters/heartbeat'
+    summary: Changes
+    description: |
+      This request retrieves a sorted list of changes made to documents in the database, in time order of application. Each document appears at most once, ordered by its most recent change, regardless of how many times it's been changed.
+      This request can be used to listen for update and modifications to the database for post processing or synchronization. A continuously connected changes feed is a reasonable approach for generating a real-time log for most applications.
+    responses:
+      200:
+        description: Request completed successfully
+        schema:
+          type: object
+          properties:
+            last_seq:
+              type: integer
+              description: Last change sequence number
+            results:
+              type: array
+              description: List of changes to the database. See the following table for a list of fields in this object.
+              items:
+                $ref: '#/definitions/ChangesFeedRow'
+  post:
+    tags:
+      - database
+    parameters:
+      - $ref: '#/parameters/changes_body'
+    summary: Changes
+    description: |
+      Same as the GET /_changes request except the parameters are in the JSON body.
+    responses:
+      200:
+        description: Request completed successfully
+        schema:
+          $ref: '#/definitions/ChangesFeedRow'
+/{db}/{doc}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/doc'
+  get:
+    tags:
+      - document
+    operationId: get
+    parameters:
+      - $ref: '#/parameters/attachments'
+      - $ref: '#/parameters/atts_since'
+      - $ref: '#/parameters/open_revs'
+      - $ref: '#/parameters/revs'
+    summary: Get document
+    description: This request retrieves a document from a database.
+    responses:
+      200:
+        description: The message body contains the following objects in a JSON document.
+        schema:
+          $ref: '#/definitions/Success'
+  put:
+    tags:
+      - document
+    operationId: put
+    parameters:
+      - in: body
+        name: body
+        description: Request body
+        schema:
+          $ref: '#/definitions/Document'
+      - $ref: '#/parameters/new_edits'
+      - $ref: '#/parameters/rev'
+    summary: Create or update document
+    description: |
+      This request creates a new document or creates a new revision of an existing document. It enables you to specify the identifier for a new document rather than letting the software create an identifier. If you want to create a new document and let the software create an identifier, use the POST /db request.
+      If the document specified by doc does not exist, a new document is created and assigned the identifier specified in doc. If the document already exists, the document is updated with the JSON document in the message body and given a new revision.
+    responses:
+      200:
+        description: The response is a JSON document that contains the following objects
+        schema:
+          $ref: '#/definitions/Success'
+  delete:
+    tags:
+      - document
+    operationId: delete
+    parameters:
+      - $ref: '#/parameters/rev'
+    summary: Delete document
+    description: |
+      This request deletes a document from the database. When a document is deleted, the revision number is updated so the database can track the deletion in synchronized copies.
+    responses:
+      200:
+        description: Document successfully removed
+        schema:
+          $ref: '#/definitions/Success'
+/{db}/_design/{ddoc}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/ddoc'
+  get:
+    tags:
+      - query
+    summary: Get Views of a design document
+    description: |
+      Query a design document.
+    responses:
+      200:
+        description: Views for design document
+        schema:
+          type: object
+          properties:
+            my_view_name:
+              $ref: '#/definitions/View'
+  put:
+    tags:
+      - query
+    summary: Update views of a design document
+    parameters:
+      - in: body
+        name: body
+        description: The request body
+        required: false
+        schema:
+          $ref: "#/definitions/View"
+    responses:
+      201:
+        description: Successful operation
+        schema:
+          $ref: '#/definitions/Success'
+  delete:
+    tags:
+      - query
+    summary: Delete design document
+    description: |
+      Delete a design document.
+    responses:
+      200:
+        description: The status
+        schema:
+          type: object
+          items:
+            $ref: '#/definitions/Design'
+      default:
+        description: Unexpected error
+        schema:
+          $ref: '#/definitions/Error'
+/{db}/_design/{ddoc}/_view/{view}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/ddoc'
+    - $ref: '#/parameters/view'
+  get:
+    tags:
+      - query
+    summary: Query a view
+    description: |
+      Query the view on a the design document ddoc
+    parameters:
+      - in: query
+        name: conflicts
+        description: Include conflict information in the response. This parameter is ignored if the include_docs parameter is false.
+        type: boolean
+      - in: query
+        name: descending
+        description: Return documents in descending order.
+        type: boolean
+      - in: query
+        name: endkey
+        description: If this parameter is provided, stop returning records when the specified key is reached.
+        type: string
+      - in: query
+        name: end_key
+        description: Alias for the endkey parameter.
+        type: string
+      - in: query
+        name: endkey_docid
+        description: If this parameter is provided, stop returning records when the specified document identifier is reached.
+        type: string
+      - in: query
+        name: end_key_doc_id
+        description: Alias for the endkey_docid parameter.
+        type: string
+      - in: query
+        name: group_level
+        description: The group level of the query
+        type: integer
+      - in: query
+        name: include_docs
+        description: Indicates whether to include the full content of the documents in the response.
+        type: boolean
+      - in: query
+        name: inclusive_end
+        description: Indicates whether the specified end key should be included in the result.
+        type: boolean
+      - in: query
+        name: key
+        description: If this parameter is provided, return only document that match the specified key.
+        type: string
+      - in: query
+        name: limit
+        description: If this parameter is provided, return only the specified number of documents.
+        type: integer
+      - in: query
+        name: prefix_match_level
+        description: The level
+        type: integer
+      - in: query
+        name: skip
+        description: If this parameter is provided, skip the specified number of documents before starting to return results.
+        type: integer
+      - in: query
+        name: stale
+        description: Allow the results from a stale view to be used, without triggering a rebuild of all views within the encompassing design document. Valid values are ok and update_after.
+        type: string
+      - in: query
+        name: startkey
+        description: If this parameter is provided, return documents starting with the specified key.
+        type: string
+      - in: query
+        name: start_key
+        description: Alias for startkey param.
+        type: string
+      - in: query
+        name: startkey_docid
+        description: If this parameter is provided, return documents starting with the specified document identifier.
+        type: string
+      - in: query
+        name: update_seq
+        description: Indicates whether to include the update_seq property in the response.
+        type: boolean
+    responses:
+      200:
+        description: Query results
+        schema:
+          type: object
+          properties:
+            offset:
+              type: string
+              description: Starting index of the returned rows.
+            row:
+              type: array
+              items:
+                $ref: '#/definitions/QueryRow'
+            total_rows:
+              type: integer
+              description: Number of documents in the database. This number is not the number of rows returned.
+  post:
+    tags:
+      - query
+    summary: Query a view
+    description: |
+      Executes the specified view function from the specified design document. Unlike GET /{db}/{design-doc-id}/_view/{view} for accessing views, the POST method supports the specification of explicit keys to be retrieved from the view results. The remainder of the POST view functionality is identical to the GET /{db}/{design-doc-id}/_view/{view} API.
+    parameters:
+      - in: body
+        name: keys
+        description: List of identifiers of the documents to retrieve
+        schema:
+          type: array
+          items:
+            type: string
+    responses:
+      200:
+        description: 200 OK
+/{db}/_purge:
+  parameters:
+   - $ref: '#/parameters/db'
+  post:
+   tags:
+     - document
+   summary: Purge document
+   description: |
+     When an application deletes a document a tombstone revision is created, over time the number of tombstones can become significant. Tombstones allow document deletions to be propagated to other clients via replication. For some applications the replication of a tombstone may not be useful after a period of time. The purge command provides a way to remove the tombstones from a Sync Gateway database, recovering storage space and reducing the amount of data replicated to clients.
+   parameters:
+     - in: body
+       name: body
+       description: The message body is a JSON document that contains the following objects.
+       schema:
+         $ref: '#/definitions/PurgeBody'
+   responses:
+     200:
+       description: OK – The purge operation was successful
+       schema:
+         type: object
+         description: Response object
+         properties:
+           a_doc_id:
+             type: array
+             description: Contains one property for each document ID successfully purged, the property key is the "docID" and the property value is a list containing the single entry "*".
+             items:
+               type: string
+               description: Revision ID that was purged

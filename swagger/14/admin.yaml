@@ -1,0 +1,35 @@
+# this is an example of the Sync Gateway API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: Sync Gateway
+  description: |
+    Documentation for the Sync Gateway Admin REST API. This page is generated from the Sync Gateway Admin Swagger spec, the exact same information is also available at [developer.couchbase.com/mobile/swagger/sync-gateway-admin](http://developer.couchbase.com/mobile/swagger/sync-gateway-admin/).
+  version: '1.4'
+# the domain of the service
+host: localhost:4985
+# array of all schemes that your API supports
+schemes:
+  - http
+  - https
+# will be prefixed to all paths
+basePath: /
+consumes:
+  - application/json
+produces:
+  - application/json
+################################################################################
+#                                   Parameters                                 #
+################################################################################
+parameters:
+  $ref: ./parameters/index.yaml
+################################################################################
+#                                   Paths                                      #
+################################################################################
+paths:
+  $ref: ./paths/index.yaml
+################################################################################
+#                                 Definitions                                  #
+################################################################################
+definitions:
+  $ref: ./definitions/index.yaml

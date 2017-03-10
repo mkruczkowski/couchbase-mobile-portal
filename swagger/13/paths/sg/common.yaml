@@ -1,0 +1,484 @@
+/:
+  get:
+    tags:
+      - server
+    summary: Server
+    description: |
+      Returns meta-information about the server.
+    responses:
+      200:
+        description: Meta-information about the server.
+        schema:
+          $ref: '#/definitions/Server'
+/_replicate:
+  post:
+    tags:
+      - server
+    summary: Starts or cancels a database replication operation
+    description: |
+      This request starts or cancels a database replication operation.
+      
+      You can cancel continuous replications by adding the cancel field to the JSON request object and setting the value to true. Note that the structure of the request must be identical to the original for the cancellation request to be honoured. For example, if you requested continuous replication, the cancellation request must also contain the continuous field.
+    parameters:
+      - $ref: '#/parameters/replication'
+    responses:
+      200:
+        description: 200 OK
+        schema:
+          $ref: '#/definitions/Replication'
+/{db}/_bulk_get:
+  parameters:
+    - $ref: '#/parameters/db'
+  post:
+    tags:
+      - database
+    summary: Bulk get
+    description: |
+      This request returns any number of documents, as individual bodies in a MIME multipart response.
+      Each enclosed body contains one requested document. The bodies appear in the same order as in the request, but can also be identified by their X-Doc-ID and X-Rev-ID headers.
+      A body for a document with no attachments will have content type application/json and contain the document itself.
+      A body for a document that has attachments will be written as a nested multipart/related body. Its first part will be the document's JSON, and the subsequent parts will be the attachments (each identified by a Content-Disposition header giving its attachment name.)
+    parameters:
+      - $ref: '#/parameters/revs'
+      - $ref: '#/parameters/attachments'
+      - $ref: '#/parameters/bulkget'
+    responses:
+      200:
+        description: Request completed successfully
+        schema:
+          type: object
+          properties:
+            docs:
+              type: array
+              items:
+                $ref: '#/definitions/Success'
+/{db}/_local/{local_doc}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/local_doc'
+  get:
+    tags:
+      - document
+    summary: Get local doc
+    description: |
+      This request retrieves a local document. Local document IDs begin with _local/. Local documents are not replicated or indexed, don't support attachments, and don't save revision histories. In practice they are almost only used by Couchbase Lite's replicator, as a place to store replication checkpoint data.
+    responses:
+      200:
+        description: The message body contains the following objects in a JSON document.
+        schema:
+          $ref: '#/definitions/Success'
+  put:
+    tags:
+      - document
+    summary: Create or update a local document
+    description: |
+      This request creates or updates a local document. Local document IDs begin with _local/. Local documents are not replicated or indexed, don't support attachments, and don't save revision histories. In practice they are almost only used by the client's replicator, as a place to store replication checkpoint data.
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/Success'
+  delete:
+    tags:
+      - document
+    summary: Delete a local document
+    description: |
+      This request deletes a local document. Local document IDs begin with _local/. Local documents are not replicated or indexed, don't support attachments, and don't save revision histories. In practice they are almost only used by Couchbase Lite's replicator, as a place to store replication checkpoint data.
+    parameters:
+      - $ref: '#/parameters/rev'
+      - $ref: '#/parameters/batch'
+    responses:
+      200:
+        description: Document successfully removed
+        schema:
+          $ref: '#/definitions/Success'
+/{db}/_changes:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - database
+    parameters:
+      - $ref: '#/parameters/limit'
+      - $ref: '#/parameters/style'
+      - $ref: '#/parameters/active_only'
+      - $ref: '#/parameters/include_docs'
+      - $ref: '#/parameters/filter'
+      - $ref: '#/parameters/channels_list'
+      - $ref: '#/parameters/doc_ids'
+      - $ref: '#/parameters/feed'
+      - $ref: '#/parameters/since'
+      - $ref: '#/parameters/heartbeat'
+      - $ref: '#/parameters/timeout'
+    summary: Changes
+    description: |
+      This request retrieves a sorted list of changes made to documents in the database, in time order of application. Each document appears at most once, ordered by its most recent change, regardless of how many times it's been changed.
+      This request can be used to listen for update and modifications to the database for post processing or synchronization. A continuously connected changes feed is a reasonable approach for generating a real-time log for most applications.
+    responses:
+      200:
+        description: Request completed successfully
+        schema:
+          $ref: '#/definitions/Changes'
+  post:
+    tags:
+      - database
+    parameters:
+      - $ref: '#/parameters/changes_body'
+    summary: Changes
+    description: |
+      Same as the GET /_changes request except the parameters are in the JSON body.
+    responses:
+      200:
+        description: Request completed successfully
+        schema:
+          $ref: '#/definitions/Changes'
+/{db}/{doc}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/doc'
+  get:
+    tags:
+      - document
+    parameters:
+      - $ref: '#/parameters/attachments'
+      - $ref: '#/parameters/atts_since'
+      - $ref: '#/parameters/open_revs'
+      - $ref: '#/parameters/revs'
+      - $ref: '#/parameters/show_exp'
+    summary: Get document
+    description: This request retrieves a document from a database.
+    responses:
+      200:
+        description: The message body contains the following objects in a JSON document.
+        schema:
+          $ref: '#/definitions/Success'
+  put:
+    tags:
+      - document
+    parameters:
+      - in: body
+        name: Document
+        description: Request body
+        schema:
+          $ref: '#/definitions/Document'
+      - $ref: '#/parameters/new_edits'
+      - $ref: '#/parameters/rev'
+    summary: Create or update document
+    description: |
+      This request creates a new document or creates a new revision of an existing document. It enables you to specify the identifier for a new document rather than letting the software create an identifier. If you want to create a new document and let the software create an identifier, use the POST /db request.
+      If the document specified by doc does not exist, a new document is created and assigned the identifier specified in doc. If the document already exists, the document is updated with the JSON document in the message body and given a new revision.
+    responses:
+      200:
+        description: The response is a JSON document that contains the following objects
+        schema:
+          $ref: '#/definitions/Success'
+  delete:
+    tags:
+      - document
+    parameters:
+      - $ref: '#/parameters/rev'
+    summary: Delete document
+    description: |
+      This request deletes a document from the database. When a document is deleted, the revision number is updated so the database can track the deletion in synchronized copies.
+    responses:
+      200:
+        description: Document successfully removed
+        schema:
+          $ref: '#/definitions/Success'
+/{db}/_design/{ddoc}/_view/{view}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/ddoc'
+    - $ref: '#/parameters/view'
+  get:
+    tags:
+      - query
+    summary: Query a view
+    description: |
+      Query a view on a design document. This endpoint is only accessible if you have enabled views in the Sync Gateway configuration file (see [this guide](/documentation/mobile/current/develop/guides/sync-gateway/views/index.html) for more information on this topic).
+    parameters:
+      - in: query
+        name: conflicts
+        description: Include conflict information in the response. This parameter is ignored if the include_docs parameter is false.
+        type: boolean
+      - in: query
+        name: descending
+        description: Return documents in descending order.
+        type: boolean
+      - in: query
+        name: endkey
+        description: If this parameter is provided, stop returning records when the specified key is reached.
+        type: string
+      - in: query
+        name: end_key
+        description: Alias for the endkey parameter.
+        type: string
+      - in: query
+        name: endkey_docid
+        description: If this parameter is provided, stop returning records when the specified document identifier is reached.
+        type: string
+      - in: query
+        name: end_key_doc_id
+        description: Alias for the endkey_docid parameter.
+        type: string
+      - in: query
+        name: include_docs
+        description: Indicates whether to include the full content of the documents in the response.
+        type: boolean
+      - in: query
+        name: inclusive_end
+        description: Indicates whether the specified end key should be included in the result.
+        type: boolean
+      - in: query
+        name: key
+        description: If this parameter is provided, return only document that match the specified key.
+        type: string
+      - in: query
+        name: limit
+        description: If this parameter is provided, return only the specified number of documents.
+        type: integer
+      - in: query
+        name: skip
+        description: If this parameter is provided, skip the specified number of documents before starting to return results.
+        type: integer
+      - in: query
+        name: stale
+        description: Allow the results from a stale view to be used, without triggering a rebuild of all views within the encompassing design document. Valid values are ok and update_after.
+        type: string
+      - in: query
+        name: startkey
+        description: If this parameter is provided, return documents starting with the specified key.
+        type: string
+      - in: query
+        name: start_key
+        description: Alias for startkey param.
+        type: string
+      - in: query
+        name: startkey_docid
+        description: If this parameter is provided, return documents starting with the specified document identifier.
+        type: string
+      - in: query
+        name: update_seq
+        description: Indicates whether to include the update_seq property in the response.
+        type: boolean
+    responses:
+      200:
+        description: Query results
+        schema:
+          $ref: '#/definitions/QueryResult'
+  post:
+    tags:
+      - query
+    summary: Query a view
+    description: |
+      Executes the specified view function from the specified design document. Unlike GET /{db}/{design-doc-id}/_view/{view} for accessing views, the POST method supports the specification of explicit keys to be retrieved from the view results. The remainder of the POST view functionality is identical to the GET /{db}/{design-doc-id}/_view/{view} API.
+    parameters:
+      - in: body
+        name: keys
+        description: List of identifiers of the documents to retrieve
+        schema:
+          type: array
+          items:
+            type: string
+    responses:
+      200:
+        description: 200 OK
+/{db}/_all_docs:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+     - query
+    summary: All docs
+    description: |
+      This request returns a built-in view of all the documents in the database.
+    parameters:
+      - $ref: '#/parameters/access'
+      - $ref: '#/parameters/channels'
+      - $ref: '#/parameters/include_docs'
+      - $ref: '#/parameters/revs'
+      - $ref: '#/parameters/update_seq'
+      - $ref: '#/parameters/limit'
+      - $ref: '#/parameters/keys'
+      - $ref: '#/parameters/startkey'
+      - $ref: '#/parameters/endkey'
+    responses:
+      200:
+        description: Query results
+        schema:
+          $ref: '#/definitions/QueryResult'
+  post:
+    tags:
+      - query
+    summary: All docs
+    description: |
+      This request retrieves specified documents from the database.
+    parameters:
+      - $ref: '#/parameters/access'
+      - $ref: '#/parameters/channels'
+      - $ref: '#/parameters/include_docs'
+      - $ref: '#/parameters/revs'
+      - $ref: '#/parameters/update_seq'
+      - in: body
+        name: body
+        description: Request body
+        schema:
+          $ref: '#/definitions/AllDocs'      
+    responses:
+      200:
+        description: Query results
+        schema:
+          $ref: '#/definitions/QueryResult'
+/{db}/_oidc:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - auth
+    summary: OpenID Connect Authentication.
+    description: |
+      Called by clients to initiate the OIDC Authorization Code flow. 
+    parameters:
+      - in: query
+        name: offline
+        description: When true, requests a refresh token from the OP. Sets access_type=offline and prompt=consent on the redirect to the OP. Secure clients should set offline=true and persist the returned refresh token to secure storage.
+        type: boolean
+        required: false
+      - in: query
+        name: provider
+        description: OpenId Connect provider to be used for authentication, from the list of providers defined in the Sync Gateway Config. If not specified, will attempt to authenticate using the default provider.
+        type: string
+        required: false
+    responses:
+      302:
+        description: Redirect to the requested OpenID Connect provider for authentication. Redirect link is returned in the Location header.
+      400:
+        description: Bad request.  Reason is returned as "OpenID Connect not configured for database default".  If a provider was specified in the request, that provider was not defined in the Sync Gateway config.  If no provider was specified, OpenID Connect is not configured in the Sync Gateway config.
+      500:
+        description: Server Error.  Sync Gateway is unable to connect and validate the OpenID Connect provider requested.  
+/{db}/_oidc_callback:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - auth
+    summary: OpenID Connect Authentication callback.
+    description: |
+      Sync Gateway callback URL that clients are redirected to by the OpenID Connect provider. 
+    parameters:
+      - in: query
+        name: code
+        description: OpenID Connect Authorization code. 
+        type: string
+        required: true
+      - in: query
+        name: provider
+        description: OpenId Connect provider to be used for authentication, from the list of providers defined in the Sync Gateway Config. If not specified, will attempt to authenticate using the default provider.
+        type: string
+        required: false
+    responses:
+      200:
+        description: Successful OpenID Connect authentication.
+        schema:
+          type: object
+          properties:
+            id_token: 
+              type: string
+              description: OpenID Connect ID token
+            refresh_token:
+              type: string
+              description: OpenID Connect refresh token
+            session_id:
+              type: string
+              description: Sync Gateway session token
+            name: 
+              type: string
+              description: Sync Gateway username 
+            access_token:
+              type: string
+              description: OpenID Connect access token
+            token_type:
+              type: string
+              description: OpenID Connect token type
+            expires_in:
+              type: number
+              description: TTL for id_token
+      400:
+        description: Bad request.  
+      401:
+        description: Authentication failed.  Reason returned in the response body.
+/{db}/_oidc_challenge:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - auth
+    summary: OpenID Connect Authentication.
+    description: |
+      Called by clients to initiate the OIDC Authorization Code flow. 
+    parameters:
+      - in: query
+        name: offline
+        description: When true, requests a refresh token from the OP. Sets access_type=offline and prompt=consent on the redirect to the OP. Secure clients should set offline=true and persist the returned refresh token to secure storage.
+        type: boolean
+        required: false
+      - in: query
+        name: provider
+        description: OpenId Connect provider to be used for authentication, from the list of providers defined in the Sync Gateway Config. If not specified, will attempt to authenticate using the default provider.
+        type: string
+        required: false
+    responses:
+      302:
+        description: Redirect to the requested OpenID Connect provider for authentication. Redirect link is returned in the Location header.
+      400:
+        description: Bad request.  Reason is returned as "OpenID Connect not configured for database default".  If a provider was specified in the request, that provider was not defined in the Sync Gateway config.  If no provider was specified, OpenID Connect is not configured in the Sync Gateway config.
+      500:
+        description: Server Error.  Sync Gateway is unable to connect and validate the OpenID Connect provider requested. 
+/{db}/_oidc_refresh:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - auth
+    summary: OpenID Connect refresh.
+    description: |
+      Used to obtain a new OpenID Connect ID token based on the provided refresh token.
+    parameters:
+      - in: query
+        name: refresh_token
+        description: OpenID Connect refresh token. 
+        type: string
+        required: true
+      - in: query
+        name: provider
+        description: OpenId Connect provider to be used for authentication, from the list of providers defined in the Sync Gateway Config. If not specified, will attempt to authenticate using the default provider.
+        type: string
+        required: false
+    responses:
+      200:
+        description: Successful OpenID Connect authentication.
+        schema:
+          type: object
+          properties:
+            id_token: 
+              type: string
+              description: OpenID Connect ID token
+            session_id:
+              type: string
+              description: Sync Gateway session token
+            name: 
+              type: string
+              description: Sync Gateway username 
+            access_token:
+              type: string
+              description: OpenID Connect access token
+            token_type:
+              type: string
+              description: OpenID Connect token type
+            expires_in:
+              type: number
+              description: TTL for id_token
+      400:
+        description: Bad request.  
+      401:
+        description: Authentication failed.  Unable to refresh token.
