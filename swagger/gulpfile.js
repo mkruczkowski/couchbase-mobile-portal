@@ -62,19 +62,19 @@ gulp.task('paths-sg-admin', function () {
 
 gulp.task('public', ['params-sg', 'definitions-sg', 'paths-sg-public'], function () {
   return gulp.src(version + 'public.yaml')
-    .pipe(swagger('public.json'))
+    .pipe(swagger('sync-gateway-public.json'))
     .pipe(gulp.dest('tmp'))
 });
 
 gulp.task('admin', ['params-sg', 'definitions-sg', 'paths-sg-admin'], function () {
   return gulp.src(version + 'admin.yaml')
-    .pipe(swagger('admin.json'))
+    .pipe(swagger('sync-gateway-admin.json'))
     .pipe(gulp.dest('tmp'))
 });
 
 gulp.task('cbl', ['params-cbl', 'definitions-cbl', 'paths-cbl'], function () {
   return gulp.src(version + 'cbl.yaml')
-    .pipe(swagger('cbl.json'))
+    .pipe(swagger('couchbase-lite.json'))
     // run the swagger js code
     .pipe(gulp.dest('tmp'))
 });
