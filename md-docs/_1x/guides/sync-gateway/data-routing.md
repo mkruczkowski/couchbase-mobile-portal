@@ -158,9 +158,26 @@ function (doc, oldDoc) {
 }
 ```
 
-## Troubleshooting channels
+## Special channels
 
-If documents aren't being synced correctly, it may be that they're not in the proper channels. Or the users may not have access to the channels. Here are some ways to check.
+There are a two special channels that are automatically created when Sync Gateway starts:
+
+- The public channel, written as `!` in the sync function. Documents added to this channel are visible to any user (i.e all users are automatically granted access to the `!` channel). This channel can be used as a public distribution channel.
+- The all docs channel, written as `*` in the sync function. All documents are added to this channel. So any user that is granted access to the `*` channel can access all the documents in the database. A user can be given access to the all docs channel through the sync function or in the [configuration file](../config-properties/index.html#foo_user).
+
+The following Sync Function maps the document to the public channel if it contains an `isPublic` property set to true and grants users with the 'admin' role access to the all docs channel.
+
+```javascript
+function (doc, oldDoc) {
+	if (doc.isPublic) {
+		channel('!');
+	}
+	if (doc.type == 'user') {
+		requireRole('admin');
+		access(doc.username, '*');
+	}
+}
+```
 
 ### Inspecting document channels
 
