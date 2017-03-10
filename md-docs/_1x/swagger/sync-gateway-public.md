@@ -2,6 +2,7 @@
 id: sync-gateway-public
 title: Sync Gateway Public REST API
 permalink: references/sync-gateway/rest-api/index.html
+swagger: true
 ---
 
 The API explorer below groups all the endpoints by functionality. You can click on a label to expand the list of endpoints.

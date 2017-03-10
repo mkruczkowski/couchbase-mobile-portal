@@ -30,8 +30,10 @@
           <div class="story">
             <div class="body">
               <link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/cb-docs-assets/styles.css">
-              {% if page.noedit != true %}
-              <a class="edit-page-link" href="https://github.com/couchbaselabs/couchbase-mobile-portal/tree/master/md-docs/{{ page.path }}" target="_blank">Edit on GitHub</a>
+              {% if page.swagger == true %}
+                <a class="edit-page-link" href="https://github.com/couchbaselabs/couchbase-mobile-portal/tree/master/swagger" target="_blank">Edit on GitHub</a>
+              {% elsif page.noedit != true %}
+                <a class="edit-page-link" href="https://github.com/couchbaselabs/couchbase-mobile-portal/tree/master/md-docs/{{ page.path }}" target="_blank">Edit on GitHub</a>
               {% endif %}
 
 

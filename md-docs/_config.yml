@@ -30,11 +30,6 @@ defaults:
       type: '20'
     values:
       layout: ready
-  - scope:
-      path: '_1x/swagger'
-      type: 1x
-    values:
-      layout: swagger
 
 # Build settings
 #markdown: kramdown
