@@ -10,15 +10,9 @@ Sync Gateway uses channels to make it easy to share a database between a large n
 - Authorize users to access documents.
 - Minimize the amount of data synced down to devices.
 
-A replication from Sync Gateway specifies a set of channels to replicate. Documents that do not belong to any of the specified channels are ignored (even if the user has access to them).
-
-You do not need to register or preassign channels. Channels come into existence as documents are assigned to them. Channels with no documents assigned to them are empty.
-
-Valid channel names consist of text letters [A–Z, a–z], digits [0–9], and a few special characters [= + / . , _ @]. The empty string is not allowed. The special channel name * denotes all channels. Channel names are compared literally—the comparison is case and diacritical sensitive.
-
 ## Introduction to channels
 
-In the Sync Gateway, a **channel** is like a combination of a tag and a message-queue. Channels have relationships to 
+In Sync Gateway, a **channel** is like a combination of a tag and a message-queue. Channels have relationships to
 both documents and users:
 
 - Every document is associated with a set of channels. From the document's perspectives, the channels are like tags that can be used to identify its type, purpose, accessibility, etc. The app-defined sync function is responsible for assigning every incoming document revision a set of channels as it's saved to the database.
@@ -27,13 +21,9 @@ both documents and users:
 
 - A Couchbase Lite "pull" replication can optionally specify what channels it wants to receive documents from. (If it doesn't, it gets all channels the user has access to.) Client apps can use this ability to intelligently sync with a subset of the available documents from the database.
 
-There's not much to a channel besides its name. Channels don't have to be pre-configured; a channel comes into existence simply by being assigned to a document or a user/role. Channel names are a sequence of one or more (Unicode) letters, digits, and any of the punctuation characters `-+=/_.@`. Channel names are case-sensitive.
+There's not much to a channel besides its name. Channels come into existence as documents are assigned to them. Channels with no documents assigned to them are empty.
 
-There is a special channel name `*` that's treated as a wild-card:
-
-- All documents are automatically tagged with `*`.
-- A user/role with access to `*` can read any document in the database.
-- A client request to sync with `*` means to receive documents in all channels available to the user (which is the same as not specifying channels at all.)
+Valid channel names consist of text letters `[A–Z, a–z]`, digits `[0–9]`, and a few special characters 	`[= + / . , _ @]`. Channel names are case-sensitive.
 
 ## Developing channels
 
