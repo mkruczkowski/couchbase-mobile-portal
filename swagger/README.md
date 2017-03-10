@@ -52,6 +52,11 @@ This section describes how to generate the Swagger specs locally to use them wit
           -i http://localhost:9000/tmp/sync-gateway-public.json -l java -o ./lib
     ```
 
-### Custom HTML output
+### Uploading to specs to s3
 
-Not currently supported, but there is an option to use the open source bootprint-openapi repo (submodule in `swagger`) to generate HTML that can be pushed to IngestStage.
+In the current directory, run the following commands:
+
+```bash
+gulp build 13
+s3cmd --acl-public -r put tmp/ s3://docs.couchbase.com/mobile/1.3/rest-apis/
+```
