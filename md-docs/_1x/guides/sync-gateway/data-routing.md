@@ -163,7 +163,7 @@ function (doc, oldDoc) {
 There are a two special channels that are automatically created when Sync Gateway starts:
 
 - The public channel, written as `!` in the sync function. Documents added to this channel are visible to any user (i.e all users are automatically granted access to the `!` channel). This channel can be used as a public distribution channel.
-- The all docs channel, written as `*` in the sync function. All documents are added to this channel. So any user that is granted access to the `*` channel can access all the documents in the database. A user can be given access to the all docs channel through the sync function or in the [configuration file](../config-properties/index.html#foo_user).
+- The all docs channel, written as `*` in the sync function. All documents are added to this channel. So any user that is granted access to the `*` channel can access all the documents in the database. A user can be given access to the all docs channel through the sync function or in the [configuration file](../config-properties/index.html#foo_user). Note that Sync Gateway automatically assigns documents to the all docs channel. Explicitly assigning a document to it in the Sync Function (i.e `channel('*')`) will result in unexpected behavior such as receiving the document twice on the client side.
 
 The following Sync Function maps the document to the public channel if it contains an `isPublic` property set to true and grants users with the 'admin' role access to the all docs channel.
 
