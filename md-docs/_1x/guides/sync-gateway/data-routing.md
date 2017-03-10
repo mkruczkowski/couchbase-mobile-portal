@@ -179,6 +179,8 @@ function (doc, oldDoc) {
 }
 ```
 
+## Troubleshooting channels
+
 ### Inspecting document channels
 
 You can use the admin REST API to see the channels that documents are assigned to. Issue an `_all_docs` request, and add the query parameter `?channels=true` to the URL. Here's a command-line example that uses the [HTTPie](https://github.com/jkbrzt/httpie) tool (like a souped-up curl) to look at the channels of the document `foo`:
