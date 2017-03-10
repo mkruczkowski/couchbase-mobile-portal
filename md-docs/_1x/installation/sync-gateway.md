@@ -195,37 +195,3 @@ administrator credentials.
 ### Couchbase Server network configuration
 
 In a typical mobile deployment on premise or in the cloud (AWS, RedHat etc), the following ports must be opened on the host for Couchbase Server to operate correctly: 8091, 8092, 8093, 8094, 11207, 11210, 11211, 18091, 18092, 18093. You must verify that any firewall configuration allows communication on the specified ports. If this is not done, the Couchbase Server node can experience difficulty joining a cluster. You can refer to the [Couchbase Server Network Configuration](/documentation/server/current/install/install-ports.html) guide to see the full list of available ports and their associated services.
-
-## AWS
-
-1. Browse to the [Sync Gateway AMI](https://aws.amazon.com/marketplace/pp/B013XDNYRG) in the AWS Marketplace.
-2. Click Continue.
-3. Make sure you choose a key that you have locally.
-4. Paste the [user-data.sh](https://raw.githubusercontent.com/couchbase/build/master/scripts/jenkins/mobile/ami/user-data.sh) script contents into the text area in Advanced Details
-5. If you want to run a custom Sync Gateway configuration, you should customize the variables in the Customization section of the user-data.sh script you just pasted.  You can set the Sync Gateway config to any public URL and will need to update the Couchbase Server bucket name to match what's in your config.
-6. Edit your Security Group to expose port 4984 to Anywhere
-
-### Verify via curl
-
-From your workstation:
-
-```bash
-$ curl http://public_ip:4984/sync_gateway/
-```
-You should get a response like the following:
-
-```bash
-{"committed_update_seq":1,"compact_running":false,"db_name":"sync_gateway","disk_format_version":0,"instance_start_time":1446579479331843,"purge_seq":0,"update_seq":1}
-```
-
-### Customize configuration
-
-For more advanced Sync Gateway configuration, you will want to create a JSON config file on the EC2 instance itself and pass that to Sync Gateway when you launch it, or host your config JSON on the internet somewhere and pass Sync Gateway the URL to the file.
-
-### View Couchbase Server UI
-
-In order to login to the Couchbase Server UI, go to `http://public_ip:8091` and use the following credentials:
-
-**Username**: Administrator
-
-**Password**: The AWS instance id that can be found on the EC2 Control Panel (eg: i-8a9f8335)
