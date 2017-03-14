@@ -151,7 +151,7 @@ We've renamed "attachments" to "blobs", for clarity. The new behavior should be 
 
 CBLBlob itself has a simple API that lets you access the contents as in-memory data (an NSData object) or as a stream (NSInputStream.) It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike CBLAttachment, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. `[doc setObject: imageBlob forKey: @"thumbnail.jpg"]`.)
 
->Note: A blob stored in the document's raw JSON as an object with a property `"_cbltype":"blob"`. It also has properties `"digest"` (a SHA-1 digest of the data), `"length"` (the length in bytes), and optionally `"type"` (the MIME type.) As always, the data is not stored in the document, but in a separate content-addressable store, indexed by the digest.
+>Note: A blob is stored in the document's raw JSON as an object with a property `"_cbltype":"blob"`. It also has properties such as `"digest"` (a SHA-1 digest of the data), `"length"` (the length in bytes), and optionally `"type"` (the MIME type.) As always, the data is not stored in the document, but in a separate content-addressable store, indexed by the digest.
 
 ### Conflict Handling
 
