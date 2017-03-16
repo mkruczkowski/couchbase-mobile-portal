@@ -29,7 +29,10 @@
         <div class="col four-fifths article">
           <div class="story">
             <div class="body">
-              <link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/cb-docs-assets/styles.css">
+              <!-- Do not import the overridden styles on swagger ui pages -->
+              {% if page.swagger != true %}
+                <link rel="stylesheet" type="text/css" href="https://couchbase-docs.s3.amazonaws.com/mobile/assets/styles.css">
+              {% endif %}
               {% if page.swagger == true %}
                 <a class="edit-page-link" href="https://github.com/couchbaselabs/couchbase-mobile-portal/tree/master/swagger" target="_blank">Edit on GitHub</a>
               {% elsif page.noedit != true %}
