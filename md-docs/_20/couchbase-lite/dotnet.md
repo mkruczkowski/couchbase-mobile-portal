@@ -93,7 +93,7 @@ To build the entire project from source requires several tools working together:
     - XCode
     - Xamarin iOS 10+
 
-**NOTE** For DB002 the only tested platform is .NET Core (on Windows, macOS, and Ubuntu 16.04).  UWP support classes are provided but currently unable to be tested.  Xamarin iOS and Android support classes are not yet provided.  They will still compile against these platforms, but certain things will fail (like using the default directory, and logging).  These platforms will be fully added in future developer builds.
+**NOTE** For DB002 the only tested platform is .NET Core (on Windows, macOS, and Ubuntu 16.04).  UWP support classes are provided but currently unable to be tested.  Xamarin iOS and Android support classes are not yet provided.  They will still compile against these platforms, but nothing will work because the native components are included in the support packages.
 
 **NOTE** For DB003 UWP has been tested manually, but there are still issues with the test runner in a CI environment.  Xamarin iOS and Android support classes are not yet provided.  Same caveat as above.
 
