@@ -20,11 +20,11 @@ Most of Couchbase Lite has been rewritten, based on what we've learned from impl
 
 Some of the new features aren't implemented yet, and some existing features are temporarily missing because they have yet to be adapted to the new core engine and APIs. Pardon our dust! We will be releasing new previews often, so if this one is too incomplete for you to evaluate or use, please check back later.
 
-In developer build #2:
+In developer build #2-#3:
 
 * The replicator is unavailable. It needs to be adapted to the LiteCore APIs.
 * The REST API (Listener) is unavailable.
-* Map/reduce queries aren't supported. We are still evaluating whether to support them in 2.0; your feedback is welcome.
+* Map/reduce queries aren't supported.
 * The database file format has changed, and there is not yet any support for upgrading/migrating 1.x databases. (The format is likely to change again, incompatibly, in future preview releases until we implement migration.)
 * Object modeling (mapping documents to native objects) isn't implemented yet.
 * Components provided for .NET Core and UWP
@@ -49,7 +49,7 @@ Add `http://mobile.nuget.couchbase.com/nuget/Developer/` to your Nuget package s
 		<div class="column size-1of2">
 			<div class="box">
 				<div class="container">
-					<a href="https://github.com/couchbase/couchbase-lite-net/releases/tag/2.0.0-db002" taget="_blank">
+					<a href="https://github.com/couchbase/couchbase-lite-net/releases/tag/2.0.0-db003" taget="_blank">
 						<p style="text-align: center;">API References</p>
 					</a>
 				</div>
@@ -95,9 +95,11 @@ To build the entire project from source requires several tools working together:
 
 **NOTE** For DB002 the only tested platform is .NET Core (on Windows, macOS, and Ubuntu 16.04).  UWP support classes are provided but currently unable to be tested.  Xamarin iOS and Android support classes are not yet provided.  They will still compile against these platforms, but certain things will fail (like using the default directory, and logging).  These platforms will be fully added in future developer builds.
 
+**NOTE** For DB003 UWP has been tested manually, but there are still issues with the test runner in a CI environment.  Xamarin iOS and Android support classes are not yet provided.  Same caveat as above.
+
 ## The New API
 
-Here are the highlights of the new API. We assume you're already familiar with Couchbase Lite 1.x. This isn't an exhaustive description; please refer to the [Sandcastle-generated API docs](https://github.com/couchbase/couchbase-lite-net/releases/tag/2.0.0-db002) for details.
+Here are the highlights of the new API. We assume you're already familiar with Couchbase Lite 1.x. This isn't an exhaustive description; please refer to the [Sandcastle-generated API docs](https://github.com/couchbase/couchbase-lite-net/releases/tag/2.0.0-db003) for details.
 
 ### No Manager
 
@@ -109,7 +111,7 @@ Things like databases, blobs, encryption keys, etc are no longer concrete classe
 
 ### Thread safety notes
 
-Thread safety will be rigorously enforced, and fail quickly with an exception to indicate incorrect usage.  The way the thread safety models will be enforced is via dispatch queues (which, as their name suggests, are inspired by Apple's [Grand Central Dispatch](https://developer.apple.com/library/content/documentation/General/Conceptual/ConcurrencyProgrammingGuide/OperationQueues/OperationQueues.html) library).  This means that for most properties and methods, access will be limited to inside the queue and calling them from anywhere else will result in an exception.  There are synchronous and asynchronous ways to add work to a given queue so a block of work does not necessarily need to block the thread it is added from (`async` / `await` can be used as well).  You can get a hold of the proper queue via the `ActionQueue` on any `IThreadSafe` object, and use the appropriate Dispatch methods to schedule blocks of work onto it.  Note that each object needs to have its own queue used (this may change to simplify things so that a database controls a queue and each object it creates shares that one)
+Thread safety will be rigorously enforced, and fail quickly with an exception to indicate incorrect usage.  The way the thread safety models will be enforced is via dispatch queues (which, as their name suggests, are inspired by Apple's [Grand Central Dispatch](https://developer.apple.com/library/content/documentation/General/Conceptual/ConcurrencyProgrammingGuide/OperationQueues/OperationQueues.html) library).  This means that for most properties and methods, access will be limited to inside the queue and calling them from anywhere else will result in an exception if thread safety checking is enabled (thread safety checking is optional as of DB003).  There are synchronous and asynchronous ways to add work to a given queue so a block of work does not necessarily need to block the thread it is added from (`async` / `await` can be used as well).  You can get a hold of the proper queue via the `ActionQueue` on any `IThreadSafe` object, and use the appropriate Dispatch methods to schedule blocks of work onto it.  Note that each object needs to have its own queue used in DB002.  In DB003, a database will get a unique action queue and all of the objects associated with it will share the same queue, so you can interact with any object in that database's space on that queue.
 
 ## Databases
 
@@ -147,7 +149,7 @@ This does create the possibility of confusion, since the document's in-memory st
 
 ### Subdocuments
 
->Note: Subdocuments aren't available yet in this developer preview. Instead, nested JSON objects are exposed as `IDictionary<string, object>`, as they were in 1.x. But expect this to change soon, hopefully in DP3.
+>Note: Subdocuments aren't available in DB002. Instead, nested JSON objects are exposed as `IDictionary<string, object>`, as they were in 1.x.  They were added in DB003.
 
 A *subdocument* is a nested document with its own set of named properties. In JSON terms it's a nested object. This isn't a new feature of the document model; it's just that we're exposing it in a more structured form. In Couchbase Lite 1.x you would see a nested object as a nested `IDictionary<string, object>` (and honestly a lot of the time it was a `JObject` causing massive confusion). In 2.0 we expose it as an `ISubdocument` object instead.
 
@@ -198,4 +200,4 @@ These all have defaults:
 
 ### The Query API
 
-We are still designing the cross-platform query API; it will appear in a future preview release. Unlike iOS, there is no built in string based query mechanism in C# so we lack the ability to include a platform specific query mechanism at this time (LINQ is dependent on strongly typed objects and the "model" API, which will need to be released first)
+We are still designing the cross-platform query API; it will appear in a future preview release (likely DB004). Unlike iOS, there is no built in string based query mechanism in C# so we lack the ability to include a platform specific query mechanism at this time (LINQ is dependent on strongly typed objects and the "model" API, which will need to be released first)
