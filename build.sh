@@ -17,7 +17,7 @@ if [[ ${2} = "upload" ]]; then
 	put tmp.zip
 	" > push.sh
 	
-	sftp -b push.sh -oIdentityFile=~/.ssh/cb_xfer_id_rsa cb_xfer@54.175.181.113
+	sftp -b push.sh -oIdentityFile=~/.ssh/couchbase_sftp.key couchbaseinc@static.hosting.onehippo.com
 	
-	curl -X POST "http://$JENKINS_USERNAME:$JENKINS_PASSWORD@build-ingestion.cbauthx.com/job/CouchbaseDocumentationJobs/job/Mobile/job/IngestStage/build\?delay\=0sec"
+	curl -X POST "http://$JENKINS_USERNAME:$JENKINS_PASSWORD@52.200.81.196:8080/job/Ingestion%20Mobile%20-%20PROD%20ENV/build\?delay\=0sec"
 fi
