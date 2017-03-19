@@ -17,6 +17,16 @@ defaults:
       layout: ready
   - scope:
       path: ''
+      type: '11'
+    values:
+      layout: ready
+  - scope:
+      path: ''
+      type: '12'
+    values:
+      layout: ready
+  - scope:
+      path: ''
       type: '13'
     values:
       layout: ready

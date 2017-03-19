@@ -1,0 +1,11 @@
+collections:
+  '1x':
+    output: true
+    permalink: /:path:output_ext
+  '12':
+    output: true
+    permalink: /:path:output_ext
+version: '1.2'
+package_version: '1.2.1'
+sg_download_link: 'http://packages.couchbase.com/releases/couchbase-sync-gateway/1.2.1/'
+sg_package_name: 'couchbase-sync-gateway-community_1.2.1-4_x86_64'
