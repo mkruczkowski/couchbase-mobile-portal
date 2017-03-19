@@ -4,12 +4,6 @@ title: Database
 permalink: guides/couchbase-lite/native-api/database/index.html
 ---
 
-{% if site.version == "1.4" %}
-
-This is 1.4 content.
-
-{% endif %}
-
 A Database is a container and a namespace for documents, a scope for queries, and the source and target of replication. Databases are represented by the `Database` class.
 
 Most applications only need one database, but you can use the Manager to create as many as you need. Multiple databases are independent of each other. If your application supports switching between multiple users, each with their own separate content and settings, you should consider using a database for each user. Otherwise, it's usually best to stick with one database.
