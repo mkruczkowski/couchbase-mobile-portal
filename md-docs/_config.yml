@@ -55,3 +55,5 @@ exclude:
 
 keep_files:
   - "references"
+
+tutorial_project: 'https://cl.ly/1Y3W3s2e1D0y/project.zip'
