@@ -112,7 +112,7 @@ node import.js
 
 Open the Sync Gateway Admin UI and you should see all the movies there.
 
-![](img/admin-ui-movies-lister.png)
+![](../img/admin-ui-movies-lister.png)
 
 Notice that the `_rev` property is also stored on each record on the external store, `movies.json`.
 
@@ -267,8 +267,8 @@ var client = new Swagger({
 
 Restart Sync Gateway to have an empty database and run the program. The documents are saved with the attachment metadata.
 
-![](img/admin-ui-attachment.png)
+![](../img/admin-ui-attachment.png)
 
 You can view the thumbnail at `http://localhost:4984/movies_lister/{db}/{doc}/{attachment}/` (note it's on the public port 4984).
 
-![](img/sg-attachment.png)
+![](../img/sg-attachment.png)
