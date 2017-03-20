@@ -207,9 +207,10 @@ The `CBLAuthenticator` class has static methods for each authentication method s
 
 <block class="ios" />
 
-1. Set `kLoginFlowEnabled` to `true` in **AppDelegate.swift**.
+1. Set `kSyncEnabled` and `kLoginFlowEnabled` to `true` in **AppDelegate.swift**.
 
     ```swift
+    let kSyncEnabled = true
     let kLoginFlowEnabled = true
     ```
 
@@ -246,9 +247,10 @@ The `CBLAuthenticator` class has static methods for each authentication method s
 
 <block class="android" />
 
-1. Set `mLoginFlowEnabled` to `true` in **Application.java**.
+1. Set `mSyncEnabled` and `mLoginFlowEnabled` to `true` in **Application.java**.
 
     ```java
+    private Boolean mSyncEnabled = true;
     private Boolean mLoginFlowEnabled = true;
     ```
 
@@ -365,7 +367,7 @@ As shown above, you can define inner functions to encapsulate logic used through
     ```bash
     [
       {"id":"e498cad0380e30a86ed5572140c94831","rev":"1-e4ac377fc9bd3345ddf5892b509c4d79"},
-      {"error":"forbidden","reason":"type property missing","status":403}
+      {"error":"forbidden","reason":"type is not provided.","status":403}
     ]
     ```
     
