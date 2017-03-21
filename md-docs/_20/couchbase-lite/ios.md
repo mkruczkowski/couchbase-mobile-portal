@@ -168,7 +168,25 @@ A resolver can be specified either at the database or the document level. If a d
 
 Database queries have changed significantly. Instead of the map/reduce algorithm used in 1.x, they're now based on expressions, of the form “*return ____ from documents where ____, ordered by ____*”, with semantics based on Couchbase Server's N1QL query language. If you've used Core Data, or other query APIs based on SQL, you'll find this familiar.
 
-> Note: We're still evaluating whether to support map/reduce in 2.0. We recognize that, although it has a learning curve, it can be very powerful. We would appreciate feedback on this.
+### Query API
+
+The Query API provides a simple way to construct a query statement from a set of API methods. There will be two API styles (builder and chainable) implemented based on what makes sense for each platform.
+
+In the Developer Build 3, a builder API has been implemented into the Objective-C SDK. You can call one of the select methods
+in the `CBLQuery` class to build up your query statement.
+
+For example, the `SELECT * FROM type='account' AND owner='Wayne' ORDER BY dealSize` statement can be written with the
+builder API as follows:
+
+```Objective-C
+CBLQuery *query =
+    [CBLQuery select: [CBLQuerySelect all]
+                from: [CBLQueryDataSource database: database]
+               where: [[CBLQueryExpression property: @"type"] equalTo: @"account"] and:
+                      [CBLQueryExpression property: @"owner"] equalTo: @"Wayne"]]
+             orderBy: [CBLQueryOrderBy expression: [CBLQueryExpression property: @"dealSize"]]
+    ];
+```
 
 There are several parts to specifying a query:
 
@@ -186,13 +204,13 @@ These all have defaults:
 * If you don't specify what groups to include, all are included
 * If you don't specify a sort order, the order is undefined
 
-> Note: The query API does not yet support joins. This feature will be added in a future preview release.
+The `CBLQuery` object can be run by calling the `-run:` method which will return an Enumerator of `CBLQueryRow` objects. As of Developer Build 3, column projection is not supported yet but will be supported in a future release.
 
-### The Query API
+### NSPredicate API
 
-We are still designing the cross-platform query API; it will appear in a future preview release. But we also offer platform-specific APIs that are integrated with existing query mechanisms.
+Same as Developer Build 2, in Objective-C and Swift, we also support NSPredicate query. However in the Developer Build 3, the `NSPredicate` query will be named as `CBLPredicateQuery` and can be constructed from `[CBLDatabase createQueryWhere:]` method. In the future release, we plan to have `NSPredicate` query along side with the query builder style.
 
-In Objective-C and Swift we support the same core Foundation classes used by Core Data:
+Similarly to Core Data, we support the same Core Foundation classes:
 
 1. Document criteria are expressed as an NSPredicate
 2. The sort order is an array of NSSortDescriptors
@@ -202,17 +220,17 @@ In Objective-C and Swift we support the same core Foundation classes used by Cor
 
 For convenience, you can provide these as NSStrings: document criteria will be interpreted as NSPredicate format strings, properties to return as NSExpression format strings, and sort orders as key-paths (optionally prefixed with “-” to indicate descending order.)
 
-As before, queries are CBLQuery objects, which you create by calling `-createQuery…` methods on CBLDatabase. After creating a query you can set additional attributes like grouping and ordering before running it.
+A CBLPredicateQuery object can be created by calling -createQueryWhere: method on CBLDatabase. After creating a query you can set additional attributes like grouping and ordering before running it.
 
-### Parameters
+#### Parameters
 
 A query can have placeholder parameters that are filled in when it's run. This makes the query more flexible, and it improves performance since the query only has to be compiled once (see below.)
 
 Parameters are specified in the usual way when constructing the NSPredicate. In the string-based syntax they're written as “`$`”-prefixed identifiers, like “`$MinPrice`”. (The “`$`” is not considered part of the parameter name.) If constructing the predicate as an object tree, you call `+[NSExpression expressionForVariable:]`.
 
-The compiled CBLQuery has a property `parameters` , an NSDictionary that maps parameter names (minus the “`$`”!) to values. The values need to be JSON-compatible types. All parameters specified in the query need to be given values via the `parameters` property before running the query, otherwise you'll get an error.
+The compiled CBLPredicateQuery has a property `parameters` , an NSDictionary that maps parameter names (minus the “`$`”!) to values. The values need to be JSON-compatible types. All parameters specified in the query need to be given values via the `parameters` property before running the query, otherwise you'll get an error.
 
-### Return Values
+#### Return Values
 
 As in 1.x, running a CBLQuery returns an enumeration of CBLQueryRow objects. Each row's `documentID` property gives the ID of the associated document, and its `document` property loads the document object (at the cost of an extra database lookup.) But a query row can also return values directly, which is often faster than having to load the whole document.
 
@@ -220,7 +238,7 @@ To return values directly from query rows, set the query object's `returning:` p
 
 To access the values returned by a CBLQueryRow, call any of the methods `-objectAtIndex:`, `integerAtIndex:`, etc., where the index corresponds to the index in the query's `returning:` array. Use the most appropriate method for the type of value returned; the numeric/boolean accessors are more efficient, as well as more convenient, because they avoid allocating NSNumber objects. `-stringAtIndex:` will return nil if the value is not a string (avoiding the possibility of an exception), and `-dateAtIndex:` additionally converts an ISO-8601 date string into an NSDate for you.
 
-### Aggregation and Grouping
+#### Aggregation and Grouping
 
 If the return values of a query include calls to aggregate functions like `count()`, `min()` or `max()`, all of its rows will be combined together into one, with the aggregate functions operating on their parameters from all the rows.
 
@@ -252,15 +270,14 @@ It's very common to sort full-text results in descending order of relevance. Thi
 
 ### Under The Hood
 
-For the time being, the Objective-C query API also allows you to compose queries using the underlying [JSON-based query syntax](https://github.com/couchbase/couchbase-lite-core/wiki/JSON-Query-Schema) recognized by LiteCore. This can be useful as a workaround if you run into limitations or bugs in the NSPredicate/NSExpression-based API. (But if so, please report the issue to us so we can fix it.)
+For the time being, the Objective-C NSPredicate query API also allows you to compose queries using the underlying [JSON-based query syntax](https://github.com/couchbase/couchbase-lite-core/wiki/JSON-Query-Schema) recognized by LiteCore. This can be useful as a workaround if you run into limitations or bugs in the NSPredicate/NSExpression-based API. (But if so, please report the issue to us so we can fix it.)
 
 >Disclaimer: This low-level query syntax is not part of Couchbase Lite's public API. We will probably remove this
  access to it before the final release of Couchbase Lite 2.0. By then the public API should be robust enough to handle your needs.
 
 Using the JSON query syntax is very simple: just construct a JSON object tree out of Foundation objects, in accordance with the [spec](https://github.com/couchbase/couchbase-lite-core/wiki/JSON-Query-Schema), then pass the top level NSArray or NSDictionary to the CBLDatabase method that creates a query or creates/deletes an index:
 
-* `-createQuery:error:` — The `query` parameter can be a JSON NSArray (interpreted as a WHERE clause), or NSDictionary (interpreted as an entire SELECT query.)
-* `-createQuery:orderBy:returning:error:` — Same as above; also, any of the items in the `returning` parameter can be a JSON NSArray (interpreted as an expression to return.)
+* `-createQueryWhere:` — The `query` parameter can be a JSON NSArray (interpreted as a WHERE clause), or NSDictionary (interpreted as an entire SELECT query.)
 * `-createIndexOn:error:` — Any item of the `expressions` array can be a JSON NSArray (interpreted as an expression to index.)
 * `-createIndexOn:type:options:error:` — Same as above.
 * `-deleteIndexOn:type:error:` — Same as above.
