@@ -16,7 +16,6 @@
 
   <!-- LEFTNAV and ARTICLE -->
   <section class="tpl-body">
-
     <div class="wrapper">
       <div class="cols">
         <aside class="col one-fifth section-nav left-rail">
@@ -29,6 +28,10 @@
         <div class="col four-fifths article">
           <div class="story">
             <div class="body">
+              {% assign depth = page.url | split: '/' | size | minus: 1 %}
+              {% if depth == 2 %}
+                {% include developer-preview.html %}
+              {% endif %}
               <!-- Do not import the overridden styles on swagger ui pages -->
               {% if page.swagger != true %}
                 <link rel="stylesheet" type="text/css" href="https://couchbase-docs.s3.amazonaws.com/mobile/assets/styles.css">
