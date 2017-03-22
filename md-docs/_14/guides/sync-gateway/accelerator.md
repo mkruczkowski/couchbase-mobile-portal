@@ -4,21 +4,33 @@ title: Accelerator
 
 In this guide, you will learn how to scale a Couchbase Mobile deployment with Sync Gateway Accelerator. Before going into the details, it's important to identify if you wish to scale the **read** or **write** throughput of your application's back-end infrastructure.
 
-As a distributed database system, Sync Gateway and Couchbase Server can already be scaled horizontally. Horizontal scaling is achieved by adding more nodes behind a load balancer which distributes the traffic evenly between each one (see the [Install, Upgrade, Scale](../../../current/training/deploy/install/index.html) lesson). This method of scaling is particularly well suited for a scenario with a large amount of **read traffic**. On the other hand, it wouldn't suit a scenario where only the **write traffic** increases.
+As a distributed database system, Sync Gateway and Couchbase Server can already be scaled horizontally. Horizontal scaling is achieved by adding more nodes behind a load balancer which distributes the traffic evenly between each one (see the [Install, Upgrade, Scale](../../training/deploy/install/index.html) lesson). This method of scaling is particularly well suited for a scenario with a large amount of **read traffic**. On the other hand, it wouldn't suit a scenario where only the **write traffic** increases.
 
 Sync Gateway Accelerator is designed to cover the second aspect of highly scalable server infrastructure for your application, **write traffic**.
 
 ## How does it work?
 
-Part of Sync Gateway's role in a Couchbase Mobile deployment is to query the documents in a given channel from Couchbase Server and stream the results to users.
+### Changes Feed
+
+The changes feed is at the heart of Couchbase Mobile replication - it provides clients an ordered mutation feed of changes, restricted to the set of documents the user has access to. Clients can disconnect and reconnect, resuming their changes feed where they left off. When a user is granted access to additional documents, those documents are back filled through the changes feed.
+
+### Sync Gateway Alone
+
+When Sync Gateway is running in an environment without Sync Gateway Accelerator, each Sync Gateway node listens to the full server mutation feed (DCP or TAP), and builds an in-memory cache of recent changes. Sync Gateway processes the security metadata (channel membership, access grants) for each document as it arrives over the feed.
 
 ![](img/channel-access-accelerator.png)
 
-To optimize this process, Sync Gateway maintains an in-memory cache of recent changes in each channel (step 3) which is used to serve the `GET/POST /{db}/_changes` requests (step 4). So as write throughput increases, the cache for a particular channel is invalidated more frequently and Sync Gateway needs to update its channel cache. Each Sync Gateway instance will end up doing this work to maintain the in-memory cache.
+To optimize this process, Sync Gateway maintains an in-memory cache of recent changes in each channel (step 3) which is used to serve the `GET/POST /{db}/_changes` requests (step 4). When a client requests changes, Sync Gateway first attempts to serve the request from the in-memory channel cache. If the cache isn't sufficient, Sync Gateway issues a view query to Couchbase Server to retrieve the non-cached result for the channel(s).
 
-With Couchbase Mobile 1.4, it's now possible to build the set of documents per channel using a separate component called Sync Gateway Accelerator. This component can also be scaled horizontally and persists the channel index to a different bucket in Couchbase Server. In this configuration, the Sync Gateway nodes support your applications (Web, Mobile, IoT) as normal, while Sync Gateway Accelerator handles the channel indexing. Separating the two workloads in distinct entities makes it possible to scale both Sync Gateway and Sync Gateway Accelerator to handle much larger write throughput. The diagram below represents the architecture differences with and without Sync Gateway Accelerator.
+So as write throughput increases, the cache for a particular channel is invalidated more frequently and every Sync Gateway node needs to issue a view query to update the in-memory cache and serve changes feed requests.
+
+### Sync Gateway Accelerator
+
+The goal of Sync Gateway Accelerator is to move the mutation feed processing off Sync Gateway nodes, and instead distribute this work across a cluster of Sync Gateway Accelerator nodes. In a cluster with Sync Gateway and Sync Gateway Accelerator deployed, the server DCP feed is sharded across the Accelerator nodes. Each accelerator node processes a subset of the DCP feed, and persists the set of documents per channel to a backing bucket (the 'channel index' bucket). When a client requests changes from a Sync Gateway node, that node retrieves the changes from the channel index bucket.
 
 ![](img/accelerator-comparison.png)
+
+In this configuration, the Sync Gateway nodes support your applications (Web, Mobile, IoT) as normal, while Sync Gateway Accelerator handles the channel indexing. Separating the two workloads in distinct entities makes it possible to scale both Sync Gateway and Sync Gateway Accelerator to handle much larger write throughput.
 
 ## Example
 
@@ -86,9 +98,10 @@ Prior to installing Sync Gateway Accelerator you must have a running instance of
     }
     ```
 
-    In the configuration file, there are two points worth noting:
-    - The default listening port for Sync Gateway Accelerator is `4985`. Here, you're setting it to `4986` to avoid using a port that conflicts with Sync Gateway.
-    - The `"writer": true` property specifies that this Accelerator instance can persist the channel index to the Couchbase Server bucket.
+    There are a few points to note here:
+    - The `cluster_config` section is defined at the root level. This is used to manage cluster communication. It specifies the bucket that should be used to store shared Sync Gateway Accelerator cluster information (server, bucket), and a local location to write runtime configuration files (`data_dir`). It is possible to reuse the existing data bucket in the `cluster_config` bucket (the one used by Sync Gateway alone).
+    - The default listening port for Sync Gateway Accelerator is `4985`. Here, we're setting it to `4986` to avoid using a port that conflicts with Sync Gateway if they are both started on the same node.
+    - The `"writer": true` property specifies that this Accelerator instance must persist the channel index to the Couchbase Server channel index bucket.
 
 4. Start the Sync Gateway Accelerator node.
 
