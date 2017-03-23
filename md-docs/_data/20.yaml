@@ -1,6 +1,6 @@
 - title: Couchbase Lite
   items:
-    - title: iOS
-      path: couchbase-lite/ios.html
-    - title: .NET
-      path: couchbase-lite/dotnet.html
+    - title: Release notes
+      path: references/couchbase-lite/release-notes/index.html
+    - title: Features
+      path: guides/couchbase-lite/index.html

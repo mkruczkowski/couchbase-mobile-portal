@@ -38,7 +38,6 @@
                 <a class="edit-page-link" href="https://github.com/couchbaselabs/couchbase-mobile-portal/tree/master/md-docs/{{ page.path }}" target="_blank">Edit on GitHub</a>
               {% endif %}
 
-
               <div class="inner-content">
                 <!-- Platform tabs -->
                 <!-- TODO: Make visible when ready to show multi-platform training -->
@@ -46,9 +45,9 @@
                   <style>
                     .toggler a {
                       display: inline-block;
-                      padding: 10px 5px;
+                      padding: 3px 20px;
                       margin: 2px;
-                      border: 1px solid #05A5D1;
+                      border: 1px solid #00739c;
                       border-radius: 3px;
                       text-decoration: none !important;
                     }
@@ -56,8 +55,10 @@
                     .display-platform-android .toggler .button-android,
                     .display-platform-rn .toggler .button-rn,
                     .display-platform-wpf .toggler .button-wpf,
-                    .display-platform-xam .toggler .button-xam {
-                      background-color: #05A5D1;
+                    .display-platform-xam .toggler .button-xam,
+                    .display-platform-swift .toggler .button-swift,
+                    .display-platform-objc .toggler .button-objc {
+                      background-color: #00739c;
                       color: white;
                     }
 
@@ -69,14 +70,29 @@
                     .display-platform-net .net,
                     .display-platform-wpf .wpf,
                     .display-platform-xam .xam,
-                    .display-platform-all .all {
+                    .display-platform-all .all,
+                    .display-platform-swift .swift,
+                    .display-platform-objc .objc {
                       display: block;
-                    }</style>
+                    }
+                    .inner-content .inline:not(.tab-nav) {
+                      display: none;
+                    }
+                    /* Must change the display mode for striped method names.
+                       This works with the StripingTag Jekyll plugin. */
+                    .display-platform-ios .ios.inline,
+                    .display-platform-android .android.inline,
+                    .display-platform-net .net.inline,
+                    .display-platform-swift .swift.inline,
+                    .display-platform-objc .objc.inline {
+                      display: inline;
+                    }
+                  </style>
                   <div id="platform-tabs" class="hide">
                     <span>Platform:</span>
-                    <a href="javascript:void(0);" class="button-ios" onclick="display('platform', 'ios')">iOS</a>
-                    <a href="javascript:void(0);" class="button-android" onclick="display('platform', 'android')">Android</a>
-                    <a href="javascript:void(0);" class="button-wpf" onclick="display('platform', 'wpf')">WPF</a>
+                    <a href="javascript:void(0);" class="button-swift" onclick="display('platform', 'swift')">Swift</a>
+                    <a href="javascript:void(0);" class="button-objc" onclick="display('platform', 'objc')">Objective-C</a>
+                    <a href="javascript:void(0);" class="button-wpf" onclick="display('platform', 'wpf')">.NET</a>
                   </div>
                 </div>
                 <!-- SDK buttons -->
@@ -112,7 +128,7 @@
                 <!-- Logic for platform tabs -->
                 <script>
                   // Only show on Develop pages
-                  var blocks = document.getElementsByClassName('ios');
+                  var blocks = document.getElementsByClassName('objc');
                   if (blocks.length > 0) {
                     var platformTabs = document.getElementById('platform-tabs');
                     platformTabs.className = "show";
@@ -121,24 +137,31 @@
                   // Into <div>...<block />...</div>
                   var blocks = document.getElementsByTagName('block');
                   for (var i = 0; i < blocks.length; ++i) {
-                    var block = blocks[i];
-                    var span = blocks[i].parentNode;
-                    var container = span.parentNode;
-                    container.insertBefore(block, span);
-                    container.removeChild(span);
+                    // Ignore blocks that have the inline class name.
+                    if (blocks[i].className.indexOf('inline') == -1) {
+                      var block = blocks[i];
+                      var span = blocks[i].parentNode;
+                      var container = span.parentNode;
+                      container.insertBefore(block, span);
+                      container.removeChild(span);
+                    }
                   }
                   // Convert <div>...<block />content<block />...</div>
                   // Into <div>...<block>content</block><block />...</div>
                   blocks = document.getElementsByTagName('block');
                   for (var i = 0; i < blocks.length; ++i) {
-                    var block = blocks[i];
-                    while (block.nextSibling && block.nextSibling.tagName !== 'BLOCK') {
-                      block.appendChild(block.nextSibling);
+                    // Ignore blocks that have the inline class name.
+                    if (blocks[i].className.indexOf('inline') == -1) {
+                      var block = blocks[i];
+                      while (block.nextSibling && block.nextSibling.tagName !== 'BLOCK') {
+                        block.appendChild(block.nextSibling);
+                      }
                     }
                   }
                   function display(type, value) {
-                    var container = document.getElementsByTagName('block')[0].parentNode;
-                    container.className = 'display-' + type + '-' + value;
+                    // Place the display-platform-* class on div.inner-content
+                    var container = document.getElementsByClassName('inner-content')[0];
+                    container.className = 'inner-content display-' + type + '-' + value;
                     if (value == 'wpf' || value == 'xam') {
                       container.className += ' display-platform-net';
                     }
@@ -150,13 +173,13 @@
                   var foundHash = false;
                   if (window.location.hash !== '' && window.location.hash !== 'content') { // content is default
                     var platform = window.location.hash.slice(1);
-                    if (['ios', 'android', 'wpf'].indexOf(platform) > -1) {
+                    if (['ios', 'android', 'wpf', 'swift', 'objc'].indexOf(platform) > -1) {
                       display('platform', platform);
                       foundHash = true;
                     }
                   }
                   if (!foundHash) {
-                    display('platform', 'ios');
+                    display('platform', 'swift');
                   }
                 </script>
                 <!-- Segment.io analytics -->
