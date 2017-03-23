@@ -1,4 +1,7 @@
+- title: Developer Builds
+  path: whatsnew.html
 - title: Couchbase Lite
+  open: true
   items:
     - title: Release notes
       path: references/couchbase-lite/release-notes/index.html
