@@ -221,12 +221,24 @@ User:
       items:
         type: string
         description: Role name
+    all_channels:
+      type: array
+      description: Array of channel names the user is given access to
+      items:
+        type: string
+        description: Channel name
     email:
       type: string
       description: Email of the user that will be created.
     disabled:
       type: boolean
       description: Boolean property to disable this user. The user will not be able to login if this property is set to true.
+    roles:
+      type: array
+      description: Array of role names the user is given access to
+      items:
+        type: string
+        description: Role name
 ChangesFeedRow:
   type: object
   properties:

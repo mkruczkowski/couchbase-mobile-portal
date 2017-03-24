@@ -14,6 +14,9 @@
     responses:
       200:
         description: The message body contains the attachment, in the format specified in the Content-Type header.
+        schema:
+          type: string
+          format: binary
       304:
         description: Not Modified, the attachment wasn't modified if ETag equals the If-None-Match header
       404:
@@ -31,6 +34,7 @@
     parameters:
       - $ref: '#/parameters/rev'
       - $ref: '#/parameters/body'
+      - $ref: '#/parameters/content_type'
     responses:
       200:
         description: Operation completed successfully

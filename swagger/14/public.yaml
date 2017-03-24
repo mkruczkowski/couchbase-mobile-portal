@@ -12,6 +12,18 @@ host: localhost:4984
 schemes:
   - http
   - https
+# Security schemes available
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: HTTP Basic Authentication
+  apiKey:
+    name: Cookie
+    type: apiKey
+    in: header
+# Security schemes applied for the API as a whole
+security:
+  - apiKey: []
 # will be prefixed to all paths
 basePath: /
 produces:

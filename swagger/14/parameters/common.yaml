@@ -35,7 +35,8 @@ body:
   in: body
   description: The request body
   schema:
-    type: object
+    type: string
+    format: binary
 bulkget:
   in: body
   name: BulkGetBody
@@ -63,6 +64,11 @@ channels_list:
   description: A comma-separated list of channel names. The response will be filtered to only documents in these channels. (This parameter must be used with the sync_gateway/bychannel filter parameter; see below.)
   type: string
   required: false
+content_type:
+  in: header
+  name: Content-Type
+  description: Attachment Content-Type
+  type: string
 db:
   name: db
   in: path

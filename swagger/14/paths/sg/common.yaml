@@ -149,7 +149,7 @@
       200:
         description: The message body contains the following objects in a JSON document.
         schema:
-          $ref: '#/definitions/Success'
+          type: object
   put:
     tags:
       - document
