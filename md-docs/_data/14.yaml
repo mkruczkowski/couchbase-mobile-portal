@@ -96,7 +96,7 @@
           path: guides/sync-gateway/server-integration/index.html
         - title: Deployment considerations
           path: guides/sync-gateway/deployment/index.html
-        - title: NGINX
+        - title: Load Balancer
           path: guides/sync-gateway/nginx/index.html
         - title: Taking databases offline and online
           path: guides/sync-gateway/database-offline/index.html

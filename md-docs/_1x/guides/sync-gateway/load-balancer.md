@@ -1,10 +1,10 @@
 ---
 id: nginx
-title: NGINX
+title: Load Balancer
 permalink: guides/sync-gateway/nginx/index.html
 ---
 
-In this guide we'll show how to deploy Sync Gateway with nginx acting as a reverse proxy.
+In this guide we'll show how to deploy Sync Gateway behind a reverse proxy.
 
 ## When to use a reverse proxy
 
@@ -14,7 +14,13 @@ In this guide we'll show how to deploy Sync Gateway with nginx acting as a rever
 - A reverse proxy can distribute the load from incoming requests to several Sync Gateway instances.
 - A reverse proxy may rewrite the URL of each incoming request in order to match the relevant internal location of the requested resource. For Sync Gateway the reverse proxy may map the Internet facing port 80 to the standard Sync Gateway public REST API port 4984.
 
-## Installing NGINX
+## Reverse proxies tested with Sync Gateway
+
+1. NGINX
+2. AWS Elastic Load Balancer (ELB)
+
+
+## NGINX
 
 Connect to the server running Sync Gateway and install the nginx server:
 
@@ -32,7 +38,7 @@ Note: Replace 127.0.0.1 with the IP address of your server.
 
 You should see the standard Welcome to nginx! page.
 
-## Basic nginx configuration for Sync Gateway
+### Basic nginx configuration for Sync Gateway
 
 If you installed nginx using the instructions above, then you will create your sync\_gateway configuration file in **/etc/nginx/sites-available**. Create a file in that directory called sync\_gateway with the following content:
 
@@ -128,7 +134,7 @@ Note: Replace 127.0.0.1 with the IP address of your server.
 
 You should see the standard Welcome to nginx! page.
 
-## Adding websocket support
+### Adding websocket support
 
 Couhbase Lite introduces websocket support for the changes feed, but by default nginx will not upgrade it's connection to Sync Gateway to support websockets. If an iOS client has websockets enabled for the _changes feed it will be unable to to pull replicate from a Sync Gateway behind an nginx reverse proxy. To enable websockets support, update the location block by adding the following two directives.
 
@@ -143,7 +149,7 @@ location / {
 }
 ```
 
-## Load balancing requests
+### Load balancing requests
 
 Sync gateway instances have a 'shared nothing' architecture, this means that you can scale out by simply deploying additional Sync Gateway instances. But incoming traffic needs to be distributed across all the instances, ngingx can easily accommodate this and balance the incoming traffic load across all your Sync Gateway instances. Simply add the additional instances to the 'upstream' block as shown below.
 
@@ -155,7 +161,7 @@ upstream sync_gateway {
 }
 ```
 
-## Transport Layer Security (HTTPS)
+### Transport Layer Security (HTTPS)
 
 To secure data between clients and Sync Gateway in production, you will want to use secure HTTPS connections.
 
@@ -214,3 +220,17 @@ curl -k https://myservice.example.org/
 ```
 
 You can also see this by going to https://myservice.example.org/ in your browser.
+
+## AWS Elastic Load Balancer (ELB)
+
+The following parameters need to be customized to work with Sync Gateway
+
+### Idle Timeout
+
+Since Sync Gateway and Couchbase Lite can have long running connections for changes feeds, you should set the Idle Timeout setting of the ELB to the maximum value of 3600 seconds (1 hour)
+
+See the [ELB instructions](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/config-idle-timeout.html) for more information on how to change this setting.
+
+
+
+
