@@ -52,7 +52,7 @@ This section describes how to generate the Swagger specs locally to use them wit
           -i http://localhost:9000/tmp/sync-gateway-public.json -l java -o ./lib
     ```
 
-### Uploading to specs to s3
+### Uploading the specs to s3
 
 In the current directory, run the following commands:
 
