@@ -38,7 +38,15 @@ git submodule init && git submodule update
 
 ## Generate local preview
 
-Install Jekyll and the local dependencies.
+### Install ruby from brew (or use rvm):
+
+```bash
+$ brew install ruby
+```
+
+and then open a new terminal to refresh the environment.
+
+### Install Jekyll and the local dependencies.
 
 ```bash
 $ cd md-docs
@@ -46,7 +54,7 @@ $ gem install bundler
 $ bundle install
 ```
 
-Generate a local preview.
+### Generate a local preview.
 
 ```bash
 $ cd md-docs
