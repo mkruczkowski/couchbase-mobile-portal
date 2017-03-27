@@ -179,7 +179,42 @@ Console.WriteLine($"createdAt value :: ${document.GetDate("createdAt")}");
 
 ### Subdocuments
 
-A *subdocument* is a nested document with its own set of named properties. In JSON terms it's a nested object. This isn't a new feature of the document model; it's just that we're exposing it in a more structured form. In Couchbase Lite 1.x you would see a nested object as a nested {% st Dictionary, NSDictionary, IDictionary, IDictionary %}. In 2.0 we expose it as a {% st Subdocument, CBLSubdocument, ISubdocument, ISubdocument %} object instead.
+A subdocument is a nested document with its own set of named properties. In JSON terms it's a nested object. This isn't a new feature of the document model; it's just that we're exposing it in a more structured form. In Couchbase Lite 1.x you would see a nested object as a nested {% st Dictionary, NSDictionary, IDictionary, IDictionary %}. In 2.0 we expose it as a {% st Subdocument, CBLSubdocument, ISubdocument, ISubdocument %} object instead.
+
+<block class="swift" />
+
+```swift
+let address: Subdocument? = document["address"]
+address?["city"] = "galaxy city"
+do {
+	try document.save()
+} catch let error {
+	print(error.localizedDescription)
+}
+print("address properties :: \((document["address"] as Subdocument?)?.properties)")
+```
+
+<block class="objc" />
+
+```objective-c
+CBLSubdocument* address = [document subdocumentForKey:@"address"];
+[address setObject:@"galaxy city" forKey:@"city"];
+[document save:&error];
+if (error) {
+	NSLog(@"address properties :: %@", [[document subdocumentForKey:@"address"] properties]);
+}
+```
+
+<block class="net" />
+
+```csharp
+var address = document.GetSubdocument("address");
+address.Set("city", "galaxy city");
+document.Save();
+Console.WriteLine($"address value :: ${address.GetSubdocument("address").Properties}");
+```
+
+<block class="all" />
 
 {% st Subdocument, CBLSubdocument, ISubdocument, ISubdocument %}, like {% st Document, CBLDocument, IDocument, IDocument %}, inherits from {% st Properties, CBLProperties, IPropertyContainer, IPropertyContainer %}. That means it has the same set of type-specific accessors discussed in the previous section. Like {% st Document, CBLDocument, IDocument, IDocument %}, it's mutable, so you can make changes in-place. The difference is that a subdocument doesn't have its own ID. It's not a first-class entity in the database, it's just a nested object within the document's JSON. It can't be saved individually; changes are persisted when you save its document.
 
