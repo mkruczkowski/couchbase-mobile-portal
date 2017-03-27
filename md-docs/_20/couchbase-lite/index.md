@@ -138,17 +138,42 @@ This does create the possibility of confusion, since the document's in-memory st
 
 ### Typed Accessors
 
-The {% st Document, CBLDocument, IDocument, IDocument %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st -stringForKey:, -stringForKey:, GetString(), GetString() %} returns either a {%st NSString, NSString, string, string %} or {% st nil, nil, null, null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil, nil, null, null %}.)
+The {% st Document, CBLDocument, IDocument, IDocument %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st let name: String = doc["name"], -stringForKey:, GetString(), GetString() %} returns either a {%st String, NSString, string, string %} or {% st nil, nil, null, null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil, nil, null, null %}.)
 
-<block class="ios" />
+<block class="all" />
 
-> Note: If you're looking for these accessors in the headers, they're not in CBLDocument.h; they're defined in its superclass CBLProperties, so look in CBLProperties.h.
+In addition, as a convenience we offer {% st Date, NSDate, c, d %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it from the document using the {% st subscript, -dateForKey:, GetDate, GetDate %} accessor method.
 
-In addition, as a convenience we offer NSDate accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. `-dateForKey:` and `setDate:forKey:` do this conversion for you. (So does `-setObjectForKey:` if you pass it an NSDate object. However, `-objectForKey:` does *not*, because it has no way of knowing whether a JSON string should be interpreted as a date. So always call `-dateForKey:` if you want an NSDate.)
+<block class="swift" />
+
+```swift
+document["createdAt"] = Date()
+do {
+	try document.save()
+} catch let error {
+	print(error.localizedDescription)
+}
+print("createdAt value :: \(document["createdAt"] as Date?)")
+```
+
+<block class="objc" />
+
+```objective-c
+[document setObject:[NSDate date] forKey:@"createdAt"];
+[document save:&error];
+if (error) {
+	NSLog(@"Cannot save document %@", error);
+}
+NSLog(@"createdAt value :: %@", [document dateForKey:@"createdAt"]);
+```
 
 <block class="net" />
 
-> Note: If you're looking for these accessors in the source files, they're not in `IDocument.cs`; they're defined in its parent interface `IPropertyContainer`, so look in `IPropertyContainer.cs`.
+```csharp
+document.Set("createdAt", new DateTime());
+document.Save();
+Console.WriteLine($"createdAt value :: ${document.GetDate("createdAt")}");
+```
 
 <block class="all" />
 
