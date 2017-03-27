@@ -6,7 +6,7 @@ permalink: guides/couchbase-lite/native-api/document/index.html
 
 In a _document database_ such as Couchbase Lite, the primary entity stored in a database is called a **document** instead of a "row" or "record". This reflects the fact that a document can store more data, with more structure, than its equivalent in other databases.
 
-In Couchbase Lite (as in Couchbase Server and CouchDB) a document's **body** takes the form of a JSON object — a collection of key/value pairs where the values can be different types of data such as numbers, strings, arrays or even nested objects. Every document is identified by a **document ID**, which can be automatically generated (as a UUID) or determined by the application; the only constraints are that it must be unique within the database, and it can't be changed.
+In Couchbase Lite, a document's **body** takes the form of a JSON object — a collection of key/value pairs where the values can be different types of data such as numbers, strings, arrays or even nested objects. Every document is identified by a **document ID**, which can be automatically generated (as a UUID) or determined by the application; the only constraints are that it must be unique within the database, and it can't be changed.
 
 In addition, a document can contain attachments, named binary blobs that are useful for storing large media files or other non-textual data. Couchbase Lite supports attachments of unlimited size, although the Sync Gateway currently imposes a 20MB limit for attachments synced to it.
 
