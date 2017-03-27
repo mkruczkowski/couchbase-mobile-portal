@@ -69,6 +69,12 @@ if (!database) {
 }
 ```
 
+<block class="net" />
+
+```csharp
+var database = DatabaseFactory.Create("my-database");
+```
+
 <block class="all" />
 
 You can instantiate multiple {% st Databases, CBLDatabases, IDatabases, IDatabases %} with the same name and directory; these will all share the same storage. Do this if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
@@ -126,14 +132,60 @@ if (error) {
 <block class="net" />
 
 ```csharp
-var document = database.CreateDocument();
-document.Properties = new Dictionary<string, object>
+document["admin"] = true;
+document.Set("address", new Dictionary<string, object>
 {
-	["type"] = "user",
-	["name"] = "userA"
-};
+	["street"] = "1 park street",
+	["zip"] = "123"
+});
 document.Save();
+Console.WriteLine($"address value :: ${document.Get("address")}");
 ```
+
+<block class="all" />
+
+### Mutability
+
+The biggest change is that {% st Document, CBLDocument, IDocument, IDocument %} properties are now mutable. Instead of having to make a mutable copy of the properties dictionary, update it, and then save it back to the document, you can now modify individual properties in place and then save.
+
+<block class="swift" />
+
+```swift
+document.setProperty("admin", true)
+document.setProperty("address", ["street": "1 park street", "zip": 123])
+do {
+	try document.save()
+} catch let error {
+	print(error.localizedDescription)
+}
+```
+
+<block class="objc" />
+
+```objective-c
+[document setValue:@TRUE forKey:@"admin"];
+[document setObject:@{@"street": @"1 park street", @"zip": @123} forKey:@"address"];
+[document save:&error];
+if (error) {
+	NSLog(@"address value :: %@", [document objectForKey:@"address"]);
+}
+```
+
+<block class="net" />
+
+```csharp
+document["admin"] = true;
+document.Set("address", new Dictionary<string, object>
+{
+	["street"] = "1 park street",
+	["zip"] = "123"
+});
+document.Save();
+Console.WriteLine($"address value :: ${document.Get("address")}");
+```
+
+<block class="all" />
+
 This does create the possibility of confusion, since the document's in-memory state may not match what's in the database. Unsaved changes are not visible to other {% st Database, CBLDatabase, IDatabase, IDatabase %} instances (i.e. other threads that may have other instances), or to queries.
 
 ### Typed Accessors
