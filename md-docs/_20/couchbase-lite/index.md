@@ -8,7 +8,7 @@ permalink: guides/couchbase-lite/index.html
 
 <block class="swift" />
 
-- Download the latest [developer build](../whatsnew.html).
+- Download the latest [developer build](../../whatsnew.html).
 - Drag **CouchbaseLiteSwift.framework** from your Finder to the Xcode navigator.
 - Click on Project > General > Embedded Binary > Add **CouchbaseLiteSwift.framework**.
 - Import the framework and start using it in your project.
@@ -22,7 +22,7 @@ API references for the Swift SDK are available [here](http://docs.couchbase.com/
 
 <block class="objc" />
 
-- Download the latest [developer build](../whatsnew.html).
+- Download the latest [developer build](../../whatsnew.html).
 - Drag **CouchbaseLite.framework** from your Finder to the Xcode navigator.
 - Import the framework and start using it in your project.
 
