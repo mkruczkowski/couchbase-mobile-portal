@@ -208,8 +208,7 @@ if (error) {
 <block class="net" />
 
 ```csharp
-var address = document.GetSubdocument("address");
-address.Set("city", "galaxy city");
+var address = document.GetSubdocument("address")["city"] = "galaxy city";
 document.Save();
 Console.WriteLine($"address value :: ${address.GetSubdocument("address").Properties}");
 ```
