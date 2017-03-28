@@ -537,7 +537,7 @@ To be precise, Couchbase Lite uses the following rules to handle conflicts:
 - If there are no undeleted leaf revisions, the deletion (tombstone) on the longest branch wins.
 - If there's a tie, the winner is the one whose revision ID sorts higher in a simple ASCII comparison.
 
-> **Note:** Couchbase Lite does not automatically merge the contents of conflicts. Automated merging sometimes works, but in many cases it'll give wrong results; only you know your document schemas well enough to decide how conflicts should be merged.
+> **Note:** Couchbase Lite does not automatically merge the contents of conflicts. Automated merging would run the risk of giving wrong or undesired results in many cases; only you know your document schemas well enough to decide how conflicts should be merged.
 
 In some cases this simple "one revision wins" rule is good enough. For example, in a grocery list if two people rename the same item, one of them will just see that their change got overwritten, and may do it over again. But usually the details of the document content are more important, so the application will want to detect and resolve conflicts.
 
