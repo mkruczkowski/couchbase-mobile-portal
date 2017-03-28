@@ -19,7 +19,7 @@ class StripingTag < Liquid::Tag
   end
   
   def split_params(params)
-  	params.split(",")
+  	params.split("|")
   end
 end
 
