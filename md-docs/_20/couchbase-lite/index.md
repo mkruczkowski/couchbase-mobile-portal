@@ -330,6 +330,9 @@ CBLQuery *query =
     ];
 ```
 
+
+The list of available expressions can be found on the API reference of the [CBLQueryExpression](http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db003/Classes/CBLQueryExpression.html) class.
+
 There are several parts to specifying a query:
 
 1. What document criteria to match (corresponding to the “`WHERE …`” clause in N1QL or SQL)
