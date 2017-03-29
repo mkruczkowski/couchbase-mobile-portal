@@ -47,7 +47,7 @@ API references for Couchbase Lite .NET are available [here](http://docs.couchbas
 
 ### Creating Databases
 
-As the top-level entity in the API, you now create objects directly using the {% st Database|CBLDatabase|DatabaseFactory|DatabaseFactory %} class and passing in a name, options, or both. Just as before, the database will be created in a default location. You can override this by specifying a parent directory in the `CBLDatabaseOptions`.
+As the top-level entity in the API, new databases can be created using the {% st Database|CBLDatabase|DatabaseFactory|DatabaseFactory %} class by passing in a name, options, or both. The following example creates a database using the {% st Database(name: String)|initWithName:|Create(string name)|Create(string name) %} method.
 
 <block class="swift" />
 
@@ -76,6 +76,8 @@ var database = DatabaseFactory.Create("my-database");
 ```
 
 <block class="all" />
+
+Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: String options: DatabaseOptions?)|-initWithName:options:error:|Create(string name, DatabaseOptions options)|d %} method can be used to provide specific options (directory to create the database, whether it is read-only etc.)
 
 You can instantiate multiple {% st Databases|CBLDatabases|IDatabases|IDatabases %} with the same name and directory; these will all share the same storage. Do this if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
 
@@ -206,7 +208,7 @@ The {% st Document|CBLDocument|IDocument|IDocument %} class now offers a set of 
 
 <block class="all" />
 
-In addition, as a convenience we offer {% st Date|NSDate|c|d %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it from the document using the {% st subscript|-dateForKey:|GetDate|GetDate %} accessor method.
+In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|d %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it from the document using the {% st subscript|-dateForKey:|GetDate|GetDate %} accessor method.
 
 <block class="swift" />
 
@@ -234,7 +236,7 @@ NSLog(@"createdAt value :: %@", [document dateForKey:@"createdAt"]);
 <block class="net" />
 
 ```csharp
-document.Set("createdAt", new DateTime());
+document.Set("createdAt", DateTimeOffset.UtcNow);
 document.Save();
 Console.WriteLine($"createdAt value :: ${document.GetDate("createdAt")}");
 ```
