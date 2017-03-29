@@ -528,4 +528,4 @@ Performance is hard to quantify because it depends so much on document size, net
 
 **Troubleshooting:** As always with replication, logging is your friend. The `Sync` tag logs information specific to the replicator, and `WS` logs about the WebSocket. If you have connectivity problems, make sure that any proxy server (like nginx) in front of Sync Gateway supports WebSockets.
 
-[REPL_PROTOCOL]: https://github.com/couchbaselabs/couchbase-lite-api/wiki/New-Replication-Protocol
+[REPL_PROTOCOL]: https://github.com/couchbase/couchbase-lite-core/wiki/Replication-Protocol
