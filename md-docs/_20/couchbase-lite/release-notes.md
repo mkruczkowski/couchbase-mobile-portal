@@ -6,16 +6,18 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 ### Developer build 4
 
-- Replication! The new replicator is faster, but the protocol has changed, and the class API isn't yet finalized. Please read the documentation for details.
-
 <block class="objc" />
 
+- Replication! The new replicator is faster, but the protocol has changed, and the class API isn't yet finalized. Please read the documentation for details.
 
 <block class="swift" />
 
 
 <block class="net" />
 
+- Cross platform Query API
+
+<block class="java" />
 
 <block class="all" />
 
@@ -34,6 +36,10 @@ N/A
 - Sub-document API
 - Some taming of the dispatch queue model. (A database gets a queue and all the objects associated with it share the same one. Callback queue has been removed, and callbacks now come over the action queue so that it is safe to access the DB directly from the callback). Thread safety checking has been made optional (default OFF) and can be enabled in the DatabaseOptions class.
 
+<block class="java" />
+
+N/A
+
 <block class="all" />
 
 ### Developer build 2
@@ -51,12 +57,17 @@ N/A
 - CRUD operations
 - Document with property type accessors
 - Blob data type
+- Database and Document Change Notification
+
+<block class="java" />
+
+N/A
 
 <block class="all" />
 
 ### Developer build 1
 
-<block class="objc swift" />
+<block class="objc" />
 
 - CRUD operations
 - Document with property type accessors
@@ -65,7 +76,15 @@ N/A
 - Query
 	- NSPredicate based API
 	- Grouping and Aggregation support
+	
+<block class="swift" />
+
+N/A
 
 <block class="csharp" />
+
+N/A
+
+<block class="java" />
 
 N/A
