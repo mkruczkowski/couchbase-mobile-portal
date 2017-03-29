@@ -12,15 +12,23 @@
   {% assign nav_docs = site.data.20 %}
 {% endif %}
 
+<!-- Used in the left nav to find the relative URL -->
+{% assign base = '' %}
+{% assign depth = page.url | split: '/' | size | minus: 1 %}
+{% if    depth <= 1 %}{% assign base = '.' %}
+{% elsif depth == 2 %}{% assign base = '..' %}
+{% elsif depth == 3 %}{% assign base = '../..' %}
+{% elsif depth == 4 %}{% assign base = '../../..' %}{% endif %}
+
 <nav style="width: 100%;" role="navigation" aria-label="Secondary" class="toc collapsible">
   <ul class="main collapsed">
     {% for item0 in nav_docs %}
       <li class="{% if item0.open == true%}open{% endif %}">
       {% if item0.path %}
         {% if item0.path == url %}
-          <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item0.path }}">{{ item0.title }}</a>
+          <a class="selected" href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item0.path }}">{{ item0.title }}</a>
         {% else %}
-          <a href="{% if page.url != '/'%}/{% endif %}{{ item0.path }}">{{ item0.title }}</a>
+          <a href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item0.path }}">{{ item0.title }}</a>
         {% endif %}
       {% else %}
         <a href="#" class="static">{{ item0.title }}</a>
@@ -31,9 +39,9 @@
           <li class="{% if item1.open == true%}open{% endif %}">
             {% if item1.path %}
               {% if item1.path == url %}
-                <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item1.path }}">{{ item1.title }}</a>
+                <a class="selected" href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item1.path }}">{{ item1.title }}</a>
               {% else %}
-                <a href="{% if page.url != '/'%}/{% endif %}{{ item1.path }}">{{ item1.title }}</a>
+                <a href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item1.path }}">{{ item1.title }}</a>
               {% endif %}
             {% else %}
               <a href="#" class="static">{{ item1.title }}</a>
@@ -44,9 +52,9 @@
               <li class="{% if item2.open == true%}open{% endif %}">
                 {% if item2.path %}
                   {% if item2.path == url %}
-                    <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item2.path }}">{{ item2.title }}</a>
+                    <a class="selected" href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item2.path }}">{{ item2.title }}</a>
                   {% else %}
-                    <a href="{% if page.url != '/'%}/{% endif %}{{ item2.path }}">{{ item2.title }}</a>
+                    <a href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item2.path }}">{{ item2.title }}</a>
                   {% endif %}
                 {% else %}
                   <a href="#" class="static">{{ item2.title }}</a>
@@ -57,9 +65,9 @@
                   <li>
                     {% if item3.path %}
                       {% if item3.path == url %}
-                      <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item3.path }}">{{ item3.title}}</a>
+                      <a class="selected" href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item3.path }}">{{ item3.title}}</a>
                       {% else %}
-                      <a href="{% if page.url != '/'%}/{% endif %}{{ item3.path }}">{{ item3.title }}</a>
+                      <a href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item3.path }}">{{ item3.title }}</a>
                       {% endif %}
                     {% else %}
                       <a href="#" class="static">{{ item3.title }}</a>
@@ -70,9 +78,9 @@
                       <li>
                         {% if item4.path %}
                           {% if item4.path == url %}
-                          <a class="selected" href="{% if page.url != '/'%}/{% endif %}{{ item4.path }}">{{ item4.title }}</a>
+                          <a class="selected" href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item4.path }}">{{ item4.title }}</a>
                           {% else %}
-                          <a href="{% if page.url != '/'%}/{% endif %}{{ item4.path }}">{{ item4.title }}</a>
+                          <a href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item4.path }}">{{ item4.title }}</a>
                           {% endif %}
                         {% else %}
                           <a href="#" class="static">{{ item4.title }}</a>
