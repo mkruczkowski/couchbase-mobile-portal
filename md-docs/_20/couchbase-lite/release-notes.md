@@ -4,6 +4,21 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 
+### Developer build 4
+
+- Replication! The new replicator is faster, but the protocol has changed, and the class API isn't yet finalized. Please read the documentation for details.
+
+<block class="objc" />
+
+
+<block class="swift" />
+
+
+<block class="net" />
+
+
+<block class="all" />
+
 ### Developer build 3
 
 <block class="objc" />
