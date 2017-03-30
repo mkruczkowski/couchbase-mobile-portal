@@ -14,7 +14,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 N/A
 
-<block class="net" />
+<block class="csharp" />
 
 - Sub-document API
 - Some taming of the dispatch queue model. (A database gets a queue and all the objects associated with it share the same one. Callback queue has been removed, and callbacks now come over the action queue so that it is safe to access the DB directly from the callback). Thread safety checking has been made optional (default OFF) and can be enabled in the DatabaseOptions class.
@@ -31,7 +31,7 @@ N/A
 
 - Sub-document API
 
-<block class="net" />
+<block class="csharp" />
 
 - CRUD operations
 - Document with property type accessors
@@ -51,6 +51,6 @@ N/A
 	- NSPredicate based API
 	- Grouping and Aggregation support
 
-<block class="net" />
+<block class="csharp" />
 
 N/A

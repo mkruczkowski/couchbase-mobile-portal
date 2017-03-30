@@ -33,7 +33,7 @@ API references for the Swift SDK are available [here](http://docs.couchbase.com/
 
 API references for the Objective-C SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db003/index.html).
 
-<block class="net" />
+<block class="csharp" />
 
 - Add `http://mobile.nuget.couchbase.com/nuget/Developer/` to your Nuget package sources and expect a new build approximately every 2 weeks!
 
@@ -69,7 +69,7 @@ if (!database) {
 }
 ```
 
-<block class="net" />
+<block class="csharp" />
 
 ```csharp
 var database = DatabaseFactory.Create("my-database");
@@ -139,7 +139,7 @@ if (error) {
 }
 ```
 
-<block class="net" />
+<block class="csharp" />
 
 ```csharp
 var document = database.GetDocument("john");
@@ -185,7 +185,7 @@ if (error) {
 }
 ```
 
-<block class="net" />
+<block class="csharp" />
 
 ```csharp
 document["admin"] = true;
@@ -233,7 +233,7 @@ if (error) {
 NSLog(@"createdAt value :: %@", [document dateForKey:@"createdAt"]);
 ```
 
-<block class="net" />
+<block class="csharp" />
 
 ```csharp
 document.Set("createdAt", DateTimeOffset.UtcNow);
@@ -271,7 +271,7 @@ if (error) {
 }
 ```
 
-<block class="net" />
+<block class="csharp" />
 
 ```csharp
 var address = document.GetSubdocument("address")["city"] = "galaxy city";
@@ -310,7 +310,7 @@ Database queries have changed significantly. Instead of the map/reduce algorithm
 
 The Query API provides a simple way to construct a query statement from a set of API methods. There will be two API styles (builder and chainable) implemented based on what makes sense for each platform.
 
-<block class="net" />
+<block class="csharp" />
 
 We are still designing the cross-platform query API; it will appear in a future preview release (likely DB004). Unlike iOS, there is no built in string based query mechanism in C# so we lack the ability to include a platform specific query mechanism at this time (LINQ is dependent on strongly typed objects and the "model" API, which will need to be released first).
 

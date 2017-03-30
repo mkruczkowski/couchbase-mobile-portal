@@ -93,9 +93,15 @@
                   </style>
                   <div id="platform-tabs" class="hide">
                     <span>Platform:</span>
-                    <a href="javascript:void(0);" class="button-swift" onclick="display('platform', 'swift')">Swift</a>
-                    <a href="javascript:void(0);" class="button-objc" onclick="display('platform', 'objc')">Objective-C</a>
-                    <a href="javascript:void(0);" class="button-csharp" onclick="display('platform', 'csharp')">.NET</a>
+                    {% if site.version == '2.0' %}
+                      <a href="javascript:void(0);" class="button-swift" onclick="display('platform', 'swift')">Swift</a>
+                      <a href="javascript:void(0);" class="button-objc" onclick="display('platform', 'objc')">Objective-C</a>
+                      <a href="javascript:void(0);" class="button-csharp" onclick="display('platform', 'csharp')">.NET</a>
+                    {% elsif site.version == '1.4' %}
+                      <a href="javascript:void(0);" class="button-ios" onclick="display('platform', 'ios')">iOS</a>
+                      <a href="javascript:void(0);" class="button-android" onclick="display('platform', 'android')">Android</a>
+                      <a href="javascript:void(0);" class="button-wpf" onclick="display('platform', 'wpf')">WPF</a>
+                    {% endif %}
                   </div>
                 </div>
                 <!-- SDK buttons -->
@@ -133,8 +139,9 @@
                 <!-- Logic for platform tabs -->
                 <script>
                   // Only show on Develop pages
-                  var blocks = document.getElementsByClassName('objc');
-                  if (blocks.length > 0) {
+                  var blocksv1 = document.getElementsByClassName('ios');
+                  var blocksv2 = document.getElementsByClassName('swift');
+                  if (blocksv1.length > 0 || blocksv2.length > 0) {
                     var platformTabs = document.getElementById('platform-tabs');
                     platformTabs.className = "show";
                   }
@@ -171,7 +178,7 @@
                     // Place the display-platform-* class on div.inner-content
                     var container = document.getElementsByClassName('inner-content')[0];
                     container.className = 'inner-content display-' + type + '-' + value;
-                    if (value == 'csharp' || value == 'xam') {
+                    if (value == 'wpf' || value == 'csharp' || value == 'xam') {
                       container.className += ' display-platform-net';
                     }
                     container.className += ' display-platform-all';
@@ -182,16 +189,21 @@
                   // us as close as possible to the correct platform and dev os using the hashtag and block walk up.
                   var foundHash = false;
                   var language = getParameterByName('language');
-                  if (['ios', 'android', 'csharp', 'swift', 'objc'].indexOf(language) > -1) {
+                  if (['ios', 'android', 'csharp', 'swift', 'objc', 'wpf'].indexOf(language) > -1) {
                     display('platform', language);
                     foundHash = true;
                   }
+                  
                   if (!foundHash) {
                     var cookie_lang = getCookie('mobile-lang');
-                    if (cookie_lang) {
+                    if (document.getElementsByClassName(cookie_lang).length > 0) {
                       display('platform', cookie_lang);
                     } else {
-                      display('platform', 'swift');
+                      if (document.getElementsByClassName('swift').length > 0) {
+                        display('platform', 'swift');
+                      } else {
+                        display('platform', 'ios');
+                      }
                     }
                   }
 
