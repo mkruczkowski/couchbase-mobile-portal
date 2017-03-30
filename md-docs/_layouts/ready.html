@@ -28,6 +28,9 @@
         <div class="col four-fifths article">
           <div class="story">
             <div class="body">
+              {% if site.version == '1.4' %}
+                {% include developer-preview.html %}
+              {% endif %}
               <!-- Do not import the overridden styles on swagger ui pages -->
               {% if page.swagger != true %}
                 <link rel="stylesheet" type="text/css" href="https://couchbase-docs.s3.amazonaws.com/mobile/assets/styles.css">
