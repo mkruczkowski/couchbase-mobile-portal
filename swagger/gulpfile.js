@@ -5,6 +5,14 @@ var gulp = require('gulp')
   , argv = require('yargs').argv
   , version = argv.version + '/';
 
+var swaggerOptions = {
+  parser: {
+    $refs: {
+      internal: false
+    }
+  }
+};
+
 /**
  * Concat the parameters into parameters/index.yaml
  */
@@ -62,19 +70,19 @@ gulp.task('paths-sg-admin', function () {
 
 gulp.task('public', ['params-sg', 'definitions-sg', 'paths-sg-public'], function () {
   return gulp.src(version + 'public.yaml')
-    .pipe(swagger('sync-gateway-public.json'))
+    .pipe(swagger('sync-gateway-public.json', swaggerOptions))
     .pipe(gulp.dest('tmp'))
 });
 
 gulp.task('admin', ['params-sg', 'definitions-sg', 'paths-sg-admin'], function () {
   return gulp.src(version + 'admin.yaml')
-    .pipe(swagger('sync-gateway-admin.json'))
+    .pipe(swagger('sync-gateway-admin.json', swaggerOptions))
     .pipe(gulp.dest('tmp'))
 });
 
 gulp.task('cbl', ['params-cbl', 'definitions-cbl', 'paths-cbl'], function () {
   return gulp.src(version + 'cbl.yaml')
-    .pipe(swagger('couchbase-lite.json'))
+    .pipe(swagger('couchbase-lite.json', swaggerOptions))
     // run the swagger js code
     .pipe(gulp.dest('tmp'))
 });
