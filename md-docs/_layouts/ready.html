@@ -144,7 +144,7 @@
                   // Only show on Develop pages
                   var blocksv1 = document.getElementsByClassName('ios');
                   var blocksv2 = document.getElementsByClassName('swift');
-                  if (blocksv1.length > 0 || blocksv2.length > 0) {
+                  if ((blocksv1.length > 0 && blocksv1[0].tagName == 'BLOCK') || (blocksv2.length > 0 && blocksv2[0].tagName == 'BLOCK')) {
                     var platformTabs = document.getElementById('platform-tabs');
                     platformTabs.className = "show";
                   }
