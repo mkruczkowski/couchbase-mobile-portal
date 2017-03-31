@@ -405,15 +405,50 @@ A query can only be fast if there's a pre-existing database index it can search 
 
 To create an index, call -[CBLDatabase createIndexOn:error:]. (This is a no-op if the index already exists, so it's OK to call it every time the app runs.) The parameter is an array of one or more NSExpressions, or NSStrings that compile to NSExpressions. These are most often key-paths, but they don't have to be. If there are multiple expressions, the first one will be the primary key, the second the secondary key, etc.
 
+<block class="objc" />
+
 ### Full-Text Search
 
-Queries can perform a full-text search (FTS), powered by SQLite's FTS4 engine, by using the `MATCHES` operator in an NSPredicate. (This operator is defined as a regular-expression match by Apple, but we've hijacked it for FTS.) The left-hand side is usually a document property, but can be any expression producing a string. The right-hand side is the pattern to match: usually a word or a space-separated list of words, but it can be a more powerful [FTS4 search expression](https://www.sqlite.org/fts3.html#full_text_index_queries).
+To run a full-text search (FTS) query, you must have created a full-text index on the expression being matched. Unlike regular queries, the index is not optional. The index's (single) expression should be the property name you wish to search on. The index type must also be {% st kCBLFullTextIndex|kCBLFullTextIndex|kCBLFullTextIndex|kCBLFullTextIndex %}. The following code example inserts three documents of type `task` and creates an FTS index on the `name` property.
 
-But hold on! *Before* issuing a query that uses `MATCHES`, you *must* have created a full-text index on the expression being matched. Unlike regular queries, the index is not optional. The index's (single) expression should be the expression you'll use on the left-hand side of the `MATCHES` operator, and its type must be `kCBLFullTextIndex`.
+```objective-c
+// Insert documents
+NSArray *tasks = @[@"buy groceries", @"play chess", @"book travels", @"buy museum tickets"];
+for (NSString* task in tasks) {
+	CBLDocument* doc = [database document];
+	doc.properties = @{@"type": @"task", @"name": task};
+	[doc save:&error];
+	if (error) {
+		NSLog(@"Cannot save document %@", error);
+	}
+}
 
-When you run a full-text query, the resulting rows are instances of CBLFullTextQueryRow. This subclass has extra API that lets you access the full string that was matched, and the character range(s) in that string where the match(es) occur.
+// Create index
+[database createIndexOn:@[@"name"] type:kCBLFullTextIndex options:NULL error:&error];
+if (error) {
+	NSLog(@"Cannot create index %@", error);
+}
+```
+
+With the index created, an FTS query on the property that is being indexed can be constructed and ran. The full-text search criteria is defined as a {% st CBLQueryExpression|CBLQueryExpression|CBLQueryExpression|CBLQueryExpression %}. The left-hand side is usually a document property, but can be any expression producing a string. The right-hand side is the pattern to match: usually a word or a space-separated list of words, but it can be a more powerful [FTS4 search expression](https://www.sqlite.org/fts3.html#full_text_index_queries). The following code example matches all documents that contain the word 'buy' in the value of the `name` property.
+
+```objective-c
+CBLQueryExpression* where = [[CBLQueryExpression property:@"name"] match:@"'buy'"];
+CBLQuery *ftsQuery = [CBLQuery select:[CBLQuerySelect all]
+                                 from:[CBLQueryDataSource database:database]
+                                where:where];
+
+NSEnumerator* ftsQueryResult = [ftsQuery run:&error];
+for (CBLFullTextQueryRow *row in ftsQueryResult) {
+	NSLog(@"document properties :: %@", row.document.properties);
+}
+```
+
+When you run a full-text query, the resulting rows are instances of {% st CBLFullTextQueryRow|CBLFullTextQueryRow|CBLFullTextQueryRow|CBLFullTextQueryRow %}. This class has additional methods that let you access the full string that was matched, and the character range(s) in that string where the match(es) occur.
 
 It's very common to sort full-text results in descending order of relevance. This can be a very difficult heuristic to define, but Couchbase Lite comes with a fairly simple ranking function you can use. In the `orderBy:` array, use a string of the form `rank(X)`, where `X` is the property or expression being searched, to represent the ranking of the result. Since higher rankings are better, you'll probably want to reverse the order by prefixing the string with a `-`.
+
+<block class="all" />
 
 ### Under The Hood
 
