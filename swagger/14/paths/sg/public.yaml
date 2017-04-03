@@ -42,7 +42,7 @@
       - session
     summary: Create a user session
     description: |
-      This request creates a new session in the specified database.
+      If the credentials provided in the request body are valid, the session is created with an idle session timeout of 24 hours. An idle session timeout in the context of Sync Gateway is defined as the following: if 10% or more of the current expiration time has elapsed when a subsequent request with that session id is processed, the session's expiry time is automatically updated to 24 hours from that time.
     parameters:
       - in: body
         name: SessionBody
