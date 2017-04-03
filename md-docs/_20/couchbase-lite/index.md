@@ -285,11 +285,53 @@ Console.WriteLine($"address value :: ${address.GetSubdocument("address").Propert
 
 ### Blobs
 
-We've renamed "attachments" to "blobs", for clarity. The new behavior should be clearer too: a {% st Blob|CBLBlob|IBlob|IBlob %} is now a normal object that can appear in a document as a property value, either at the top level or in a subdocument. In other words, there's no special API for creating or accessing attachments; you just instantiate an {% st Blob|CBLBlob|IBlob|IBlob %} and set it as the value of a property, and then later you can get the property value, which will be a {% st Blob|CBLBlob|IBlob|IBlob %} object.
+We've renamed "attachments" to "blobs", for clarity. The new behavior should be clearer too: a {% st Blob|CBLBlob|IBlob|IBlob %} is now a normal object that can appear in a document as a property value, either at the top level or in a subdocument. In other words, there's no special API for creating or accessing attachments; you just instantiate an {% st Blob|CBLBlob|IBlob|IBlob %} and set it as the value of a property, and then later you can get the property value, which will be a {% st Blob|CBLBlob|IBlob|IBlob %} object. The following code example adds a blob to the document under the `avatar` property.
 
-{% st CBLBlob|CBLBlob|IBlob|IBlob %} itself has a simple API that lets you access the contents as in-memory data (an {% st NSData|NSData|byte[]|byte[] %} object) or as a {% st NSInputStream|NSInputStream|Stream|Stream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st CBLAttachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st [doc setObject: imageBlob forKey: @"thumbnail.jpg"]|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.Set("thumbnail.jpg", imageBlob) %})
+<block class="swift" />
 
-> Note: A blob is stored in the document's raw JSON as an object with a property `"_cbltype":"blob"`. It also has properties such as `"digest"` (a SHA-1 digest of the data), `"length"` (the length in bytes), and optionally `"type"` (the MIME type.) As always, the data is not stored in the document, but in a separate content-addressable store, indexed by the digest.
+```swift
+let image = UIImage(named: "avatar.jpg")
+let imageData = UIImageJPEGRepresentation(image!, 1)
+
+let blob = Blob(contentType: "image/jpg", data: imageData!)
+document["avatar"] = blob
+do {
+	try document.save()
+} catch let error {
+	print(error.localizedDescription)
+}
+print("document properties :: \(document.properties)")
+```
+
+<block class="objc" />
+
+```objective-c
+UIImage *image = [UIImage imageNamed:@"avatar.jpg"];
+NSData *data = UIImageJPEGRepresentation(image, 1);
+
+CBLBlob *blob = [[CBLBlob alloc] initWithContentType:@"image/jpg" data:data];
+document[@"avatar"] = blob;
+if (error) {
+	NSLog(@"Cannot save document %@", error);
+}
+NSLog(@"document properties :: %@", [document properties]);
+```
+
+<block class="csharp" />
+
+```csharp
+var data = Encoding.UTF8.GetBytes("12345");
+var blob = BlobFactory.Create("image/jpg", data);
+document["avatar"] = blob;
+document.Save();
+Console.WriteLine($"document properties :: ${document["avatar"]}");
+```
+
+<block class="all" />
+
+{% st Blob|CBLBlob|IBlob|IBlob %} itself has a simple API that lets you access the contents as in-memory data (an {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|Stream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st CBLAttachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st doc["thumbnail.jpg"] = imageBlob|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.Set("thumbnail.jpg", imageBlob) %})
+
+> **Note:** A blob is stored in the document's raw JSON as an object with a property `"_cbltype":"blob"`. It also has properties such as `"digest"` (a SHA-1 digest of the data), `"length"` (the length in bytes), and optionally `"type"` (the MIME type.) As always, the data is not stored in the document, but in a separate content-addressable store, indexed by the digest.
 
 ### Conflict Handling
 
