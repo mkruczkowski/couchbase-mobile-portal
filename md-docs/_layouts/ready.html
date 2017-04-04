@@ -61,7 +61,8 @@
                     .display-platform-csharp .toggler .button-csharp,
                     .display-platform-xam .toggler .button-xam,
                     .display-platform-swift .toggler .button-swift,
-                    .display-platform-objc .toggler .button-objc {
+                    .display-platform-objc .toggler .button-objc,
+                    .display-platform-java .toggler .button-java {
                       background-color: #00739c;
                       color: white;
                     }
@@ -77,7 +78,8 @@
                     .display-platform-xam .xam,
                     .display-platform-all .all,
                     .display-platform-swift .swift,
-                    .display-platform-objc .objc {
+                    .display-platform-objc .objc,
+                    .display-platform-java .java {
                       display: block;
                     }
                     .inner-content .inline:not(.tab-nav) {
@@ -90,7 +92,8 @@
                     .display-platform-net .net.inline,
                     .display-platform-csharp .csharp.inline,
                     .display-platform-swift .swift.inline,
-                    .display-platform-objc .objc.inline {
+                    .display-platform-objc .objc.inline,
+                    .display-platform-java .java.inline {
                       display: inline;
                     }
                   </style>
@@ -100,6 +103,7 @@
                       <a href="javascript:void(0);" class="button-swift" onclick="display('platform', 'swift')">Swift</a>
                       <a href="javascript:void(0);" class="button-objc" onclick="display('platform', 'objc')">Objective-C</a>
                       <a href="javascript:void(0);" class="button-csharp" onclick="display('platform', 'csharp')">.NET</a>
+                      <a href="javascript:void(0);" class="button-java" onclick="display('platform', 'java')">Java</a>
                     {% elsif site.version == '1.4' %}
                       <a href="javascript:void(0);" class="button-ios" onclick="display('platform', 'ios')">iOS</a>
                       <a href="javascript:void(0);" class="button-android" onclick="display('platform', 'android')">Android</a>

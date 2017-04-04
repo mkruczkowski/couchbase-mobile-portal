@@ -14,7 +14,7 @@ class StripingTag < Liquid::Tag
     output = "<block class=\"swift inline\"><code> #{swift}</code></block>"
     output += "<block class=\"objc inline\"><code> #{objc}</code></block>"
     output += "<block class=\"net inline\"><code> #{c}</code></block>"
-    output += "<block class=\"android inline\"><code> #{java}</code></block>"
+    output += "<block class=\"java inline\"><code> #{java}</code></block>"
     return output
   end
   
