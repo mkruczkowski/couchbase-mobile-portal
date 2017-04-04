@@ -12,12 +12,19 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 <block class="swift" />
 
+- Cross platform Query API
 
 <block class="net" />
 
 - Cross platform Query API
 
 <block class="java" />
+
+- CRUD operations
+- Document with property type accessors
+- Blob data type
+- Document Change Notification
+- Cross platform Query API
 
 <block class="all" />
 

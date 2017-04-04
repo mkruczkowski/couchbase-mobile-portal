@@ -41,6 +41,29 @@ When a support assembly is required, your app must call the relevant `Activate()
 
 API references for Couchbase Lite .NET are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db003/).
 
+<block class="java" />
+
+- In the top-level **build.gradle** file, add the following Maven repository in the `allprojects` section.
+
+	```groovy
+	allprojects {
+		repositories {
+			jcenter()
+			maven {
+				url "http://mobile.maven.couchbase.com/maven2/dev/"
+			}
+		}
+	}
+	```
+
+- Next, add the following in the `dependencies` section of the application's **build.gradle** (the one in the **app** folder).
+
+	```groovy
+	dependencies {
+		compile 'com.couchbase.lite:couchbase-lite-android:2.0.0-DB004'
+	}
+	```
+
 <block class="all" />
 
 ## Databases
@@ -75,6 +98,14 @@ if (!database) {
 var database = DatabaseFactory.Create("my-database");
 ```
 
+<block class="java" />
+
+```java
+DatabaseOptions options = new DatabaseOptions();
+options.setDirectory(getFilesDir());
+Database database = new Database("my-database", options);
+```
+
 <block class="all" />
 
 Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: String options: DatabaseOptions?)|-initWithName:options:error:|Create(string name, DatabaseOptions options)|d %} method can be used to provide specific options (directory to create the database, whether it is read-only etc.)
@@ -93,8 +124,8 @@ Again, the behavior of the method hasn't changed, just its name.
 
 In Couchbase Lite, a document's body takes the form of a JSON object — a collection of key/value pairs where the values can be different types of data such as numbers, strings, arrays or even nested objects. Every document is identified by a document ID, which can be automatically generated (as a UUID) or determined by the application; the only constraints are that it must be unique within the database, and it can't be changed. There are two methods in the API to create a new document:
 
-- The {% st document(withID: String)|documentWithID:|CreateDocument()|document(withID: String) %} method can be used to create a document with a specific ID defined by the application.
-- The {% st document()|document:|GetDocument(string id)|-document %} method can be used to let the database generate a random document ID.
+- The {% st document(withID: String)|documentWithID:|GetDocument(string id)|getDocument(String docID) %} method can be used to create a document with a specific ID defined by the application.
+- The {% st document()|document:|CreateDocument()|getDocument() %} method can be used to let the database generate a random document ID.
 
 [//]: # (TODO: Since this identifier must be unique, you may want to check if a document with this ID already exists in the database using the {% st a|b|c|d %} method.)
 
@@ -128,11 +159,18 @@ var document = database.CreateDocument();
 document.Save();
 ```
 
+<block class="java" />
+
+```java
+Document document = database.getDocument();
+document.save();
+```
+
 <block class="all" />
 
 ### Mutability
 
-The biggest change is that {% st Document|CBLDocument|IDocument|IDocument %} properties are now mutable. Instead of having to make a mutable copy of the properties dictionary, update it, and then save it back to the document, you can now modify individual properties in place and then save.
+The biggest change is that {% st Document|CBLDocument|IDocument|Document %} properties are now mutable. Instead of having to make a mutable copy of the properties dictionary, update it, and then save it back to the document, you can now modify individual properties in place and then save.
 
 <block class="swift" />
 
@@ -188,17 +226,35 @@ document.Save();
 Console.WriteLine($"document type :: ${document.Get("type")}");
 ```
 
+<block class="java" />
+
+```java
+Map<String, Object> properties = new HashMap<String, Object>();
+properties.put("type", "user");
+properties.put("admin", false);
+
+Map<String, Object> address = new HashMap<String, Object>();
+address.put("street", "1 park street");
+address.put("zip", 123456);
+
+properties.put("address", address);
+
+document.setProperties(properties);
+document.save();
+Log.d("app", String.format("document type :: %s", document.getString("type")));
+```
+
 <block class="all" />
 
-This does create the possibility of confusion, since the document's in-memory state may not match what's in the database. Unsaved changes are not visible to other {% st Database|CBLDatabase|IDatabase|IDatabase %} instances (i.e. other threads that may have other instances), or to queries.
+This does create the possibility of confusion, since the document's in-memory state may not match what's in the database. Unsaved changes are not visible to other {% st Database|CBLDatabase|IDatabase|Database %} instances (i.e. other threads that may have other instances), or to queries.
 
 ### Typed Accessors
 
-The {% st Document|CBLDocument|IDocument|IDocument %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st let name: String = doc["name"]|-stringForKey:|GetString()|GetString() %} returns either a {% st String|NSString|string|string %} or {% st nil|nil|null|null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil|nil|null|null %}.)
+The {% st Document|CBLDocument|IDocument|Document %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st let name: String = doc["name"]|-stringForKey:|GetString()|GetString() %} returns either a {% st String|NSString|string|string %} or {% st nil|nil|null|null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil|nil|null|null %}.)
 
 <block class="all" />
 
-In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|d %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it from the document using the {% st subscript|-dateForKey:|GetDate|GetDate %} accessor method.
+In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|Date %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it from the document using the {% st subscript|-dateForKey:|GetDate()|GetDate() %} accessor method.
 
 <block class="swift" />
 
@@ -231,7 +287,15 @@ document.Save();
 Console.WriteLine($"createdAt value :: ${document.GetDate("createdAt")}");
 ```
 
-<block class="all" />
+<block class="java" />
+
+```java
+document.set("createdAt", new Date(System.currentTimeMillis()));
+document.save();
+Log.d("app", String.format("createdAt value :: %s", document.getDate("createdAt")));
+```
+
+<block class="swift objc csharp" />
 
 ### Subdocuments
 
@@ -317,9 +381,25 @@ document.Save();
 Console.WriteLine($"document properties :: ${document["avatar"]}");
 ```
 
+<block class="java" />
+
+```java
+InputStream inputStream = null;
+try {
+	inputStream = getAssets().open("avatar.jpg");
+} catch (IOException e) {
+	e.printStackTrace();
+}
+
+Blob blob = new Blob("image/jpg", inputStream);
+document.set("avatar", blob);
+document.save();
+Log.d("app", String.format("document properties :: %s", document.getProperties()));
+```
+
 <block class="all" />
 
-{% st Blob|CBLBlob|IBlob|IBlob %} itself has a simple API that lets you access the contents as in-memory data (an {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|Stream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st CBLAttachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st doc["thumbnail.jpg"] = imageBlob|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.Set("thumbnail.jpg", imageBlob) %})
+{% st Blob|CBLBlob|IBlob|Blob %} itself has a simple API that lets you access the contents as in-memory data (an {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|InputStream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st CBLAttachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st doc["thumbnail.jpg"] = imageBlob|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.set("avatar.jpg", imageBlob) %})
 
 > **Note:** A blob is stored in the document's raw JSON as an object with a property `"_cbltype":"blob"`. It also has properties such as `"digest"` (a SHA-1 digest of the data), `"length"` (the length in bytes), and optionally `"type"` (the MIME type.) As always, the data is not stored in the document, but in a separate content-addressable store, indexed by the digest.
 
