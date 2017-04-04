@@ -443,11 +443,36 @@ A query can only be fast if there's a pre-existing database index it can search 
 
 To create an index, call {% st createIndex(expressions: [Expression])|-createIndexOn:error:|CreateIndex()|d %} passing an array of one or more {% st String|NSString|string|d %}s. These are most often key-paths, but they don't have to be. If there are multiple expressions, the first one will be the primary key, the second the secondary key, etc.
 
-<block class="objc" />
+<block class="all" />
 
 ### Full-Text Search
 
-To run a full-text search (FTS) query, you must have created a full-text index on the expression being matched. Unlike regular queries, the index is not optional. The index's (single) expression should be the property name you wish to search on. The index type must also be {% st kCBLFullTextIndex|kCBLFullTextIndex|kCBLFullTextIndex|kCBLFullTextIndex %}. The following code example inserts three documents of type `task` and creates an FTS index on the `name` property.
+To run a full-text search (FTS) query, you must have created a full-text index on the expression being matched. Unlike regular queries, the index is not optional. The index's (single) expression should be the property name you wish to search on. The index type must also be {% st fullTextIndex|kCBLFullTextIndex|FullTextIndex|kCBLFullTextIndex %}. The following code example inserts three documents of type `task` and creates an FTS index on the `name` property.
+
+<block class="swift" />
+
+```swift
+// Insert documents
+let tasks = ["buy groceries", "play chess", "book travels", "buy museum tickets"]
+for task in tasks {
+	let doc = database.document()
+	doc.properties = ["type": "task", "name": task]
+	do {
+		try doc.save()
+	} catch let error {
+		print(error.localizedDescription)
+	}
+}
+
+// Create index
+do {
+	try database.createIndex(["name"], options: .fullTextIndex(language: nil, ignoreDiacritics: false))
+} catch let error {
+	print(error.localizedDescription)
+}
+```
+
+<block class="objc" />
 
 ```c
 // Insert documents
@@ -468,7 +493,47 @@ if (error) {
 }
 ```
 
-With the index created, an FTS query on the property that is being indexed can be constructed and ran. The full-text search criteria is defined as a {% st CBLQueryExpression|CBLQueryExpression|CBLQueryExpression|CBLQueryExpression %}. The left-hand side is usually a document property, but can be any expression producing a string. The right-hand side is the pattern to match: usually a word or a space-separated list of words, but it can be a more powerful [FTS4 search expression](https://www.sqlite.org/fts3.html#full_text_index_queries). The following code example matches all documents that contain the word 'buy' in the value of the `name` property.
+<block class="csharp" />
+
+```csharp
+// Insert documents
+var tasks = new string[] { "buy groceries", "play chess", "book travels", "buy museum tickets" };
+foreach (string task in tasks)
+{
+	var doc = database.CreateDocument();
+	doc.Properties = new Dictionary<string, object>
+	{
+		["type"] = "task",
+		["name"] = task
+	};
+	doc.Save();
+}
+
+// Create Index
+database.CreateIndex(new[] { "name" }, IndexType.FullTextIndex, null);
+```
+
+<block class="all" />
+
+With the index created, an FTS query on the property that is being indexed can be constructed and ran. The full-text search criteria is defined as a {% st Expression|CBLQueryExpression|Expression|CBLQueryExpression %}. The left-hand side is usually a document property, but can be any expression producing a string. The right-hand side is the pattern to match: usually a word or a space-separated list of words, but it can be a more powerful [FTS4 search expression](https://www.sqlite.org/fts3.html#full_text_index_queries). The following code example matches all documents that contain the word 'buy' in the value of the `name` property.
+
+<block class="swift" />
+
+```swift
+let whereClause = Expression.property("name").match("'buy'")
+let ftsQuery = Query.select().from(DataSource.database(database)).where(whereClause)
+
+do {
+	let ftsQueryResult = try ftsQuery.run()
+	for row in ftsQueryResult {
+		print("document properties \(row.document.properties)")
+	}
+} catch let error {
+	print(error.localizedDescription)
+}
+```
+
+<block class="objc" />
 
 ```c
 CBLQueryExpression* where = [[CBLQueryExpression property:@"name"] match:@"'buy'"];
@@ -482,7 +547,23 @@ for (CBLFullTextQueryRow *row in ftsQueryResult) {
 }
 ```
 
-When you run a full-text query, the resulting rows are instances of {% st CBLFullTextQueryRow|CBLFullTextQueryRow|CBLFullTextQueryRow|CBLFullTextQueryRow %}. This class has additional methods that let you access the full string that was matched, and the character range(s) in that string where the match(es) occur.
+<block class="csharp" />
+
+```csharp
+var query = QueryFactory.Select()
+		.From(DataSourceFactory.Database(database))
+		.Where(ExpressionFactory.Property("name").Match("'buy'"));
+
+var rows = query.Run();
+for (rows in rows)
+{
+	Console.WriteLine($"document properties ${row.document.properties}");
+}
+```
+
+<block class="all" />
+
+When you run a full-text query, the resulting rows are instances of {% st FullTextQueryRow|CBLFullTextQueryRow|FullTextQueryRow|CBLFullTextQueryRow %}. This class has additional methods that let you access the full string that was matched, and the character range(s) in that string where the match(es) occur.
 
 It's very common to sort full-text results in descending order of relevance. This can be a very difficult heuristic to define, but Couchbase Lite comes with a fairly simple ranking function you can use. In the `orderBy:` array, use a string of the form `rank(X)`, where `X` is the property or expression being searched, to represent the ranking of the result. Since higher rankings are better, you'll probably want to reverse the order by prefixing the string with a `-`.
 
