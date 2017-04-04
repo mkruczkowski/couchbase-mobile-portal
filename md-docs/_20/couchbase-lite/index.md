@@ -333,13 +333,15 @@ document.Save();
 Console.WriteLine($"address properties :: ${document.GetSubdocument("address").Properties}");
 ```
 
-<block class="all" />
+<block class="swift objc csharp" />
 
 {% st Subdocument|CBLSubdocument|ISubdocument|ISubdocument %}, like {% st Document|CBLDocument|IDocument|IDocument %}, inherits from {% st Properties|CBLProperties|IPropertyContainer|IPropertyContainer %}. That means it has the same set of type-specific accessors discussed in the previous section. Like {% st Document|CBLDocument|IDocument|IDocument %}, it's mutable, so you can make changes in-place. The difference is that a subdocument doesn't have its own ID. It's not a first-class entity in the database, it's just a nested object within the document's JSON. It can't be saved individually; changes are persisted when you save its document.
 
+<block class="all" />
+
 ### Blobs
 
-We've renamed "attachments" to "blobs", for clarity. The new behavior should be clearer too: a {% st Blob|CBLBlob|IBlob|IBlob %} is now a normal object that can appear in a document as a property value, either at the top level or in a subdocument. In other words, there's no special API for creating or accessing attachments; you just instantiate an {% st Blob|CBLBlob|IBlob|IBlob %} and set it as the value of a property, and then later you can get the property value, which will be a {% st Blob|CBLBlob|IBlob|IBlob %} object. The following code example adds a blob to the document under the `avatar` property.
+We've renamed "attachments" to "blobs", for clarity. The new behavior should be clearer too: a {% st Blob|CBLBlob|IBlob|Blob %} is now a normal object that can appear in a document as a property value, either at the top level or in a subdocument. In other words, there's no special API for creating or accessing attachments; you just instantiate an {% st Blob|CBLBlob|IBlob|Blob %} and set it as the value of a property, and then later you can get the property value, which will be a {% st Blob|CBLBlob|IBlob|Blob %} object. The following code example adds a blob to the document under the `avatar` property.
 
 <block class="swift" />
 
@@ -422,15 +424,13 @@ Database queries have changed significantly. Instead of the map/reduce algorithm
 
 The Query API provides a simple way to construct a query statement from a set of API methods. There will be two API styles (builder and chainable) implemented based on what makes sense for each platform.
 
-<block class="csharp swift" />
+<block class="swift objc java" />
 
-We are still designing the cross-platform query API; it will appear in a future preview release (likely DB004).
-
-<block class="objc" />
-
-In the current Developer Build, a builder API has been implemented. You can call one of the select methods in the `CBLQuery` class to build up your query statement.
+In the current Developer Build, a builder API has been implemented. You can call one of the select methods in the {% st Query|CBLQuery|Query|Query %} class to build up your query statement.
 
 For example, the `SELECT * FROM type='user' AND admin='false'` statement can be written with the builder API as follows.
+
+<block class="objc" />
 
 ```c
 CBLQuery* query = [CBLQuery select:[CBLQuerySelect all]
@@ -445,7 +445,23 @@ for (CBLQueryRow *row in rows) {
 }
 ```
 
-The query can be executed by calling the `-run:` method which will return an `NSEnumerator` instance (enumerator of `CBLQueryRow` objects). As of the current Developer Build, joins are not available yet but will be supported in a future release.
+<block class="java" />
+
+```java
+Query query = Query.select()
+		.from(DataSource.database(database))
+		.where(Expression.property("type").equalTo("user").add(Expression.property("admin").equalTo(false)));
+
+ResultSet rows = query.run();
+QueryRow row;
+while ((row = rows.next()) != null) {
+	Log.d("app", String.format("doc ID :: %s", row.getDocumentID()));
+}
+```
+
+<block class="swift objc java" />
+
+The query can be executed by calling the {% st run()|-run:|run()|run() %} method which will return a {% st Enumerator|NSEnumerator|Enumerator|ResultSet %} instance (enumerator of `CBLQueryRow` objects). As of the current Developer Build, joins are not available yet but will be supported in a future release.
 
 There are several parts to specifying a query:
 
@@ -592,6 +608,10 @@ foreach (string task in tasks)
 // Create Index
 database.CreateIndex(new[] { "name" }, IndexType.FullTextIndex, null);
 ```
+
+<block class="java" />
+
+
 
 <block class="all" />
 
