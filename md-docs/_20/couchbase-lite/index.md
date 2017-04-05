@@ -18,7 +18,7 @@ permalink: guides/couchbase-lite/index.html
 	...
 	```
 
-API references for the Swift SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db003/).
+API references for the Swift SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db004/docsets/CouchbaseLiteSwift.docset/Contents/Resources/Documents/index.html).
 
 <block class="objc" />
 
@@ -31,7 +31,7 @@ API references for the Swift SDK are available [here](http://docs.couchbase.com/
 	...
 	```
 
-API references for the Objective-C SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db003/index.html).
+API references for the Objective-C SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db004/index.html).
 
 <block class="csharp" />
 
@@ -39,7 +39,7 @@ API references for the Objective-C SDK are available [here](http://docs.couchbas
 
 When a support assembly is required, your app must call the relevant `Activate()` function inside of the class that is included in the assembly (there is only one public class in each support assembly).  For example, UWP looks like `Couchbase.Lite.Support.UWP.Activate()`.  Currently the support assemblies provide dependency injected mechanisms for default directory logic, and platform specific logging (i.e. Android will log to logcat with correct log levels and tags.  No more "mono-stdout" at always info level).
 
-API references for Couchbase Lite .NET are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db003/).
+API references for the .NET SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db003/).
 
 <block class="java" />
 
@@ -63,6 +63,8 @@ API references for Couchbase Lite .NET are available [here](http://docs.couchbas
 		compile 'com.couchbase.lite:couchbase-lite-android:2.0.0-DB004'
 	}
 	```
+	
+API references for the Java SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/db004/index.html).
 
 <block class="all" />
 
