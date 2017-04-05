@@ -782,28 +782,74 @@ Using the JSON query syntax is very simple: just construct a JSON object tree ou
 
 **Troubleshooting:** If LiteCore doesn't like your JSON, the call will return with an error. More usefully, LiteCore will log an error message to the console, so check that. (For internal reasons these messages don't propagate all the way up to the NSError yet.) If you're still stuck, it may help to set an Xcode breakpoint on all C++ exceptions; this will get hit when the parser gives up, and the stack backtrace _might_ give a clue. A common mistake is to pass an expression where an _array of_ expressions is expected; this is easy to do since expressions themselves are arrays. For example, `returning: @[@".", @"x"]` won't work; instead use `returning: @[@[@".", @"x"]]`.
 
+<block class="objc swift" />
+
 ## Replication
 
-Couchbase Mobile 2.0 uses a [new replication protocol][REPL_PROTOCOL], based on WebSockets. This protocol has been designed to be fast, efficient, easier to implement, and symmetrical between client/server.
+Couchbase Mobile 2.0 uses a [new replication protocol](https://github.com/couchbase/couchbase-lite-core/wiki/Replication-Protocol), based on WebSockets. This protocol has been designed to be fast, efficient, easier to implement, and symmetrical between client/server.
 
-**COMPATIBILITY:** The new protocol is incompatible with version 1.x, and with CouchDB-based databases including PouchDB and Cloudant. Since Couchbase Lite 2 developer builds support only the new protocol, to test replication you will need to run the corresponding developer build of Sync Gateway, which supports both.
+### Compatibility
 
-**NOTE:** The Replication class API is still under development; what you see in DP4 is a placeholder that is likely to change.
+The new protocol is incompatible with version 1.x, and with CouchDB-based databases including PouchDB and Cloudant. Since Couchbase Lite 2 developer builds support only the new protocol, to test replication you will need to run the corresponding developer build of Sync Gateway, which supports both.
 
-The URL scheme for remote database URLs has changed. You should now use `blip:`, or `blips:` for SSL/TLS connections. (You can also use the more-standard `ws:` / `wss:`.)
+### Example
 
-Replication objects are now bidirectional. You no longer need to create two separate Replications to push and pull. An instance's `push` and `pull` properties govern which direction(s) to transfer documents; they both default to `true`, so if you want unidirectional replication you'll need to turn the other direction off.
+To run an example, create a new file named **sync-gateway-config.json** with the following.
 
-You can now replicate between two local databases. This isn't often needed, but it can be very useful. For example, you can implement incremental backup by pushing your main database to a mirror on a backup disk.
+```javascript
+{
+  "databases": {
+    "db": {
+      "server":"walrus:",
+      "users": {
+        "GUEST": {"disabled": false, "admin_channels": ["*"]}
+      },
+      "unsupported": {
+        "replicator_2":true
+      }
+    }
+  }
+}
+```
 
-The implementation is still incomplete; some things to be aware of:
+There are a few things to note here:
 
-* There is no authentication yet (so you'll need to enable the guest account on the Sync Gateway you use for replication testing.)
-* Attachments are not yet replicated.
-* Filtering isn't implemented yet.
+- In this developer build, there is no authentication yet so you're enabling the GUEST account on the Sync Gateway you use for replication testing.
+- Attachments are not yet replicated.
+- Filtering isn't implemented yet.
+
+Download the current Sync Gateway developer build and start it from the command line with the configuration file created above.
+
+```bash
+~/Downloads/couchbase-sync-gateway-1.4.1-292/bin/sync_gateway sync-gateway-config.json
+```
+
+Replication objects are now bidirectional. You no longer need to create two separate Replications to push and pull. An instance's `push` and `pull` properties govern which direction(s) to transfer documents; they both default to `true`, so if you want unidirectional replication you'll need to turn the other direction off. The following example creates a bi-directional replications with Sync Gateway.
+
+<block class="objc" />
+
+```objective-c
+NSURL *url = [[NSURL alloc] initWithString:@"blip://localhost:4984/db"];
+CBLReplication *replication = [database replicationWithURL:url];
+[replication start];
+```
+
+<block class="swift" />
+
+```swift
+let url = URL(string: "blip://localhost:4984/db")!
+let replication = database.replication(with: url)
+replication.start()
+```
+
+<block class="all" />
+
+The URL scheme for remote database URLs has changed. You should now use `blip:`, or `blips:` for SSL/TLS connections (or the more-standard `ws:` / `wss:` notation).
+
+Documents that have been pushed to Sync Gateway can be found on the Sync Gateway Admin UI [http://localhost:4985/_admin/db/db](http://localhost:4985/_admin/db/db).
+
+Additionally, you can now replicate between two local databases. This isn't often needed, but it can be very useful. For example, you can implement incremental backup by pushing your main database to a mirror on a backup disk.
 
 Performance is hard to quantify because it depends so much on document size, network conditions, device SSD speed, and server load. But the new replicator is generally a lot faster than the old one. We've seen up to twice the speed on iOS devices, and we expect even greater improvement on Android because the 1.x replicator there was slower.
 
-**Troubleshooting:** As always with replication, logging is your friend. The `Sync` tag logs information specific to the replicator, and `WS` logs about the WebSocket. If you have connectivity problems, make sure that any proxy server (like nginx) in front of Sync Gateway supports WebSockets.
-
-[REPL_PROTOCOL]: https://github.com/couchbase/couchbase-lite-core/wiki/Replication-Protocol
+> **Troubleshooting:** As always with replication, logging is your friend. The `Sync` tag logs information specific to the replicator, and `WS` logs about the WebSocket. If you have connectivity problems, make sure that any proxy server (like nginx) in front of Sync Gateway supports WebSockets.
