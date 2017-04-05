@@ -13,6 +13,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 <block class="swift" />
 
 - Cross platform Query API
+- Replication! The new replicator is faster, but the protocol has changed, and the class API isn't yet finalized. Please read the documentation for details.
 
 <block class="net" />
 
