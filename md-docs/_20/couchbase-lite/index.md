@@ -114,9 +114,80 @@ You can instantiate multiple databases with the same name and directory; these w
 
 ### Transactions / batch operations
 
-As before, if you're making multiple changes to a database at once, it's *much* faster to group them together. (Otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability.) In 2.0 we've renamed the method, to {% st -inBatch:do:|-inBatch:do:|InBatch()|-inBatch:do: %}, to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions.
+As before, if you're making multiple changes to a database at once, it's *much* faster to group them together. (Otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability.) In 2.0 we've renamed the method, to {% st -inBatch:do:|-inBatch:do:|InBatch()|-inBatch:do: %}, to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions. The following example persists a few documents in batch.
 
-At the *local* level this operation is still transactional: no other {% st CBLDatabase|CBLDatabase|IDatabase|IDatabase %} instances, including ones managed by the replicator or HTTP listener, can make changes during the execution of the block, and other instances will not see partial changes. But Couchbase Mobile is a *distributed* system, and due to the way replication works, there's no guarantee that Sync Gateway or other devices will receive your changes all at once.
+<block class="swift" />
+
+```swift
+do {
+	try database.inBatch {
+		for i in 0...10 {
+			let doc = database.document()
+			doc["type"] = "user"
+			doc["name"] = "user \(i)"
+			try doc.save()
+			print("saved user document \(doc.getString("name"))")
+		}
+	}
+} catch let error {
+	print(error.localizedDescription)
+}
+```
+
+<block class="objc" />
+
+```objective-c
+[database inBatch:&error do:^{
+	for (int i = 1; i <= 10; i++)
+	{
+		CBLDocument *document = [database document];
+		[document setObject:@"user" forKey:@"type"];
+		[document setObject:[NSString stringWithFormat:@"user %d", i] forKeyedSubscript:@"name"];
+		[document save:&error];
+		NSLog(@"saved user document %s", [document stringForKey:@"name"]);
+	}
+}];
+```
+
+<block class="csharp" />
+
+```csharp
+database.InBatch(() =>
+{
+	foreach (int i = 0; i < 10; i++)
+	{
+		var doc = database.CreateDocument();
+		doc.Properties = new Dictionary<string, object>
+		{
+			["type"] = "user",
+			["name"] = "user" + i
+		};
+		doc.Save();
+		Console.WriteLine($"saved user document ${doc.GetString("name")}");
+	}
+});
+```
+
+<block class="java" />
+
+```java
+database.inBatch(new TimerTask() {
+	@Override
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			Document doc = database.getDocument();
+			doc.set("type", "user");
+			doc.set("name", String.format("user %s", i));
+			doc.save();
+			Log.d("app", String.format("saved user document %s", doc.get("name")));
+		}
+	}
+});
+```
+
+<block class="all" />
+
+At the *local* level this operation is still transactional: no other {% st CBLDatabase|CBLDatabase|IDatabase|Database %} instances, including ones managed by the replicator or HTTP listener, can make changes during the execution of the block, and other instances will not see partial changes. But Couchbase Mobile is a *distributed* system, and due to the way replication works, there's no guarantee that Sync Gateway or other devices will receive your changes all at once.
 
 Again, the behavior of the method hasn't changed, just its name.
 
