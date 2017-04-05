@@ -110,7 +110,7 @@ Database database = new Database("my-database", options);
 
 Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: String options: DatabaseOptions?)|-initWithName:options:error:|Create(string name, DatabaseOptions options)|d %} method can be used to provide specific options (directory to create the database, whether it is read-only etc.)
 
-You can instantiate multiple {% st Databases|CBLDatabases|IDatabases|IDatabases %} with the same name and directory; these will all share the same storage. Do this if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
+You can instantiate multiple databases with the same name and directory; these will all share the same storage. Do this if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
 
 ### Transactions / batch operations
 
@@ -409,7 +409,7 @@ Log.d("app", String.format("document properties :: %s", document.getProperties()
 
 We're approaching conflict handling differently, and more directly. Instead of requiring application code to go out of its way to find conflicts and look up the revisions involved, Couchbase Lite will detect the conflict (while saving a document, or during replication) and invoke an app-defined conflict-resolver handler. The conflict resolver is given "my" document properties, "their" document properties, and (if available) the properties of the common ancestor revision.
 
-* When saving a {% st CBLDocument|CBLDocument|IDocument|IDocument %}, "my" properties will be the in-memory properties of the object, and "their" properties will be one ones already saved in the database (by some other application thread, or by the replicator.)
+* When saving a {% st CBLDocument|CBLDocument|IDocument|Document %}, "my" properties will be the in-memory properties of the object, and "their" properties will be one ones already saved in the database (by some other application thread, or by the replicator.)
 * During replication, "my" properties will be the ones in the local database, and "their" properties will be the ones coming from the server.
 
 The resolver is responsible for returning the resulting properties that should be saved. There are of course a lot of ways to do this. By the time 2.0 is released we want to include some resolver implementations for common algorithms (like the popular "last writer wins" that just returns "my" properties.) The resolver can also give up by returning {% st nil|nil|null|null %}, in which case the save fails with a "conflict" error. This can be appropriate if the merge needs to be done interactively or by user intervention.
@@ -543,7 +543,7 @@ To create an index, call {% st createIndex(expressions: [Expression])|-createInd
 
 ### Full-Text Search
 
-To run a full-text search (FTS) query, you must have created a full-text index on the expression being matched. Unlike regular queries, the index is not optional. The index's (single) expression should be the property name you wish to search on. The index type must also be {% st fullTextIndex|kCBLFullTextIndex|FullTextIndex|kCBLFullTextIndex %}. The following code example inserts three documents of type `task` and creates an FTS index on the `name` property.
+To run a full-text search (FTS) query, you must have created a full-text index on the expression being matched. Unlike regular queries, the index is not optional. The index's (single) expression should be the property name you wish to search on. The index type must also be {% st fullTextIndex|kCBLFullTextIndex|FullTextIndex|IndexType.FullText %}. The following code example inserts three documents of type `task` and creates an FTS index on the `name` property.
 
 <block class="swift" />
 
@@ -592,7 +592,7 @@ if (error) {
 <block class="csharp" />
 
 ```csharp
-// Insert documents
+// insert documents
 var tasks = new string[] { "buy groceries", "play chess", "book travels", "buy museum tickets" };
 foreach (string task in tasks)
 {
@@ -605,17 +605,29 @@ foreach (string task in tasks)
 	doc.Save();
 }
 
-// Create Index
+// create Index
 database.CreateIndex(new[] { "name" }, IndexType.FullTextIndex, null);
 ```
 
 <block class="java" />
 
+```java
+List<String> tasks = new ArrayList<>(Arrays.asList("buy groceries", "play chess", "book travels", "buy museum tickets"));
+for (String task : tasks) {
+	Document doc = database.getDocument();
+	doc.set("type", "task");
+	doc.set("name", task);
+	doc.save();
+}
 
+// create index
+List<Expression> expressions = Arrays.<Expression>asList(Expression.property("name"));
+database.createIndex(expressions, IndexType.FullText, new IndexOptions(null, false));
+```
 
 <block class="all" />
 
-With the index created, an FTS query on the property that is being indexed can be constructed and ran. The full-text search criteria is defined as a {% st Expression|CBLQueryExpression|Expression|CBLQueryExpression %}. The left-hand side is usually a document property, but can be any expression producing a string. The right-hand side is the pattern to match: usually a word or a space-separated list of words, but it can be a more powerful [FTS4 search expression](https://www.sqlite.org/fts3.html#full_text_index_queries). The following code example matches all documents that contain the word 'buy' in the value of the `name` property.
+With the index created, an FTS query on the property that is being indexed can be constructed and ran. The full-text search criteria is defined as a {% st Expression|CBLQueryExpression|Expression|Expression %}. The left-hand side is usually a document property, but can be any expression producing a string. The right-hand side is the pattern to match: usually a word or a space-separated list of words, but it can be a more powerful [FTS4 search expression](https://www.sqlite.org/fts3.html#full_text_index_queries). The following code example matches all documents that contain the word 'buy' in the value of the `name` property.
 
 <block class="swift" />
 
@@ -655,19 +667,33 @@ var query = QueryFactory.Select()
 		.Where(ExpressionFactory.Property("name").Match("'buy'"));
 
 var rows = query.Run();
-for (rows in rows)
+foreach (var row in rows)
 {
-	Console.WriteLine($"document properties ${row.document.properties}");
+	Console.WriteLine($"document properties ${row.Document.Properties}");
+}
+```
+
+<block class="java" />
+
+```java
+Query ftsQuery = Query.select()
+		.from(DataSource.database(database))
+		.where(Expression.property("name").match("'buy'"));
+		
+ResultSet ftsQueryResult = ftsQuery.run();
+FullTextQueryRow ftsRow;
+while ((ftsRow = (FullTextQueryRow) ftsQueryResult.next()) != null) {
+	Log.d("app", String.format("document properties :: %s", ftsRow.getDocument().getProperties()));
 }
 ```
 
 <block class="all" />
 
-When you run a full-text query, the resulting rows are instances of {% st FullTextQueryRow|CBLFullTextQueryRow|FullTextQueryRow|CBLFullTextQueryRow %}. This class has additional methods that let you access the full string that was matched, and the character range(s) in that string where the match(es) occur.
+When you run a full-text query, the resulting rows are instances of {% st FullTextQueryRow|CBLFullTextQueryRow|FullTextQueryRow|FullTextQueryRow %}. This class has additional methods that let you access the full string that was matched, and the character range(s) in that string where the match(es) occur.
 
 It's very common to sort full-text results in descending order of relevance. This can be a very difficult heuristic to define, but Couchbase Lite comes with a fairly simple ranking function you can use. In the `orderBy:` array, use a string of the form `rank(X)`, where `X` is the property or expression being searched, to represent the ranking of the result. Since higher rankings are better, you'll probably want to reverse the order by prefixing the string with a `-`.
 
-<block class="all" />
+<block class="objc" />
 
 ### Under The Hood
 
