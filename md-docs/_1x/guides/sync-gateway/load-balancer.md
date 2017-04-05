@@ -4,7 +4,7 @@ title: Load Balancer
 permalink: guides/sync-gateway/nginx/index.html
 ---
 
-In this guide we'll show how to deploy Sync Gateway behind a reverse proxy.
+This guide covers various aspects to consider when using a Load Balancer in a Couchbase Mobile deployment. In particular, when using NGINX or AWS Elastic Load Balancer (ELB). For an architectural walkthrough, you can refer to the [Deploy](../../../training/deploy/install/index.html) lessons of the Tutorial.
 
 ## When to use a reverse proxy
 
@@ -13,12 +13,6 @@ In this guide we'll show how to deploy Sync Gateway behind a reverse proxy.
 - A reverse proxy can offload ssl termination from the Sync Gateway instances, this can be a significant overhead when supporting large numbers of mobile devices.
 - A reverse proxy can distribute the load from incoming requests to several Sync Gateway instances.
 - A reverse proxy may rewrite the URL of each incoming request in order to match the relevant internal location of the requested resource. For Sync Gateway the reverse proxy may map the Internet facing port 80 to the standard Sync Gateway public REST API port 4984.
-
-## Reverse proxies tested with Sync Gateway
-
-1. NGINX
-2. AWS Elastic Load Balancer (ELB)
-
 
 ## NGINX
 
@@ -223,11 +217,7 @@ You can also see this by going to https://myservice.example.org/ in your browser
 
 ## AWS Elastic Load Balancer (ELB)
 
-The following parameters need to be customized to work with Sync Gateway
-
-### Idle Timeout
-
-Since Sync Gateway and Couchbase Lite can have long running connections for changes feeds, you should set the Idle Timeout setting of the ELB to the maximum value of 3600 seconds (1 hour)
+Since Sync Gateway and Couchbase Lite can have long running connections for changes feeds, you should set the **Idle Timeout** setting of the ELB to the maximum value of 3600 seconds (1 hour).
 
 See the [ELB instructions](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/config-idle-timeout.html) for more information on how to change this setting.
 
