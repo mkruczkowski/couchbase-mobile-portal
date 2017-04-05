@@ -116,7 +116,7 @@ You can instantiate multiple databases with the same name and directory; these w
 
 ### Transactions / batch operations
 
-As before, if you're making multiple changes to a database at once, it's *much* faster to group them together. (Otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability.) In 2.0 we've renamed the method, to {% st -inBatch:do:|-inBatch:do:|InBatch()|-inBatch:do: %}, to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions. The following example persists a few documents in batch.
+As before, if you're making multiple changes to a database at once, it's *much* faster to group them together. (Otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability.) In 2.0 we've renamed the method, to {% st -inBatch:do:|-inBatch:do:|InBatch()|inBatch() %}, to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions. The following example persists a few documents in batch.
 
 <block class="swift" />
 
@@ -552,9 +552,11 @@ These all have defaults:
 * If you don't specify what groups to include, all are included
 * If you don't specify a sort order, the order is undefined
 
+<block class="objc" />
+
 #### Parameters
 
-The list of available expressions can be found on the API reference of the [CBLQueryExpression](http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db003/Classes/CBLQueryExpression.html) class.
+The list of available expressions can be found on the API reference of the [CBLQueryExpression](http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db004/Classes/CBLQueryExpression.html) class.
 
 [//]: # (TODO: #### Return Values)
 
@@ -844,7 +846,7 @@ let replication = database.replication(with: url)
 replication.start()
 ```
 
-<block class="all" />
+<block class="objc swift" />
 
 The URL scheme for remote database URLs has changed. You should now use `blip:`, or `blips:` for SSL/TLS connections (or the more-standard `ws:` / `wss:` notation).
 
