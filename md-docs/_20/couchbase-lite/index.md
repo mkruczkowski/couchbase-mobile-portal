@@ -410,7 +410,7 @@ Console.WriteLine($"address properties :: ${document.GetSubdocument("address").P
 
 {% st Subdocument|CBLSubdocument|ISubdocument|ISubdocument %}, like {% st Document|CBLDocument|IDocument|IDocument %}, inherits from {% st Properties|CBLProperties|IPropertyContainer|IPropertyContainer %}. That means it has the same set of type-specific accessors discussed in the previous section. Like {% st Document|CBLDocument|IDocument|IDocument %}, it's mutable, so you can make changes in-place. The difference is that a subdocument doesn't have its own ID. It's not a first-class entity in the database, it's just a nested object within the document's JSON. It can't be saved individually; changes are persisted when you save its document.
 
-<block class="all" />
+<block class="objc swift csharp" />
 
 ### Blobs
 
@@ -456,7 +456,7 @@ document.Save();
 Console.WriteLine($"document properties :: ${document["avatar"]}");
 ```
 
-<block class="java" />
+<block class="java-tmp" />
 
 ```java
 InputStream inputStream = null;
@@ -472,7 +472,7 @@ document.save();
 Log.d("app", String.format("document properties :: %s", document.getProperties()));
 ```
 
-<block class="all" />
+<block class="objc swift csharp" />
 
 {% st Blob|CBLBlob|IBlob|Blob %} itself has a simple API that lets you access the contents as in-memory data (an {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|InputStream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st CBLAttachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st doc["thumbnail.jpg"] = imageBlob|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.set("avatar.jpg", imageBlob) %})
 
