@@ -523,8 +523,8 @@ let query = Query
 	.select()
 	.from(DataSource.database(database))
 	.where(
-		Expression.property("type").match("user")
-			.and(Expression.property("admin").match(false))
+		Expression.property("type").equalTo("user")
+			.and(Expression.property("admin").equalTo(false))
 	)
 
 do {
