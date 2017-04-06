@@ -555,7 +555,18 @@ for (CBLQueryRow *row in rows) {
 <block class="csharp" />
 
 ```csharp
+var query = QueryFactory.Select()
+		.From(DataSourceFactory.Database(database))
+		.Where(
+			ExpressionFactory.Property("type").EqualTo("user")
+			.And(ExpressionFactory.Property("admin").EqualTo(false))
+		);
 
+var rows = query.Run();
+foreach(var row in rows)
+{
+	Console.WriteLine($"doc ID :: ${row.DocumentID}");
+}
 ```
 
 <block class="java" />
@@ -574,7 +585,7 @@ while ((row = rows.next()) != null) {
 
 <block class="all" />
 
-The query can be executed by calling the {% st run()|run:|run()|run() %} method which will return a {% st Enumerator|NSEnumerator|Enumerator|ResultSet %} instance (enumerator of {% st Query|CBLQueryRow|c|QueryRow %} objects). As of the current developer build, joins are not available yet but will be supported in a future release.
+The query can be executed by calling the {% st run()|run:|Run()|run() %} method which will return a {% st Enumerator|NSEnumerator|IEnumerable|ResultSet %} instance (enumerator of {% st Query|CBLQueryRow|IQueryRow|QueryRow %} objects). As of the current developer build, joins are not available yet but will be supported in a future release.
 
 There are several parts to specifying a query:
 
