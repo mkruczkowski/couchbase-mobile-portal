@@ -10,7 +10,7 @@ permalink: guides/couchbase-lite/index.html
 
 - Download the latest [developer build](../../whatsnew.html).
 - Drag **CouchbaseLiteSwift.framework** from your Finder to the Xcode navigator.
-- Click on Project > General > Embedded Binary > Add **CouchbaseLiteSwift.framework**.
+- Click on Project > General > Embedded Binary and add **CouchbaseLiteSwift.framework** to this section.
 - Import the framework and start using it in your project.
 
 	```swift
@@ -18,20 +18,21 @@ permalink: guides/couchbase-lite/index.html
 	...
 	```
 
-API references for the Swift SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db004/docsets/CouchbaseLiteSwift.docset/Contents/Resources/Documents/index.html).
+The API references for the Swift SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db004/docsets/CouchbaseLiteSwift.docset/Contents/Resources/Documents/index.html).
 
 <block class="objc" />
 
 - Download the latest [developer build](../../whatsnew.html).
 - Drag **CouchbaseLite.framework** from your Finder to the Xcode navigator.
+- Click on Project > General > Embedded Binary and add **CouchbaseLite.framework** to this section.
 - Import the framework and start using it in your project.
 
-	```swift
+	```objectivec
 	#include <CouchbaseLite/CouchbaseLite.h>
 	...
 	```
 
-API references for the Objective-C SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db004/index.html).
+The API references for the Objective-C SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db004/index.html).
 
 <block class="csharp" />
 
@@ -39,7 +40,7 @@ API references for the Objective-C SDK are available [here](http://docs.couchbas
 
 When a support assembly is required, your app must call the relevant `Activate()` function inside of the class that is included in the assembly (there is only one public class in each support assembly).  For example, UWP looks like `Couchbase.Lite.Support.UWP.Activate()`.  Currently the support assemblies provide dependency injected mechanisms for default directory logic, and platform specific logging (i.e. Android will log to logcat with correct log levels and tags.  No more "mono-stdout" at always info level).
 
-API references for the .NET SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db003/).
+The API references for the .NET SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db004/).
 
 <block class="java" />
 
@@ -64,7 +65,7 @@ API references for the .NET SDK are available [here](http://docs.couchbase.com/m
 	}
 	```
 	
-API references for the Java SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/db004/index.html).
+The API references for the Java SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/db004/index.html).
 
 <block class="all" />
 
@@ -72,7 +73,7 @@ API references for the Java SDK are available [here](http://docs.couchbase.com/m
 
 ### Creating Databases
 
-As the top-level entity in the API, new databases can be created using the {% st Database|CBLDatabase|DatabaseFactory|DatabaseFactory %} class by passing in a name, options, or both. The following example creates a database using the {% st Database(name: String)|initWithName:|Create(string name)|Create(string name) %} method.
+As the top-level entity in the API, new databases can be created using the {% st Database|CBLDatabase|DatabaseFactory|Database %} class by passing in a name, options, or both. The following example creates a database using the {% st Database(name: String)|initWithName:error:|Create(string name)|new Database(String name, DatabaseOptions options) %} method.
 
 <block class="swift" />
 
@@ -86,7 +87,7 @@ do {
 
 <block class="objc" />
 
-```c
+```objectivec
 NSError *error;
 CBLDatabase* database = [[CBLDatabase alloc] initWithName:@"my-database" error:&error];
 if (!database) {
@@ -110,95 +111,16 @@ Database database = new Database("my-database", options);
 
 <block class="all" />
 
-Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: String options: DatabaseOptions?)|-initWithName:options:error:|Create(string name, DatabaseOptions options)|d %} method can be used to provide specific options (directory to create the database, whether it is read-only etc.)
+Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: String options: DatabaseOptions?)|initWithName:options:error:|Create(string name, DatabaseOptions options)|new Database(String name, DatabaseOptions options) %} method can be used to provide specific options (directory to create the database in, whether it is read-only etc.)
 
-You can instantiate multiple databases with the same name and directory; these will all share the same storage. Do this if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
-
-### Transactions / batch operations
-
-As before, if you're making multiple changes to a database at once, it's *much* faster to group them together. (Otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability.) In 2.0 we've renamed the method, to {% st -inBatch:do:|-inBatch:do:|InBatch()|inBatch() %}, to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions. The following example persists a few documents in batch.
-
-<block class="swift" />
-
-```swift
-do {
-	try database.inBatch {
-		for i in 0...10 {
-			let doc = database.document()
-			doc["type"] = "user"
-			doc["name"] = "user \(i)"
-			try doc.save()
-			print("saved user document \(doc.getString("name"))")
-		}
-	}
-} catch let error {
-	print(error.localizedDescription)
-}
-```
-
-<block class="objc" />
-
-```objective-c
-[database inBatch:&error do:^{
-	for (int i = 1; i <= 10; i++)
-	{
-		CBLDocument *document = [database document];
-		[document setObject:@"user" forKey:@"type"];
-		[document setObject:[NSString stringWithFormat:@"user %d", i] forKeyedSubscript:@"name"];
-		[document save:&error];
-		NSLog(@"saved user document %s", [document stringForKey:@"name"]);
-	}
-}];
-```
-
-<block class="csharp" />
-
-```csharp
-database.InBatch(() =>
-{
-	foreach (int i = 0; i < 10; i++)
-	{
-		var doc = database.CreateDocument();
-		doc.Properties = new Dictionary<string, object>
-		{
-			["type"] = "user",
-			["name"] = "user" + i
-		};
-		doc.Save();
-		Console.WriteLine($"saved user document ${doc.GetString("name")}");
-	}
-});
-```
-
-<block class="java" />
-
-```java
-database.inBatch(new TimerTask() {
-	@Override
-	public void run() {
-		for (int i = 0; i < 10; i++) {
-			Document doc = database.getDocument();
-			doc.set("type", "user");
-			doc.set("name", String.format("user %s", i));
-			doc.save();
-			Log.d("app", String.format("saved user document %s", doc.get("name")));
-		}
-	}
-});
-```
-
-<block class="all" />
-
-At the *local* level this operation is still transactional: no other {% st CBLDatabase|CBLDatabase|IDatabase|Database %} instances, including ones managed by the replicator or HTTP listener, can make changes during the execution of the block, and other instances will not see partial changes. But Couchbase Mobile is a *distributed* system, and due to the way replication works, there's no guarantee that Sync Gateway or other devices will receive your changes all at once.
-
-Again, the behavior of the method hasn't changed, just its name.
+You can instantiate multiple databases with the same name and directory; these will all share the same storage. This is the recommended approach if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
 
 ## Documents
 
 In Couchbase Lite, a document's body takes the form of a JSON object — a collection of key/value pairs where the values can be different types of data such as numbers, strings, arrays or even nested objects. Every document is identified by a document ID, which can be automatically generated (as a UUID) or determined by the application; the only constraints are that it must be unique within the database, and it can't be changed. There are two methods in the API to create a new document:
 
 - The {% st document(withID: String)|documentWithID:|GetDocument(string id)|getDocument(String docID) %} method can be used to create a document with a specific ID defined by the application.
-- The {% st document()|document:|CreateDocument()|getDocument() %} method can be used to let the database generate a random document ID.
+- The {% st document()|document|CreateDocument()|getDocument() %} method can be used to let the database generate a random document ID.
 
 [//]: # (TODO: Since this identifier must be unique, you may want to check if a document with this ID already exists in the database using the {% st a|b|c|d %} method.)
 
@@ -217,7 +139,7 @@ do {
 
 <block class="objc" />
 
-```objective-c
+```objectivec
 CBLDocument* document = [database document];
 [document save:&error];
 if (error) {
@@ -266,7 +188,7 @@ do {
 
 <block class="objc" />
 
-```objective-c
+```objectivec
 document.properties = @{
 	 @"type": @"user",
 	 @"admin": @FALSE,
@@ -323,11 +245,11 @@ This does create the possibility of confusion, since the document's in-memory st
 
 ### Typed Accessors
 
-The {% st Document|CBLDocument|IDocument|Document %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st let name: String = doc["name"]|-stringForKey:|GetString()|GetString() %} returns either a {% st String|NSString|string|string %} or {% st nil|nil|null|null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil|nil|null|null %}.)
+The {% st Document|CBLDocument|IDocument|Document %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st let name: String = doc["name"]|stringForKey:|GetString(string key)|getString(String key) %} returns either a {% st String|NSString|string|String %} or {% st nil|nil|null|null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil|nil|null|null %}.)
 
 <block class="all" />
 
-In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|Date %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it from the document using the {% st subscript|-dateForKey:|GetDate()|GetDate() %} accessor method.
+In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|Date %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it from the document using the {% st subscript|dateForKey:|GetDate(string key)|getDate(String key) %} accessor method.
 
 <block class="swift" />
 
@@ -343,7 +265,7 @@ print("createdAt value :: \(document["createdAt"] as Date?)")
 
 <block class="objc" />
 
-```objective-c
+```objectivec
 [document setObject:[NSDate date] forKey:@"createdAt"];
 [document save:&error];
 if (error) {
@@ -389,13 +311,14 @@ print("address properties :: \((document["address"] as Subdocument?)?.properties
 
 <block class="objc" />
 
-```objective-c
+```objectivec
 CBLSubdocument* address = [document subdocumentForKey:@"address"];
 [address setObject:@"galaxy city" forKey:@"city"];
 [document save:&error];
 if (error) {
-	NSLog(@"address properties :: %@", [[document subdocumentForKey:@"address"] properties]);
+	NSLog(@"Cannot save document %@", error);
 }
+NSLog(@"address properties :: %@", [[document subdocumentForKey:@"address"] properties]);
 ```
 
 <block class="csharp" />
@@ -409,6 +332,92 @@ Console.WriteLine($"address properties :: ${document.GetSubdocument("address").P
 <block class="swift objc csharp" />
 
 {% st Subdocument|CBLSubdocument|ISubdocument|ISubdocument %}, like {% st Document|CBLDocument|IDocument|IDocument %}, inherits from {% st Properties|CBLProperties|IPropertyContainer|IPropertyContainer %}. That means it has the same set of type-specific accessors discussed in the previous section. Like {% st Document|CBLDocument|IDocument|IDocument %}, it's mutable, so you can make changes in-place. The difference is that a subdocument doesn't have its own ID. It's not a first-class entity in the database, it's just a nested object within the document's JSON. It can't be saved individually; changes are persisted when you save its document.
+
+<block class="all" />
+
+### Transactions / batch operations
+
+As before, if you're making multiple changes to a database at once, it's *much* faster to group them together, otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability. In 2.0 we've renamed the method to {% st -inBatch:do:|inBatch:do:|InBatch()|inBatch(Runnable action) %} to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions. The following example persists a few documents in batch.
+
+<block class="swift" />
+
+```swift
+do {
+	try database.inBatch {
+		for i in 0...10 {
+			let doc = database.document()
+			doc["type"] = "user"
+			doc["name"] = "user \(i)"
+			try doc.save()
+			print("saved user document \(doc.getString("name"))")
+		}
+	}
+} catch let error {
+	print(error.localizedDescription)
+}
+```
+
+<block class="objc" />
+
+```objectivec
+[database inBatch:&error do:^{
+	for (int i = 1; i <= 10; i++)
+	{
+		CBLDocument *doc = [database document];
+		[doc setObject:@"user" forKey:@"type"];
+		[doc setObject:[NSString stringWithFormat:@"user %d", i] forKey:@"name"];
+		NSError *error;
+		[doc save:&error];
+		if (error) {
+			NSLog(@"Cannot save document %@", error);
+		}
+		NSLog(@"saved user document %@", [doc stringForKey:@"name"]);
+	}
+}];
+```
+
+<block class="csharp" />
+
+```csharp
+database.InBatch(() =>
+{
+	for (int i = 0; i < 10; i++)
+	{
+		var doc = database.CreateDocument();
+		doc.Properties = new Dictionary<string, object>
+		{
+			["type"] = "user",
+			["name"] = $"user ${i}"
+		};
+		doc.Save();
+		Console.WriteLine($"saved user document ${doc.GetString("name")}");
+	}
+	return true;
+});
+```
+
+<block class="java" />
+
+```java
+database.inBatch(new TimerTask() {
+	@Override
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			Document doc = database.getDocument();
+			doc.set("type", "user");
+			doc.set("name", String.format("user %s", i));
+			doc.save();
+			Log.d("app", String.format("saved user document %s", doc.get("name")));
+		}
+	}
+});
+```
+
+<block class="all" />
+
+At the *local* level this operation is still transactional: no other {% st Database|CBLDatabase|IDatabase|Database %} instances, including ones managed by the replicator or HTTP listener, can make changes during the execution of the block, and other instances will not see partial changes. But Couchbase Mobile is a *distributed* system, and due to the way replication works, there's no guarantee that Sync Gateway or other devices will receive your changes all at once.
+
+Again, the behavior of the method hasn't changed, just its name.
 
 <block class="objc swift csharp" />
 
@@ -434,7 +443,7 @@ print("document properties :: \(document.properties)")
 
 <block class="objc" />
 
-```objective-c
+```objectivec
 UIImage *image = [UIImage imageNamed:@"avatar.jpg"];
 NSData *data = UIImageJPEGRepresentation(image, 1);
 
@@ -474,15 +483,19 @@ Log.d("app", String.format("document properties :: %s", document.getProperties()
 
 <block class="objc swift csharp" />
 
-{% st Blob|CBLBlob|IBlob|Blob %} itself has a simple API that lets you access the contents as in-memory data (an {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|InputStream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st CBLAttachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st doc["thumbnail.jpg"] = imageBlob|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.set("avatar.jpg", imageBlob) %})
+{% st Blob|CBLBlob|IBlob|Blob %} itself has a simple API that lets you access the contents as in-memory data (a {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|InputStream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st Attachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st doc["thumbnail.jpg"] = imageBlob|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.set("avatar.jpg", imageBlob) %})
 
 > **Note:** A blob is stored in the document's raw JSON as an object with a property `"_cbltype":"blob"`. It also has properties such as `"digest"` (a SHA-1 digest of the data), `"length"` (the length in bytes), and optionally `"type"` (the MIME type.) As always, the data is not stored in the document, but in a separate content-addressable store, indexed by the digest.
 
+<block class="all" />
+
 ### Conflict Handling
+
+Conflict handling is not supported in the current developer build. This section describes the way the API will change to welcome any feedback before it gets implemented.
 
 We're approaching conflict handling differently, and more directly. Instead of requiring application code to go out of its way to find conflicts and look up the revisions involved, Couchbase Lite will detect the conflict (while saving a document, or during replication) and invoke an app-defined conflict-resolver handler. The conflict resolver is given "my" document properties, "their" document properties, and (if available) the properties of the common ancestor revision.
 
-* When saving a {% st CBLDocument|CBLDocument|IDocument|Document %}, "my" properties will be the in-memory properties of the object, and "their" properties will be one ones already saved in the database (by some other application thread, or by the replicator.)
+* When saving a {% st Document|CBLDocument|IDocument|Document %}, "my" properties will be the in-memory properties of the object, and "their" properties will be one ones already saved in the database (by some other application thread, or by the replicator.)
 * During replication, "my" properties will be the ones in the local database, and "their" properties will be the ones coming from the server.
 
 The resolver is responsible for returning the resulting properties that should be saved. There are of course a lot of ways to do this. By the time 2.0 is released we want to include some resolver implementations for common algorithms (like the popular "last writer wins" that just returns "my" properties.) The resolver can also give up by returning {% st nil|nil|null|null %}, in which case the save fails with a "conflict" error. This can be appropriate if the merge needs to be done interactively or by user intervention.
@@ -497,15 +510,36 @@ Database queries have changed significantly. Instead of the map/reduce algorithm
 
 The Query API provides a simple way to construct a query statement from a set of API methods. There will be two API styles (builder and chainable) implemented based on what makes sense for each platform.
 
-<block class="swift objc java" />
+<block class="all" />
 
 In the current Developer Build, a builder API has been implemented. You can call one of the select methods in the {% st Query|CBLQuery|Query|Query %} class to build up your query statement.
 
 For example, the `SELECT * FROM type='user' AND admin='false'` statement can be written with the builder API as follows.
 
+<block class="swift" />
+
+```swift
+let query = Query
+	.select()
+	.from(DataSource.database(database))
+	.where(
+		Expression.property("type").match("user")
+			.and(Expression.property("admin").match(false))
+	)
+
+do {
+	let rows = try query.run()
+	for row in rows {
+		print("doc ID :: \(row.documentID)")
+	}
+} catch let error {
+	print(error.localizedDescription)
+}
+```
+
 <block class="objc" />
 
-```c
+```objectivec
 CBLQuery* query = [CBLQuery select:[CBLQuerySelect all]
                               from:[CBLQueryDataSource database:database]
                              where:[
@@ -516,6 +550,12 @@ NSEnumerator* rows = [query run:&error];
 for (CBLQueryRow *row in rows) {
 	NSLog(@"doc ID :: %@", row.documentID);
 }
+```
+
+<block class="csharp" />
+
+```csharp
+
 ```
 
 <block class="java" />
@@ -532,9 +572,9 @@ while ((row = rows.next()) != null) {
 }
 ```
 
-<block class="swift objc java" />
+<block class="all" />
 
-The query can be executed by calling the {% st run()|-run:|run()|run() %} method which will return a {% st Enumerator|NSEnumerator|Enumerator|ResultSet %} instance (enumerator of `CBLQueryRow` objects). As of the current Developer Build, joins are not available yet but will be supported in a future release.
+The query can be executed by calling the {% st run()|run:|run()|run() %} method which will return a {% st Enumerator|NSEnumerator|Enumerator|ResultSet %} instance (enumerator of {% st Query|CBLQueryRow|c|QueryRow %} objects). As of the current developer build, joins are not available yet but will be supported in a future release.
 
 There are several parts to specifying a query:
 
@@ -562,7 +602,7 @@ The list of available expressions can be found on the API reference of the [CBLQ
 
 [//]: # (TODO: #### Aggregation and Grouping)
 
-<block class="objc swift" />
+<block class="objc" />
 
 ### NSPredicate API
 
@@ -600,23 +640,25 @@ If the return values of a query include calls to aggregate functions like `count
 
 If you set the query's `groupBy` property, all rows that have the same values of the expressions given in that property will be grouped together. In this case, aggregate functions will operate on the rows in a group, not all the rows of the query.
 
+<block class="all" />
+
 ### Query Performance
 
-Queries have to be parsed and compiled into an optimized form for the underlying database to execute. This doesn't take long, but it's best to create a {% st Query|CBLQuery|c|d %} once and then reuse it, instead of recreating it every time. (Of course, only reuse a CBLQuery on the same thread/queue you created it on!)
+Queries have to be parsed and compiled into an optimized form for the underlying database to execute. This doesn't take long, but it's best to create a {% st Query|CBLQuery|Query|Query %} once and then reuse it, instead of recreating it every time (of course, only reuse a {% st Query|CBLQuery|Query|Query %} on the same thread/queue you created it on).
 
-Expression-based queries have different performance-vs-flexibility trade offs than map/reduce queries. Map functions can be unintuitive to design, and an individual map function isn't very flexible (all you can control is the range of keys.) But any map/reduce query will be fast because, by definition, it's just a single traversal of an index.
+Expression-based queries have different performance-vs-flexibility trade offs than map/reduce queries. Map functions can be unintuitive to design, and an individual map function isn't very flexible (all you can control is the range of keys). But any map/reduce query will be fast because, by definition, it's just a single traversal of an index.
 
-On the other hand, expression-based queries are easier to design and more flexible, but there's no guarantee of performance. In fact, by default *all* queries will be unoptimized, because they have to make a linear scan of the entire database, testing every document against the criteria! In a small database you might not notice, but as the database grows, query time will increase linearly. So how do you make a query faster? By creating any necessary indexes.
+On the other hand, expression-based queries are easier to design and more flexible, but there's no guarantee of performance. In fact, by default *all* queries will be unoptimized, because they have to make a linear scan of the entire database, testing every document against the criteria. In a small database you might not notice, but as the database grows, query time will increase linearly. So how do you make a query faster? By creating any necessary indexes.
 
 ### Indexing
 
 A query can only be fast if there's a pre-existing database index it can search to narrow down the set of documents to examine. On the other hand, every index has to be updated whenever a document is updated, so too many indexes can hurt performance. Thus, good performance depends on designing and creating the *right* indexes to go along with your queries.
 
-To create an index, call {% st createIndex(expressions: [Expression])|-createIndexOn:error:|CreateIndex()|d %} passing an array of one or more {% st String|NSString|string|d %}s. These are most often key-paths, but they don't have to be. If there are multiple expressions, the first one will be the primary key, the second the secondary key, etc.
+To create an index, call {% st createIndex(expressions: [Expression])|createIndexOn:error:|CreateIndex()|d %} passing an array of one or more strings. These are most often key-paths, but they don't have to be. If there are multiple expressions, the first one will be the primary key, the second the secondary key, etc.
 
 <block class="all" />
 
-### Full-Text Search
+## Full-Text Search
 
 To run a full-text search (FTS) query, you must have created a full-text index on the expression being matched. Unlike regular queries, the index is not optional. The index's (single) expression should be the property name you wish to search on. The index type must also be {% st fullTextIndex|kCBLFullTextIndex|FullTextIndex|IndexType.FullText %}. The following code example inserts three documents of type `task` and creates an FTS index on the `name` property.
 
@@ -645,8 +687,8 @@ do {
 
 <block class="objc" />
 
-```c
-// Insert documents
+```objectivec
+// insert documents
 NSArray *tasks = @[@"buy groceries", @"play chess", @"book travels", @"buy museum tickets"];
 for (NSString* task in tasks) {
 	CBLDocument* doc = [database document];
@@ -657,7 +699,7 @@ for (NSString* task in tasks) {
 	}
 }
 
-// Create index
+// create index
 [database createIndexOn:@[@"name"] type:kCBLFullTextIndex options:NULL error:&error];
 if (error) {
 	NSLog(@"Cannot create index %@", error);
@@ -687,6 +729,7 @@ database.CreateIndex(new[] { "name" }, IndexType.FullTextIndex, null);
 <block class="java" />
 
 ```java
+// insert documents
 List<String> tasks = new ArrayList<>(Arrays.asList("buy groceries", "play chess", "book travels", "buy museum tickets"));
 for (String task : tasks) {
 	Document doc = database.getDocument();
@@ -722,7 +765,7 @@ do {
 
 <block class="objc" />
 
-```c
+```objectivec
 CBLQueryExpression* where = [[CBLQueryExpression property:@"name"] match:@"'buy'"];
 CBLQuery *ftsQuery = [CBLQuery select:[CBLQuerySelect all]
                                  from:[CBLQueryDataSource database:database]
@@ -766,9 +809,9 @@ while ((ftsRow = (FullTextQueryRow) ftsQueryResult.next()) != null) {
 
 When you run a full-text query, the resulting rows are instances of {% st FullTextQueryRow|CBLFullTextQueryRow|FullTextQueryRow|FullTextQueryRow %}. This class has additional methods that let you access the full string that was matched, and the character range(s) in that string where the match(es) occur.
 
-It's very common to sort full-text results in descending order of relevance. This can be a very difficult heuristic to define, but Couchbase Lite comes with a fairly simple ranking function you can use. In the `orderBy:` array, use a string of the form `rank(X)`, where `X` is the property or expression being searched, to represent the ranking of the result. Since higher rankings are better, you'll probably want to reverse the order by prefixing the string with a `-`.
-
 <block class="objc" />
+
+It's very common to sort full-text results in descending order of relevance. This can be a very difficult heuristic to define, but Couchbase Lite comes with a fairly simple ranking function you can use. In the `orderBy:` array, use a string of the form `rank(X)`, where `X` is the property or expression being searched, to represent the ranking of the result. Since higher rankings are better, you'll probably want to reverse the order by prefixing the string with a `-`.
 
 ### Under The Hood
 
@@ -822,17 +865,19 @@ There are a few things to note here:
 - Attachments are not yet replicated.
 - Filtering isn't implemented yet.
 
-Download the current Sync Gateway developer build and start it from the command line with the configuration file created above.
+Download the current Sync Gateway [developer build](../../whatsnew.html) and start it from the command line with the configuration file created above.
 
 ```bash
 ~/Downloads/couchbase-sync-gateway-1.4.1-292/bin/sync_gateway sync-gateway-config.json
 ```
 
+For platform specific installation instructions, refer to the Sync Gateway [installation guide](../../../current/installation/sync-gateway/index.html).
+
 Replication objects are now bidirectional. You no longer need to create two separate Replications to push and pull. An instance's `push` and `pull` properties govern which direction(s) to transfer documents; they both default to `true`, so if you want unidirectional replication you'll need to turn the other direction off. The following example creates a bi-directional replications with Sync Gateway.
 
 <block class="objc" />
 
-```objective-c
+```objectivec
 NSURL *url = [[NSURL alloc] initWithString:@"blip://localhost:4984/db"];
 CBLReplication *replication = [database replicationWithURL:url];
 [replication start];
