@@ -67,6 +67,10 @@ The API references for the .NET SDK are available [here](http://docs.couchbase.c
 	
 The API references for the Java SDK are available [here](http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/db004/index.html).
 
+<block class="swift objc java" />
+
+The following sections cover the features that are implemented in the latest developer build. Additionally, the [tutorial app](https://github.com/couchbaselabs/mobile-training-todo/tree/feature/2.0) is incrementally updated to use the 2.0 API.
+
 <block class="all" />
 
 ## Databases
