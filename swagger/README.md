@@ -35,7 +35,7 @@ This section describes how to generate the Swagger specs locally to use them wit
 
 - Install gulp: `npm install -g gulp`
 - Install local dependencies: `npm install`
-- Start the resolver and validator script: `gulp watch 14`
+- Start the resolver and validator script: `gulp watch --version 14`
 - Start a web server: `python -m SimpleHTTPServer 9000`
 
 #### SwaggerJS
@@ -57,6 +57,6 @@ This section describes how to generate the Swagger specs locally to use them wit
 In the current directory, run the following commands:
 
 ```bash
-gulp build 13
+gulp build --version 13
 s3cmd --acl-public -r put tmp/ s3://docs.couchbase.com/mobile/1.3/rest-apis/
 ```
