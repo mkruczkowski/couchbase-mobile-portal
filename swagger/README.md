@@ -27,7 +27,7 @@ In the `parameters` and `definitions` folders you will find 3 files.
 - `cbl.yaml`: Functionality specific to CBL.
 - `sg.yaml`: Functionality specific to SG.
 
-When running `gulp watch 14` or `gulp build 14`, the definitions and parameters are pulled from the correct files depending on the target (lite, public or admin).
+When running `gulp watch --version 14` or `gulp build --version 14`, the definitions and parameters are pulled from the correct files depending on the target (lite, public or admin).
 
 ### Swagger libraries
 
