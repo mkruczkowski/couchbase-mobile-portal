@@ -72,9 +72,9 @@ For a Mac OS target, you'll need to make sure the framework is copied to your ap
 ## Carthage
 
 1. [Install Carthage](https://github.com/Carthage/Carthage#installing-carthage)
-2. Add github "couchbase/couchbase-lite-ios" to your Cartfile.
-3. Run `carthage update`.
-4. Drag `CouchbaseLite.framework` from the appropriate platform directory in `Carthage/Build/` to the "Embedded Binaries" section of your Xcode project's "General" settings.
+2. Add `github "couchbase/couchbase-lite-ios" "release/{{ site.package_version }}"` to your Cartfile.
+3. Run `carthage update --platform iOS`.
+4. Drag `CouchbaseLite.framework` from the appropriate platform directory in `Carthage/Build/` to the **Embedded Binaries** section of your Xcode project's **General** settings.
 
 ## Optional packages
 
