@@ -67,7 +67,7 @@ The Couchbase Lite Listener exposes the same functionality as the native SDKs th
 
 The Swagger JS client allows us to leverage the Couchbase Lite REST API Swagger spec in hybrid mobile frameworks such as PhoneGap. To install the Swagger JS library in your project do the following:
 
-- [Download the Swagger JS client](https://raw.githubusercontent.com/swagger-api/swagger-js/master/browser/swagger-client.min.js) to a new file **www/js/swagger-client.min.js**.
+- [Download the Swagger JS client](http://couchbase-docs.s3.amazonaws.com/assets/swagger-js/2.x/swagger-client.min.js) to a new file **www/js/swagger-client.min.js**.
 - [Download the Couchbase Lite Swagger spec](http://developer.couchbase.com/mobile/swagger/couchbase-lite/spec.json) to a new file **www/js/spec.js**. Your IDE might show an error because you've copied a JSON object into a JavaScript file but don't worry, prepend the following to set the spec on the `window` object.
 
   ```javascript
