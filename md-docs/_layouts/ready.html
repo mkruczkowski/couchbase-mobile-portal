@@ -177,11 +177,13 @@
                       }
                     }
                   }
-                  function display(type, value) {
+                  function display(type, value, isFirstPageLoad) {
                     deleteCookie('mobile-lang');
                     setCookie('mobile-lang', value, 365);
-                    var newurl = UpdateQueryString('language', value);
-                    window.history.pushState({path: newurl}, '', newurl);
+                    if (!isFirstPageLoad) {
+                      var newurl = UpdateQueryString('language', value);
+                      window.history.pushState({path: newurl}, '', newurl);
+                    }
                     // Place the display-platform-* class on div.inner-content
                     var container = document.getElementsByClassName('inner-content')[0];
                     container.className = 'inner-content display-' + type + '-' + value;
@@ -197,19 +199,19 @@
                   var foundHash = false;
                   var language = getParameterByName('language');
                   if (['ios', 'android', 'csharp', 'swift', 'objc', 'wpf', 'java'].indexOf(language) > -1) {
-                    display('platform', language);
                     foundHash = true;
+                    display('platform', language, true);
                   }
                   
                   if (!foundHash) {
                     var cookie_lang = getCookie('mobile-lang');
                     if (document.getElementsByClassName(cookie_lang).length > 0) {
-                      display('platform', cookie_lang);
+                      display('platform', cookie_lang, true);
                     } else {
                       if (document.getElementsByClassName('swift').length > 0) {
-                        display('platform', 'swift');
-                      } else {
-                        display('platform', 'ios');
+                        display('platform', 'swift', true);
+                      } else if (document.getElementsByClassName('ios').length > 0) {
+                        display('platform', 'ios', true);
                       }
                     }
                   }
