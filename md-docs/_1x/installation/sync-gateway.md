@@ -204,7 +204,7 @@ Before installing Sync Gateway, you should have completed the Getting Started in
 
 1. Configure Sync Gateway to use the following configuration file.
 
-	```json
+	```javascript
 	{
 		"databases": {
 			"hello": {
