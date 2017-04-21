@@ -287,7 +287,7 @@ Document doc = database.getDocument(myDocId);
 doc.update(new Document.DocumentUpdater() {
     @Override
     public boolean update(UnsavedRevision newRevision) {
-        Map<String, Object> properties = newRevision.getUserProperties();
+        Map<String, Object> properties = newRevision.getProperties();
         properties.put("title", title);
         properties.put("notes", notes);
         newRevision.setUserProperties(properties);
