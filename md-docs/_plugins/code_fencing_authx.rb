@@ -48,6 +48,23 @@ module Jekyll
 						end
 					end
 				end
+
+				module WithoutHighlighting
+					require "cgi"
+
+					include CommonMethods
+
+					# removed <figure></figure> container tag to conform to server docs.
+					def code_wrap(code)
+						# "<figure class=\"highlight\"><pre>#{CGI.escapeHTML(code)}</pre></figure>"
+						"<pre>#{CGI.escapeHTML(code)}</pre>"
+					end
+
+					def block_code(code, lang)
+						lang = lang && lang.split.first || "text"
+						add_code_tags(code_wrap(code), lang)
+					end
+				end
       end
     end
   end

@@ -5,7 +5,12 @@ rm -rf tmp
 mkdir tmp
 
 echo "Building..."
-jekyll build --source "md-docs/" --destination "${TMP}" --config "md-docs/_config.yml","md-docs/_config.${1}.yml"
+# Disable syntax highlighter when uploading to acct/prod server and use Redcarpet's Rouge syntax highlighter for local builds.
+if [[ ! -z ${2} ]]; then
+		jekyll build --source "md-docs/" --destination "${TMP}" --config "md-docs/_config.yml","md-docs/_config.${1}.yml","md-docs/_config.prod.yml"
+	else
+		jekyll build --source "md-docs/" --destination "${TMP}" --config "md-docs/_config.yml","md-docs/_config.${1}.yml"
+fi
 java -jar site/gtor/saxon9.jar -xi -l:on -s:site/src/site-hippo.xml -xsl:site/gtor/hippo.xslt output-directory="${TMP}/"
 
 if [[ ! -z ${2} ]]; then
