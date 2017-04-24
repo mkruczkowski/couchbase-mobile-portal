@@ -131,3 +131,12 @@ The tool outputs the XML for each repository in the current directory.
 - Create a new key-value pair for the new version (on [cms-qa](http://cms-qa.cbauthx.com/cms/?1&path=/content/documents/website/value-lists/couchbasemobileversions) for example).
 - Create a new documentation set for the new version (on [cms-qa](http://cms-qa.cbauthx.com/cms/?1&path=/content/documents/couchbase-developer-portal/documentation/mobile/1.3/mobile-1.3) for example)
 - Make the latest documentation set the current one and uncheck the previous one if necessary.
+
+## Link checker
+
+To validate links, generate the docs and run the [link checker tool](https://github.com/wummel/linkchecker).
+
+```bash
+./build.sh 20
+linkchecker tmp/index.html
+```
