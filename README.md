@@ -65,6 +65,8 @@ $ bundle exec jekyll serve --config _config.yml,_config.14.yml
 $ bundle exec jekyll serve --config _config.yml,_config.20.yml
 ```
 
+Browse the docs [http://localhost:4000/index.html].
+
 ## Writing guide
 
 To contribute to Guides, API references or REST APIs, read the following. You don't need to build the site locally. Just find the content that needs editing and submit a pull request.
