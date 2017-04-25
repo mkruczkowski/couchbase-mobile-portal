@@ -31,7 +31,7 @@ Couchbase Lite requires additional frameworks and libraries for building an app.
     libc++.dylib
     ```
 
-	To use the SDK in Swift files, you must also import the framework in the bridging header (`#import <CouchbaseLite/CouchbaseLite.h>`).
+	To use the SDK in Swift files, you must also import the framework in a bridging header (`#import <CouchbaseLite/CouchbaseLite.h>`).
 		
 #### macOS
 
@@ -73,8 +73,10 @@ For a macOS target, you'll need to make sure the framework is copied to your app
     ```ruby
     pod install
     ```
+    
+    To use the SDK in Swift files, you must also import the framework in a bridging header (`#import <CouchbaseLite/CouchbaseLite.h>`).
 
-    The following pods are available to import different Couchbase Lite components.
+    The following subspecs are available to import different Couchbase Lite components.
 
     |Pod|Service|
     |:--|:------|
@@ -124,10 +126,6 @@ pull.continuous = true;
 push.start();
 pull.start();
 ```
-
-By default, Xcode 8 prints OS level diagnostic logs to the console which add considerable noise. You will go ahead and disable them before running the app. From the Xcode menu, open **Product > Scheme > Edit Scheme** and add the `OS_ACTIVITY_MODE`=`disable` environment variable.
-
-<img src="../img/xcode-edit-scheme.png" class=center-image />
 
 Build and run. You should see the document ID and property printed to the console. The document was successfully persisted to the database.
 
