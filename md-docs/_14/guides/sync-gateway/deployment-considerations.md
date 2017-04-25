@@ -16,8 +16,8 @@ With multiple Sync Gateways, we recommend placing this cluster behind a load-bal
 
 Keep in mind the following notes on performance:
 
-- Sync Gateway nodes don’t keep any local state, so they don’t require any disk.
-- Sync Gateway nodes do not cache much in RAM. Every request is handled independently. The Sync Gateway is written with the Go programming language, which does use garbage collection, so the memory usage might be somewhat higher than for C code. However, memory usage shouldn’t be excessive, provided the number of simultaneous requests per node is kept limited.
+- Sync Gateway nodes don’t keep any local state, so they don’t require any disk beyond what's needed for logging and the application itself.
+- Sync Gateway nodes do not cache much in RAM (and this is [tunable](https://developer.couchbase.com/documentation/mobile/1.4/guides/sync-gateway/config-properties/index.html#cache)). Every request is handled independently. The Sync Gateway is written with the Go programming language, which does use garbage collection, so the memory usage might be somewhat higher than for C code. However, memory usage shouldn’t be excessive, provided the number of simultaneous requests per node is kept limited.
 - Go is good at multiprocessing. It uses lightweight threads and asynchronous I/O. Adding more CPU cores to a Sync Gateway node can speed it up.
 - As is typical with databases, writes are going to put a greater load on the system than reads. In particular, replication and channels imply that there’s a lot of fan-out, where making a change triggers sending notifications to many other clients, who then perform reads to get the new data.
 
