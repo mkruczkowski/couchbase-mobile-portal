@@ -27,9 +27,9 @@ In addition to adding Sync Gateway nodes, we recommend developers to also optimi
 
 To secure data between clients and Sync Gateway in production, you will probably want to use secure HTTPS connections.
 
-You can run Sync Gateway behind a reverse proxy, such as [Nginx](https://www.nginx.com/blog/websocket-nginx/) (can also be used to load balance a sync\_gateway cluster; see above), which supports HTTPS connections and route internal traffic to sync_gateway over HTTP. The advantage of this approach is that nginx can proxy both HTTP and HTTPS connections to a single Sync Gateway instance.
+You can run Sync Gateway behind a reverse proxy, such as [Nginx](https://www.nginx.com/blog/websocket-nginx/) (can also be used to load balance a Sync Gateway cluster; see above), which supports HTTPS connections and route internal traffic to Sync Gateway over HTTP. The advantage of this approach is that nginx can proxy both HTTP and HTTPS connections to a single Sync Gateway instance.
 
-Alternatively sync\_gateway can be configured to only allow secure HTTPS connections, if you want to support both HTTP and HTTPS connections you will need to run two separate instances of sync_gateway.
+Alternatively Sync Gateway can be configured to only allow secure HTTPS connections, if you want to support both HTTP and HTTPS connections you will need to run two separate instances of Sync Gateway.
 
 To enable HTTPS add the following top-level properties to your config.json file:
 
@@ -53,7 +53,7 @@ The second command is interactive and will ask you for information like country 
 
 You should now have two files: privkey.pem: the private key. This needs to be kept secure -- anyone who has this data can impersonate your server. cert.pem: the public certificate. You'll want to embed a copy of this in an application that connects to your server, so it can verify that it's actually connecting to your server and not some other server that also has a cert with the same hostname. The SSL client API you're using should have a function to either register a trusted 'root certificate', or to check whether two certificates have the same key. Then just add the "SSLCert" and "SSLKey" properties to your Sync Gateway configuration file, as shown up above.
 
-The sync_gateway GitHub repository contains a pre-configured self-cert configuration in [examples/ssl](https://github.com/couchbase/sync_gateway/tree/master/examples/ssl/).
+The [sync_gateway](https://github.com/couchbase/sync_gateway) GitHub repository contains a pre-configured self-cert configuration in [examples/ssl](https://github.com/couchbase/sync_gateway/tree/master/examples/ssl/).
 
 ## Log Rotation
 
@@ -157,7 +157,7 @@ By default Sync gateway will write log statements to stderr, normally stderr is 
 sync_gateway sync_gateway.json 2>> sg_error.log
 ```
 
-On linux the logrotate tool can be used to monitor log files and rotate them at fixed time intervals or when they reach a certain size. Below is an example of a logrotate configuration that will rotate the Sync Gateway log file once a day or if it reaches 10M in size.
+On Linux the logrotate tool can be used to monitor log files and rotate them at fixed time intervals or when they reach a certain size. Below is an example of a logrotate configuration that will rotate the Sync Gateway log file once a day or if it reaches 10M in size.
 
 ```
 /home/sync_gateway/logs/* { 
@@ -196,7 +196,7 @@ sync_gateway -logFilePath=sg_error.log sync_gateway.json
 [//]: # "TODO: Link can break."
 The **logFilePath** property can also be set in the configuration file at the [server level](../config-properties/index.html#server-configuration).
 
-If the option is not used then Sync Gateway uses the existing stderr logging behaviour. When the option is passed Sync Gateway will attempt to open and write to a log file at the path provided. If a Sync Gateway process is sent the SIGHUP signal it will close the open log file and then reopen it, on linux the SIGHUP signal can be manually sent using the following command:
+If the option is not used then Sync Gateway uses the existing stderr logging behaviour. When the option is passed Sync Gateway will attempt to open and write to a log file at the path provided. If a Sync Gateway process is sent the `SIGHUP` signal it will close the open log file and then reopen it, on Linux the `SIGHUP` signal can be manually sent using the following command:
 
 ```bash
 pkill -HUP sync_gateway
@@ -219,7 +219,7 @@ This command can be added to the logrotate configuration using the 'postrotate' 
 }
 ```
 
-After renaming the log file logrotate will send the SIGHUP signal to the sync_gateway process, Sync Gateway will close the existing log file and open a new file at the original path, no log entries will be lost.
+After renaming the log file logrotate will send the `SIGHUP` signal to the `sync_gateway` process, Sync Gateway will close the existing log file and open a new file at the original path, no log entries will be lost.
 
 ## Troubleshooting
 
@@ -261,7 +261,7 @@ If your issue is urgent, please make a phone call as well as send an e-mail. The
 
 The Sync Gateway logs will give us further detail around the issue itself and the health of your environment.
 
-Sync Gateway 1.3.x includes a command line utility 'sgcollect\_info' that provides us with detailed statistics for a specific node. Run sgcollect_info on each node individually, not on all simultaneously.
+Sync Gateway 1.3.x includes a command line utility `sgcollect_info` that provides us with detailed statistics for a specific node. Run `sgcollect_info` on each node individually, not on all simultaneously.
 
 Example usage:
 
@@ -278,21 +278,21 @@ Windows (run as an administrator)
 C:\Program Files\Couchbase\Server\bin\sgcollect_info <node_name>.zip
 ```
 
-Run sgcollect_info on all nodes in the cluster, and upload all of the resulting files to us.
+Run `sgcollect_info` on all nodes in the cluster, and upload all of the resulting files to us.
 
 ### Sharing Files with Us
 
-The sg\_collect_info tool can result in large files. Simply run the command below, replacing <FILE NAME> and <YOUR COMPANY NAME>, to upload a file to our cloud storage on Amazon AWS. Make sure you include the last slash ("/") character after the company name.
+The `sgcollect_info` tool can result in large files. Simply run the command below, replacing `<FILE NAME>` and `<YOUR COMPANY NAME>`, to upload a file to our cloud storage on Amazon AWS. Make sure you include the last slash (`/`) character after the company name.
 
 ```bash
 curl --upload-file FILE NAME https://s3.amazonaws.com/customers.couchbase.com/<YOUR COMPANY NAME>/
 ```
 
-> **Note:** we ship curl with couchbase, on linux this is located in /opt/couchbase/bin/
+> **Note:** we ship `curl` with Couchbase Server, on Linux this is located in `/opt/couchbase/bin/`
 
-Firewalled Couchbase Nodes
+Firewalled Sync Gateway Nodes
 
-If your Couchbase nodes do not have internet access, the best way to provide the logs to us is to copy the files then run Curl from a machine with internet access. We ship a Windows curl binary as part of Couchbase, so if you have Couchbase Server installed on a laptop or other system which has an Internet connection you can upload from there. Alternatively you can download standalone Curl for Windows:
+If your Sync Gateway nodes do not have internet access, the best way to provide the logs to us is to copy the files then run `curl` from a machine with internet access. We ship a Windows `curl` binary as part of Couchbase Server, so if you have Couchbase Server installed on a laptop or other system which has an Internet connection you can upload from there. Alternatively you can download standalone Curl for Windows:
 
 [http://curl.haxx.se/download.html](http://curl.haxx.se/download.html)
 
