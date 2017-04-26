@@ -55,6 +55,16 @@ You should now have two files: privkey.pem: the private key. This needs to be ke
 
 The [sync_gateway](https://github.com/couchbase/sync_gateway) GitHub repository contains a pre-configured self-cert configuration in [examples/ssl](https://github.com/couchbase/sync_gateway/tree/master/examples/ssl/).
 
+## Managing Tombstones
+
+By design, when a document is deleted in Couchbase Mobile, they are not actually deleted from the database, but simply marked as deleted (by setting the `_deleted` property). This is discussed in the documentation for the [Document API](https://developer.couchbase.com/documentation/mobile/current/guides/couchbase-lite/native-api/document/index.html#deleting-documents). The reason that documents are not immediately removed is to allow all devices to see that they have been deleted - particularly in the case of devices that may not be online continuously and therefore not syncing regularly.
+
+To actually remove the documents permanently, you need to *purge* them. This can be done in both [Couchbase Lite](https://developer.couchbase.com/documentation/mobile/current/guides/couchbase-lite/native-api/document/index.html#purging-documents) and via the [Sync Gateway Admin Interface](https://developer.couchbase.com/documentation/mobile/current/references/sync-gateway/admin-rest-api/index.html#!/document/post_db_purge).
+
+Further to this, Couchbase Mobile 1.3 introduced the concept of [Document Expiration](https://developer.couchbase.com/documentation/mobile/current/guides/couchbase-lite/native-api/document/index.html#document-expiration-ttl), which allows you to set a Time To Live (TTL) on a document - when the TTL expires the document will be purged from the local database. Note that this does not affect the copy of the document on any other device.
+
+Depending on the use case, data model and many more variables, there can be a need to proactively manage these tombstones as they are created. For example, you might decide that if a document is deleted on a Couchbase Lite client, that you want to purge the document (on that device) as soon as the delete has been successfully replicated out to Sync Gateway. Then later on Sync Gateway, set an expiration so that they are automatically purged after a set period (perhaps a week, or a month, to allow for all other devices to sync and receive the delete notifications) - more on this later. If a document is deleted on the Sync Gateway itself (say by a batch process or REST API client), you may similarly want to set a TTL, and on the Couchbase Lite devices you can monitor the Database Change Notifications and purge locally whenever a document is marked as deleted. 
+
 ## Log Rotation
 
 ### Built-in log rotation
