@@ -57,15 +57,111 @@ The [sync_gateway](https://github.com/couchbase/sync_gateway) GitHub repository 
 
 ## Managing Tombstones
 
-By design, when a document is deleted in Couchbase Mobile, they are not actually deleted from the database, but simply marked as deleted (by setting the `_deleted` property). This is discussed in the documentation for the [Document API](https://developer.couchbase.com/documentation/mobile/current/guides/couchbase-lite/native-api/document/index.html#deleting-documents). The reason that documents are not immediately removed is to allow all devices to see that they have been deleted - particularly in the case of devices that may not be online continuously and therefore not syncing regularly.
+By design, when a document is deleted in Couchbase Mobile, they are not actually deleted from the database, but simply marked as deleted (by setting the `_deleted` property). This is discussed in the [Document](../../couchbase-lite/native-api/document/index.html#deleting-documents) guide. The reason that documents are not immediately removed is to allow all devices to see that they have been deleted - particularly in the case of devices that may not be online continuously and therefore not syncing regularly.
 
-To actually remove the documents permanently, you need to *purge* them. This can be done in both [Couchbase Lite](https://developer.couchbase.com/documentation/mobile/current/guides/couchbase-lite/native-api/document/index.html#purging-documents) and via the [Sync Gateway Admin Interface](https://developer.couchbase.com/documentation/mobile/current/references/sync-gateway/admin-rest-api/index.html#!/document/post_db_purge).
+To actually remove the documents permanently, you need to *purge* them. This can be done in both [Couchbase Lite](../../couchbase-lite/native-api/document/index.html#purging-documents) and via the [Sync Gateway REST API](../../../references/sync-gateway/admin-rest-api/index.html#!/document/post_db_purge).
 
-Further to this, Couchbase Mobile 1.3 introduces the concept of [Document Expiration](https://developer.couchbase.com/documentation/mobile/current/guides/couchbase-lite/native-api/document/index.html#document-expiration-ttl), which allows you to set a Time To Live (TTL) on a document - when the TTL expires the document will be purged from the local database. Note that this does not affect the copy of the document on any other device.
+Beginning in Couchbase Mobile 1.3, documents can have a Time To Live (TTL) value - when the TTL expires the document will be purged from the local database. Note that this does not affect the copy of the document on any other device. This concept is covered in more detail in the [Document](../../couchbase-lite/native-api/document/index.html#document-expiration-ttl) guide.
 
-Depending on the use case, data model and many more variables, there can be a need to proactively manage these tombstones as they are created. For example, you might decide that if a document is deleted on a Couchbase Lite client, that you want to purge the document (on that device) as soon as the delete has been successfully replicated out to Sync Gateway. Then later on Sync Gateway, set an expiration so that they are automatically purged after a set period (perhaps a week, or a month, to allow for all other devices to sync and receive the delete notifications) - more on this later. If a document is deleted on the Sync Gateway itself (say by a batch process or REST API client), you may similarly want to set a TTL, and on the Couchbase Lite devices you can monitor the Database Change Notifications and purge locally whenever a document is marked as deleted. 
+Depending on the use case, data model and many more variables, there can be a need to proactively manage these tombstones as they are created. For example, you might decide that if a document is deleted on a Couchbase Lite client, that you want to purge the document (on that device) as soon as the delete has been successfully replicated out to Sync Gateway. Then later on Sync Gateway, set an expiration so that they are automatically purged after a set period (perhaps a week, or a month, to allow for all other devices to sync and receive the delete notifications) - more on this later. If a document is deleted on the Sync Gateway itself (say by a batch process or REST API client), you may similarly want to set a TTL, and on the Couchbase Lite devices you can monitor the [Database Change Notifications](../../couchbase-lite/native-api/database/index.html#database-notifications) and purge locally whenever a document is marked as deleted. 
 
 ## Log Rotation
+
+{% if site.version == '1.4' %}
+
+### Built-in log rotation
+
+By default, Sync Gateway outputs the logs to standard out with the "HTTP" log key and can also output logs to a file. Prior to 1.4, the two main configuration options were `log` and `logFilePath` at the root of the configuration file.
+
+```javascript
+{
+	"log": ["*"],
+	"logFilePath": "/var/log/sync_gateway/sglogfile.log"
+}
+```
+
+In Couchbase Mobile 1.4, Sync Gateway can now be configured to perform log rotation in order to minimize disk space usage.
+
+#### Log rotation configuration
+
+The log rotation configuration is specified under the `logging` key. The following example demonstrates where the log rotation properties reside in the configuration file.
+
+```javascript
+{
+  "logging": {
+    "default": {
+      "logFilePath": "/var/log/sync_gateway/sglogfile.log",
+      "logKeys": ["*"],
+      "logLevel": "debug",
+      "rotation": {
+        "maxsize": 1,
+        "maxage": 30,
+        "maxbackups": 2,
+        "localtime": true
+      }
+    }
+  },
+  "databases": {
+    "db": {
+      "server": "walrus:data",
+      "bucket": "default",
+      "users": {"GUEST": {"disabled": false,"admin_channels": ["*"]}}
+    }
+  }
+}
+```
+
+As shown above, the `logging` property must contain a single named logging appender called `default`. Note that if the "logging" property is specified, it will override the top level `log` and `logFilePath` properties.
+
+The descriptions and default values for each logging property can be found on the [Sync Gateway configuration](../config-properties/index.html) 
+page.
+
+#### Example Output
+
+If Sync Gateway is running with the configuration shown above, after a total of 3.5 MB of log data, the contents of the `/var/log/sync_gateway` directory would have 3 files because `maxsize` is set to 1 MB.
+
+```bash
+/var/log/sync_gateway
+├── sglogfile.log
+├── sglogfile-2017-01-25T23-35-23.671.log
+└── sglogfile-2017-01-25T22-25-39.662.log
+```
+
+#### Windows Configuration
+
+On MS Windows `logFilePath` supports the following path formats.
+
+```javascript
+"C:/var/tmp/sglogfile.log"
+`C:\var\tmp\sglogfile.log`
+`/var/tmp/sglogfile.log`
+"/var/tmp/sglogfile.log"
+```
+Log rotation will not work if `logFilePath` is set to the path below as it is reserved for use by the Sync Gateway Windows service wrapper.
+
+```bash
+C:\Program Files (x86)\Couchbase\var\lib\couchbase\logs\sync_gateway_error.log
+```
+
+#### Deprecation notice
+
+The current proposal is to remove the top level `log` and `logFilePath` properties in Sync Gateway 2.0. For users that want to migrate to the new logging config to write to a log file but do not need log rotation they should use a default logger similar to the following:
+
+```javascript
+{
+	"logging": {
+		"default": {
+			"logFilePath": "/var/log/sync_gateway/sglogfile.log",
+			"logKeys": ["*"],
+			"logLevel": "debug"
+		}
+	}
+}
+```
+
+{% endif %}
+
+### OS log rotation
 
 In production environments it is common to rotate log files to prevent them from taking too much disk space, and to support log file archival.
 
