@@ -15,6 +15,8 @@ permalink: references/couchbase-lite/release-notes/index.html
 - Replication! The new replicator is faster, but the protocol has changed, and the class API isn't yet finalized.
 
 <block class="java" />
+- Blob
+- Database and Document Change Notification
 
 <block class="all" />
 
