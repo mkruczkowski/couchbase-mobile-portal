@@ -17,7 +17,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 <block class="java" />
 
 - Blob
-- Database and Document Change Notification
+- Conflict Resolver
 
 <block class="all" />
 
