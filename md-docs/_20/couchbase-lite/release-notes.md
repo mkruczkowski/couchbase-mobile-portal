@@ -4,20 +4,6 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 
-### Developer build 5
-
-<block class="objc" />
-
-<block class="swift" />
-
-<block class="net" />
-
-- Replication! The new replicator is faster, but the protocol has changed, and the class API isn't yet finalized.
-
-<block class="java" />
-
-<block class="all" />
-
 ### Developer build 4
 
 <block class="objc" />
