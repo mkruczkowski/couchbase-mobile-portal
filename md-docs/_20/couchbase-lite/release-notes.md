@@ -12,7 +12,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 <block class="net" />
 
-- Replication! The new replicator is faster, but the protocol has changed, and the class API isn't yet finalized.  Also, unfortunately there is no public way to create replications yet but this will come soon.  Various other optimizations under the hood.
+- Replication! The new replicator is faster, but the protocol has changed, and the class API isn't yet finalized.  Also, unfortunately there is no public way to create replications yet but this will come soon.  Support automatic 1.x database upgrade to 2.0.  Various other optimizations under the hood.
 
 <block class="java" />
 
