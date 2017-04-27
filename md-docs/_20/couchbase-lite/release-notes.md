@@ -8,7 +8,14 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 <block class="objc" />
 
+- Support replicating attachments
+- Support automatic 1.x database upgrade to 2.0
+
 <block class="swift" />
+
+- Support replicating attachments
+- Support automatic 1.x database upgrade to 2.0
+- Fixed Swift replication delegate not functional (#1699)
 
 <block class="net" />
 
