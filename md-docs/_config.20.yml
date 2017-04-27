@@ -3,7 +3,7 @@ collections:
     output: true
     permalink: /:path:output_ext
 version: '2.0'
-ios_dev_build: '2.0DB004'
+ios_dev_build: '2.0DB005'
 dev_build_release_date: 'April 6, 2017'
 objc_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB5/couchbase-lite-objc_community_2.0DB005.zip
 swift_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB5/couchbase-lite-swift_community_2.0DB005.zip
