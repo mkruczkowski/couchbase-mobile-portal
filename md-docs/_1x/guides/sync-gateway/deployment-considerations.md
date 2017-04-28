@@ -35,7 +35,7 @@ To access the Admin REST API from an entirely different network or from a remote
 
 **Authorization**
 
-In addition to the Admin REST API, a user can be assigned to a role with additional privileges. The role and the user assigned to it can be created in the configuration file. Then, the Sync Function's [requireRole()](../sync-function-api-guide/index.html#requirerolerolename) method can be used to allow certain operations only if the user has a certain role. The [adding security](../../../training/develop/adding-security/index.html#write-permissions) tutorial shows an example of this pattern.
+In addition to the Admin REST API, a user can be assigned to a role with additional privileges. The role and the user assigned to it can be created in the configuration file. Then, the Sync Function's [requireRole()](../sync-function-api-guide/index.html#requirerolerolename) method can be used to allow certain operations only if the user has that role. The [adding security](../../../training/develop/adding-security/index.html#write-permissions) tutorial shows an example of this pattern.
 
 **Data Model Validation**
 
