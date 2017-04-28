@@ -303,6 +303,46 @@
         description: Document successfully removed
         schema:
           $ref: '#/definitions/Success'
+/{db}/_local/{local_doc}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/local_doc'
+  get:
+    tags:
+      - document
+    summary: Get local doc
+    description: |
+      This request retrieves a local document. Local document IDs begin with _local/. Local documents are not replicated or indexed, don't support attachments, and don't save revision histories. In practice, they are used by Couchbase Lite's replicator, as a place to store replication checkpoint data and can also be used to store temporary data locally (generally configuration or metadata).
+    responses:
+      200:
+        description: The message body contains the following objects in a JSON document.
+        schema:
+          $ref: '#/definitions/Success'
+  put:
+    tags:
+      - document
+    summary: Create or update a local document
+    description: |
+      This request creates or updates a local document. Local document IDs begin with _local/. Local documents are not replicated or indexed, don't support attachments, and don't save revision histories. In practice, they are used by Couchbase Lite's replicator, as a place to store replication checkpoint data and can also be used to store temporary data locally (generally configuration or metadata).
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/Success'
+  delete:
+    tags:
+      - document
+    summary: Delete a local document
+    description: |
+      This request deletes a local document. Local document IDs begin with _local/. Local documents are not replicated or indexed, don't support attachments, and don't save revision histories. In practice, they are used by Couchbase Lite's replicator, as a place to store replication checkpoint data and can also be used to store temporary data locally (generally configuration or metadata).
+    parameters:
+      - $ref: '#/parameters/rev'
+      - $ref: '#/parameters/batch'
+    responses:
+      200:
+        description: Document successfully removed
+        schema:
+          $ref: '#/definitions/Success'
 /{db}/_design/{ddoc}:
   parameters:
     - $ref: '#/parameters/db'

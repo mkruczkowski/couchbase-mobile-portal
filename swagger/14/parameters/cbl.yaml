@@ -1,3 +1,9 @@
+batch:
+  in: query
+  name: batch
+  description: Stores the document in batch mode. To use, set the value to ok.
+  type: string
+  required: false
 bulkdocs:
   in: body
   name: body
