@@ -4,6 +4,8 @@ title: Deployment considerations
 permalink: guides/sync-gateway/deployment/index.html
 ---
 
+The following guide describes a set of recommended best practices for a production deployment of Couchbase Mobile.
+
 ## Sizing and Scaling
 
 Your physical hardware determines how many active, concurrent users you can comfortably support for a single Sync Gateway. A quad-core/4GB RAM backed Sync Gateway can support up to 5k users. Larger boxes, such as a eight-core/8GB RAM backed Sync Gateway, can support 10k users, and so forth.
@@ -21,39 +23,41 @@ Keep in mind the following notes on performance:
 - Go is good at multiprocessing. It uses lightweight threads and asynchronous I/O. Adding more CPU cores to a Sync Gateway node can speed it up.
 - As is typical with databases, writes are going to put a greater load on the system than reads. In particular, replication and channels imply that there’s a lot of fan-out, where making a change triggers sending notifications to many other clients, who then perform reads to get the new data.
 
-In addition to adding Sync Gateway nodes, we recommend developers to also optimize how many connections they need to open to the sync tier. Very large-scale deployments might run into challenges managing large numbers of simultaneous open TCP connections. The replication protocol uses a “hanging-GET” technique to enable the server to push change notifications. This means that an active client running a continuous pull replication always has an open TCP connection on the server. This is similar to other applications that use server-push, also known as “Comet” techniques, as well as protocols like XMPP and IMAP. These sockets remain idle most of the time (unless documents are being modified at a very high rate), so the actual data traffic is low—the issue is just managing that many sockets. This is commonly known as the “C10k Problem” and it’s been pretty well analyzed in the last few years. Because Go uses asynchronous I/O, it’s capable of listening on large numbers of sockets provided that you make sure the OS is tuned accordingly and you’ve got enough network interfaces to provide a sufficiently large namespace of TCP port numbers per node.
+In addition to adding Sync Gateway nodes, we recommend developers to also optimize how many connections they need to open to the sync tier. Very large-scale deployments might run into challenges managing large numbers of simultaneous open TCP connections. The replication protocol uses a "hanging-GET" technique to enable the server to push change notifications. This means that an active client running a continuous pull replication always has an open TCP connection on the server. This is similar to other applications that use server-push, also known as “Comet” techniques, as well as protocols like XMPP and IMAP. These sockets remain idle most of the time (unless documents are being modified at a very high rate), so the actual data traffic is low—the issue is just managing that many sockets. This is commonly known as the “C10k Problem” and it’s been pretty well analyzed in the last few years. Because Go uses asynchronous I/O, it’s capable of listening on large numbers of sockets provided that you make sure the OS is tuned accordingly and you’ve got enough network interfaces to provide a sufficiently large namespace of TCP port numbers per node.
 
-### Transport Layer Security (HTTPS)
+## Security
 
-To secure data between clients and Sync Gateway in production, you will probably want to use secure HTTPS connections.
+**Authentication**
 
-You can run Sync Gateway behind a reverse proxy, such as [Nginx](https://www.nginx.com/blog/websocket-nginx/) (can also be used to load balance a Sync Gateway cluster; see above), which supports HTTPS connections and route internal traffic to Sync Gateway over HTTP. The advantage of this approach is that nginx can proxy both HTTP and HTTPS connections to a single Sync Gateway instance.
+In a Couchbase Mobile production deployment, administrators typically perform operations on the Admin REST API. If Sync Gateway is deployed on an internal network, you can bind the [adminInterface](../config-properties/index.html#server) of Sync Gateway to the internal network. In this case, the firewall should also be configured to allow external connections to the public [interface](../config-properties/index.html#server) port.
 
-Alternatively Sync Gateway can be configured to only allow secure HTTPS connections, if you want to support both HTTP and HTTPS connections you will need to run two separate instances of Sync Gateway.
+To access the Admin REST API from an entirely different network or from a remote desktop we recommend to use [SSH tunnelling](https://whatbox.ca/wiki/SSH_Tunneling).
 
-To enable HTTPS add the following top-level properties to your config.json file:
+**Authorization**
 
-```javascript
-{
-  "SSLCert": "pathto/ssl/cert.pem",
-  "SSLKey":  "pathto/ssl/privkey.pem"
-}
-```
+In addition to the Admin REST API, a user can be assigned to a role with additional privileges. The role and the user assigned to it can be created in the configuration file. Then, the Sync Function's [requireRole()](../sync-function-api-guide/index.html#requirerolerolename) method can be used to allow certain operations only if the user has a certain role. The [adding security](../../../training/develop/adding-security/index.html#write-permissions) tutorial shows an example of this pattern.
 
-For production you should get a cert from a reputable Certificate Authority, which will be signed by that authority.
+**Data Model Validation**
 
-For testing you may want to create your own self-signed certificate, it's pretty easy using the openssl command-line tool and these directions, you just need to run these commands:
+In a NoSQL database, it is the application's responsibility to ensure that the documents are created in accordance with the data model adopted throughout the system. As an additional check, the Sync Function's [throw()](../sync-function-api-guide/index.html#throw) method can be used to reject documents that do not follow the pre-defined data model. The [adding security](../../../training/develop/adding-security/index.html?language=ios#validation) tutorial shows an example of this pattern.
 
-```bash
-openssl genrsa -out privkey.pem 2048
-openssl req -new -x509 -key privkey.pem -out cert.pem -days 1095
-```
+**HTTPS**
 
-The second command is interactive and will ask you for information like country and city name that goes into the X.509 certificate. You can put whatever you want there; the only important part is the field Common Name (e.g. server FQDN or YOUR name) which needs to be the exact hostname that clients will reach your server at. The client will verify that this name matches the hostname in the URL it's trying to access, and will reject the connection if it doesn't.
+You can run Sync Gateway behind a reverse proxy, such as NGINX, which supports HTTPS connections and route internal traffic to Sync Gateway over HTTP. The advantage of this approach is that NGINX can proxy both HTTP and HTTPS connections to a single Sync Gateway instance.
 
-You should now have two files: privkey.pem: the private key. This needs to be kept secure -- anyone who has this data can impersonate your server. cert.pem: the public certificate. You'll want to embed a copy of this in an application that connects to your server, so it can verify that it's actually connecting to your server and not some other server that also has a cert with the same hostname. The SSL client API you're using should have a function to either register a trusted 'root certificate', or to check whether two certificates have the same key. Then just add the "SSLCert" and "SSLKey" properties to your Sync Gateway configuration file, as shown up above.
+Alternatively, Sync Gateway can be [configured](../configuring-ssl/index.html) to only allow secure HTTPS connections, if you want to support both HTTP and HTTPS connections you will need to run two separate instances of Sync Gateway.
 
-The [sync_gateway](https://github.com/couchbase/sync_gateway) GitHub repository contains a pre-configured self-cert configuration in [examples/ssl](https://github.com/couchbase/sync_gateway/tree/master/examples/ssl/).
+**Database Encryption**
+		
+[Database encryption](../../couchbase-lite/native-api/database/index.html#database-encryption) is available on the local database. Couchbase Lite uses SQLCipher; an open source extension to SQLite that provides transparent encryption of database files. The encryption specification is 256-bit AES.
+
+{% if site.version == '1.4' %}
+
+**Auditing**
+
+Beginning in Couchbase Mobile 1.4, [log rotation](index.html#log-rotation) can be enabled in the configuration file.
+
+{% endif %}
 
 ## Managing Tombstones
 
