@@ -1,0 +1,150 @@
+properties:
+  adminInterface:
+    description: Port or TCP network address (IP address and the port) that the Admin REST API listens on.
+    type: string
+    default: ':4985'
+  channel_index:
+    type: object
+    properties:
+      num_shards:
+        type: integer
+        description: Represents the maximum number of concurrent Sync Gateway Accelerator nodes that can be supported by the index. It is only necessary to override the default value for large Sync Gateway Accelerator clusters (> 16 nodes). Higher num_shards values can result in a more fragmented index, as entries in the index are grouped by shard. A higher num_shards value results in more work for index reads that scan all shards (in large backfill scenarios for example). Changing num_shards requires a flush to rebuild the channel index bucket.
+        default: 16
+  cluster_config:
+    type: object
+    description: The configuration to specify where the data bucket resides.
+    properties:
+      server:
+        type: string
+        description: The hostname of the Couchbase Server cluster.
+      bucket:
+        type: string
+        description: The bucket name where the data is stored (i.e the one specified in the database configuration.)
+      data_dir:
+        type: string
+        description: The directory to store the Sync Gateway Accelerator internal files. Those files can be ignored from back-ups and Sync Gateway Accelerator will re-create them on start-up if they get deleted.
+  couchbaseKeepaliveInterval:
+    description: TCP keep-alive interval in seconds between Sync Gateway and Couchbase Server.
+    type: integer
+  databases:
+      description: Database settings.
+      type: object
+      properties:
+        foo_db:
+          type: object
+          description: The database name is stored as a key.
+          properties:
+            bucket:
+              type: string
+              description: Bucket name on Couchbase Server or a Walrus bucket. The default is the value of the property Name.
+            server:
+              type: string
+              description: Couchbase Server (or Walrus) URL. The default is walrus.
+            channel_index:
+              type: object
+              properties:
+                writer:
+                  type: boolean
+                  description: Whether the channel index node can write to the bucket.
+                server:
+                  type: string
+                  description: Hostname to the Couchbase Server cluster.
+                bucket:
+                  type: string
+                  description: Bucket name for channel indexing. A common name is "channel_index".
+  log:
+    description: Comma-separated list of log keys to enable for diagnostic logging. Use ["*"] to enable logging for all log keys.
+    type: array
+    items:
+      type: string
+      enum:
+        - ChannelStorage:
+            description: Useful for low-level Sync Gateway Accel troubleshooting. Provides more granular logging during read and write of lower-level indexing at the document level.
+        - DCP:
+            description: DCP-feed processing (verbose logging).
+        - DIndex:
+            description: Useful for high-level Sync Gateway Accel troubleshooting. Provides information on high-level operations between Sync Gateway/Sync Gateway Accelerator and the channel index.
+        - HTTP:
+            description: All requests made to the Sync Gateway REST APIs (Sync and Admin). Note that the log keyword HTTP is always enabled, which means that HTTP requests and error responses are always logged (in a non-verbose manner). HTTP+ provides more verbose HTTP logging.
+    default: '["HTTP"]'
+  logFilePath:
+    description: Absolute or relative path on the filesystem to the log file. A relative path is from the directory that contains the Sync Gateway executable file.
+    type: string
+    default: 'stderr'
+  logging:
+    description: The logging object.
+    type: object
+    properties:
+      default:
+        type: object
+        properties:
+          logFilePath:
+            description: Absolute or relative path on the filesystem to the log file. A relative path is from the directory that contains the Sync Gateway executable file.
+            type: string
+            default: 'stderr'
+          logKeys:
+            description: Comma-separated list of log keys to enable for diagnostic logging. Use ["*"] to enable logging for all log keys.
+            type: array
+            items:
+              type: string
+              enum:
+                - Access:
+                    description: Anytime an access() call is made in the sync function.
+                - Attach:
+                    description: Attachment processing.
+                - Auth:
+                    description: Authentication.
+                - Bucket:
+                    description: Sync Gateway interactions with the bucket (verbose logging).
+                - Cache:
+                    description: Interactions with Sync Gateway's in-memory channel cache.
+                - Changes:
+                    description: Processing of _changes requests.
+                - CRUD:
+                    description: Updates made by Sync Gateway to documents.
+                - DCP:
+                    description: DCP-feed processing (verbose logging).
+                - Events:
+                    description: Event processing (webhooks).
+                - Feed:
+                    description: Server-feed processing.
+                - HTTP:
+                    description: All requests made to the Sync Gateway REST APIs (Sync and Admin). Note that the log keyword HTTP is always enabled, which means that HTTP requests and error responses are always logged (in a non-verbose manner). HTTP+ provides more verbose HTTP logging.
+                - Replicate:
+                    description: Log messages related to replications between Sync Gateways (using sg-replicate). This tag cannot be used for replications initiated by Couchbase Lite.
+            default: '["HTTP"]'
+          logLevel:
+            description: The level of logging.
+            type: array
+            items:
+              type: string
+              enum:
+                - debug:
+                    description: 'Print all debug messages. With this level of logging, logs are usually voluminous. This log level is usually disabled in production.'
+                - info:
+                    description: 'Pint all information messages.'
+                - error:
+                    description: 'Print all errors. If an application is running smoothly it should not generate any error level logs.'
+                - panic:
+                    description: 'Logs a message, then panics.'
+                - fatal:
+                    description: 'Logs a message, then calls os.Exit(1).'
+            default: '["info"]'
+          rotation:
+            description: The log file may be rotated by defining a "rotation" sub document. See details in the table below.
+            type: object
+            properties:
+              maxsize:
+                type: integer
+                description: The maximum size in MB of the log file before it gets rotated.
+                default: 100
+              maxage:
+                type: integer
+                description: The maximum number of days to retain old log files.
+              maxbackups:
+                type: integer
+                description: The maximum number of old log files to retain.
+              localtime:
+                type: boolean
+                description: If true, it uses the computer's local time to format the backup timestamp.
+                default: 'UTC'
