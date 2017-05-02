@@ -119,7 +119,7 @@ When a support assembly is required, your app must call the relevant `Activate()
 
 	```groovy
 	dependencies {
-		compile 'com.couchbase.lite:couchbase-lite-android:2.0.0-DB004'
+		compile 'com.couchbase.lite:couchbase-lite-android:{{ site.android_dev_build }}'
 	}
 	```
 
@@ -194,6 +194,12 @@ Database database = new Database("my-database", options);
 Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: String options: DatabaseOptions?)|initWithName:options:error:|Create(string name, DatabaseOptions options)|new Database(String name, DatabaseOptions options) %} method can be used to provide specific options (directory to create the database in, whether it is read-only etc.)
 
 You can instantiate multiple databases with the same name and directory; these will all share the same storage. This is the recommended approach if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
+
+#### Opening 1.x databases
+
+Databases that were created with Couchbase Mobile 1.2 or later can be read using the 2.0 API. Upon detecting it is a 1.x database file format, Couchbase Lite will automatically upgrade it to the new format used in 2.0. This feature is currently only available for the default storage type, SQLite (i.e not for ForestDB databases).
+
+<block class="all" />
 
 ## Documents
 
@@ -499,7 +505,7 @@ At the *local* level this operation is still transactional: no other {% st Datab
 
 Again, the behavior of the method hasn't changed, just its name.
 
-<block class="objc swift csharp" />
+<block class="all" />
 
 ### Blobs
 
@@ -545,7 +551,7 @@ document.Save();
 Console.WriteLine($"document properties :: ${document["avatar"]}");
 ```
 
-<block class="java-tmp" />
+<block class="java" />
 
 ```java
 InputStream inputStream = null;
@@ -561,7 +567,7 @@ document.save();
 Log.d("app", String.format("document properties :: %s", document.getProperties()));
 ```
 
-<block class="objc swift csharp" />
+<block class="all" />
 
 {% st Blob|CBLBlob|IBlob|Blob %} itself has a simple API that lets you access the contents as in-memory data (a {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|InputStream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st Attachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st doc["thumbnail.jpg"] = imageBlob|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.set("avatar.jpg", imageBlob) %})
 
