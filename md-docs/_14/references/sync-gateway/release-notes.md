@@ -39,9 +39,9 @@ __Enhancements__
 
 __Bugs__
 
-- [__#1529__](https://github.com/couchbase/sync_gateway/issues/1529) Longpoll _changes request that returns no results, returns invalid sequence number for last_seq
+- [__#1529__](https://github.com/couchbase/sync_gateway/issues/1529) Longpoll `_changes` request that returns no results, returns invalid sequence number for last_seq
 - [__#1865__](https://github.com/couchbase/sync_gateway/issues/1865) One shot replication of granting access doc can lead to miss documents
-- [__#1890__](https://github.com/couchbase/sync_gateway/issues/1890) Calling db _online when CBS bucket is not available results in "no such database" even when CBS bucket is available again
+- [__#1890__](https://github.com/couchbase/sync_gateway/issues/1890) Calling db `_online` when CBS bucket is not available results in "no such database" even when CBS bucket is available again
 - [__#2080__](https://github.com/couchbase/sync_gateway/issues/2080) Startup error when config includes unsupported/user_views
 - [__#2084__](https://github.com/couchbase/sync_gateway/issues/2084) Update Windows install folder for sg_accel
 - [__#2102__](https://github.com/couchbase/sync_gateway/issues/2102) Protect against empty doc body in handlePutDoc
