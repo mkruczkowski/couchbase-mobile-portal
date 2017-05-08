@@ -257,7 +257,11 @@ To change the encryption key, you must first open the database using the `openDa
 
 ## Storage engines
 
+{% if site.version == '1.4' %}
+
 **Note: The following section describes how to set up ForestDB, which will be deprecated in the next major release of Couchbase Mobile. For present and future development, we recommend to use the default storage type, SQLite.**
+
+{% endif %}
 
 There are two storage engines available with Couchbase Lite: SQLite and ForestDB. In the case of SQLite, it will use the system dependency already available on most platforms (iOS, Android, Windows...). To use ForestDB, the project must include the ForestDB storage dependency (see instructions below.)
 
