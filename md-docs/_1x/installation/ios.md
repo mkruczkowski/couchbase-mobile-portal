@@ -97,7 +97,16 @@ Create a new Xcode project and install Couchbase Lite by following one of the me
 
 <img src="../img/xcode-installation.png" class=center-image />
 
-Open **ViewController.swift** in Xcode and add the following in the `viewDidLoad` method.
+
+Open **ViewController.swift** in Xcode.
+
+If you installed through Carthage, append 
+```swift
+import CouchbaseLite
+```
+in your import section
+
+Then, add the following in the `viewDidLoad` method.
 
 ```swift
 // Create a manager
