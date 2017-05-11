@@ -113,7 +113,7 @@ several threads at once.
 
 In particular, avoid these common mistakes:
 
-- Don't do anything that depends on the current date and time -- that breaks the first rule, since your function's output can change depending on the date/time it's called. Common mistakes include emitting a timestamp, emitting a person's age, or emitting only documents that have been modified in the past week.
+- Don't do anything that depends on the current date and time -- that breaks the first rule, since your function's output can change depending on the date/time it's called. Common mistakes include emitting the current time as a timestamp, emitting a person's age, or emitting only documents that have been modified in the past week.
 - Don't try to "parameterize" the map function by referring to an external variable whose value you change when 
 querying. It won't work. People sometimes try this because they want to find various subsets of the data, like all the items of a particular color. Instead, emit all the values of that property, and use a key range in the query to pick out the rows with the specific value you want.
 - Don't make any assumptions about when the map function is called. That's an implementation detail of the indexer. 
