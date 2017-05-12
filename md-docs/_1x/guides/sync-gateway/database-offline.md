@@ -65,6 +65,10 @@ Later, to bring the database online, you can use the `POST _online` Admin REST A
 
 Sync Gateway will take a database offline automatically if specific conditions occur. Specifically, if Sync Gateway detects that the DCP feed or TAP feed for a database has been lost, then Sync Gateway takes the database offline automatically, so that the problem can be investigated. When the cause is known and has been corrected, you can use an Admin REST API request to bring the database back onine.
 
+The exception to this behavior is when running with a [Sync Gateway Accelerator](https://developer.couchbase.com/documentation/mobile/current/guides/sync-gateway/accelerator.html) architecture, in which case the Sync Gateway will not open a DCP or TAP feed, and therefore not go into the offline state.
+
+
+
 ## Creating an offline database
 
 You can use the `PUT /{db}` Admin REST API command to create a database. By default, the database that is created is brought online immediately. To create the database and keep it offline, include the configuration property `offline` with the value `true` in the database configuration properties for the database that you are posting in the request body.
