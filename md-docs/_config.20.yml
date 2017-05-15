@@ -11,5 +11,5 @@ swift_dev_build_download_link: https://packages.couchbase.com/releases/couchbase
 references:
   objc: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db005/'
   swift: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db005/docsets/CouchbaseLiteSwift.docset/Contents/Resources/Documents/'
-  csharp: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db005/'
+  csharp: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db007/'
   java: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/db005/'
