@@ -4,6 +4,21 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 
+### Developer build 7
+
+<block class="objc" />
+
+<block class="swift" />
+
+<block class="net" />
+
+- A new unified and simpler API
+- Finally, the public replication API for creating replications!
+
+<block class="java" />
+
+<block class="all" />
+
 ### Developer build 5
 
 <block class="objc" />
