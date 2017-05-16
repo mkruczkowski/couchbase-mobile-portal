@@ -3,13 +3,13 @@ collections:
     output: true
     permalink: /:path:output_ext
 version: '2.0'
-ios_dev_build: '2.0DB005'
+ios_dev_build: '2.0DB007'
 android_dev_build: '2.0.0-DB005'
 dev_build_release_date: 'May 2, 2017'
 objc_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB5/couchbase-lite-objc_community_2.0DB005.zip
 swift_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB5/couchbase-lite-swift_community_2.0DB005.zip
 references:
-  objc: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db005/'
-  swift: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db005/docsets/CouchbaseLiteSwift.docset/Contents/Resources/Documents/'
+  objc: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db007/'
+  swift: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db007/docsets/CouchbaseLiteSwift.docset/Contents/Resources/Documents/'
   csharp: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db007/'
   java: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/db005/'
