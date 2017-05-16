@@ -7,7 +7,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 ### Developer build 7
 
 <block class="objc" />
-2.0 DB7 includes the following features:
+
 - New unified API for CBLDocument, CBLReadOnlyDocument, CBLDictionary, CBLReadOnlyDictionary, CBLArray, CBLReadOnlyArray.
 - Replaced CBLSubdocument with CBLDictionary.
 - Removed DocumentChangeNotification from CBLDocument. The DocumentChangeNotification will be reimplemented at the Database level in the next release.
@@ -16,7 +16,6 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 <block class="swift" />
 
-2.0 DB7 includes the following features:
 - New unified API for Document, ReadOnlyDocument, DictionaryObject, ReadOnlyDictionaryObject, ArrayObject, ReadOnlyArrayObject.
 - Replaced Subdocument with DictionaryObject.
 - Removed DocumentChangeNotification from Document. The DocumentChangeNotification will be reimplemented at the Database level in the next release.
