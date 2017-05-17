@@ -27,6 +27,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 - Finally, the public replication API for creating replications!
 
 <block class="java" />
+
 - A new unified and simpler API
 
 <block class="all" />
