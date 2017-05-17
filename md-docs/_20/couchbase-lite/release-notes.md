@@ -32,6 +32,13 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 <block class="all" />
 
+
+### Developer build 6
+
+<block class="java" />
+
+- Database & Document Notification
+
 ### Developer build 5
 
 <block class="objc" />
