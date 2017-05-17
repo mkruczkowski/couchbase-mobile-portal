@@ -4,6 +4,8 @@ title: API Guide
 permalink: guides/couchbase-lite/index.html
 ---
 
+{% include landing.html %}
+
 ## Getting Started
 
 <block class="swift objc" />
@@ -131,6 +133,32 @@ When a support assembly is required, your app must call the relevant `Activate()
 
 The API references for the Swift SDK are available [here]({{ site.references.swift }}).
 
+#### Swift Playgrounds
+
+The following Swift Playground covers the features that are implemented in the latest developer build.
+
+<div class="dp">
+	<div class="tiles">
+		<div class="column size-1of2">
+			<div class="box">
+				<div class="container">
+					<a href="https://www.google.com" taget="_blank">
+						<p style="text-align: center;">API Walkthrough</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br/>
+<br/>
+
+1. Download the playground.
+2. Install Couchbase Lite through Carthage `carthage update --platform ios`
+3. Open **swift-playgrounds.xcworkspace** in Xcode.
+4. Build the **CBL Swift** target.
+5. Follow instructions in the playgrounds.
+
 <block class="objc" />
 
 The API references for the Objective-C SDK are available [here]({{ site.references.objc }}).
@@ -143,7 +171,7 @@ The API references for the .NET SDK are available [here]({{ site.references.csha
 	
 The API references for the Java SDK are available [here]({{ site.references.java }}).
 
-<block class="swift objc java" />
+<block class="objc java" />
 
 The following sections cover the features that are implemented in the latest developer build. Additionally, the [tutorial app](https://github.com/couchbaselabs/mobile-training-todo/tree/feature/2.0) is incrementally updated to use the 2.0 API.
 
