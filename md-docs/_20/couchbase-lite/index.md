@@ -231,10 +231,10 @@ Databases that were created with Couchbase Mobile 1.2 or later can be read using
 
 ## Documents
 
-In Couchbase Lite, a document's body takes the form of a JSON object — a collection of key/value pairs where the values can be different types of data such as numbers, strings, arrays or even nested objects. Every document is identified by a document ID, which can be automatically generated (as a UUID) or determined by the application; the only constraints are that it must be unique within the database, and it can't be changed. There are two methods in the API to create a new document:
+In Couchbase Lite, a document's body takes the form of a JSON object — a collection of key/value pairs where the values can be different types of data such as numbers, strings, arrays or even nested objects. Every document is identified by a document ID, which can be automatically generated (as a UUID) or determined by the application; the only constraints are that it must be unique within the database, and it can't be changed. The following methods/initializers can be used:
 
-- The {% st document(withID: String)|documentWithID:|GetDocument(string id)|getDocument(String docID) %} method can be used to create a document with a specific ID defined by the application.
-- The {% st document()|document|CreateDocument()|getDocument() %} method can be used to let the database generate a random document ID.
+- The {% st database.getDocument(id: String)|documentWithID:|GetDocument(string id)|getDocument(String docID) %} method can be used to  get a document. If it doesn't exist in the database, it will return {% st nil|nil|null|null %}.
+- The {% st Document()|document|CreateDocument()|getDocument() %} initializer can be used to create a new document (check the API references for alternative initializers that accept an ID and properties as parameters).
 
 [//]: # (TODO: Since this identifier must be unique, you may want to check if a document with this ID already exists in the database using the {% st a|b|c|d %} method.)
 
@@ -243,12 +243,11 @@ The following code example creates a document and persists it to the database.
 <block class="swift" />
 
 ```swift
-let document = database.document()
-do {
-	try document.save()
-} catch let error {
-	print(error.localizedDescription)
-}
+let dict: [String: Any] = ["type": "task-list",
+                           "owner": "todo",
+                           "createdAt": Date()]
+let newTask = Document(dictionary: dict)
+try database.save(newTask)
 ```
 
 <block class="objc" />
@@ -284,20 +283,8 @@ The biggest change is that {% st Document|CBLDocument|IDocument|Document %} prop
 <block class="swift" />
 
 ```swift
-doc.properties = [
-	"type": "user",
-	"admin": false,
-	"address": [
-		"street": "1 park street",
-		"zip": 123456
-	]
-]
-do {
-	try document.save()
-	print("document type :: \(document["type"] as String?)")
-} catch let error {
-	print(error.localizedDescription)
-}
+newTask.set("Apples", forKey: "name")
+try database.save(newTask)
 ```
 
 <block class="objc" />
@@ -359,22 +346,15 @@ This does create the possibility of confusion, since the document's in-memory st
 
 ### Typed Accessors
 
-The {% st Document|CBLDocument|IDocument|Document %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st let name: String = doc["name"]|stringForKey:|GetString(string key)|getString(String key) %} returns either a {% st String|NSString|string|String %} or {% st nil|nil|null|null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil|nil|null|null %}.)
+The {% st Document|CBLDocument|IDocument|Document %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st document.getString("name")|stringForKey:|GetString(string key)|getString(String key) %} returns either a {% st String|NSString|string|String %} or {% st nil|nil|null|null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil|nil|null|null %}.)
 
-<block class="all" />
-
-In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|Date %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it from the document using the {% st subscript|dateForKey:|GetDate(string key)|getDate(String key) %} accessor method.
+In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|Date %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it back using the {% st document.getDate(key: String)|dateForKey:|GetDate(string key)|getDate(String key) %} accessor method.
 
 <block class="swift" />
 
 ```swift
-document["createdAt"] = Date()
-do {
-	try document.save()
-} catch let error {
-	print(error.localizedDescription)
-}
-print("createdAt value :: \(document["createdAt"] as Date?)")
+newTask.set(Date(), forKey: "createdAt")
+let date = newTask.getDate("createdAt")
 ```
 
 <block class="objc" />
@@ -404,49 +384,6 @@ document.save();
 Log.d("app", String.format("createdAt value :: %s", document.getDate("createdAt")));
 ```
 
-<block class="swift objc csharp" />
-
-### Subdocuments
-
-A subdocument is a nested document with its own set of named properties. In JSON terms it's a nested object. This isn't a new feature of the document model; it's just that we're exposing it in a more structured form. In Couchbase Lite 1.x you would see a nested object as a nested {% st Dictionary|NSDictionary|IDictionary|IDictionary %}. In 2.0 we expose it as a {% st Subdocument|CBLSubdocument|ISubdocument|ISubdocument %} object instead.
-
-<block class="swift" />
-
-```swift
-let address: Subdocument? = document["address"]
-address?["city"] = "galaxy city"
-do {
-	try document.save()
-} catch let error {
-	print(error.localizedDescription)
-}
-print("address properties :: \((document["address"] as Subdocument?)?.properties)")
-```
-
-<block class="objc" />
-
-```objectivec
-CBLSubdocument* address = [document subdocumentForKey:@"address"];
-[address setObject:@"galaxy city" forKey:@"city"];
-[document save:&error];
-if (error) {
-	NSLog(@"Cannot save document %@", error);
-}
-NSLog(@"address properties :: %@", [[document subdocumentForKey:@"address"] properties]);
-```
-
-<block class="csharp" />
-
-```csharp
-var address = document.GetSubdocument("address")["city"] = "galaxy city";
-document.Save();
-Console.WriteLine($"address properties :: ${document.GetSubdocument("address").Properties}");
-```
-
-<block class="swift objc csharp" />
-
-{% st Subdocument|CBLSubdocument|ISubdocument|ISubdocument %}, like {% st Document|CBLDocument|IDocument|IDocument %}, inherits from {% st Properties|CBLProperties|IPropertyContainer|IPropertyContainer %}. That means it has the same set of type-specific accessors discussed in the previous section. Like {% st Document|CBLDocument|IDocument|IDocument %}, it's mutable, so you can make changes in-place. The difference is that a subdocument doesn't have its own ID. It's not a first-class entity in the database, it's just a nested object within the document's JSON. It can't be saved individually; changes are persisted when you save its document.
-
 <block class="all" />
 
 ### Transactions / batch operations
@@ -459,10 +396,10 @@ As before, if you're making multiple changes to a database at once, it's *much* 
 do {
 	try database.inBatch {
 		for i in 0...10 {
-			let doc = database.document()
-			doc["type"] = "user"
-			doc["name"] = "user \(i)"
-			try doc.save()
+			let doc = Document()
+			doc.set("user", forKey: "type")
+			doc.set("user \(i)", forKey: "name")
+			try database.save(doc)
 			print("saved user document \(doc.getString("name"))")
 		}
 	}
@@ -537,22 +474,21 @@ Again, the behavior of the method hasn't changed, just its name.
 
 ### Blobs
 
-We've renamed "attachments" to "blobs", for clarity. The new behavior should be clearer too: a {% st Blob|CBLBlob|IBlob|Blob %} is now a normal object that can appear in a document as a property value, either at the top level or in a subdocument. In other words, there's no special API for creating or accessing attachments; you just instantiate an {% st Blob|CBLBlob|IBlob|Blob %} and set it as the value of a property, and then later you can get the property value, which will be a {% st Blob|CBLBlob|IBlob|Blob %} object. The following code example adds a blob to the document under the `avatar` property.
+We've renamed "attachments" to "blobs", for clarity. The new behavior should be clearer too: a {% st Blob|CBLBlob|IBlob|Blob %} is now a normal object that can appear in a document as a property value. In other words, there's no special API for creating or accessing attachments; you just instantiate an {% st Blob|CBLBlob|IBlob|Blob %} and set it as the value of a property, and then later you can get the property value, which will be a {% st Blob|CBLBlob|IBlob|Blob %} object. The following code example adds a blob to the document under the `avatar` property.
 
 <block class="swift" />
 
 ```swift
-let image = UIImage(named: "avatar.jpg")
-let imageData = UIImageJPEGRepresentation(image!, 1)
+let appleImage = UIImage(named: "apple.jpg")
+let imageData = UIImageJPEGRepresentation(appleImage, 1)!
 
-let blob = Blob(contentType: "image/jpg", data: imageData!)
-document["avatar"] = blob
-do {
-	try document.save()
-} catch let error {
-	print(error.localizedDescription)
+let blob = Blob(contentType: "image/jpg", data: imageData)
+newTask.set(blob, forKey: "image")
+try database.save(newTask)
+
+if let taskBlob = newTask.getBlob("image") {
+    UIImage(data: taskBlob.content!)
 }
-print("document properties :: \(document.properties)")
 ```
 
 <block class="objc" />
@@ -597,7 +533,7 @@ Log.d("app", String.format("document properties :: %s", document.getProperties()
 
 <block class="all" />
 
-{% st Blob|CBLBlob|IBlob|Blob %} itself has a simple API that lets you access the contents as in-memory data (a {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|InputStream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st Attachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st doc["thumbnail.jpg"] = imageBlob|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.set("avatar.jpg", imageBlob) %})
+{% st Blob|CBLBlob|IBlob|Blob %} itself has a simple API that lets you access the contents as in-memory data (a {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|InputStream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st Attachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st document.set(imageBlob, forKey: "thumbnail.jpg")|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.set("avatar.jpg", imageBlob) %})
 
 > **Note:** A blob is stored in the document's raw JSON as an object with a property `"_cbltype":"blob"`. It also has properties such as `"digest"` (a SHA-1 digest of the data), `"length"` (the length in bytes), and optionally `"type"` (the MIME type.) As always, the data is not stored in the document, but in a separate content-addressable store, indexed by the digest.
 
