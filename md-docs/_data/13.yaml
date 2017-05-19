@@ -217,8 +217,6 @@
           items:
             - title: iOS
               path: references/couchbase-lite/release-notes/iOS/index.html
-            - title: Android
-              path: references/couchbase-lite/release-notes/Android/index.html
             - title: Java
               path: references/couchbase-lite/release-notes/Java/index.html
             - title: .NET
@@ -232,26 +230,3 @@
           path: references/sync-gateway/admin-rest-api/index.html
         - title: Release notes
           path: references/sync-gateway/release-notes/index.html
-          items:
-            - title: 1.3.1 Wednesday, September 14, 2016
-              path: references/sync-gateway/release-notes/1.3.1/index.html
-            - title: 1.3 Thursday, August 3, 2016
-              path: references/sync-gateway/release-notes/1.3/index.html
-            - title: 1.2.1 Thursday, April 21, 2016
-              path: references/sync-gateway/release-notes/1.2.1/index.html
-            - title: 1.2 February 3, 2016
-              path: references/sync-gateway/release-notes/1.2/index.html
-            - title: 1.1.1 September 15, 2015
-              path: references/sync-gateway/release-notes/1.1.1/index.html
-            - title: 1.1.0 June 17, 2015
-              path: references/sync-gateway/release-notes/1.1.0/index.html
-            - title: 1.0.4, March 5, 2015
-              path: references/sync-gateway/release-notes/1.0.4/index.html
-            - title: 1.0.3, October 29, 2014
-              path: references/sync-gateway/release-notes/1.0.3/index.html
-            - title: 1.0.2, August 27, 2014
-              path: references/sync-gateway/release-notes/1.0.2/index.html
-            - title: 1.0.1, July 28, 2014
-              path: references/sync-gateway/release-notes/1.0.1/index.html
-            - title: 1.0.0, May 21, 2014
-              path: references/sync-gateway/release-notes/1.0.0/index.html
