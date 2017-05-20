@@ -306,19 +306,8 @@ database.Save(newTask)
 <block class="java" />
 
 ```java
-Map<String, Object> properties = new HashMap<String, Object>();
-properties.put("type", "user");
-properties.put("admin", false);
-
-Map<String, Object> address = new HashMap<String, Object>();
-address.put("street", "1 park street");
-address.put("zip", 123456);
-
-properties.put("address", address);
-
-document.set(properties);
-database.save(document);
-Log.d("app", String.format("document type :: %s", document.getString("type")));
+newTask.set("name", "Apples");
+database.save(newTask);
 ```
 
 <block class="all" />
