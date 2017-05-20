@@ -212,7 +212,7 @@ var database = new Database("my-database");
 <block class="java" />
 
 ```java
-DatabaseOptions options = new DatabaseOptions();
+DatabaseConfiguration options = new DatabaseConfiguration();
 options.setDirectory(getFilesDir());
 Database database = new Database("my-database", options);
 ```
@@ -270,8 +270,8 @@ database.Save(document);
 <block class="java" />
 
 ```java
-Document document = database.getDocument();
-document.save();
+Document document = new Document();
+database.save(document);
 ```
 
 <block class="all" />
@@ -325,8 +325,8 @@ address.put("zip", 123456);
 
 properties.put("address", address);
 
-document.setProperties(properties);
-document.save();
+document.set(properties);
+database.save(document);
 Log.d("app", String.format("document type :: %s", document.getString("type")));
 ```
 
@@ -370,7 +370,7 @@ Console.WriteLine($"createdAt value :: ${document.GetDate("createdAt")}");
 
 ```java
 document.set("createdAt", new Date(System.currentTimeMillis()));
-document.save();
+database.save(document);
 Log.d("app", String.format("createdAt value :: %s", document.getDate("createdAt")));
 ```
 
@@ -442,11 +442,11 @@ database.inBatch(new TimerTask() {
 	@Override
 	public void run() {
 		for (int i = 0; i < 10; i++) {
-			Document doc = database.getDocument();
+			Document doc = new Document()
 			doc.set("type", "user");
 			doc.set("name", String.format("user %s", i));
-			doc.save();
-			Log.d("app", String.format("saved user document %s", doc.get("name")));
+			database.save(doc);
+			Log.d("app", String.format("saved user document %s", doc.getString("name")));
 		}
 	}
 });
@@ -515,8 +515,8 @@ try {
 
 Blob blob = new Blob("image/jpg", inputStream);
 document.set("avatar", blob);
-document.save();
-Log.d("app", String.format("document properties :: %s", document.getProperties()));
+database.save(document);
+Log.d("app", String.format("document properties :: %s", document.toMap()));
 ```
 
 <block class="all" />
@@ -775,10 +775,10 @@ database.CreateIndex(new[] { "name" }, IndexType.FullTextIndex, null);
 // insert documents
 List<String> tasks = new ArrayList<>(Arrays.asList("buy groceries", "play chess", "book travels", "buy museum tickets"));
 for (String task : tasks) {
-	Document doc = database.getDocument();
+	Document doc = new Docment();
 	doc.set("type", "task");
 	doc.set("name", task);
-	doc.save();
+	database.save(doc);
 }
 
 // create index
@@ -844,7 +844,7 @@ Query ftsQuery = Query.select()
 ResultSet ftsQueryResult = ftsQuery.run();
 FullTextQueryRow ftsRow;
 while ((ftsRow = (FullTextQueryRow) ftsQueryResult.next()) != null) {
-	Log.d("app", String.format("document properties :: %s", ftsRow.getDocument().getProperties()));
+	Log.d("app", String.format("document properties :: %s", ftsRow.getDocument().toMap()));
 }
 ```
 
