@@ -243,21 +243,22 @@ The following code example creates a document and persists it to the database.
 <block class="swift" />
 
 ```swift
-let dict: [String: Any] = ["type": "task-list",
-                           "owner": "todo",
-                           "createdAt": Date()]
-let newTask = Document(dictionary: dict)
+let newTask = Document()
+newTask.set("task-list", forKey:"type")
+newTask.set("todo", forKey:"owner")
+newTask.set(Date(), forKey:"createAt")
 try database.save(newTask)
 ```
 
 <block class="objc" />
 
 ```objectivec
-CBLDocument* document = [database document];
-[document save:&error];
-if (error) {
-	NSLog(@"Cannot save document %@", error);
-}
+CBLDocument* newTask = [[CBLDocument alloc] init];
+[newTask setObject:@"task-list" forKey:@"type"];
+[newTask setObject:@"todo" forKey:@"owner"];
+[newTask setObject:[NSDate date] forKey:@"createAt"];
+NSError* error;
+[database saveDocument: newTask error: &error];
 ```
 
 <block class="csharp" />
@@ -283,26 +284,16 @@ The biggest change is that {% st Document|CBLDocument|Document|Document %} prope
 <block class="swift" />
 
 ```swift
-newTask.set("Apples", forKey: "name")
+newTask.set("Apples", forKey:"name")
 try database.save(newTask)
 ```
 
 <block class="objc" />
 
 ```objectivec
-document.properties = @{
-	 @"type": @"user",
-	 @"admin": @FALSE,
-	 @"address": @{
-			@"street": @"1 park street",
-			@"zip": @123456
-	 }
-};
-[document save:&error];
-NSLog(@"document type :: %@", document[@"type"]);
-if (error) {
-	NSLog(@"Cannot save document %@", error);
-}
+[newTask setObject:@"Apples" forKey:@"name"];
+NSError* error;
+[database saveDocument:newTask error:&error];
 ```
 
 <block class="csharp" />
@@ -350,12 +341,8 @@ let date = newTask.getDate("createdAt")
 <block class="objc" />
 
 ```objectivec
-[document setObject:[NSDate date] forKey:@"createdAt"];
-[document save:&error];
-if (error) {
-	NSLog(@"Cannot save document %@", error);
-}
-NSLog(@"createdAt value :: %@", [document dateForKey:@"createdAt"]);
+[newTask setObject:[NSDate date] forKey:@"createdAt"];
+NSDate* date = [newTask dateForKey:@"createdAt"];
 ```
 
 <block class="csharp" />
@@ -404,14 +391,11 @@ do {
 [database inBatch:&error do:^{
 	for (int i = 1; i <= 10; i++)
 	{
-		CBLDocument *doc = [database document];
+		CBLDocument *doc = [[CBLDocument alloc] init];
 		[doc setObject:@"user" forKey:@"type"];
 		[doc setObject:[NSString stringWithFormat:@"user %d", i] forKey:@"name"];
-		NSError *error;
-		[doc save:&error];
-		if (error) {
-			NSLog(@"Cannot save document %@", error);
-		}
+		NSError* error;
+		[database saveDocument:doc error:&error];
 		NSLog(@"saved user document %@", [doc stringForKey:@"name"]);
 	}
 }];
@@ -475,7 +459,7 @@ newTask.set(blob, forKey: "avatar")
 try database.save(newTask)
 
 if let taskBlob = newTask.getBlob("avatar") {
-    UIImage(data: taskBlob.content!)
+    let image = UIImage(data: taskBlob.content!)
 }
 ```
 
@@ -486,11 +470,17 @@ UIImage *image = [UIImage imageNamed:@"avatar.jpg"];
 NSData *data = UIImageJPEGRepresentation(image, 1);
 
 CBLBlob *blob = [[CBLBlob alloc] initWithContentType:@"image/jpg" data:data];
-document[@"avatar"] = blob;
+[newTask setObject:blob forKey: "avatar"]
+
+NSError* error;
+[database saveDocument: newTask error:&error];
 if (error) {
 	NSLog(@"Cannot save document %@", error);
 }
-NSLog(@"document properties :: %@", [document properties]);
+
+CBLBlob* taskBlob = [newTask blobForKey:@"avatar"];
+UIImage* image = [UIImage imageWithData:taskBlob.content];
+
 ```
 
 <block class="csharp" />
