@@ -37,6 +37,11 @@ defaults:
       layout: ready
   - scope:
       path: ''
+      type: '15'
+    values:
+      layout: ready
+  - scope:
+      path: ''
       type: '20'
     values:
       layout: ready

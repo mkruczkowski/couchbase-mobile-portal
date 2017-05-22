@@ -4,8 +4,6 @@ title: Sync Gateway
 permalink: installation/sync-gateway/index.html
 ---
 
-## Installing Sync Gateway
-
 You can download Sync Gateway from the [Couchbase downloads page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile) or download it directly to a Linux system by using the `wget`.
 
 ```bash
