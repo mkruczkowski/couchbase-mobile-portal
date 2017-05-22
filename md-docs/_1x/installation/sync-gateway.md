@@ -40,6 +40,17 @@ Sync Gateway uses specific ports for communication with the outside world, mostl
 
 Once you have downloaded Sync Gateway on the distribution of your choice you are ready to install and start it as a service.
 
+### Compatibility with Couchbase Server
+
+|CB/Sync Gateway|SG 1.2.1|SG 1.3.1|SG 1.4.1|
+|:--------------|:-----|:------|:-----|:-----|
+|CB 4.0|✔|✔|✔|✔|
+|CB 4.1|✔|✔|✔|✔|
+|CB 4.5|✔|✔|✔|✔|
+|CB 4.6|✔|✔|✔|✔|
+
+## Installation
+
 ### Ubuntu
 
 Install sync_gateway with the dpkg package manager e.g:
