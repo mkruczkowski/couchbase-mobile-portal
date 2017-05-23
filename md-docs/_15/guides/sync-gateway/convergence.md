@@ -65,7 +65,8 @@ Channel assignment and access grants performed by the Sync Function behave as us
 ## Try it out
 
 1. [Download the latest Developer Build](https://www.couchbase.com/downloads) of Couchbase Server 5.0.
-2. [Download Sync Gateway](http://latestbuilds.hq.couchbase.com/couchbase-sync-gateway/1.4.2/1.4.2-358/).
+2. [Download Sync Gateway](https://www.couchbase.com/downloads?family=Mobile&product=Couchbase%20Sync%20Gateway&edition=Enterprise%20Edition 
+).
 3. Create a new bucket in the Couchbase Server Admin Console.
 4. Create a Couchbase Server user for Sync Gateway to use (Security/Add User in the Couchbase Server Admin Console), and grant that user the 'Bucket Full Access' role for your new bucket from step 3.
 5. Start Sync Gateway with the following configuration file.
