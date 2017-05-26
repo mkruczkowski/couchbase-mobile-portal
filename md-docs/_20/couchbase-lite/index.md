@@ -142,7 +142,7 @@ The following Swift Playground covers the features that are implemented in the l
 		<div class="column size-1of2">
 			<div class="box">
 				<div class="container">
-					<a href="https://www.google.com" taget="_blank">
+					<a href="https://cl.ly/0o2P2L0f1N2l/api-walkthrough.zip" taget="_blank">
 						<p style="text-align: center;">API Walkthrough</p>
 					</a>
 				</div>
