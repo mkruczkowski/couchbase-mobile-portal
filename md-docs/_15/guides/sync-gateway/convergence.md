@@ -12,6 +12,8 @@ Plan:
 
 - [x] Provide example config for most common scenario (Adam, *included below*)
 	- Can be inserted on the stub [convergence.md](https://github.com/couchbaselabs/couchbase-mobile-portal/blob/convergence/md-docs/_20/guides/sync-gateway/convergence.md) file.
+- [ ] [DP2/GA] Compatibility matrix
+	- 1.5 will enable convergence if the server is =< 5.0, otherwise will not enable it.
 - [ ] [DP2/GA] Conceptual explanation of a server-only application that starts using mobile
 	- Provide what is expected from an end user point of view (Sachin)
 		1. Pre-deployment planning
@@ -37,7 +39,10 @@ Plan:
 		3. Impact on mobile app
 			- No impact. Call out the compatibility between SG 2.x and CBL 1.x
 	- Provide implementation notes and details (Adam)
-- [ ] Release notes for convergence.
+- [ ] [DP2/GA] Migrating from bucket shadowing.
+	- Remove bucket shadowing docs from 1.5 (in 1.4 only)
+	- Explain strategy on migrating from bucket shadowing to 1.5
+- [ ] [DP2/GA] Release notes for convergence.
 	- Improve the process to edit/review release notes. Scope already covered in [#596](https://github.com/couchbaselabs/couchbase-mobile-portal/issues/596) (James)
 	Edit the release notes once the process is improved (Adam)
 
