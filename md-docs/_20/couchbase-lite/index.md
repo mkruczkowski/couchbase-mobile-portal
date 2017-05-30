@@ -884,7 +884,6 @@ To run an example, create a new file named **sync-gateway-config.json** with the
 There are a few things to note here:
 
 - In this developer build, there is no authentication yet so you're enabling the GUEST account on the Sync Gateway you use for replication testing.
-- Attachments are not yet replicated.
 - Filtering isn't implemented yet.
 
 Download the current Sync Gateway [developer build](../../whatsnew.html) and start it from the command line with the configuration file created above.
@@ -901,7 +900,13 @@ Replication objects are now bidirectional. You no longer need to create two sepa
 
 ```objectivec
 NSURL *url = [[NSURL alloc] initWithString:@"blip://localhost:4984/db"];
-CBLReplication *replication = [database replicationWithURL:url];
+
+CBLReplicatorConfiguration* config = [[CBLReplicatorConfiguration alloc] init];
+config.database = database;
+config.target = [CBLReplicatorTarget url: url];
+config.continuous = YES;
+
+CBLReplication *replication = [[CBLReplicator alloc] initWithConfig: config];
 [replication start];
 ```
 
@@ -909,7 +914,12 @@ CBLReplication *replication = [database replicationWithURL:url];
 
 ```swift
 let url = URL(string: "blip://localhost:4984/db")!
-let replication = database.replication(with: url)
+var config = ReplicatorConfiguration()
+config.database = db
+config.target = .url(url)
+config.continuous = true
+        
+let replication = Replicator(config: config);
 replication.start()
 ```
 
