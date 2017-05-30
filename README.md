@@ -33,7 +33,6 @@ Use Git to clone the Couchbase Mobile Portal repository to your local disk:
 ```
 git clone git@github.com:couchbaselabs/couchbase-mobile-portal.git
 cd couchbase-mobile-portal
-git submodule init && git submodule update
 ```
 
 ## Generate local preview
@@ -53,6 +52,8 @@ $ cd md-docs
 $ gem install bundler
 $ bundle install
 ```
+
+> Note: if you encounter an error saying that nokogiri isn't installed follow the steps in [this guide](http://www.nokogiri.org/tutorials/installing_nokogiri.html#mac_os_x) to install it on your system.
 
 ### Generate a local preview.
 
