@@ -212,9 +212,8 @@ var database = new Database("my-database");
 <block class="java" />
 
 ```java
-DatabaseConfiguration options = new DatabaseConfiguration();
-options.setDirectory(getFilesDir());
-Database database = new Database("my-database", options);
+DatabaseConfiguration config = new DatabaseConfiguration(/* Android Context*/ context);
+Database database = new Database("my-database", config);
 ```
 
 <block class="all" />
@@ -851,7 +850,7 @@ Using the JSON query syntax is very simple: just construct a JSON object tree ou
 
 **Troubleshooting:** If LiteCore doesn't like your JSON, the call will return with an error. More usefully, LiteCore will log an error message to the console, so check that. (For internal reasons these messages don't propagate all the way up to the NSError yet.) If you're still stuck, it may help to set an Xcode breakpoint on all C++ exceptions; this will get hit when the parser gives up, and the stack backtrace _might_ give a clue. A common mistake is to pass an expression where an _array of_ expressions is expected; this is easy to do since expressions themselves are arrays. For example, `returning: @[@".", @"x"]` won't work; instead use `returning: @[@[@".", @"x"]]`.
 
-<block class="all" />
+<block class="swift objc csharp" />
 
 ## Replication
 

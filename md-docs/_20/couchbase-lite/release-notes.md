@@ -12,6 +12,13 @@ permalink: references/couchbase-lite/release-notes/index.html
 - DatabaseOptions -> DatabaseConfiguration
 - New native library delivery mechanism (transparent, but now requires `Activate` call on .NET and .NET Core via `Couchbase.Lite.Support.NetDesktop.Activate()`)
 
+<block class="java" />
+
+- New APIs on Database such as `count()`, `compact()` and contains(String id)
+- New APIs on Dictionary such as `remove(String key)`
+- DatabaseOptions -> DatabaseConfiguration
+- Bug fixes
+
 <block class="all" />
 
 ### Developer build 7
