@@ -132,6 +132,112 @@ Follow the steps below to update the Sync Gateway configuration file. It must be
 
 The installation of Sync Gateway with Accelerator is now complete. Couchbase Lite clients can continue replicating to the same endpoint as if nothing changed.
 
+## Service Installers
+
+You can download Sync Gateway Accelerator from the [Couchbase download page](http://www.couchbase.com/nosql-databases/downloads#couchbase-mobile) or download it directly to a Linux system by using the `wget` or `curl` command.
+
+```bash
+wget {{ site.sg_download_link }}{{ site.sg_accel_package_name }}.deb
+```
+
+All download links follow the naming convention:
+
+```bash
+couchbase-sg-accel-community_<VERSION>-<BUILDNUM>_<ARCHITECTURE>.<EXT>
+```
+
+where
+
+- `VERSION` is the release version.
+- `BUILDNUM` is the specific build number.
+- `ARCHITECTURE` is the target architecture of the installer.
+- `EXT` is the file extension.
+
+Once you have downloaded Sync Gateway Accelerator on the distribution of your choice you are ready to install and start it as a service.
+
+### Ubuntu
+
+Install sg_accel with the dpkg package manager e.g:
+
+```bash
+dpkg -i {{ site.sg_accel_package_name }}.deb
+```
+
+When the installation is complete sg_accel will be running as a service.
+
+```bash
+service sg_accel start
+service sg_accel stop
+```
+
+The config file and logs are located in `/home/sg_accel`.
+
+> **Note:** You can also run the **sg_accel** binary directly from the command line. The binary is installed at `/opt/couchbase-sg-accel/bin/sg_accel`.
+
+### Red Hat/CentOS
+
+Install sync_gateway with the rpm package manager e.g:
+
+```bash
+rpm -i {{ site.sg_accel_package_name }}.rpm
+```
+
+When the installation is complete sg_accel will be running as a service.
+
+On CentOS 5:
+
+```bash
+service sg_accel start
+service sg_accel stop
+```
+
+On CentOS 6:
+
+```bash
+initctl start sg_accel
+initctl stop sg_accel
+```
+
+On CentOS 7:
+
+```bash
+systemctl start sg_accel
+systemctl stop sg_accel
+```
+
+The config file and logs are located in `/home/sg_accel`.
+
+### Debian
+
+Install sg_accel with the dpkg package manager e.g:
+
+```bash
+dpkg -i {{ site.sg_accel_package_name }}.deb
+```
+
+When the installation is complete sync_gateway will be running as a service.
+
+```bash
+systemctl start sg_accel
+systemctl stop sg_accel
+```
+
+The config file and logs are located in `/home/sg_accel`.
+
+### Windows
+
+Install sync_gateway on Windows by running the .exe file from the desktop.
+
+```bash
+{{ site.sg_accel_package_name }}.exe
+```
+
+When the installation is complete sg_accel will be installed as a service but not running.
+
+Use the **Control Panel --> Admin Tools --> Services** to stop/start the service.
+
+The config file and logs are located in ``.
+
 ## Configuration Reference
 
 A configuration file determines the runtime behavior of Sync Gateway Accelerator. Using a configuration file is the recommended approach for configuring Sync Gateway Accelerator, because you can provide values for all configuration properties.
