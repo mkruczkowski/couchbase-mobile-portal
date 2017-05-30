@@ -100,7 +100,7 @@ permalink: guides/couchbase-lite/index.html
 
 - Add `http://mobile.nuget.couchbase.com/nuget/Developer/` to your Nuget package sources and expect a new build approximately every 2 weeks!
 
-When a support assembly is required, your app must call the relevant `Activate()` function inside of the class that is included in the assembly (there is only one public class in each support assembly).  For example, UWP looks like `Couchbase.Lite.Support.UWP.Activate()`.  Currently the support assemblies provide dependency injected mechanisms for default directory logic, and platform specific logging (i.e. Android will log to logcat with correct log levels and tags.  No more "mono-stdout" at always info level).
+Your app must call the relevant `Activate()` function inside of the class that is included in the support assembly (there is only one public class in each support assembly, and the support assembly itself is a nuget dependency).  For example, UWP looks like `Couchbase.Lite.Support.UWP.Activate()`.  Currently the support assemblies provide dependency injected mechanisms for default directory logic, and platform specific logging (i.e. Android will log to logcat with correct log levels and tags.  No more "mono-stdout" at always info level).
 
 <block class="java" />
 
@@ -851,7 +851,7 @@ Using the JSON query syntax is very simple: just construct a JSON object tree ou
 
 **Troubleshooting:** If LiteCore doesn't like your JSON, the call will return with an error. More usefully, LiteCore will log an error message to the console, so check that. (For internal reasons these messages don't propagate all the way up to the NSError yet.) If you're still stuck, it may help to set an Xcode breakpoint on all C++ exceptions; this will get hit when the parser gives up, and the stack backtrace _might_ give a clue. A common mistake is to pass an expression where an _array of_ expressions is expected; this is easy to do since expressions themselves are arrays. For example, `returning: @[@".", @"x"]` won't work; instead use `returning: @[@[@".", @"x"]]`.
 
-<block class="objc swift" />
+<block class="all" />
 
 ## Replication
 
@@ -923,7 +923,19 @@ let replication = Replicator(config: config);
 replication.start()
 ```
 
-<block class="objc swift" />
+<block class="csharp" />
+
+```c#
+var url = new Uri("ws://localhost:4984/db");
+var config = new ReplicatorConfiguration {
+    Database = db,
+    Target = url
+};
+var replication = new Replicator(config);
+replication.Start();
+```
+
+<block class="all" />
 
 The URL scheme for remote database URLs has changed. You should now use `blip:`, or `blips:` for SSL/TLS connections (or the more-standard `ws:` / `wss:` notation).
 
