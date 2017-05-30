@@ -21,7 +21,7 @@ properties:
     properties:
       Origin:
         type: array
-        description: Comma-separated list of allowed origins; use an asterisk (*) to allow access from everywhere.
+        description: Comma-separated list of allowed origins; use an asterisk (*) to allow access from everywhere. Note that the asterisk (*) cannot be used if you plan to authenticate users as well (by using the `withCredentials` flag on the client side). In this case, the explicit domain(s) must be specified in the `Origin` and `LoginOrigin` properties of the configuration file.
         items:
           type: string
       LoginOrigin:
