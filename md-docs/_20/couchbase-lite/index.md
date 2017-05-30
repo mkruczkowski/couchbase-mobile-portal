@@ -890,7 +890,7 @@ There are a few things to note here:
 Download the current Sync Gateway [developer build](../../whatsnew.html) and start it from the command line with the configuration file created above.
 
 ```bash
-~/Downloads/couchbase-sync-gateway-1.4.1-292/bin/sync_gateway sync-gateway-config.json
+~/Downloads/couchbase-sync-gateway/bin/sync_gateway sync-gateway-config.json
 ```
 
 For platform specific installation instructions, refer to the Sync Gateway [installation guide](../../../current/installation/sync-gateway/index.html).
