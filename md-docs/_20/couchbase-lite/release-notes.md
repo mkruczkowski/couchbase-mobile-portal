@@ -4,6 +4,16 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 
+### Developer build 8
+
+<block class="net" />
+
+- New APIs on Database such as `Count` and `Compact()`
+- DatabaseOptions -> DatabaseConfiguration
+- New native library delivery mechanism (transparent, but now requires `Activate` call on .NET and .NET Core via `Couchbase.Lite.Support.NetDesktop.Activate()`)
+
+<block class="all" />
+
 ### Developer build 7
 
 <block class="objc" />
