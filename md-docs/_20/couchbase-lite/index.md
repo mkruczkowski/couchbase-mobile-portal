@@ -226,6 +226,8 @@ You can instantiate multiple databases with the same name and directory; these w
 
 Databases that were created with Couchbase Mobile 1.2 or later can be read using the 2.0 API. Upon detecting it is a 1.x database file format, Couchbase Lite will automatically upgrade it to the new format used in 2.0. This feature is currently only available for the default storage type, SQLite (i.e not for ForestDB databases).
 
+<block class="swift" />
+
 #### Methods
 
 <block class="swift" />
@@ -280,7 +282,7 @@ Document document = new Document();
 database.save(document);
 ```
 
-<block class="all" />
+<block class="swift" />
 
 #### Methods
 
@@ -623,7 +625,7 @@ There are several parts to specifying a query:
 4. Which grouped rows to include (“`HAVING …`”). If you don't specify what groups to include, all are included.
 5. The sort order (“`ORDER BY …`”). If you don't specify a sort order, the order is undefined.
 
-<block class="all" />
+<block class="swift" />
 
 #### Query methods
 
@@ -631,7 +633,7 @@ There are several parts to specifying a query:
 
 {% include swift/query.html %}
 
-<block class="all" />
+<block class="swift" />
 
 #### Expression methods
 
