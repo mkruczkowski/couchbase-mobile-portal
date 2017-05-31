@@ -37,7 +37,15 @@ cd couchbase-mobile-portal
 
 ## Generate local preview
 
-### Install ruby from brew (or use rvm):
+### Install ruby
+
+You must have ruby 2.1.0+ installed on your system.
+
+```bash
+$ ruby -v
+```
+
+If the version is lower than 2.1.0 you must update the version (via brew or using [rvm](https://rvm.io/rvm/basics)):
 
 ```bash
 $ brew install ruby
