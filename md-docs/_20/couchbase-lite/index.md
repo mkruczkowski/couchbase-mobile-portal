@@ -645,7 +645,7 @@ There are several parts to specifying a query:
 
 #### Parameters
 
-The list of available expressions can be found on the API reference of the [CBLQueryExpression](http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db004/Classes/CBLQueryExpression.html) class.
+The list of available expressions can be found on the API reference of the `CBLQueryExpression` class.
 
 [//]: # (TODO: #### Return Values)
 
