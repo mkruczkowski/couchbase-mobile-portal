@@ -6,6 +6,34 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 ### Developer build 8
 
+<block class="objc" />
+
+* CBLDatabaseOptions -> CBLDatabaseConfiguration
+* New DocumentChangeNotification implementation
+* CBLArray optimization
+* New Replicator API with Online / Offline support
+* LiveQuery support
+* Minor changes to CBLDatabase and CBLDocument API including
+  - CBLDatabase.compact()
+  - CBLDatabase.count()
+  - CBLDatabase.contains(id)
+  - CBLDictionary.remove(key)
+  - CBLDictionary nil value support
+
+<block class="swift" />
+
+* DatabaseOptions -> DatabaseConfiguration
+* New DocumentChangeNotification implementation
+* ArrayObject optimization
+* New Replicator API with Online / Offline support
+* LiveQuery support
+* Minor changes to Database and Document API including
+  - Database.compact()
+  - Database.count()
+  - Database.contains(id)
+  - DictionaryObject.remove(key)
+  - DictionaryObject nil value support
+
 <block class="net" />
 
 - New APIs on Database such as `Count` and `Compact()`
@@ -160,7 +188,7 @@ N/A
 - Query
 	- NSPredicate based API
 	- Grouping and Aggregation support
-	
+
 <block class="swift" />
 
 N/A
