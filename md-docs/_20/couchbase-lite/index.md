@@ -226,6 +226,12 @@ You can instantiate multiple databases with the same name and directory; these w
 
 Databases that were created with Couchbase Mobile 1.2 or later can be read using the 2.0 API. Upon detecting it is a 1.x database file format, Couchbase Lite will automatically upgrade it to the new format used in 2.0. This feature is currently only available for the default storage type, SQLite (i.e not for ForestDB databases).
 
+#### Methods
+
+<block class="swift" />
+
+{% include swift/database.html %}
+
 <block class="all" />
 
 ## Documents
@@ -273,6 +279,14 @@ database.Save(document);
 Document document = new Document();
 database.save(document);
 ```
+
+<block class="all" />
+
+#### Methods
+
+<block class="swift" />
+
+{% include swift/document.html %}
 
 <block class="all" />
 
@@ -603,19 +617,27 @@ The query can be executed by calling the {% st run()|run:|Run()|run() %} method 
 
 There are several parts to specifying a query:
 
-1. What document criteria to match (corresponding to the “`WHERE …`” clause in N1QL or SQL)
-2. What properties (JSON or derived) of the documents to return (“`SELECT …`”)
-3. What criteria to group rows together by (“`GROUP BY …`”)
-4. Which grouped rows to include (“`HAVING …`”)
-3. The sort order (“`ORDER BY …`”)
+1. What document criteria to match (corresponding to the “`WHERE …`” clause in N1QL or SQL). If you don't specify criteria, all documents are returned.
+2. What properties (JSON or derived) of the documents to return (“`SELECT …`”). If you don't specify properties to return, you just get the document ID and sequence number.
+3. What criteria to group rows together by (“`GROUP BY …`”). If you don't specify grouping, rows are not grouped.
+4. Which grouped rows to include (“`HAVING …`”). If you don't specify what groups to include, all are included.
+5. The sort order (“`ORDER BY …`”). If you don't specify a sort order, the order is undefined.
 
-These all have defaults:
+<block class="all" />
 
-* If you don't specify criteria, all documents are returned
-* If you don't specify properties to return, you just get the document ID and sequence number
-* If you don't specify grouping, rows are not grouped
-* If you don't specify what groups to include, all are included
-* If you don't specify a sort order, the order is undefined
+#### Query methods
+
+<block class="swift" />
+
+{% include swift/query.html %}
+
+<block class="all" />
+
+#### Expression methods
+
+<block class="swift" />
+
+{% include swift/expression.html %}
 
 <block class="objc" />
 
