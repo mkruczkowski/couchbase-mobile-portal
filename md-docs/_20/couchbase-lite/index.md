@@ -260,11 +260,11 @@ try database.save(newTask)
 <block class="objc" />
 
 ```objectivec
+NSError* error;
 CBLDocument* newTask = [[CBLDocument alloc] init];
 [newTask setObject:@"task-list" forKey:@"type"];
 [newTask setObject:@"todo" forKey:@"owner"];
 [newTask setObject:[NSDate date] forKey:@"createAt"];
-NSError* error;
 [database saveDocument: newTask error: &error];
 ```
 
@@ -307,7 +307,6 @@ try database.save(newTask)
 
 ```objectivec
 [newTask setObject:@"Apples" forKey:@"name"];
-NSError* error;
 [database saveDocument:newTask error:&error];
 ```
 
@@ -381,7 +380,7 @@ do {
 			doc.set("user", forKey: "type")
 			doc.set("user \(i)", forKey: "name")
 			try database.save(doc)
-			print("saved user document \(doc.getString("name"))")
+			print("saved user document \(doc.string(forKey: "name"))")
 		}
 	}
 } catch let error {
@@ -395,10 +394,10 @@ do {
 [database inBatch:&error do:^{
 	for (int i = 1; i <= 10; i++)
 	{
+		NSError* error;
 		CBLDocument *doc = [[CBLDocument alloc] init];
 		[doc setObject:@"user" forKey:@"type"];
 		[doc setObject:[NSString stringWithFormat:@"user %d", i] forKey:@"name"];
-		NSError* error;
 		[database saveDocument:doc error:&error];
 		NSLog(@"saved user document %@", [doc stringForKey:@"name"]);
 	}
@@ -717,13 +716,10 @@ To run a full-text search (FTS) query, you must have created a full-text index o
 // Insert documents
 let tasks = ["buy groceries", "play chess", "book travels", "buy museum tickets"]
 for task in tasks {
-	let doc = database.document()
-	doc.properties = ["type": "task", "name": task]
-	do {
-		try doc.save()
-	} catch let error {
-		print(error.localizedDescription)
-	}
+	let doc = Document()
+	doc.set("task", forKey: "type")
+	doc.set(task, forKey: "name")
+	try database.save(doc)
 }
 
 // Create index
@@ -740,9 +736,12 @@ do {
 // insert documents
 NSArray *tasks = @[@"buy groceries", @"play chess", @"book travels", @"buy museum tickets"];
 for (NSString* task in tasks) {
-	CBLDocument* doc = [database document];
-	doc.properties = @{@"type": @"task", @"name": task};
-	[doc save:&error];
+	CBLDocument* doc = [[CBLDocument alloc] init];
+	[doc setObject: @"task" forKey: @"type"];
+	[doc setObject: task forKey: @"name"];
+	
+	NSError* error;
+	[database saveDocument: newTask error:&error];
 	if (error) {
 		NSLog(@"Cannot save document %@", error);
 	}
@@ -801,7 +800,7 @@ let ftsQuery = Query.select().from(DataSource.database(database)).where(whereCla
 do {
 	let ftsQueryResult = try ftsQuery.run()
 	for row in ftsQueryResult {
-		print("document properties \(row.document.properties)")
+		print("document properties \(row.document.toDictionary())")
 	}
 } catch let error {
 	print(error.localizedDescription)
@@ -818,7 +817,7 @@ CBLQuery *ftsQuery = [CBLQuery select:[CBLQuerySelect all]
 
 NSEnumerator* ftsQueryResult = [ftsQuery run:&error];
 for (CBLFullTextQueryRow *row in ftsQueryResult) {
-	NSLog(@"document properties :: %@", row.document.properties);
+	NSLog(@"document properties :: %@", [row.document toDictionary]);
 }
 ```
 
