@@ -240,8 +240,8 @@ Databases that were created with Couchbase Mobile 1.2 or later can be read using
 
 In Couchbase Lite, a document's body takes the form of a JSON object — a collection of key/value pairs where the values can be different types of data such as numbers, strings, arrays or even nested objects. Every document is identified by a document ID, which can be automatically generated (as a UUID) or determined by the application; the only constraints are that it must be unique within the database, and it can't be changed. The following methods/initializers can be used:
 
-- The {% st database.getDocument(id: String)|documentWithID:|GetDocument(string id)|getDocument(String docID) %} method can be used to  get a document. If it doesn't exist in the database, it will return {% st nil|nil|null|null %}.
 - The {% st Document()|document|new Document()|getDocument() %} initializer can be used to create a new document (check the API references for alternative initializers that accept an ID and properties as parameters).
+- The {% st database.getDocument(id: String)|documentWithID:|GetDocument(string id)|getDocument(String docID) %} method can be used to  get a document. If it doesn't exist in the database, it will return {% st nil|nil|null|null %}.
 
 [//]: # (TODO: Since this identifier must be unique, you may want to check if a document with this ID already exists in the database using the {% st a|b|c|d %} method.)
 
