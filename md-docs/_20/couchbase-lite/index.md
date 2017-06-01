@@ -369,7 +369,7 @@ Log.d("app", String.format("createdAt value :: %s", document.getDate("createdAt"
 
 ### Transactions / batch operations
 
-As before, if you're making multiple changes to a database at once, it's *much* faster to group them together, otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability. In 2.0 we've renamed the method to {% st -inBatch:do:|inBatch:do:|InBatch()|inBatch(Runnable action) %} to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions. The following example persists a few documents in batch.
+As before, if you're making multiple changes to a database at once, it's *much* faster to group them together, otherwise each individual change incurs overhead, from flushing writes to the filesystem to ensure durability. In 2.0 we've renamed the method to {% st inBatch()|inBatch:do:|InBatch()|inBatch(Runnable action) %} to emphasize that Couchbase Lite does not offer transactional guarantees, and that the purpose of the method is to optimize batch operations rather than to enable ACID transactions. The following example persists a few documents in batch.
 
 <block class="swift" />
 
@@ -515,7 +515,7 @@ Log.d("app", String.format("document properties :: %s", document.toMap()));
 
 <block class="all" />
 
-{% st Blob|CBLBlob|Blob|Blob %} itself has a simple API that lets you access the contents as in-memory data (a {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|InputStream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike {% st Attachment|CBLAttachment|Attachment|Attachment %}, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st document.set(imageBlob, forKey: "thumbnail.jpg")|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.set("avatar.jpg", imageBlob) %})
+{% st Blob|CBLBlob|Blob|Blob %} itself has a simple API that lets you access the contents as in-memory data (a {% st Data|NSData|byte[]|byte[] %} object) or as a {% st InputStream|NSInputStream|Stream|InputStream %}. It also supports an optional `type` property that by convention stores the MIME type of the contents. Unlike attachments, blobs don't have names; if you need to associate a name you can put it in another document property, or make the filename be the property name (e.g. {% st document.set(imageBlob, forKey: "thumbnail.jpg")|[doc setObject: imageBlob forKey: @"thumbnail.jpg"]|doc.Set("thumbnail.jpg", imageBlob)|doc.set("avatar.jpg", imageBlob) %})
 
 > **Note:** A blob is stored in the document's raw JSON as an object with a property `"_cbltype":"blob"`. It also has properties such as `"digest"` (a SHA-1 digest of the data), `"length"` (the length in bytes), and optionally `"type"` (the MIME type.) As always, the data is not stored in the document, but in a separate content-addressable store, indexed by the digest.
 
