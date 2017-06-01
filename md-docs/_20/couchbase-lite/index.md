@@ -278,8 +278,11 @@ database.Save(document);
 <block class="java" />
 
 ```java
-Document document = new Document();
-database.save(document);
+Document newTask = new Document();
+newTask.set("type", "task");
+newTask.set("owner", "todo");
+newTask.set("createdAt", new Date());
+database.save(newTask);
 ```
 
 <block class="swift" />
@@ -359,9 +362,8 @@ Console.WriteLine($"createdAt value :: ${document.GetDate("createdAt")}");
 <block class="java" />
 
 ```java
-document.set("createdAt", new Date(System.currentTimeMillis()));
-database.save(document);
-Log.d("app", String.format("createdAt value :: %s", document.getDate("createdAt")));
+newTask.set("createdAt", new Date());
+Date date = newTask.getDate("createdAt");
 ```
 
 <block class="all" />
@@ -507,9 +509,11 @@ try {
 }
 
 Blob blob = new Blob("image/jpg", inputStream);
-document.set("avatar", blob);
-database.save(document);
-Log.d("app", String.format("document properties :: %s", document.toMap()));
+newTask.set("avatar", blob);
+database.save(newTask);
+
+Blob taskBlob = newTask.getBlob("avatar");
+byte[] data = taskBlob.getContent();
 ```
 
 <block class="all" />
