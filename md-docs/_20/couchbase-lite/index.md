@@ -218,7 +218,7 @@ Database database = new Database("my-database", config);
 
 <block class="all" />
 
-Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: String options: DatabaseOptions?)|initWithName:options:error:|new Database(string name, DatabaseOptions options)|new Database(String name, DatabaseOptions options) %} method can be used to provide specific options (directory to create the database in, whether it is read-only etc.)
+Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: Strings, config: DatabaseConfiguration?)|initWithName:options:error:|new Database(string name, DatabaseOptions options)|new Database(String name, DatabaseOptions options) %} method can be used to provide specific options (the directory to create the database in, whether it is read-only etc.)
 
 You can instantiate multiple databases with the same name and directory; these will all share the same storage. This is the recommended approach if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
 
@@ -250,10 +250,10 @@ The following code example creates a document and persists it to the database.
 <block class="swift" />
 
 ```swift
-let newTask = Document()
-newTask.set("task-list", forKey:"type")
-newTask.set("todo", forKey:"owner")
-newTask.set(Date(), forKey:"createAt")
+let dict: [String: Any] = ["type": "task",
+                           "owner": "todo",
+                           "createdAt": Date()]
+let newTask = Document(dictionary: dict)
 try database.save(newTask)
 ```
 
@@ -331,15 +331,15 @@ This does create the possibility of confusion, since the document's in-memory st
 
 ### Typed Accessors
 
-The {% st Document|CBLDocument|Document|Document %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st document.getString("name")|stringForKey:|GetString(string key)|getString(String key) %} returns either a {% st String|NSString|string|String %} or {% st nil|nil|null|null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil|nil|null|null %}.)
+The {% st Document|CBLDocument|Document|Document %} class now offers a set of property accessors for various scalar types, including boolean, integers, floating-point and strings. These accessors take care of converting to/from JSON encoding, and make sure you get the type you're expecting: for example, {% st document.string(forKey: String)|stringForKey:|GetString(string key)|getString(String key) %} returns either a {% st String|NSString|string|String %} or {% st nil|nil|null|null %}, so you can't get an unexpected object class and crash trying to use it as a string. (Even if the property in the document has an incompatible type, the accessor returns {% st nil|nil|null|null %}.)
 
-In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|Date %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it back using the {% st document.getDate(key: String)|dateForKey:|GetDate(string key)|getDate(String key) %} accessor method.
+In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|Date %} accessors. Dates are a common data type, but JSON doesn't natively support them, so the convention is to store them as strings in ISO-8601 format. The following example sets the date on the `createdAt` property and reads it back using the {% st document.date(forKey: String)|dateForKey:|GetDate(string key)|getDate(String key) %} accessor method.
 
 <block class="swift" />
 
 ```swift
 newTask.set(Date(), forKey: "createdAt")
-let date = newTask.getDate("createdAt")
+let date = newTask.date(forKey: "createdAt")
 ```
 
 <block class="objc" />
@@ -462,8 +462,8 @@ let blob = Blob(contentType: "image/jpg", data: imageData)
 newTask.set(blob, forKey: "avatar")
 try database.save(newTask)
 
-if let taskBlob = newTask.getBlob("avatar") {
-    let image = UIImage(data: taskBlob.content!)
+if let taskBlob = newTask.blob(forKey: "image") {
+    UIImage(data: taskBlob.content!)
 }
 ```
 
