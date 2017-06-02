@@ -218,7 +218,7 @@ Database database = new Database("my-database", config);
 
 <block class="all" />
 
-Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: Strings, config: DatabaseConfiguration?)|initWithName:options:error:|new Database(string name, DatabaseOptions options)|new Database(String name, DatabaseOptions options) %} method can be used to provide specific options (the directory to create the database in, whether it is read-only etc.)
+Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: Strings, config: DatabaseConfiguration?)|initWithName:options:error:|new Database(string name, DatabaseConfiguration config)|new Database(String name, DatabaseOptions options) %} method can be used to provide specific options (the directory to create the database in, whether it is read-only etc.)
 
 You can instantiate multiple databases with the same name and directory; these will all share the same storage. This is the recommended approach if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
 
@@ -271,8 +271,11 @@ CBLDocument* newTask = [[CBLDocument alloc] init];
 <block class="csharp" />
 
 ```csharp
-var document = new Document();
-database.Save(document);
+var newTask = new Document();
+newTask.Set("type", "task");
+newTask.Set("owner", "todo");
+newTask.Set("createdAt", DateTimeOffset.UtcNow);
+database.Save(newTask);
 ```
 
 <block class="java" />
@@ -354,9 +357,8 @@ NSDate* date = [newTask dateForKey:@"createdAt"];
 <block class="csharp" />
 
 ```csharp
-document.Set("createdAt", DateTimeOffset.UtcNow);
-database.Save(document);
-Console.WriteLine($"createdAt value :: ${document.GetDate("createdAt")}");
+newTask.Set("createdAt", DateTimeOffset.UtcNow);
+var date = newTask.GetDate("createdAt");
 ```
 
 <block class="java" />
@@ -491,11 +493,12 @@ UIImage* image = [UIImage imageWithData:taskBlob.content];
 <block class="csharp" />
 
 ```csharp
-var data = Encoding.UTF8.GetBytes("12345");
+var data = File.ReadAllBytes("avatar.jpg");
 var blob = new Blob("image/jpg", data);
 newTask.Set("avatar", blob);
 database.Save(newTask);
-Console.WriteLine($"document properties :: {document.GetBlob("avatar")}");
+var taskBlob = newTask.GetBlob("avatar");
+var data = taskBlob.Content;
 ```
 
 <block class="java" />
