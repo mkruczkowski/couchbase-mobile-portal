@@ -181,7 +181,7 @@ The following sections cover the features that are implemented in the latest dev
 
 ### Creating Databases
 
-As the top-level entity in the API, new databases can be created using the {% st Database|CBLDatabase|Database|Database %} class by passing in a name, options, or both. The following example creates a database using the {% st Database(name: String)|initWithName:error:|new Database(string name)|new Database(String name, DatabaseOptions options) %} method.
+As the top-level entity in the API, new databases can be created using the {% st Database|CBLDatabase|Database|Database %} class by passing in a name, configuration, or both. The following example creates a database using the {% st Database(name: String)|initWithName:error:|new Database(string name)|new Database(String name, DatabaseConfiguration config) %} method.
 
 <block class="swift" />
 
