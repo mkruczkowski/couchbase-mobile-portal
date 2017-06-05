@@ -28,7 +28,7 @@ By default, when Sync Gateway starts, it brings all databases that are defined i
 
 Later, to bring the database online, you can use the `POST /{db}/_online` Admin REST API request.
 
-### Automatic offline status
+### Offline state triggers
 
 Sync Gateway will take a database offline automatically if specific conditions occur. Specifically, if Sync Gateway detects that the DCP feed or TAP feed for a database has been lost, then Sync Gateway takes the database offline automatically, so that the problem can be investigated. When the cause is known and has been corrected, you can use an Admin REST API request to bring the database back onine.
 
@@ -40,7 +40,7 @@ The exception to this behavior is when running with a [Sync Gateway Accelerator]
 
 ### State diagram
 
-This state diagram represents the states for Sync Gateway and for the connection between Sync Gateway and a Couchbase Server database, in Sync Gateway 1.2. Numbers identify key points that are explained below the state diagram.
+This state diagram represents the states for Sync Gateway and for the connection between Sync Gateway and a Couchbase Server database.
 
 ![](../img/state-diagram-offline-12.png)
 
