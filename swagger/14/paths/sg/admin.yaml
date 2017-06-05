@@ -119,6 +119,8 @@
         }
       
       Note that if you pass the entire config file it won't work, it must be the database portion only (the database name is specified in the URL path). If the parameters passed are invalid it will create a walrus-backed database with all values set to default.
+      
+      By default, the database that is created is brought online immediately. To create the database and keep it offline, include the configuration property `offline` with the value `true` in the database configuration properties for the database that you are posting in the request body.
     responses:
       201:
         description: The database was created successfully.
@@ -235,16 +237,21 @@
       - database
     summary: This request takes the specified database offline.
     description: |
-      Taking a database offline:
+      An offline database is not accessible through Sync Gateway's Public REST API. However, some commands can be given to Sync Gateway through the Admin REST API.
       
-      - Cleanly closes all active _changes feeds for this database.
+      Taking a database offline will:
+      
+      - Cleanly closes all active `_changes` feeds for this database.
       - Rejects all access to the database through the Public REST API (503 Service Unavailable).
-      - Rejects most Admin API requests (503 Service Unavailable). Sync Gateway processes a small set of Admin API 
-      requests.
-      - Does not take the backing Couchbase Server bucket offline. The bucket remains available and Sync Gateway 
-      keeps its connection to the bucket.
+      - Rejects most Admin API requests (503 Service Unavailable). A specific, short list of Admin REST API requests remain available (`GET /{db}`, `PUT /{db}/_config`, `POST /{db}/_resync`).
+      - Stops webhook event handlers.
+      - Does not take the backing Couchbase Server bucket offline. The bucket remains available and Sync Gateway keeps its connection to the bucket.
       
-      For more information about taking a database offline and bringing it back online, see Taking databases offline and bringing them online.
+      When a database is offline, you can load configuration properties for the database, without stopping and re-starting the Sync Gateway instance. The new configuration properties are applied when the database is brought online.
+      
+      Taking a database offline that is in the progress of coming online will take the database offline after it comes online.
+      
+      For more information about taking a database offline and bringing it back online, see [this guide](../../../guides/sync-gateway/database-offline/index.html).
     responses:
       200:
         description: Database brought online
@@ -256,17 +263,21 @@
       - database
     summary: Bring a database online.
     description: |
-      This request brings the specified database online, either immediately or after a specified delay.
+      When a database is online, Sync Gateway serves both Public and Admin REST API requests for the database. This request brings the specified database online, either immediately or after a specified delay.
       
       Bringing a database online:
       
       - Closes the datbases connection to the backing Couchbase Server bucket.
       - Reloads the databse configuration, and connects to the backing Cocuhbase Server bucket.
       - Re-establishes access to the database from the Public REST API.
-      - Accepts all Admin API reqieste.
+      - Accepts all Admin API requests.
       
-      For more information about taking a database offline and bringing it back online, see Taking databases 
-      offline and bringing them online.
+      You can bring an offline database online after a specific delay. Uses for this include:
+      
+      - Making a database available for Couchbase Mobile clients at a specific time.
+      - Making databases on several Sync Gateway instances available at the same time.
+      
+      For more information about taking a database offline and bringing it back online, see [this guide](../../../guides/sync-gateway/database-offline/index.html).
     parameters:
       - in: body
         name: body
