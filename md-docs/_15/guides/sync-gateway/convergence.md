@@ -82,7 +82,7 @@ Channel assignment and access grants performed by the Sync Function behave as us
 				"unsupported": {
 					"enable_extended_attributes": true
 				},
-				"import_docs": continuous
+				"import_docs": "continuous"
 			}
 		}
 	}
