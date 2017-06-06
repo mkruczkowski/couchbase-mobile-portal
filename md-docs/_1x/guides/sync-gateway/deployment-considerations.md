@@ -176,7 +176,7 @@ sync_gateway sync_gateway.json 2>> sg_error.log
 On Linux the logrotate tool can be used to monitor log files and rotate them at fixed time intervals or when they reach a certain size. Below is an example of a logrotate configuration that will rotate the Sync Gateway log file once a day or if it reaches 10M in size.
 
 ```
-/home/sync_gateway/logs/* { 
+/home/sync_gateway/logs/*.log { 
     daily 
     rotate 1 
     size 10M  
@@ -189,7 +189,7 @@ On Linux the logrotate tool can be used to monitor log files and rotate them at 
 The log rotation is achieved by renaming the log file with an appended timestamp. The idea is that Sync Gateway should recreate the default log file and start writing to it again. The problem is Sync Gateway will follow the renamed file and keep writing to it until Sync gateway is restarted. By adding the copy truncate option to the logrotate configuration, the log file will be rotated by making a copy of the log file, and then truncating the original log file to zero bytes.
 
 ```
-/home/sync_gateway/logs/* { 
+/home/sync_gateway/logs/*.log { 
     daily 
     rotate 1 
     size 10M
@@ -221,7 +221,7 @@ pkill -HUP sync_gateway
 This command can be added to the logrotate configuration using the 'postrotate' option:
 
 ```
-/home/sync_gateway/logs/* { 
+/home/sync_gateway/logs/*.log {
     daily 
     rotate 1 
     size 10M
