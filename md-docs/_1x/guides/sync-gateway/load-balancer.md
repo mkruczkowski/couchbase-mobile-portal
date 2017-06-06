@@ -22,15 +22,19 @@ Connect to the server running Sync Gateway and install the nginx server:
 sudo apt-get install nginx
 ```
 
-This will install and start the nginx server. You can validate this by viewing the following web page in your browser:
+Make sure that the NGINX version installed is 1.3 or higher. Earlier versions do not support WebSockets, and will cause connection problems with pull replications from Couchbase Lite.
+
+```bash
+nginx -v
+```
+
+Once the installation is completed, you can access the NGINX welcome page from your browser.
 
 ```bash
 http://127.0.0.1/
 ```
 
 Note: Replace 127.0.0.1 with the IP address of your server.
-
-You should see the standard Welcome to nginx! page.
 
 ### Basic nginx configuration for Sync Gateway
 
@@ -72,9 +76,9 @@ server {
 
 The first section of the 'server' block defines common directives.
 
-- The 'listen' directive instructs nginx to listen on port 80 for incoming traffic.
-- The server\_name directive instructs nginx to check that the HTTP 'Host:' header value matches 'myservice.example.org' (change this value to your domain).
-- The 'client\_max\_body\_size' directive instructs nginx to accept request bodies up to 21MBytes, this is necessary to support attachments being sync'd to Sync Gateway.
+- The `listen` directive instructs nginx to listen on port 80 for incoming traffic.
+- The `server_name` directive instructs nginx to check that the HTTP `Host:` header value matches `myservice.example.org` (change this value to your domain).
+- The `client_max_body_size` directive instructs nginx to accept request bodies up to 21MBytes, this is necessary to support attachments being sync'd to Sync Gateway.
 
 ```groovy
 location / {
@@ -85,21 +89,20 @@ location / {
     keepalive_requests      1000;
     keepalive_timeout       360s;
     proxy_read_timeout      360s;
+    proxy_set_header        Upgrade $http_upgrade;
+    proxy_set_header        Connection "upgrade";
 }
 ```
 
-The location block specifies directives for all URL paths below the root path '/'.
+- The `location` block specifies directives for all URL paths below the root path '/'.
+- The `proxy_pass` directive instructs nginx to forward all incoming traffic to servers defined in the sync_gateway `upstream` block.
+- The two `proxy_pass_header` directives instruct nginx to pass `Accept:` and `Server:` headers on inbound and outbound traffic, these headers allow CouchbaseLite and sync_gateway to optimise data transfer, e.g. by using gzip compression and multipart/mixed if it is supported.
+- The `keepalive_requests` directive instructs nginx to allow up to one thousand requests on the same connection, this is useful when getting a `_changes` feed using longpoll.
+- The `keepalive_timeout` directive instructs nginx to keep connection open for 360 seconds from the last request, this value is longer than the default (300 seconds) value for the heartbeat on the _changes feed using longpoll.
+- The `proxy_read_timeout` directive instructs nginx to keep connection open for 360 seconds from the last server response, this value is longer than the default (300 seconds) value for the heartbeat on the _changes feed using longpoll.
+- The two `proxy_set_header` directives enable support for WebSocket connections, which are used by Couchbase Lite for a pull replication's _changes feed.
 
-- The 'proxy\_pass' directive instructs nginx to forward all incoming traffic to servers defined in the sync_gateway 
-upstream block.
-- The two 'proxy\_pass\_header' directives instruct nginx to pass 'Accept:' and 'Server:' headers on inbound and 
-outbound traffic, these headers allow CouchbaseLite and sync_gateway to optimise data transfer, e.g. by using gzip compression and multipart/mixed if it is supported.
-- The 'keepalive\_requests' directive instructs nginx to allow up to one thousand requests on the same connection, this is useful when getting a _changes feed using longpoll.
-- The 'keepalive\_timeout' directive instructs nginx to keep connection open for 360 seconds from the last request, this value is longer than the default (300 seconds) value for the heartbeat on the _changes feed using longpoll.
-- The 'proxy\_read\_timeout' directive instructs nginx to keep connection open for 360 seconds from the last server response, this value is longer than the default (300 seconds) value for the heartbeat on the _changes feed using longpoll.
-
-We now need to enable the sync\_gateway site, in the sites-enabled directory you need to make a symbolic link to the 
-sync\_gateway file you just created:
+We now need to enable the `sync_gateway` site, in the sites-enabled directory you need to make a symbolic link to the `sync_gateway` file you just created:
 
 ```bash
 ln -s /etc/nginx/sites-available/sync_gateway /etc/nginx/sites-enabled/sync_gateway
@@ -111,14 +114,14 @@ and then restart nginx:
 sudo service nginx restart
 ```
 
-Either take a look at the site in your web browser, or use a command line option like curl or wget, specifying the virtual host name you created above, and you should see that you are request is proxied through to the Sync Gateway, but your traffic is going over port 80:
+Take a look at the site in your web browser (or use a command line option like curl or wget), specifying the virtual host name you created above, and you should see that your request is proxied through to the Sync Gateway, but your traffic is going over port 80:
 
 ```bash
 curl http://myservice.example.org/
 {“couchdb”:”Welcome”,”vendor”:{“name”:”Couchbase Sync Gateway”,”version”:1},”version”:”Couchbase Sync Gateway/1.0.3(81;fa9a6e7)”}
 ```
 
-If you access your server using its IP address (so that no Host name is passed).
+If you access your server using its IP address, e.g. `http://127.0.0.1/(so that no `Host:` header is sent), you should see the standard `Welcome to nginx!` page.
 
 ```bash
 http://127.0.0.1/
@@ -128,24 +131,9 @@ Note: Replace 127.0.0.1 with the IP address of your server.
 
 You should see the standard Welcome to nginx! page.
 
-### Adding websocket support
+### Load-balancing requests across multiple Sync Gateway instances
 
-Couhbase Lite introduces websocket support for the changes feed, but by default nginx will not upgrade it's connection to Sync Gateway to support websockets. If an iOS client has websockets enabled for the _changes feed it will be unable to to pull replicate from a Sync Gateway behind an nginx reverse proxy. To enable websockets support, update the location block by adding the following two directives.
-
-```groovy
-location / {
-    .
-    .  
-    proxy_set_header        Upgrade $http_upgrade;
-    proxy_set_header        Connection "upgrade";
-    .
-    .
-}
-```
-
-### Load balancing requests
-
-Sync gateway instances have a 'shared nothing' architecture, this means that you can scale out by simply deploying additional Sync Gateway instances. But incoming traffic needs to be distributed across all the instances, ngingx can easily accommodate this and balance the incoming traffic load across all your Sync Gateway instances. Simply add the additional instances to the 'upstream' block as shown below.
+Sync Gateway instances have a "shared nothing" architecture: this means that you can scale out by simply deploying additional Sync Gateway instances. But incoming traffic needs to be distributed across all the instances. Ngingx can easily accommodate this and balance the incoming traffic load across all your Sync Gateway instances. Simply add the additional instances' IP addresses to the <code>upstream</code> block; for example:
 
 ```bash
 upstream sync_gateway {
@@ -155,39 +143,39 @@ upstream sync_gateway {
 }
 ```
 
-### Transport Layer Security (HTTPS)
+### Transport Layer Security (HTTPS, SSL)
 
-To secure data between clients and Sync Gateway in production, you will want to use secure HTTPS connections.
+To secure the connection between clients and Sync Gateway in production, you will want to use Transport Layer Security (TLS, also known as HTTPS or SSL.) This not only encrypts data from eavesdroppers (including passwords and login tokens), it also protects against Man-In-The-Middle attacks by verifying to the client that it's connecting to the real server, not an impostor.
 
-For production you should get a cert from a reputable Certificate Authority, which will be signed by that authority. For testing you can create your own self-signed certificate, it's pretty easy using the openssl command-line tool and these directions, you just need to run these commands:
+To enable TLS you will need an X.509 certificate. For production, you should get a certificate from a reputable Certificate Authority, which will be signed by that authority. This allows the client to verify that your certificate is trustworthy. You will end up with two files: a private key, and a public certificate. Both must be stored on a filesystem accessible to the nginx process.
 
-First create the directory where the certificate and key will be created
+Treat the private key file as highly confidential data, since anyone with the key can impersonate your site in a Man-In-The-Middle attack. Read access should be limited to the nginx process(es) and no others.
+
+For testing, you can easily create your own self-signed certificate using the `openssl` command-line tool:
 
 ```bash
 sudo mkdir -p /etc/nginx/ssl
-```
-
-```bash
 sudo openssl req -x509 -nodes -days 1095 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
 ```
 
-The command is interactive and will ask you for information like country and city name that goes into the X.509 certificate. You can put whatever you want there; the only important part is the field Common Name (e.g. server FQDN or YOUR name) which needs to be the exact hostname that clients will reach your server at. The client will verify that this name matches the hostname in the URL it's trying to access, and will reject the connection if it doesn't.
+Whichever way you generated the certificate, you should now have two files, a certificate and a private key. We will assume they are at **/etc/nginx/ssl/nginx.crt** and **/etc/nginx/ssl/nginx.key**.
 
-You should now have two files, a certificate in /etc/nginx/ssl/nginx.crt and a key in /etc/nginx/ssl/nginx.key.
-
-We will add a new server section to the sync_gateway nginx configuration file to support SSL termination.
+Now add a new server section to the nginx configuration file to support SSL termination:
 
 ```groovy
 server {
     listen 443 ssl;
     server_name  myservice.example.org;
-    client_max_body_size 21m;                            
+    client_max_body_size 21m;
+    
     ssl on;
     ssl_certificate /etc/nginx/ssl/nginx.crt;
     ssl_certificate_key /etc/nginx/ssl/nginx.key;
+    
     ssl_session_cache   shared:SSL:10m;
     ssl_session_timeout 10m;
     ssl_protocols TLSv1;
+    
     location / {
         proxy_pass              http://sync_gateway;
         proxy_pass_header       Accept;
@@ -213,7 +201,7 @@ curl -k https://myservice.example.org/
 {“couchdb”:”Welcome”,”vendor”:{“name”:”Couchbase Sync Gateway”,”version”:1},”version”:”Couchbase Sync Gateway/1.0.3(81;fa9a6e7)”}
 ```
 
-You can also see this by going to https://myservice.example.org/ in your browser.
+If you are using a self-signed cert, add a <code>-k</code> flag before the URL. This tells curl to accept an untrusted certificate; without this, the command will fail because your cert is not signed by a trusted Certificate Authority.
 
 ## AWS Elastic Load Balancer (ELB)
 
