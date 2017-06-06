@@ -87,9 +87,9 @@ For a macOS target, you'll need to make sure the framework is copied to your app
 ### Carthage
 
 1. [Install Carthage](https://github.com/Carthage/Carthage#installing-carthage)
-2. Add `github "couchbase/couchbase-lite-ios" "release/{{ site.package_version }}"` to your Cartfile.
-3. Run `carthage update --platform iOS`.
-4. Drag `CouchbaseLite.framework` from the appropriate platform directory in `Carthage/Build/` to the **Embedded Binaries** section of your Xcode project's **General** settings.
+2. Add `github "couchbase/couchbase-lite-ios" "release/{{ site.package_version }}"` to your **Cartfile**.
+3. Run `carthage update --platform ios`.
+4. Drag **CouchbaseLite.framework** from the appropriate platform directory in **Carthage/Build/** to the **Embedded Binaries** section of your Xcode project's **General** settings.
 
 ## Getting Started
 
@@ -97,14 +97,13 @@ Create a new Xcode project and install Couchbase Lite by following one of the me
 
 <img src="../img/xcode-installation.png" class=center-image />
 
-
 Open **ViewController.swift** in Xcode.
 
-If you installed through Carthage, append 
+If you installed Couchbase Lite with Carthage, append the following in your import section.
+
 ```swift
 import CouchbaseLite
 ```
-in your import section
 
 Then, add the following in the `viewDidLoad` method.
 
