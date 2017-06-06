@@ -1,9 +1,20 @@
 - title: Developer Builds
   path: whatsnew.html
 - title: Couchbase Lite
+  path: guides/couchbase-lite/index.html
   open: true
   items:
+    - title: Database
+      path: guides/couchbase-lite/native-api/database/index.html
+    - title: Document
+      path: guides/couchbase-lite/native-api/document/index.html
+    - title: Blob
+      path: guides/couchbase-lite/native-api/attachment/index.html
+    - title: Query
+      path: guides/couchbase-lite/native-api/query/index.html
+    - title: Full-Text Search
+      path: guides/couchbase-lite/native-api/full-text-search/index.html
+    - title: Replication
+      path: guides/couchbase-lite/native-api/replication/index.html
     - title: Release notes
       path: references/couchbase-lite/release-notes/index.html
-    - title: Features
-      path: guides/couchbase-lite/index.html
