@@ -109,6 +109,10 @@ replication:
       cancel:
         type: boolean
         description: Indicates that a running replication task should be cancelled, the running task is identified by passing its replication_id or by passing the original source and target values.
+      changes_feed_limit:
+        type: integer
+        description: The maximum number of change entries to pull in each loop of a continuous changes feed.
+        default: 50
 show_exp:
   in: query
   name: show_exp

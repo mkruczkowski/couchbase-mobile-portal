@@ -411,6 +411,8 @@ properties:
           description: Specifies whether the replication should be in continuous mode.
         changes_feed_limit:
           type: string
+          description: The maximum number of change entries to pull in each loop of a continous changes feed.
+          default: 50
         filter:
           type: string
           description: Indicates that the documents should be filtered using the specified filter function name. A common value used when replicating from Sync Gateway is sync_gateway/bychannel to limit the pull replication to a set of channels.
