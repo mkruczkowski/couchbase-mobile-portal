@@ -147,7 +147,7 @@ Sync Gateway supports the OpenID Connect [Implicit Flow](http://openid.net/specs
 4. Sync Gateway validates the token, based on the provider definition.
 5. Upon successful validation, Sync Gateway authenticates the user based on the subject and issuer in the token.
 
-Since Open ID tokens are typically large, the usual approach is to use the Open ID token to obtain a Sync Gateway session id (using the [POST /db/_session](../../../../references/sync-gateway/rest-api/index.html#!/session/post_db_session) endpoint), and then use the returned session id for subsequent authentication requests.
+Since Open ID tokens are typically large, the usual approach is to use the Open ID token to obtain a Sync Gateway session id (using the [POST /db/_session](../../../references/sync-gateway/rest-api/index.html#!/session/post_db_session) endpoint), and then use the returned session id for subsequent authentication requests.
 
 Here is a sample Sync Gateway config file, configured to use the Implicit Flow. 
 
