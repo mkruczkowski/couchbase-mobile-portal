@@ -139,15 +139,15 @@ Wait for the web view to redirect to a URL whose host and path are the same as t
 
 ### Sync Gateway Configuration
 
-Sync Gateway supports the OpenID Connect [Implicit Flow](http://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth). This flow has the key feature of allowing clients to obtain their own ID token and use it to authenticate against Sync Gateway.
+Sync Gateway supports the OpenID Connect [Implicit Flow](http://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth). This flow has the key feature of allowing clients to obtain their own Open ID token and use it to authenticate against Sync Gateway. The implicit flow with Sync Gateway is as follows:
 
-1. Client obtains a signed ID token directly from an OpenID Connect provider.
-2. Client includes the ID token (as a bearer token on the `Authorization` header) on requests made against the Sync Gateway REST API. 
-3. Sync Gateway matches the token to a provider in its config based on the issuer and audience in the tokwn.
+1. The client obtains a **signed** Open ID token directly from an OpenID Connect provider. Note that only signed tokens are supported. To verify that the Open ID token being sent is indeed signed, you can use the [jwt.io Debugger](https://jwt.io/#debugger-io). In this debugger, you have the option to set the `alg` property to `RS256` or `HS256`. Both algorithm types are supported by Sync Gateway.
+2. The client includes the Open ID token as an `Authorization: Bearer <id_token>` header on requests made against the Sync Gateway REST API.
+3. Sync Gateway matches the token to a provider in its configuration file based on the issuer and audience in the token.
 4. Sync Gateway validates the token, based on the provider definition.
-5. On successful validation, Sync Gateway authenticates the user based on the subject and issuer in the token.
+5. Upon successful validation, Sync Gateway authenticates the user based on the subject and issuer in the token.
 
-Since ID tokens are typically large, the usual approach is to use the ID token to obtain a Sync Gateway session (using the `/db/_session` REST endpoint), and then use that token for subsequent authentication requests. During this call, the token will be sent as `Authorization` header with the `Bearer ` prefix. Notice that only tokens signed are supported, which can be verified using [jwt.io Debugger](https://jwt.io/#debugger-io). in this debugger, such tokens have the `alg` set to `RS256`, and there is a `kid` element in the header.
+Since Open ID tokens are typically large, the usual approach is to use the Open ID token to obtain a Sync Gateway session id (using the [POST /db/_session](../../../../references/sync-gateway/rest-api/index.html#!/session/post_db_session) endpoint), and then use the returned session id for subsequent authentication requests.
 
 Here is a sample Sync Gateway config file, configured to use the Implicit Flow. 
 
@@ -179,7 +179,7 @@ With the implicit flow, the mechanism to refresh the token and Sync Gateway sess
 
 ![](img/images.003.png)
 
-1. The Google SignIn SDK prompts the user to login and if successful it returns an ID token to the application. T
+1. The Google SignIn SDK prompts the user to login and if successful it returns an ID token to the application.
 2. The ID token is used to create a Sync Gateway session by sending a POST `/{db}/_session` request.
 3. Sync Gateway returns a cookie session in the response header.
 4. The Sync Gateway cookie session is used on the replicator object.
