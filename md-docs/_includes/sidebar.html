@@ -28,7 +28,7 @@
 <nav style="width: 100%;" role="navigation" aria-label="Secondary" class="toc collapsible">
   <ul class="main collapsed">
     {% for item0 in nav_docs %}
-      <li class="{% if item0.open == true%}open{% endif %}">
+      <li class="{% if item0.open == true %}isexpanded open{% endif %}">
       {% if item0.path %}
         {% if item0.path == url %}
           <a class="selected" href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item0.path }}">{{ item0.title }}</a>
@@ -41,7 +41,7 @@
       {% if item0.items %}
         <ul>
           {% for item1 in item0.items %}
-          <li class="{% if item1.open == true%}open{% endif %}">
+          <li class="{% if item1.open == true %}isexpanded open{% endif %}">
             {% if item1.path %}
               {% if item1.path == url %}
                 <a class="selected" href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item1.path }}">{{ item1.title }}</a>
@@ -54,7 +54,7 @@
             {% if item1.items %}
             <ul>
               {% for item2 in item1.items %}
-              <li class="{% if item2.open == true%}open{% endif %}">
+              <li class="{% if item2.open == true %}isexpanded open{% endif %}">
                 {% if item2.path %}
                   {% if item2.path == url %}
                     <a class="selected" href="{% if page.url != '/'%}{{base}}/{% endif %}{{ item2.path }}">{{ item2.title }}</a>
