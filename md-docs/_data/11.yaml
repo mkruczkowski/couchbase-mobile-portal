@@ -1,253 +1,872 @@
-- title: Getting Started
-  path: installation/index.html
+- title: Get Started
+  path: get-started/couchbase-mobile-overview/index.html
+  redirect_to: installation/index.html
   items:
+  - title: Couchbase Mobile Overview
+    path: get-started/couchbase-mobile-overview/index.html
+    redirect_to: installation/index.html
+  - title: Couchbase Lite Overview
+    path: get-started/couchbase-lite-overview/index.html
+    redirect_to: installation/index.html
+  - title: Sync Gateway Overview
+    path: get-started/sync-gateway-overview/index.html
+    redirect_to: installation/index.html
+  - title: Query and Sorting
+    path: get-started/query-sorting/index.html
+    redirect_to: installation/index.html
+  - title: 5 Minutes to Awesome
+    path: get-started/get-started-mobile/index.html
+    redirect_to: installation/index.html
+    items:
     - title: iOS
-      path: installation/ios/index.html
+      path: get-started/get-started-mobile/ios/index.html
+      redirect_to: installation/ios/index.html
+      items:
+      - title: Before you begin
+        path: get-started/get-started-mobile/ios/before-you-begin/index.html
+        redirect_to: installation/ios/index.html
+      - title: Building Todo Lite
+        path: get-started/get-started-mobile/ios/building-todo-lite/index.html
+        redirect_to: installation/ios/index.html
+      - title: Creating a new project
+        path: get-started/get-started-mobile/ios/create-new-project/index.html
+        redirect_to: installation/ios/index.html
     - title: Android
-      path: installation/android/index.html
-    - title: .NET
-      path: installation/net/index.html
-    - title: Java
-      path: installation/java/index.html
+      path: get-started/get-started-mobile/android/index.html
+      redirect_to: installation/android/index.html
+      items:
+      - title: Before you begin
+        path: get-started/get-started-mobile/android/before-you-begin/index.html
+        redirect_to: installation/android/index.html
+      - title: Building Todo Lite
+        path: get-started/get-started-mobile/android/building-todo-lite/index.html
+        redirect_to: installation/android/index.html
+      - title: Create a new project with Android Studio
+        path: get-started/get-started-mobile/android/get-started-studio/index.html
+        redirect_to: installation/android/index.html
+    - title: ".NET"
+      path: get-started/get-started-mobile/net-mobile/index.html
+      redirect_to: installation/net/index.html
+      items:
+      - title: Before you begin
+        path: get-started/get-started-mobile/net-mobile/before-you-begin/index.html
+        redirect_to: installation/net/index.html
+      - title: Building Todo Lite (Coming soon!)
+        path: get-started/get-started-mobile/net-mobile/building-todolite-net/index.html
+        redirect_to: installation/net/index.html
+      - title: Create a new WPF project using Visual Studio
+        path: get-started/get-started-mobile/net-mobile/get-started-vs/index.html
+        redirect_to: installation/net/index.html
     - title: PhoneGap
-      path: installation/phonegap/index.html
-    - title: Sync Gateway
-      path: installation/sync-gateway/index.html
-- title: Tutorial
-  path: training/index.html
+      path: get-started/get-started-mobile/phonegap/index.html
+      redirect_to: installation/phonegap/index.html
+      items:
+      - title: Prepare your workstation
+        path: get-started/get-started-mobile/phonegap/prepare/index.html
+        redirect_to: installation/phonegap/index.html
+      - title: Build and run
+        path: get-started/get-started-mobile/phonegap/build-and-run/index.html
+        redirect_to: installation/phonegap/index.html
+      - title: Troubleshooting
+        path: get-started/get-started-mobile/phonegap/troubleshooting/index.html
+        redirect_to: installation/phonegap/index.html
+    - title: Cloud Sync in 100x Less Code
+      path: get-started/get-started-mobile/cloud-sync-function/index.html
+      redirect_to: training/index.html
+      items:
+      - title: Local First Data
+        path: get-started/get-started-mobile/cloud-sync-function/local-first-data/index.html
+        redirect_to: training/index.html
+      - title: Data in the Cloud
+        path: get-started/get-started-mobile/cloud-sync-function/cloud-data/index.html
+        redirect_to: training/index.html
+      - title: Example Sync Function
+        path: get-started/get-started-mobile/cloud-sync-function/sync-function-example/index.html
+        redirect_to: training/index.html
+    - title: ToDo Lite Code Tour
+      path: get-started/get-started-mobile/todo-lite/index.html
+      redirect_to: training/index.html
+      items:
+      - title: Application Launch
+        path: get-started/get-started-mobile/todo-lite/application-launch/index.html
+        redirect_to: training/index.html
+      - title: Create and Update Task Documents
+        path: get-started/get-started-mobile/todo-lite/create-and-update-tasks/index.html
+        redirect_to: training/index.html
+      - title: Attach a Photo
+        path: get-started/get-started-mobile/todo-lite/attach-a-photo/index.html
+        redirect_to: training/index.html
+      - title: Login and Sync
+        path: get-started/get-started-mobile/todo-lite/login-and-sync/index.html
+        redirect_to: training/index.html
+      - title: Sharing Lists
+        path: get-started/get-started-mobile/todo-lite/sharing-lists/index.html
+        redirect_to: training/index.html
+      - title: What's Missing?
+        path: get-started/get-started-mobile/todo-lite/whats-missing/index.html
+        redirect_to: training/index.html
+- title: Develop
+  path: develop/training/build-first-ios-app/index.html
+  redirect_to: training/index.html?language=ios
   items:
-    - title: Design
+  - title: Training
+    path: develop/training/build-first-ios-app/index.html
+    redirect_to: training/index.html?language=ios
+    items:
+    - title: Building your first Couchbase Lite iOS app
+      path: develop/training/build-first-ios-app/index.html
+      redirect_to: training/index.html?language=ios
       items:
-        - title: Data Modeling
-          path: training/design/data-modeling/index.html
-        - title: Access Control
-          path: training/design/security/index.html
-    - title: Develop
+      - title: Creating a new project
+        path: develop/training/build-first-ios-app/create-new-project/index.html
+        redirect_to: training/index.html?language=ios
+      - title: Creating the manager and a database
+        path: develop/training/build-first-ios-app/create-manager-db/index.html
+        redirect_to: training/index.html?language=ios
+      - title: Performing CRUD operations
+        path: develop/training/build-first-ios-app/do-crud/index.html
+        redirect_to: training/index.html?language=ios
+      - title: Add Sync Gateway
+        path: develop/training/build-first-ios-app/add-sync-gateway.xml/index.html
+        redirect_to: training/index.html?language=ios
+      - title: Working with Views
+        path: develop/training/build-first-ios-app/couchbase-lite-views/index.html
+        redirect_to: training/index.html?language=ios
+      - title: Understanding LiveQuery
+        path: develop/training/build-first-ios-app/understanding-live-query/index.html
+        redirect_to: training/index.html?language=ios
+    - title: Building your first Couchbase Lite Android app
+      path: develop/training/build-first-android-app/index.html
+      redirect_to: training/index.html?language=android
       items:
-        - title: Create a Database
-          path: training/develop/create-database/index.html
-        - title: Using the Database
-          path: training/develop/using-the-database/index.html
-        - title: Adding Sync
-          path: training/develop/adding-synchronization/index.html
-        - title: Adding Security
-          path: training/develop/adding-security/index.html
-        - title: Integration
-          path: training/develop/integration/index.html
-    - title: Deploy
+      - title: Create a new project with Android Studio
+        path: develop/training/build-first-android-app/get-started-studio/index.html
+        redirect_to: training/index.html?language=android
+      - title: Creating the manager and a database
+        path: develop/training/build-first-android-app/starter-code-android/index.html
+        redirect_to: training/index.html?language=android
+      - title: Performing CRUD operations
+        path: develop/training/build-first-android-app/do-crud/index.html
+        redirect_to: training/index.html?language=android
+      - title: Add Sync Gateway
+        path: develop/training/build-first-android-app/add-sync-gateway.xml/index.html
+        redirect_to: training/index.html?language=android
+      - title: Working with Views
+        path: develop/training/build-first-android-app/couchbase-lite-views/index.html
+        redirect_to: training/index.html?language=android
+      - title: Understanding LiveQuery
+        path: develop/training/build-first-android-app/understanding-live-query/index.html
+        redirect_to: training/index.html?language=android
+    - title: Building your first Couchbase Lite Xamarin.Android app
+      path: develop/training/build-first-xamarin-android-app/index.html
+      redirect_to: installation/xamarin/index.html
       items:
-        - title: Install
-          path: training/deploy/install/index.html
-        - title: Upgrade
-          path: training/deploy/upgrade/index.html
-        - title: Scale
-          path: training/deploy/scale/index.html
-- title: Guides
-  path: guides/index.html
-  items:
+      - title: Create a new Xamarin.Android project using Xamarin Studio
+        path: develop/training/build-first-xamarin-android-app/get-started-xamarin-xs/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Create a new Xamarin.Android project using Visual Studio
+        path: develop/training/build-first-xamarin-android-app/get-started-xamarin-vs/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Creating the manager and a database
+        path: develop/training/build-first-xamarin-android-app/starter-code-xamarin-android/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Performing CRUD operations
+        path: develop/training/build-first-xamarin-android-app/do-crud/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Add Sync Gateway
+        path: develop/training/build-first-xamarin-android-app/add-sync-gateway.xml/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Working with Views
+        path: develop/training/build-first-xamarin-android-app/couchbase-lite-views/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Understanding LiveQuery
+        path: develop/training/build-first-xamarin-android-app/understanding-live-query/index.html
+        redirect_to: installation/xamarin/index.html
+    - title: Building your first Couchbase Lite Xamarin.iOS app
+      path: develop/training/build-first-xamarin-ios-app/index.html
+      redirect_to: installation/xamarin/index.html
+      items:
+      - title: Create a new Xamarin.iOS project using Xamarin Studio
+        path: develop/training/build-first-xamarin-ios-app/get-started-xamarin-xs/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Create a new Xamarin.iOS project using Visual Studio
+        path: develop/training/build-first-xamarin-ios-app/get-started-xamarin-vs/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Creating the manager and a database
+        path: develop/training/build-first-xamarin-ios-app/starter-code-xamarin-ios/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Performing CRUD operations
+        path: develop/training/build-first-xamarin-ios-app/do-crud/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Add Sync Gateway
+        path: develop/training/build-first-xamarin-ios-app/add-sync-gateway.xml/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Working with Views
+        path: develop/training/build-first-xamarin-ios-app/couchbase-lite-views/index.html
+        redirect_to: installation/xamarin/index.html
+      - title: Understanding LiveQuery
+        path: develop/training/build-first-xamarin-ios-app/understanding-live-query/index.html
+        redirect_to: installation/xamarin/index.html
+    - title: Building your first Couchbase Lite with .NET and WPF
+      path: develop/training/build-first-dotnet-app/index.html
+      redirect_to: training/index.html?language=wpf
+      items:
+      - title: Creating a new project
+        path: develop/training/build-first-dotnet-app/create-new-project/index.html
+        redirect_to: training/index.html?language=wpf
+      - title: Creating the manager and a database
+        path: develop/training/build-first-dotnet-app/create-database/index.html
+        redirect_to: training/index.html?language=wpf
+      - title: Performing CRUD operations
+        path: develop/training/build-first-dotnet-app/crud/index.html
+        redirect_to: training/index.html?language=wpf
+      - title: Create a new WPF project using Visual Studio
+        path: develop/training/build-first-dotnet-app/get-started-vs/index.html
+        redirect_to: training/index.html?language=wpf
+      - title: Creating the manager and a database
+        path: develop/training/build-first-dotnet-app/starter-code-wpf/index.html
+        redirect_to: training/index.html?language=wpf
+      - title: Performing CRUD operations
+        path: develop/training/build-first-dotnet-app/do-crud/index.html
+        redirect_to: training/index.html?language=wpf
+      - title: Add Sync Gateway
+        path: develop/training/build-first-dotnet-app/add-sync-gateway.xml/index.html
+        redirect_to: training/index.html?language=wpf
+      - title: Working with Views
+        path: develop/training/build-first-dotnet-app/couchbase-lite-views/index.html
+        redirect_to: training/index.html?language=wpf
+      - title: Understanding LiveQuery
+        path: develop/training/build-first-dotnet-app/understanding-live-query/index.html
+        redirect_to: training/index.html?language=wpf
+  - title: Guides
+    path: develop/guides/modeling/index.html
+    redirect_to: guides/couchbase-lite/native-api/data-modeling/index.html
+    items:
     - title: Data Modeling
-      path: guides/couchbase-lite/native-api/data-modeling/index.html
+      path: develop/guides/modeling/index.html
+      redirect_to: guides/couchbase-lite/native-api/data-modeling/index.html
+      items:
+      - title: The Basics
+        path: develop/guides/modeling/basics/index.html
+        redirect_to: guides/couchbase-lite/native-api/data-modeling/index.html
+      - title: One-to-Many Relationships
+        path: develop/guides/modeling/one-to-many/index.html
+        redirect_to: guides/couchbase-lite/native-api/data-modeling/index.html
     - title: Couchbase Lite
-      path: guides/couchbase-lite/index.html
+      path: develop/guides/couchbase-lite/index.html
+      redirect_to: guides/couchbase-lite/index.html
       items:
-        - title: Native API
-          path: guides/couchbase-lite/native-api/index.html
-          items:
-            - title: Manager
-              path: guides/couchbase-lite/native-api/manager/index.html
-            - title: Database
-              path: guides/couchbase-lite/native-api/database/index.html
-            - title: Document
-              path: guides/couchbase-lite/native-api/document/index.html
-            - title: Revision
-              path: guides/couchbase-lite/native-api/revision/index.html
-            - title: Attachment
-              path: guides/couchbase-lite/native-api/attachment/index.html
-            - title: View
-              path: guides/couchbase-lite/native-api/view/index.html
-            - title: Query
-              path: guides/couchbase-lite/native-api/query/index.html
-            - title: Replication
-              path: guides/couchbase-lite/native-api/replication/index.html
-            - title: Model (iOS only)
-              path: guides/couchbase-lite/native-api/model/index.html
-        - title: Technical Notes
-          path: guides/couchbase-lite/tech-notes/index.html
-          items:
-            - title: Encrypting Databases
-              path: guides/couchbase-lite/tech-notes/cbl-encryption/index.html
+      - title: Native API
+        path: develop/guides/couchbase-lite/native-api/index.html
+        redirect_to: guides/couchbase-lite/native-api/index.html
+        items:
+        - title: Manager
+          path: develop/guides/couchbase-lite/native-api/manager/index.html
+          redirect_to: guides/couchbase-lite/native-api/manager/index.html
+        - title: Database
+          path: develop/guides/couchbase-lite/native-api/database/index.html
+          redirect_to: guides/couchbase-lite/native-api/database/index.html
+        - title: Document
+          path: develop/guides/couchbase-lite/native-api/document/index.html
+          redirect_to: guides/couchbase-lite/native-api/document/index.html
+        - title: Revision
+          path: develop/guides/couchbase-lite/native-api/revision/index.html
+          redirect_to: guides/couchbase-lite/native-api/revision/index.html
+        - title: Attachment
+          path: develop/guides/couchbase-lite/native-api/attachment/index.html
+          redirect_to: guides/couchbase-lite/native-api/attachment/index.html
+        - title: View
+          path: develop/guides/couchbase-lite/native-api/view/index.html
+          redirect_to: guides/couchbase-lite/native-api/view/index.html
+        - title: Query
+          path: develop/guides/couchbase-lite/native-api/query/index.html
+          redirect_to: guides/couchbase-lite/native-api/query/index.html
+        - title: Replication
+          path: develop/guides/couchbase-lite/native-api/replication/index.html
+          redirect_to: guides/couchbase-lite/native-api/replication/index.html
+        - title: Model (iOS only)
+          path: develop/guides/couchbase-lite/native-api/model/index.html
+          redirect_to: guides/couchbase-lite/native-api/model/index.html
+      - title: Technical Notes
+        path: develop/guides/couchbase-lite/tech-notes/index.html
+        redirect_to: guides/couchbase-lite/tech-notes/index.html
+        items:
+        - title: Encrypting Couchbase Lite databases
+          path: develop/guides/couchbase-lite/tech-notes/cbl-encryption/index.html
+          redirect_to: guides/couchbase-lite/tech-notes/cbl-encryption/index.html
     - title: Sync Gateway
-      path: guides/sync-gateway/index.html
+      path: develop/guides/sync-gateway/index.html
+      redirect_to: guides/sync-gateway/index.html
       items:
-        - title: Configuration file
-          path: guides/sync-gateway/config-properties/index.html
-        - title: Command line options
-          path: guides/sync-gateway/command-line-options/index.html
+      - title: Running Sync Gateway
+        path: develop/guides/sync-gateway/running-sync-gateway/index.html
+        redirect_to: installation/sync-gateway/index.html
+        items:
+        - title: Installing Sync Gateway
+          path: develop/guides/sync-gateway/running-sync-gateway/installing-sync-gateway/index.html
+          redirect_to: installation/sync-gateway/index.html
+        - title: Connecting Sync Gateway to Couchbase Server
+          path: develop/guides/sync-gateway/running-sync-gateway/connecting-sync-gateway-to-couchbase-server/index.html
+          redirect_to: installation/sync-gateway/index.html
+        - title: Starting and stopping Sync Gateway
+          path: develop/guides/sync-gateway/running-sync-gateway/starting-and-stopping/index.html
+          redirect_to: installation/sync-gateway/index.html
+      - title: Configuration
+        path: develop/guides/sync-gateway/configuring-sync-gateway/index.html
+        redirect_to: guides/sync-gateway/config-properties/index.html
+        items:
+        - title: Configuration using a configuration file
+          path: develop/guides/sync-gateway/configuring-sync-gateway/config-properties/index.html
+          redirect_to: guides/sync-gateway/config-properties/index.html
+        - title: Configuration using command-line options
+          path: develop/guides/sync-gateway/configuring-sync-gateway/command-line-options/index.html
+          redirect_to: guides/sync-gateway/config-properties/index.html
+      - title: Administration
+        path: develop/guides/sync-gateway/administering-sync-gateway/index.html
+        redirect_to: guides/sync-gateway/authorizing-users/index.html
+        items:
+        - title: Administering the REST APIs
+          path: develop/guides/sync-gateway/administering-sync-gateway/administering-the-rest-apis/index.html
+          redirect_to: guides/sync-gateway/authorizing-users/index.html
+        - title: Authenticating Users
+          path: develop/guides/sync-gateway/administering-sync-gateway/authenticating-users/index.html
+          redirect_to: guides/sync-gateway/authorizing-users/index.html
         - title: Authorizing Users
-          path: guides/sync-gateway/authorizing-users/index.html
-        - title: Data Routing
-          path: guides/sync-gateway/channels/index.html
-        - title: Sync Function API
-          path: guides/sync-gateway/sync-function-api-guide/index.html
-        - title: Webhooks and changes feed
-          path: guides/sync-gateway/server-integration/index.html
-        - title: Deployment considerations
-          path: guides/sync-gateway/deployment/index.html
-        - title: NGINX
-          path: guides/sync-gateway/nginx/index.html
+          path: develop/guides/sync-gateway/administering-sync-gateway/authorizing-users/index.html
+          redirect_to: guides/sync-gateway/authorizing-users/index.html
+      - title: Data routing with channels
+        path: develop/guides/sync-gateway/channels/index.html
+        redirect_to: guides/sync-gateway/channels/index.html
+        items:
+        - title: Introduction to channels
+          path: develop/guides/sync-gateway/channels/intro/index.html
+          redirect_to: guides/sync-gateway/channels/index.html
+        - title: Developing channels
+          path: develop/guides/sync-gateway/channels/developing/index.html
+          redirect_to: guides/sync-gateway/channels/index.html
+        - title: Troubleshooting channels
+          path: develop/guides/sync-gateway/channels/troubleshooting/index.html
+          redirect_to: guides/sync-gateway/channels/index.html
+      - title: Sync Function API
+        path: develop/guides/sync-gateway/sync-function-api-guide/index.html
+        redirect_to: guides/sync-gateway/sync-function-api-guide/index.html
+        items:
+        - title: Introduction
+          path: develop/guides/sync-gateway/sync-function-api-guide/intro/index.html
+          redirect_to: guides/sync-gateway/sync-function-api-guide/index.html
+        - title: Validation and Authorization
+          path: develop/guides/sync-gateway/sync-function-api-guide/validation/index.html
+          redirect_to: guides/sync-gateway/sync-function-api-guide/index.html
+        - title: Routing
+          path: develop/guides/sync-gateway/sync-function-api-guide/routing/index.html
+          redirect_to: guides/sync-gateway/sync-function-api-guide/index.html
+      - title: Server integration
+        path: develop/guides/sync-gateway/server-integration/index.html
+        redirect_to: guides/sync-gateway/server-integration/index.html
+        items:
+        - title: Using webhooks
+          path: develop/guides/sync-gateway/server-integration/webhooks/index.html
+          redirect_to: guides/sync-gateway/server-integration/index.html
+        - title: Using the changes worker pattern
+          path: develop/guides/sync-gateway/server-integration/changes-worker/index.html
+          redirect_to: guides/sync-gateway/server-integration/index.html
+      - title: Deployment considerations
+        path: develop/guides/sync-gateway/deployment/index.html
+        redirect_to: guides/sync-gateway/deployment/index.html
+        items:
+        - title: During Development
+          path: develop/guides/sync-gateway/deployment/during-development/index.html
+          redirect_to: guides/sync-gateway/deployment/index.html
+        - title: In Production
+          path: develop/guides/sync-gateway/deployment/in-production/index.html
+          redirect_to: guides/sync-gateway/deployment/index.html
+        - title: Troubleshooting and Fine-Tuning
+          path: develop/guides/sync-gateway/deployment/troubleshooting/index.html
+          redirect_to: guides/sync-gateway/deployment/index.html
+      - title: Deploying Sync Gateway behind a reverse proxy
+        path: develop/guides/sync-gateway/nginx/index.html
+        redirect_to: guides/sync-gateway/nginx/index.html
+        items:
+        - title: Introduction to reverse proxies
+          path: develop/guides/sync-gateway/nginx/introduction-to-reverse-proxies/index.html
+          redirect_to: guides/sync-gateway/nginx/index.html
+        - title: Deploying and configuring nginx
+          path: develop/guides/sync-gateway/nginx/configuring-nginx-for-sync-gateway/index.html
+          redirect_to: guides/sync-gateway/nginx/index.html
+      - title: Upgrading Sync Gateway
+        path: develop/guides/sync-gateway/upgrade-guide/index.html
+        redirect_to: training/deploy/upgrade/index.html
+        items:
+        - title: Overview and planning
+          path: develop/guides/sync-gateway/upgrade-guide/upgrading-overview/index.html
+          redirect_to: training/deploy/upgrade/index.html
+        - title: Upgrading Sync Gateway without spare nodes
+          path: develop/guides/sync-gateway/upgrade-guide/upgrading-in-place/index.html
+          redirect_to: training/deploy/upgrade/index.html
+        - title: Upgrading Sync Gateway using temporary spare nodes
+          path: develop/guides/sync-gateway/upgrade-guide/upgrading-temp-spares/index.html
+          redirect_to: training/deploy/upgrade/index.html
+        - title: Upgrading Sync Gateway offline
+          path: develop/guides/sync-gateway/upgrade-guide/upgrading-offline/index.html
+          redirect_to: training/deploy/upgrade/index.html
+        - title: Upgrade examples
+          path: develop/guides/sync-gateway/upgrade-guide/upgrading-examples/index.html
+          redirect_to: training/deploy/upgrade/index.html
+      - title: Accessing Couchbase Server views via Sync Gateway
+        path: develop/guides/sync-gateway/accessing-cb-views/index.html
+        redirect_to: guides/sync-gateway/views/index.html
+        items:
         - title: Creating and querying a View
-          path: guides/sync-gateway/views/index.html
-        - title: OS Level Tuning
-          path: guides/sync-gateway/os-level-tuning/index.html
-        - title: Resolving Conflicts
-          path: guides/sync-gateway/resolving-conflicts/index.html
-        - title: Integrating External Stores
-          path: guides/sync-gateway/integrating-external-stores/index.html
-        - title: Running replications
-          path: guides/sync-gateway/running-replications/index.html
-        - title: REST API Client
-          path: guides/sync-gateway/rest-api-client/index.html
-        - title: SGCollect Info
-          path: guides/sync-gateway/sgcollect-info/index.html
-        - title: Configuring SSL
-          path: guides/sync-gateway/configuring-ssl/index.html
-        - title: Bucket Shadowing
-          path: guides/sync-gateway/bucket-shadowing/index.html
-    - title: Authentication
-      path: guides/authentication/index.html
-      items:
-        - title: Basic Authentication
-          path: guides/authentication/basic-authentication/index.html
-        - title: OpenID Connect
-          path: guides/authentication/openid/index.html
-          items:
-            - title: Configuration Options
-              path: guides/authentication/openid/configuration-options/index.html
-            - title: Advanced Topics
-              path: guides/authentication/openid/advanced-topics/index.html
-            - title: "How-To: Google"
-              path: guides/authentication/openid/google/index.html
-            - title: "How-To: Active Directory"
-              path: guides/authentication/openid/active-directory/index.html
-        - title: Custom Authentication
-          path: guides/authentication/custom-authentication/index.html
-        - title: Static Providers
-          path: guides/authentication/static-providers/index.html
-- title: API References
-  path: references/index.html
-  items:
+          path: develop/guides/sync-gateway/accessing-cb-views/creating-and-using-a-view/index.html
+          redirect_to: guides/sync-gateway/views/index.html
+      - title: OS Level Tuning
+        path: develop/guides/sync-gateway/os-level-tuning/index.html
+        redirect_to: guides/sync-gateway/os-level-tuning/index.html
+        items:
+        - title: Tuning the max no. of file descriptors
+          path: develop/guides/sync-gateway/os-level-tuning/max-file-descriptors/index.html
+          redirect_to: guides/sync-gateway/os-level-tuning/index.html
+        - title: Tuning the TCP Keepalive parameters
+          path: develop/guides/sync-gateway/os-level-tuning/tcp-keep-alive/index.html
+          redirect_to: guides/sync-gateway/os-level-tuning/index.html
+  - title: API References
+    path: develop/references/couchbase-lite/index.html
+    redirect_to: references/index.html
+    items:
     - title: Couchbase Lite
-      path: references/couchbase-lite/index.html
+      path: develop/references/couchbase-lite/index.html
+      redirect_to: references/couchbase-lite/index.html
       items:
-        - title: Native API
-          path: references/couchbase-lite/couchbase-lite/index.html
+      - title: Native API
+        path: develop/references/couchbase-lite/couchbase-lite/index.html
+        redirect_to: references/couchbase-lite/couchbase-lite/index.html
+        items:
+        - title: Manager
+          path: develop/references/couchbase-lite/couchbase-lite/manager/index.html
+          redirect_to: references/couchbase-lite/couchbase-lite/manager/index.html
           items:
-            - title: Manager
-              path: references/couchbase-lite/couchbase-lite/manager/index.html
-              items:
-                - title: Manager
-                  path: references/couchbase-lite/couchbase-lite/manager/manager/index.html
-                - title: ManagerOptions
-                  path: references/couchbase-lite/couchbase-lite/manager/manager-options/index.html
-                - title: DatabaseOptions
-                  path: references/couchbase-lite/couchbase-lite/manager/database-options/index.html
-            - title: Database
-              path: references/couchbase-lite/couchbase-lite/database/index.html
-              items:
-                - title: Database
-                  path: references/couchbase-lite/couchbase-lite/database/database/index.html
-                - title: ValidationContext
-                  path: references/couchbase-lite/couchbase-lite/database/validation-context/index.html
-            - title: Document
-              path: references/couchbase-lite/couchbase-lite/document/index.html
-              items:
-                - title: Document
-                  path: references/couchbase-lite/couchbase-lite/document/document/index.html
-                - title: Document Change
-                  path: references/couchbase-lite/couchbase-lite/document/document-change/index.html
-            - title: Revision
-              path: references/couchbase-lite/couchbase-lite/revision/index.html
-              items:
-                - title: Revision
-                  path: references/couchbase-lite/couchbase-lite/revision/revision/index.html
-                - title: Saved Revision
-                  path: references/couchbase-lite/couchbase-lite/revision/saved-revision/index.html
-                - title: Unsaved Revision
-                  path: references/couchbase-lite/couchbase-lite/revision/unsaved-revision/index.html
-            - title: Attachment
-              path: references/couchbase-lite/couchbase-lite/attachment/index.html
-              items:
-                - title: Attachment
-                  path: references/couchbase-lite/couchbase-lite/attachment/attachment/index.html
-            - title: View
-              path: references/couchbase-lite/couchbase-lite/view/index.html
-              items:
-                - title: View
-                  path: references/couchbase-lite/couchbase-lite/view/view/index.html
-                - title: View Compiler
-                  path: references/couchbase-lite/couchbase-lite/view/view-compiler/index.html
-            - title: Query
-              path: references/couchbase-lite/couchbase-lite/query/index.html
-              items:
-                - title: Query
-                  path: references/couchbase-lite/couchbase-lite/query/query/index.html
-                - title: Live Query
-                  path: references/couchbase-lite/couchbase-lite/query/live-query/index.html
-                - title: QueryEnumerator
-                  path: references/couchbase-lite/couchbase-lite/query/query-enumerator/index.html
-                - title: QueryRow
-                  path: references/couchbase-lite/couchbase-lite/query/query-row/index.html
-            - title: Replication
-              path: references/couchbase-lite/couchbase-lite/replication/index.html
-              items:
-                - title: Replication
-                  path: references/couchbase-lite/couchbase-lite/replication/replication/index.html
-                - title: Authenticator
-                  path: references/couchbase-lite/couchbase-lite/replication/authenticator/index.html
-                - title: AuthenticatorFactory
-                  path: references/couchbase-lite/couchbase-lite/replication/authenticator-factory/index.html
-        - title: REST API
-          path: references/couchbase-lite/rest-api/index.html
-        - title: Release notes
-          path: references/couchbase-lite/release-notes/index.html
+          - title: Manager
+            path: develop/references/couchbase-lite/couchbase-lite/manager/manager/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/manager/manager/index.html
+          - title: ManagerOptions
+            path: develop/references/couchbase-lite/couchbase-lite/manager/manager-options/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/manager/manager-options/index.html
+        - title: Database
+          path: develop/references/couchbase-lite/couchbase-lite/database/index.html
+          redirect_to: references/couchbase-lite/couchbase-lite/database/index.html
           items:
-            - title: iOS
-              path: references/couchbase-lite/release-notes/iOS/index.html
-            - title: Android
-              path: references/couchbase-lite/release-notes/Android/index.html
-            - title: Java
-              path: references/couchbase-lite/release-notes/Java/index.html
-            - title: .NET
-              path: references/couchbase-lite/release-notes/Dot-Net/index.html
+          - title: Database
+            path: develop/references/couchbase-lite/couchbase-lite/database/database/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/database/database/index.html
+          - title: ValidationContext
+            path: develop/references/couchbase-lite/couchbase-lite/database/validation-context/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/database/validation-context/index.html
+        - title: Document
+          path: develop/references/couchbase-lite/couchbase-lite/document/index.html
+          redirect_to: references/couchbase-lite/couchbase-lite/document/index.html
+          items:
+          - title: Document
+            path: develop/references/couchbase-lite/couchbase-lite/document/document/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/document/document/index.html
+          - title: DocumentChange
+            path: develop/references/couchbase-lite/couchbase-lite/document/document-change/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/document/document-change/index.html
+        - title: Revision
+          path: develop/references/couchbase-lite/couchbase-lite/revision/index.html
+          redirect_to: references/couchbase-lite/couchbase-lite/revision/index.html
+          items:
+          - title: Revision
+            path: develop/references/couchbase-lite/couchbase-lite/revision/revision/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/revision/revision/index.html
+          - title: SavedRevision
+            path: develop/references/couchbase-lite/couchbase-lite/revision/saved-revision/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/revision/saved-revision/index.html
+          - title: UnsavedRevision
+            path: develop/references/couchbase-lite/couchbase-lite/revision/unsaved-revision/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/revision/unsaved-revision/index.html
+        - title: Attachment
+          path: develop/references/couchbase-lite/couchbase-lite/attachment/index.html
+          redirect_to: references/couchbase-lite/couchbase-lite/attachment/index.html
+          items:
+          - title: Attachment
+            path: develop/references/couchbase-lite/couchbase-lite/attachment/attachment/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/attachment/attachment/index.html
+        - title: View
+          path: develop/references/couchbase-lite/couchbase-lite/view/index.html
+          redirect_to: references/couchbase-lite/couchbase-lite/view/index.html
+          items:
+          - title: View
+            path: develop/references/couchbase-lite/couchbase-lite/view/view/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/view/view/index.html
+          - title: ViewCompiler
+            path: develop/references/couchbase-lite/couchbase-lite/view/view-compiler/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/view/view-compiler/index.html
+        - title: Query
+          path: develop/references/couchbase-lite/couchbase-lite/query/index.html
+          redirect_to: references/couchbase-lite/couchbase-lite/query/index.html
+          items:
+          - title: Query
+            path: develop/references/couchbase-lite/couchbase-lite/query/query/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/query/query/index.html
+          - title: LiveQuery
+            path: develop/references/couchbase-lite/couchbase-lite/query/live-query/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/query/live-query/index.html
+          - title: QueryEnumerator
+            path: develop/references/couchbase-lite/couchbase-lite/query/query-enumerator/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/query/query-enumerator/index.html
+          - title: QueryRow
+            path: develop/references/couchbase-lite/couchbase-lite/query/query-row/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/query/query-row/index.html
+        - title: Replication
+          path: develop/references/couchbase-lite/couchbase-lite/replication/index.html
+          redirect_to: references/couchbase-lite/couchbase-lite/replication/index.html
+          items:
+          - title: Replication
+            path: develop/references/couchbase-lite/couchbase-lite/replication/replication/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/replication/replication/index.html
+          - title: Authenticator
+            path: develop/references/couchbase-lite/couchbase-lite/replication/authenticator/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/replication/authenticator/index.html
+          - title: AuthenticatorFactory
+            path: develop/references/couchbase-lite/couchbase-lite/replication/authenticator-factory/index.html
+            redirect_to: references/couchbase-lite/couchbase-lite/replication/authenticator-factory/index.html
+      - title: REST API
+        path: develop/references/couchbase-lite/rest-api/index.html
+        redirect_to: references/couchbase-lite/rest-api/index.html
+        items:
+        - title: Server
+          path: develop/references/couchbase-lite/rest-api/server/index.html
+          redirect_to: references/couchbase-lite/rest-api/index.html
+          items:
+          - title: GET /
+            path: develop/references/couchbase-lite/rest-api/server/get--/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /_active_tasks
+            path: develop/references/couchbase-lite/rest-api/server/get-active-tasks/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /_all_dbs
+            path: develop/references/couchbase-lite/rest-api/server/get-all-dbs/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: POST /_replicate
+            path: develop/references/couchbase-lite/rest-api/server/post-replicate/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /_session
+            path: develop/references/couchbase-lite/rest-api/server/get-session/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /_uuids
+            path: develop/references/couchbase-lite/rest-api/server/get-uuids/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+        - title: Database
+          path: develop/references/couchbase-lite/rest-api/database/index.html
+          redirect_to: references/couchbase-lite/rest-api/index.html
+          items:
+          - title: PUT /{db}
+            path: develop/references/couchbase-lite/rest-api/database/put---db-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /{db}
+            path: develop/references/couchbase-lite/rest-api/database/get---db-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: DELETE /{db}
+            path: develop/references/couchbase-lite/rest-api/database/delete-db/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /{db}/_all_docs
+            path: develop/references/couchbase-lite/rest-api/database/get-all-docs/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: POST /{db}/_all_docs
+            path: develop/references/couchbase-lite/rest-api/database/post-all-docs/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: POST /{db}/_bulk_docs
+            path: develop/references/couchbase-lite/rest-api/database/post-bulk-docs/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /{db}/_changes
+            path: develop/references/couchbase-lite/rest-api/database/get-changes/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: POST /{db}/_compact
+            path: develop/references/couchbase-lite/rest-api/database/post-compact/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: POST /{db}/_purge
+            path: develop/references/couchbase-lite/rest-api/database/post-purge/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: POST /{db}/_temp_view
+            path: develop/references/couchbase-lite/rest-api/database/post-temp-view/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+        - title: Document
+          path: develop/references/couchbase-lite/rest-api/document/index.html
+          redirect_to: references/couchbase-lite/rest-api/index.html
+          items:
+          - title: POST /{db}
+            path: develop/references/couchbase-lite/rest-api/document/post---db-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: PUT /{db}/{doc}
+            path: develop/references/couchbase-lite/rest-api/document/put---db---doc-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /{db}/{doc}
+            path: develop/references/couchbase-lite/rest-api/document/get---db---doc-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: DELETE /{db}/{doc}
+            path: develop/references/couchbase-lite/rest-api/document/delete---db---doc-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: PUT /{db}/{doc}/{attachment}
+            path: develop/references/couchbase-lite/rest-api/document/put---db---doc---attachment-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /{db}/{doc}/{attachment}
+            path: develop/references/couchbase-lite/rest-api/document/get---db---doc---attachment-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: DELETE /{db}/{doc}/{attachment}
+            path: develop/references/couchbase-lite/rest-api/document/delete---db---doc---attachment-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+        - title: Local Document
+          path: develop/references/couchbase-lite/rest-api/local-document/index.html
+          redirect_to: references/couchbase-lite/rest-api/index.html
+          items:
+          - title: PUT /{db}/{local-doc-id}
+            path: develop/references/couchbase-lite/rest-api/local-document/put---db--local--local-doc-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /{db}/{local-doc-id}
+            path: develop/references/couchbase-lite/rest-api/local-document/get---db--local--local-doc-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: DELETE /{db}/{local-doc-id}
+            path: develop/references/couchbase-lite/rest-api/local-document/delete---db--local--local-doc-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+        - title: Design Document
+          path: develop/references/couchbase-lite/rest-api/design-document/index.html
+          redirect_to: references/couchbase-lite/rest-api/index.html
+          items:
+          - title: PUT /{db}/{design-doc-id}
+            path: develop/references/couchbase-lite/rest-api/design-document/put---db--_design--design-doc-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /{db}/{design-doc-id}
+            path: develop/references/couchbase-lite/rest-api/design-document/get---db--_design--design-doc-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: DELETE /{db}/{design-doc-id}
+            path: develop/references/couchbase-lite/rest-api/design-document/delete---db--_design--design-doc-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /{db}{design-doc-id}/{attachment}
+            path: develop/references/couchbase-lite/rest-api/design-document/get---db--_design--design-doc---attachment-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: PUT /{db}/{design-doc-id}/{attachment}
+            path: develop/references/couchbase-lite/rest-api/design-document/put---db--_design--design-doc---attachment-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: DELETE /{db}/{design-doc-id}/{attachment}
+            path: develop/references/couchbase-lite/rest-api/design-document/delete---db--_design--design-doc---attachment-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: GET /{db}/{design-doc-id}/_view/{view-name}
+            path: develop/references/couchbase-lite/rest-api/design-document/get---db--design--design-doc--view--view-name-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: POST /{db}/{design-doc-id}/_view/{view-name}
+            path: develop/references/couchbase-lite/rest-api/design-document/post---db--design--design-doc--view--view-name-/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+        - title: Authentication
+          path: develop/references/couchbase-lite/rest-api/authentication/index.html
+          redirect_to: references/couchbase-lite/rest-api/index.html
+          items:
+          - title: POST /_facebook_token
+            path: develop/references/couchbase-lite/rest-api/authentication/post-facebook/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+          - title: POST /_persona_assertion
+            path: develop/references/couchbase-lite/rest-api/authentication/post-persona/index.html
+            redirect_to: references/couchbase-lite/rest-api/index.html
+      - title: Release notes
+        path: develop/references/couchbase-lite/release-notes/index.html
+        redirect_to: references/couchbase-lite/release-notes/index.html
+        items:
+        - title: iOS
+          path: develop/references/couchbase-lite/release-notes/iOS/index.html
+          redirect_to: references/couchbase-lite/release-notes/iOS.html
+        - title: Android
+          path: develop/references/couchbase-lite/release-notes/Android/index.html
+          redirect_to: references/couchbase-lite/release-notes/Java.html
+        - title: Java
+          path: develop/references/couchbase-lite/release-notes/Java/index.html
+          redirect_to: references/couchbase-lite/release-notes/Java.html
+        - title: ".NET"
+          path: develop/references/couchbase-lite/release-notes/Dot-Net/index.html
+          redirect_to: references/couchbase-lite/release-notes/Dot-Net.html
     - title: Sync Gateway
-      path: references/sync-gateway/index.html
+      path: develop/references/sync-gateway/index.html
+      redirect_to: references/sync-gateway/index.html
       items:
-        - title: Public REST API
-          path: references/sync-gateway/rest-api/index.html
-        - title: Admin REST API
-          path: references/sync-gateway/admin-rest-api/index.html
-        - title: Release notes
-          path: references/sync-gateway/release-notes/index.html
+      - title: REST API
+        path: develop/references/sync-gateway/rest-api/index.html
+        redirect_to: references/sync-gateway/rest-api/index.html
+        items:
+        - title: Server
+          path: develop/references/sync-gateway/rest-api/server/index.html
+          redirect_to: references/sync-gateway/rest-api/index.html
           items:
-            - title: 1.3.1 Wednesday, September 14, 2016
-              path: references/sync-gateway/release-notes/1.3.1/index.html
-            - title: 1.3 Thursday, August 3, 2016
-              path: references/sync-gateway/release-notes/1.3/index.html
-            - title: 1.2.1 Thursday, April 21, 2016
-              path: references/sync-gateway/release-notes/1.2.1/index.html
-            - title: 1.2 February 3, 2016
-              path: references/sync-gateway/release-notes/1.2/index.html
-            - title: 1.1.1 September 15, 2015
-              path: references/sync-gateway/release-notes/1.1.1/index.html
-            - title: 1.1.0 June 17, 2015
-              path: references/sync-gateway/release-notes/1.1.0/index.html
-            - title: 1.0.4, March 5, 2015
-              path: references/sync-gateway/release-notes/1.0.4/index.html
-            - title: 1.0.3, October 29, 2014
-              path: references/sync-gateway/release-notes/1.0.3/index.html
-            - title: 1.0.2, August 27, 2014
-              path: references/sync-gateway/release-notes/1.0.2/index.html
-            - title: 1.0.1, July 28, 2014
-              path: references/sync-gateway/release-notes/1.0.1/index.html
-            - title: 1.0.0, May 21, 2014
-              path: references/sync-gateway/release-notes/1.0.0/index.html
+          - title: GET /
+            path: develop/references/sync-gateway/rest-api/server/get--/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+        - title: Database
+          path: develop/references/sync-gateway/rest-api/database/index.html
+          redirect_to: references/sync-gateway/rest-api/index.html
+          items:
+          - title: GET /{db}
+            path: develop/references/sync-gateway/rest-api/database/get---db-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: GET /{db}/_all_docs
+            path: develop/references/sync-gateway/rest-api/database/get-all-docs/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: POST /{db}/_all_docs
+            path: develop/references/sync-gateway/rest-api/database/post-all-docs/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: POST /{db}/_bulk_docs
+            path: develop/references/sync-gateway/rest-api/database/post-bulk-docs/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: POST /{db}/_bulk_get
+            path: develop/references/sync-gateway/rest-api/database/post-bulk-get/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: GET /{db}/_changes
+            path: develop/references/sync-gateway/rest-api/database/get-changes/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: POST /{db}/_changes
+            path: develop/references/sync-gateway/rest-api/database/post-changes/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+        - title: Document
+          path: develop/references/sync-gateway/rest-api/document/index.html
+          redirect_to: references/sync-gateway/rest-api/index.html
+          items:
+          - title: POST /{db}
+            path: develop/references/sync-gateway/rest-api/document/post---db-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: PUT /{db}/{doc}
+            path: develop/references/sync-gateway/rest-api/document/put---db---doc-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: GET /{db}/{doc}
+            path: develop/references/sync-gateway/rest-api/document/get---db---doc-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: DELETE /{db}/{doc}
+            path: develop/references/sync-gateway/rest-api/document/delete---db---doc-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: PUT /{db}/{doc}/{attachment}
+            path: develop/references/sync-gateway/rest-api/document/put---db---doc---attachment-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: GET /{db}/{doc}/{attachment}
+            path: develop/references/sync-gateway/rest-api/document/get---db---doc---attachment-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+        - title: Local Document
+          path: develop/references/sync-gateway/rest-api/local-document/index.html
+          redirect_to: references/sync-gateway/rest-api/index.html
+          items:
+          - title: PUT /{db}/{local-doc-id}
+            path: develop/references/sync-gateway/rest-api/local-document/put---db--local--local-doc-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: GET /{db}/{local-doc-id}
+            path: develop/references/sync-gateway/rest-api/local-document/get---db--local--local-doc-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: DELETE /{db}/{local-doc-id}
+            path: develop/references/sync-gateway/rest-api/local-document/delete---db--local--local-doc-/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+        - title: Authentication
+          path: develop/references/sync-gateway/rest-api/authentication/index.html
+          redirect_to: references/sync-gateway/rest-api/index.html
+          items:
+          - title: POST /{db}/_session
+            path: develop/references/sync-gateway/rest-api/authentication/post-session/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: POST /{db}/_facebook_token
+            path: develop/references/sync-gateway/rest-api/authentication/post-facebook/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+          - title: POST /{db}/_persona_assertion
+            path: develop/references/sync-gateway/rest-api/authentication/post-persona/index.html
+            redirect_to: references/sync-gateway/rest-api/index.html
+      - title: Admin REST API
+        path: develop/references/sync-gateway/admin-rest-api/index.html
+        redirect_to: references/sync-gateway/admin-rest-api/index.html
+        items:
+        - title: Database
+          path: develop/references/sync-gateway/admin-rest-api/database/index.html
+          redirect_to: references/sync-gateway/admin-rest-api/index.html
+          items:
+          - title: POST /{db}/_resync/
+            path: develop/references/sync-gateway/admin-rest-api/database/post-role/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+        - title: Session
+          path: develop/references/sync-gateway/admin-rest-api/session/index.html
+          redirect_to: references/sync-gateway/admin-rest-api/index.html
+          items:
+          - title: GET /{db}/_session/{session-id}
+            path: develop/references/sync-gateway/admin-rest-api/session/get---db--_session--session-id-/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: POST /{db}/_session
+            path: develop/references/sync-gateway/admin-rest-api/session/post---db--_session-/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: DELETE /{db}/_session/{session-id}
+            path: develop/references/sync-gateway/admin-rest-api/session/delete---db--_session--session-id-/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: DELETE /{db}/_user/{name}/ _session/{session-id}
+            path: develop/references/sync-gateway/admin-rest-api/session/delete---db--_user--name--_session--session-id-/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: DELETE /{db}/_user/{name}/_session
+            path: develop/references/sync-gateway/admin-rest-api/session/delete---db--_user--name--_session-/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+        - title: User
+          path: develop/references/sync-gateway/admin-rest-api/user/index.html
+          redirect_to: references/sync-gateway/admin-rest-api/index.html
+          items:
+          - title: GET /{db}/_user/
+            path: develop/references/sync-gateway/admin-rest-api/user/get-user-list/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: GET /{db}/_user/{name}
+            path: develop/references/sync-gateway/admin-rest-api/user/get-user/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: POST /{db}/_user/
+            path: develop/references/sync-gateway/admin-rest-api/user/post-user/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: PUT /{db}/_user/{name}
+            path: develop/references/sync-gateway/admin-rest-api/user/put-user/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: DELETE /{db}/_user/{name}
+            path: develop/references/sync-gateway/admin-rest-api/user/delete-user/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+        - title: Role
+          path: develop/references/sync-gateway/admin-rest-api/role/index.html
+          redirect_to: references/sync-gateway/admin-rest-api/index.html
+          items:
+          - title: GET /{db}/_role/
+            path: develop/references/sync-gateway/admin-rest-api/role/get-role-list/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: GET /{db}/_role/{name}
+            path: develop/references/sync-gateway/admin-rest-api/role/get-role/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: POST /{db}/_role/
+            path: develop/references/sync-gateway/admin-rest-api/role/post-role/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: PUT /{db}/_role/{name}
+            path: develop/references/sync-gateway/admin-rest-api/role/put-role/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+          - title: DELETE /{db}/_role/{name}
+            path: develop/references/sync-gateway/admin-rest-api/role/delete-role/index.html
+            redirect_to: references/sync-gateway/admin-rest-api/index.html
+      - title: Release notes
+        path: develop/references/sync-gateway/release-notes/index.html
+        redirect_to: references/sync-gateway/release-notes.html
+        items:
+        - title: 1.1.1 September 15, 2015
+          path: develop/references/sync-gateway/release-notes/1.1.1/index.html
+          redirect_to: references/sync-gateway/release-notes.html
+        - title: 1.1.0 June 17, 2015
+          path: develop/references/sync-gateway/release-notes/1.1.0/index.html
+          redirect_to: references/sync-gateway/release-notes.html
+        - title: 1.0.4, March 5, 2015
+          path: develop/references/sync-gateway/release-notes/1.0.4/index.html
+          redirect_to: references/sync-gateway/release-notes.html
+        - title: 1.0.3, October 29, 2014
+          path: develop/references/sync-gateway/release-notes/1.0.3/index.html
+          redirect_to: references/sync-gateway/release-notes.html
+        - title: 1.0.2, August 27, 2014
+          path: develop/references/sync-gateway/release-notes/1.0.2/index.html
+          redirect_to: references/sync-gateway/release-notes.html
+        - title: 1.0.1, July 28, 2014
+          path: develop/references/sync-gateway/release-notes/1.0.1/index.html
+          redirect_to: references/sync-gateway/release-notes.html
+        - title: 1.0.0, May 21, 2014
+          path: develop/references/sync-gateway/release-notes/1.0.0/index.html
+          redirect_to: references/sync-gateway/release-notes.html
+  - title: Samples
+    path: develop/samples/samples/index.html
+    redirect_to: training/index.html
+    items:
+    - title: Samples
+      path: develop/samples/samples/index.html
+      redirect_to: training/index.html
