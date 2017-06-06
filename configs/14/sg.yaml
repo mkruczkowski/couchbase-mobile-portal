@@ -55,6 +55,10 @@ properties:
           bucket:
             type: string
             description: Bucket name on Couchbase Server or a Walrus bucket. The default is the database name.
+          import_docs:
+            type: boolean
+            description: If set to `true`, causes the Sync Gateway to scan the bucket on startup looking for documents that have no `_sync` metadata, and adding that metadata. You only want to have this on when you do the first import, because it will slow down the startup of the Sync Gateway. You also only want to run a single Sync Gateway while in this mode, otherwise they'll step on each other's toes tying to generate the `_sync` metadata at the same time.
+            default: false
           channel_index:
             type: object
             properties:
