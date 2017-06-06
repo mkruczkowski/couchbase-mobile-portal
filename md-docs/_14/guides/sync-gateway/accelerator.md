@@ -249,6 +249,6 @@ $ sg_accel accel-config.json
 ```
 
 <script>
-	window.configurl = 'https://cb-mobile.s3.amazonaws.com/mobile/1.4/configs/sg-accel.json';
+	window.configurl = 'https://couchbase-docs.s3.amazonaws.com/mobile/1.4/configs/{{ site.configs_last_commit }}/sg-accel.json';
 </script>
 <div id="root"></div>
