@@ -121,7 +121,7 @@ curl http://myservice.example.org/
 {“couchdb”:”Welcome”,”vendor”:{“name”:”Couchbase Sync Gateway”,”version”:1},”version”:”Couchbase Sync Gateway/1.0.3(81;fa9a6e7)”}
 ```
 
-If you access your server using its IP address, e.g. `http://127.0.0.1/(so that no `Host:` header is sent), you should see the standard `Welcome to nginx!` page.
+If you access your server using its IP address, e.g. `http://127.0.0.1/`(so that no `Host:` header is sent), you should see the standard `Welcome to nginx!` page.
 
 ```bash
 http://127.0.0.1/
