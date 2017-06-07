@@ -55,8 +55,16 @@ Databases that were created with Couchbase Mobile 1.2 or later can be read using
 
 <block class="swift" />
 
-#### Methods
-
-<block class="swift" />
-
 {% include swift/database.html %}
+
+<block class="objc" />
+
+{% include objc/database.html %}
+
+<block class="csharp" />
+
+{% include csharp/database.html %}
+
+<block class="java" />
+
+{% include java/database.html %}
