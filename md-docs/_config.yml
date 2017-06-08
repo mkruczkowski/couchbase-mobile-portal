@@ -46,6 +46,11 @@ defaults:
     values:
       layout: ready
 
+collections:
+  'all':
+    output: true
+    permalink: /:path:output_ext
+
 # Build settings
 #markdown: kramdown
 # Build settings

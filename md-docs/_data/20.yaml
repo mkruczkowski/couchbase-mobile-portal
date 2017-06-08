@@ -1,9 +1,11 @@
 - title: Developer Builds
   path: whatsnew.html
 - title: Couchbase Lite
-  path: guides/couchbase-lite/index.html
+  path: installation/index.html
   open: true
   items:
+    - title: Getting Started
+      path: guides/couchbase-lite/index.html
     - title: Database
       path: guides/couchbase-lite/native-api/database/index.html
     - title: Document
