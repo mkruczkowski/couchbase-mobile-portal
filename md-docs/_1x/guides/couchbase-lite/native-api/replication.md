@@ -263,15 +263,11 @@ No code example is currently available.
 
 ### Filtered pull from CouchDB, PouchDB or Cloudant
 
-Other non-Couchbase databases that Couchbase Lite can replicate with don't support channels, but they do support server-side filter functions. These are implemented in JavaScript and stored in special "design documents" in the server-side database. The CouchDB documentation describes how to write and install them.
-
-To use such a filter function in a pull replication, set the Replication object's filter property to a string of the form designDocName/filterName. For example, if the server-side design document is named _design/access and you want to use its filter function called byYear, you would set the Replication.filter property to "access/byYear".
-
-(The same example from the previous section applies here too; the difference is on the remote server, where the byOwner filter would be defined as a JavaScript function stored in a design document.)
+Since Couchbase Lite 1.2, filter functions in pull replications with non-Couchbase databases are no longer available. There is an incompatibility in the way the `filter` parameter is handled in the `POST /{db}/_changes` request (see [#1139](https://github.com/couchbase/couchbase-lite-ios/issues/1139)).
 
 ### Filtering by document IDs
 
-In one-shot **pull** replications with Sync Gateway, it's possible to specify a list of document IDs (this feature is not available for replications in continuous mode, see [1703](https://github.com/couchbase/sync_gateway/issues/1703)). The code below pulls the documents with ID "123" and "xyz" if they exist and the user has access to them.
+In one-shot **pull** replications with Sync Gateway, it's possible to specify a list of document IDs (this feature is not available for replications in continuous mode, see [#1703](https://github.com/couchbase/sync_gateway/issues/1703)). The code below pulls the documents with ID "123" and "xyz" if they exist and the user has access to them.
 
 <div class="tabs"></div>
 
