@@ -4,6 +4,19 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 
+### Developer build 9
+
+<block class="net" />
+
+* ReplicationOptions -> ReplicatorConfiguration
+* IReplication -> Replicator
+* TLS support for replication (blips)
+* Online / offline network change handling
+* Channel replication support (waiting on SG fix)
+* Make DI system public to allow third party support assemblies
+
+<block class="all" />
+
 ### Developer build 8
 
 <block class="objc" />
