@@ -67,6 +67,15 @@ When a non-Sync Gateway write is imported into Sync Gateway, that import is done
 
 Channel assignment and access grants performed by the Sync Function behave as usual during import.  
 
+### Metadata Purge Interval
+
+Starting in 1.5, tombstones will be purged based on Couchbase Server's Metadata Purge Interval. The default Metadata Purge Interval is set to 3 days which can potentially result in tombstones being purged before all clients have had to chance to get notified of it. For that reason, the Metadata Purge Interval should be increased to the maximum amount of time users are expected to be offline between pull replications.
+
+Ways to tune the Metadata Purge Interval:
+
+- Bucket settings [on UI](https://developer.couchbase.com/documentation/server/5.0/settings/configure-compact-settings.html)
+- Bucket endpoint [on the REST API](https://developer.couchbase.com/documentation/server/4.6/rest-api/rest-bucket-create.html)
+
 ## Try it out
 
 1. [Download the latest Developer Build](https://www.couchbase.com/downloads) of Couchbase Server 5.0.
