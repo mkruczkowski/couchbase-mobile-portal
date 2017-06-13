@@ -11,6 +11,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 * ReplicationOptions -> ReplicatorConfiguration
 * IReplication -> Replicator
 * TLS support for replication (blips)
+* HTTP Basic auth support for replication (via `ReplicationOptionsDictionary` -> 'AuthOptionsDictionary`).  This API will probably change.
 * Online / offline network change handling
 * Channel replication support (waiting on SG fix)
 * Make DI system public to allow third party support assemblies
