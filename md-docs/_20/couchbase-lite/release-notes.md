@@ -16,6 +16,11 @@ permalink: references/couchbase-lite/release-notes/index.html
 * Channel replication support (waiting on SG fix)
 * Make DI system public to allow third party support assemblies
 
+<block class="java" />
+* Replication API
+* Replicator - Basic Authentication
+* Replicator - Online / Offline network change handling
+
 <block class="all" />
 
 ### Developer build 8
