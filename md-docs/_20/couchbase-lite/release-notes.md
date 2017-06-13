@@ -17,6 +17,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 * Make DI system public to allow third party support assemblies
 
 <block class="java" />
+
 * Replication API
 * Replicator - Basic Authentication
 * Replicator - Online / Offline network change handling
