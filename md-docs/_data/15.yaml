@@ -1,3 +1,7 @@
 - title: What's new in 1.5
-  open: true
   path: whatsnew.html
+- title: Sync Gateway
+  open: true
+  items:
+    - title: Release notes
+      path: references/sync-gateway/release-notes.html
