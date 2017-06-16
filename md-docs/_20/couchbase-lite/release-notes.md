@@ -14,6 +14,10 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 * Fixed replicator not correctly encoding documents when it saves the documents
 
+<block class="java" />
+
+* Fixed replicator not correctly encoding documents when it saves the documents
+
 ### Developer build 9
 
 <block class="objc" />
