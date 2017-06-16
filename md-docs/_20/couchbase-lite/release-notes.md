@@ -19,13 +19,13 @@ permalink: references/couchbase-lite/release-notes/index.html
 <block class="objc" />
 
 * Added an ability to pin server certificate to a replicator
-* Fixed custom fuctions not being registered in all opened SQLite connections
+* Fixed custom functions not being registered in all opened SQLite connections
 * Fixed unused blobs not being garbaged after compacting a database
 
 <block class="swift" />
 
 * Added an ability to pin server certificate to a replicator
-* Fixed custom fuctions not being registered in all opened SQLite connections
+* Fixed custom functions not being registered in all opened SQLite connections
 * Fixed unused blobs not being garbaged after compacting a database
 
 <block class="net" />
