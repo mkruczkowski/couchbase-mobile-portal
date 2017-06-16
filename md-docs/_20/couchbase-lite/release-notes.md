@@ -4,7 +4,29 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 
+### Developer build 10
+
+<block class="objc" />
+
+* Fixed replicator not correctly encoding documents when saving the documents
+
+<block class="swift" />
+
+* Fixed replicator not correctly encoding documents when saving the documents
+
 ### Developer build 9
+
+<block class="objc" />
+
+* Added an ability to pin server certificate to a replicator
+* Fixed custom fuctions not being registered in all opened SQLite connections
+* Fixed unused blobs not being garbaged after compacting
+
+<block class="swift" />
+
+* Added an ability to pin server certificate to a replicator
+* Fixed custom fuctions not being registered in all opened SQLite connections
+* Fixed unused blobs not being garbaged after compacting
 
 <block class="net" />
 
