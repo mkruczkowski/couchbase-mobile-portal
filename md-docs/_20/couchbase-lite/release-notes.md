@@ -8,11 +8,11 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 <block class="objc" />
 
-* Fixed replicator not correctly encoding documents when saving the documents
+* Fixed replicator not correctly encoding documents when it saves the documents
 
 <block class="swift" />
 
-* Fixed replicator not correctly encoding documents when saving the documents
+* Fixed replicator not correctly encoding documents when it saves the documents
 
 ### Developer build 9
 
