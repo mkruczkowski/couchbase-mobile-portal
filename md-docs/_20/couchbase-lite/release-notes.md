@@ -9,19 +9,6 @@ permalink: references/couchbase-lite/release-notes/index.html
 <block class="objc" />
 
 * Fixed replicator not correctly encoding documents when it saves the documents
-
-<block class="swift" />
-
-* Fixed replicator not correctly encoding documents when it saves the documents
-
-<block class="java" />
-
-* Fixed replicator not correctly encoding documents when it saves the documents
-
-### Developer build 9
-
-<block class="objc" />
-
 * Added an ability to pin server certificate to a replicator
 * Fixed custom functions not being registered in all opened SQLite connections
 * Fixed unused blobs not being garbaged after compacting a database
@@ -31,6 +18,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 * Added an ability to pin server certificate to a replicator
 * Fixed custom functions not being registered in all opened SQLite connections
 * Fixed unused blobs not being garbaged after compacting a database
+* Fixed replicator not correctly encoding documents when it saves the documents
 
 <block class="net" />
 
@@ -47,6 +35,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 * Replication API
 * Replicator - Basic Authentication
 * Replicator - Online / Offline network change handling
+* Fixed replicator not correctly encoding documents when it saves the documents
 
 <block class="all" />
 
