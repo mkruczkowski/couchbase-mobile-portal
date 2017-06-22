@@ -20,3 +20,5 @@
       path: guides/couchbase-lite/native-api/replication/index.html
     - title: Release notes
       path: references/couchbase-lite/release-notes/index.html
+    - title: Technical notes
+      path: guides/couchbase-lite/tech-notes/index.html
