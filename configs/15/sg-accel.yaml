@@ -10,6 +10,10 @@ properties:
         type: integer
         description: Represents the maximum number of concurrent Sync Gateway Accelerator nodes that can be supported by the index. It is only necessary to override the default value for large Sync Gateway Accelerator clusters (> 16 nodes). Higher num_shards values can result in a more fragmented index, as entries in the index are grouped by shard. A higher num_shards value results in more work for index reads that scan all shards (in large backfill scenarios for example). Changing num_shards requires a flush to rebuild the channel index bucket.
         default: 16
+      tombstone_compact_freq:
+        type: integer
+        description: Process that runs periodically to identify any tombstones that are older than the server's metadata purge interval. These tombstones are then purged from the channel index and the new tombstone index.
+        default: 24
   cluster_config:
     type: object
     description: The configuration to specify where the data bucket resides.
