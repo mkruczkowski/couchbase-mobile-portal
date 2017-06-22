@@ -12,7 +12,7 @@ properties:
         default: 16
       tombstone_compact_freq:
         type: integer
-        description: Process that runs periodically to identify any tombstones that are older than the server's metadata purge interval. These tombstones are then purged from the channel index and the new tombstone index.
+        description: How often tombstones should be compacted in the channel index.  When compaction runs, it identifies tombstones that are older than the server's metadata purge interval and removes them from Sync Gateway Accelerator's channel index. 
         default: 24
   cluster_config:
     type: object
