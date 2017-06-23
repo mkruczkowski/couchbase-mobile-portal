@@ -174,7 +174,7 @@
     tags:
       - document
     parameters:
-      - $ref: '#/parameters/rev'
+      - $ref: '#/parameters/rev_delete'
     summary: Delete document
     description: |
       This request deletes a document from the database. When a document is deleted, the revision number is updated so the database can track the deletion in synchronized copies.

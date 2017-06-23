@@ -175,6 +175,12 @@ rev:
   description: Revision identifier of the parent revision the new one should replace. (Not used when creating a new document.)
   type: string
   required: false
+rev_delete:
+  name: rev
+  in: query
+  description: Revision identifier of the revision to delete. It must be the identifier of the latest revision in the history.
+  type: string
+  required: true
 revs:
   in: query
   name: revs
