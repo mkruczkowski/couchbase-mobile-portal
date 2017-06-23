@@ -158,7 +158,7 @@ local_doc:
 new_edits:
   name: new_edits
   in: query
-  description: Default is true. Setting this to false indicates that the request body is an already-existing revision that should be directly inserted into the database, instead of a modification to apply to the current document. (This mode is used by the replicato.)
+  description: Default is true. Setting this to false indicates that the request body is an already-existing revision that should be directly inserted into the database, instead of a modification to apply to the current document. (This mode is used by the replicato.) This option must be used in conjunction with the `_revisions` property in the request body.
   type: boolean
   default: true
 open_revs:

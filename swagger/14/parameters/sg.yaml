@@ -9,6 +9,7 @@ bulkdocs:
         type: array
         items:
           type: object
+          $ref: '#/definitions/Document'
       new_edits:
         description: Indicates whether to assign new revision identifiers to new edits.
         type: boolean
