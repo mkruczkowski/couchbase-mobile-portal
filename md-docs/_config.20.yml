@@ -11,7 +11,7 @@ swift_dev_build_download_link: https://packages.couchbase.com/releases/couchbase
 references:
   objc: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db010/'
   swift: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db010/'
-  csharp: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db010/'
+  csharp: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db011/'
   java: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/db010/'
 sg_download_link: 'https://packages.couchbase.com/releases/couchbase-sync-gateway/1.5.0-dp001/couchbase-sync-gateway-community_1.5.0-377_x86_64'
 platform_support:
@@ -19,5 +19,5 @@ platform_support:
   tvos: tvOS 10.0.1+
   android: Android 4.1+
   macos: macOS 10.10+
-  dotnet: .NET 4.5 (UWP)
+  dotnet: .NET Core 1.0+ (.NET 4.6.1+), UWP, Xamarin iOS, Xamarin Android
   java: Java 7,8
