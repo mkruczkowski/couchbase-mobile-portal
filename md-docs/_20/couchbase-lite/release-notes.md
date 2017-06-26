@@ -4,6 +4,13 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 
+### Developer build 11
+
+<block class="java" />
+
+* LiveQuery
+* Authentication for Replicator 
+
 ### Developer build 10
 
 <block class="objc" />
