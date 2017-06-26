@@ -1,0 +1,613 @@
+/_config:
+  get:
+    tags:
+      - server
+    summary: Server configuration
+    description: |
+      Returns the Sync Gateway configuration of the running instance. This is a good method to check if a 
+      particular key was set correctly on the config file.
+    responses:
+      200:
+        description: Sync Gateway configuration of the running instance.
+/_expvar:
+  get:
+    tags:
+      - server
+    summary: Debugging/monitoring at runtime
+    description: Number of runtime variables that you can view for debugging or performance monitoring purposes.
+    responses:
+      200:
+        description: hello
+        schema:
+          $ref: '#/definitions/ExpVars'
+/_logging:
+  get:
+    tags:
+      - server
+    summary: Get logging tags
+    description: |
+      Get logging tags of running instance.
+    responses:
+      200:
+        description: | 
+          The response is a set of key-value pairs. The key is a log tag and the value is a boolean to indicate whether this tag is enabled.
+        schema:
+          $ref: '#/definitions/LogTags'
+  put:
+    tags:
+      - server
+    summary: Set all logging tags
+    description: |
+      Enabling logging for a tag provides additional diagnostic information for that logging area.
+      
+      The PUT request replaces all existing logging tags with the ones specified in the request body.
+    parameters:
+      - $ref: '#/parameters/loglevel'
+      - $ref: '#/parameters/logtags'
+    responses:
+      201:
+        description: The operation was successful
+  post:
+    tags:
+      - server
+    summary: Set individual logging tags
+    description: |
+      Enabling logging for a tag provides additional diagnostic information for that logging area.
+      
+      The POST request only updates the tags specified in the request body.
+    parameters:
+      - $ref: '#/parameters/loglevel'
+      - $ref: '#/parameters/logtags'
+    responses:
+      201:
+        description: The operation was successful
+/_replicate:
+  post:
+    tags:
+      - server
+    summary: Starts or cancels a database replication operation
+    description: |
+      This request starts or cancels a database replication operation.
+      
+      You can cancel continuous replications by adding the cancel field to the JSON request object and setting the value to true. Note that the structure of the request must be identical to the original for the cancellation request to be honoured. For example, if you requested continuous replication, the cancellation request must also contain the continuous field.
+    parameters:
+      - $ref: '#/parameters/replication'
+    responses:
+      200:
+        description: 200 OK
+        schema:
+          $ref: '#/definitions/Replication'
+/{db}/:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - database
+    summary: Database info
+    description: |
+      This request retrieves information about the database.
+    responses:
+      200:
+        description: Request completed successfully.
+        schema:
+          $ref: '#/definitions/Database'
+      401:
+        description: Unauthorized. Login required.
+      404:
+        description: Not Found. Requested database not found.
+  post:
+    tags:
+      - document
+    operationId: post
+    summary: Create document
+    description: |
+      This request creates a new document in the specified database. You can either specify the document ID by including the _id in the request message body (the value must be a string), or let the software generate an ID.
+    parameters:
+      - in: body
+        name: body
+        description: The document body
+        schema:
+          type: object
+    responses:
+      201:
+        description: The document was written successfully
+        schema:
+          $ref: '#/definitions/Success'
+  put:
+    tags:
+      - database
+    summary: Create database
+    description: >
+      This request creates a database.
+      
+      You can optionally pass the database config as the JSON body. For example:
+      
+        {
+          "server":"http://localhost:8091",
+          "bucket": "todo_app",
+          "users": {
+            "john": {"password": "pass", "admin_channels": ["*"]}
+          }
+        }
+      
+      Note that if you pass the entire config file it won't work, it must be the database portion only (the database name is specified in the URL path). If the parameters passed are invalid it will create a walrus-backed database with all values set to default.
+      
+      By default, the database that is created is brought online immediately. To create the database and keep it offline, include the configuration property `offline` with the value `true` in the database configuration properties for the database that you are posting in the request body.
+    responses:
+      201:
+        description: The database was created successfully.
+  delete:
+    tags:
+      - database
+    summary: Delete database
+    description: Delete database
+    responses:
+      200:
+        description: Success
+        schema:
+          $ref: '#/definitions/Success'
+/{db}/_compact:
+  parameters:
+    - $ref: '#/parameters/db'
+  post:
+    tags:
+      - database
+    summary: Compact the database
+    description: |
+      This request deletes obsolete backup revisions. When a new revision is created, the body of the previous non-conflicting revision is temporarily stored in a separate document. These backup documents are set to expire after 5 minutes. Calling the _compact endpoint will remove these backup documents immediately. For tombstone management operations, refer to the revs_limit configuration and the /{db}/_purge endpoint.
+    responses:
+      200:
+        description: Request completed successfully.
+        schema:
+          type: object
+          properties:
+            revs:
+              type: integer
+              description: Count of the number of revisions that were compacted away.
+/{db}/_config:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - database
+    summary: Database configuration
+    description: |
+      Returns the Sync Gateway configuration of the database specified in the URL. This is a good method to check if a particular key was set correctly on the config file.
+    responses:
+      200:
+        description: Sync Gateway configuration of the running instance.
+  put:
+    tags:
+      - database
+    summary: Update database configuration
+    description: This request updates the configuration for the database specified in the URL.
+    parameters:
+      - in: body
+        name: body
+        description: The message body is a JSON document with the same set of properties described in the Database configuration section of the configuration file documentation.
+        schema:
+          type: object
+    responses:
+      201:
+        description: Created
+/{db}/_design/{ddoc}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/ddoc'
+  get:
+    tags:
+      - query
+    summary: Get Views of a design document
+    description: |
+      Query a design document.
+    responses:
+      200:
+        description: Views for design document
+        schema:
+          type: object
+          properties:
+            my_view_name:
+              $ref: '#/definitions/View'
+  put:
+    tags:
+      - query
+    summary: Update views of a design document
+    parameters:
+      - in: body
+        name: body
+        description: The request body
+        required: false
+        schema:
+          $ref: "#/definitions/View"
+    responses:
+      201:
+        description: Successful operation
+        schema:
+          $ref: '#/definitions/Success'
+  delete:
+    tags:
+      - query
+    summary: Delete design document
+    description: |
+      Delete a design document.
+    responses:
+      200:
+        description: The status
+        schema:
+          type: object
+          items:
+            $ref: '#/definitions/Design'
+      default:
+        description: Unexpected error
+        schema:
+          $ref: '#/definitions/Error'
+/{db}/_offline:
+  parameters:
+    - $ref: '#/parameters/db'
+  post:
+    tags:
+      - database
+    summary: This request takes the specified database offline.
+    description: |
+      An offline database is not accessible through Sync Gateway's Public REST API. However, some commands can be given to Sync Gateway through the Admin REST API.
+      
+      Taking a database offline will:
+      
+      - Cleanly closes all active `_changes` feeds for this database.
+      - Rejects all access to the database through the Public REST API (503 Service Unavailable).
+      - Rejects most Admin API requests (503 Service Unavailable). A specific, short list of Admin REST API requests remain available (`GET /{db}`, `PUT /{db}/_config`, `POST /{db}/_resync`).
+      - Stops webhook event handlers.
+      - Does not take the backing Couchbase Server bucket offline. The bucket remains available and Sync Gateway keeps its connection to the bucket.
+      
+      When a database is offline, you can load configuration properties for the database, without stopping and re-starting the Sync Gateway instance. The new configuration properties are applied when the database is brought online.
+      
+      Taking a database offline that is in the progress of coming online will take the database offline after it comes online.
+      
+      For more information about taking a database offline and bringing it back online, see [this guide](../../../guides/sync-gateway/database-offline/index.html).
+    responses:
+      200:
+        description: Database brought online
+/{db}/_online:
+  parameters:
+    - $ref: '#/parameters/db'
+  post:
+    tags:
+      - database
+    summary: Bring a database online.
+    description: |
+      When a database is online, Sync Gateway serves both Public and Admin REST API requests for the database. This request brings the specified database online, either immediately or after a specified delay.
+      
+      Bringing a database online:
+      
+      - Closes the datbases connection to the backing Couchbase Server bucket.
+      - Reloads the databse configuration, and connects to the backing Cocuhbase Server bucket.
+      - Re-establishes access to the database from the Public REST API.
+      - Accepts all Admin API requests.
+      
+      You can bring an offline database online after a specific delay. Uses for this include:
+      
+      - Making a database available for Couchbase Mobile clients at a specific time.
+      - Making databases on several Sync Gateway instances available at the same time.
+      
+      For more information about taking a database offline and bringing it back online, see [this guide](../../../guides/sync-gateway/database-offline/index.html).
+    parameters:
+      - in: body
+        name: body
+        description: Optional request body to specify a delay.
+        required: false
+        schema:
+          type: object
+          properties:
+            delay:
+              type: integer
+              description: Delay in seconds before bringing the database online.
+    responses:
+      200:
+        description: OK – online request accepted.
+      503:
+        description: Service Unavailable – Database resync is in progress.
+/{db}/_purge:
+  parameters:
+   - $ref: '#/parameters/db'
+  post:
+   tags:
+     - document
+   summary: Purge document
+   description: |
+     The purge command provides a way to remove a document from the bucket itself. The operation removes all the revisions (active and tombstones) for the specified document(s). A common usage of this endpoint is to remove tombstone documents that are no longer needed, thus recovering storage space and reducing data replicated to clients. Other clients are not notified when a revision has been purged; so in order to purge a revision from the system it must be done from all databases (on Couchbase Lite and Sync Gateway).
+   parameters:
+     - in: body
+       name: body
+       description: The message body is a JSON document that contains the following objects.
+       schema:
+         $ref: '#/definitions/PurgeBody'
+   responses:
+     200:
+       description: OK – The purge operation was successful
+       schema:
+         type: object
+         description: Response object
+         properties:
+           a_doc_id:
+             type: array
+             description: Contains one property for each document ID successfully purged, the property key is the "docID" and the property value is a list containing the single entry "*".
+             items:
+               type: string
+               description: Revision ID that was purged
+/{db}/_raw/{doc}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/doc'
+  get:
+    tags:
+      - document
+    summary: Document with metadata
+    description: Returns the document with the metadata.
+    responses:
+      200:
+        description: hello
+        schema:
+          $ref: '#/definitions/DocMetadata'
+/{db}/_resync:
+  parameters:
+    - $ref: '#/parameters/db'
+  post:
+    tags:
+      - database
+    summary: Reprocess all documents by the database in the sync function.
+    description: |
+      This request causes all documents to be reprocessed by the database sync function. The _resync operation should be called if the sync function for a databse has been modified in such a way that the channel or access mappings for any existing document would change as a result.
+      
+      When the sync function is invoked by _resync, the requireUser() and requireRole() calls will always return 'true'.
+      
+      A _resync operation on a database that is not in the offline state will be rejected (503 Service Unavailable).
+      
+      A _resync operation will block until all documents in the database have been processed.
+    responses:
+      200:
+        description: OK – The _resync operation has completed
+        schema:
+          type: object
+          description: The number of documents that were successfully updated.
+          properties:
+            changes:
+              type: integer
+              description: The number of documents that were successfully updated
+/{db}/_role:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - database
+    summary: Get roles
+    description: This request returns all the roles in the specified database.
+    responses:
+      200:
+        description: 200 OK – Returns the list of roles as an array of strings
+        schema:
+          type: array
+          description: The message body contains the list of roles in a JSON array. Each element of the array is a string representing the name of a role in the specified database.
+          items:
+            type: string
+  post:
+    tags:
+      - database
+    summary: Role
+    description: This request creates a new role in the specified database.
+    parameters:
+      - $ref: '#/parameters/role'
+    responses:
+      201:
+        description: 201 OK – The role was created successfully
+      409:
+        description: 409 Conflict – A role with this name already exists
+/{db}/_role/{name}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/name'
+  get:
+    tags:
+      - database
+    summary: Get role
+    description: Request a specific role by name.
+    responses:
+      200:
+        description: The response contains information about this role.
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            admin_channels:
+              type: array
+              description: |
+                The admin channels that this role has granted access to. Admin channels are the ones which were 
+                granted access to in the config file or via the Admin REST API.
+              items:
+                type: string
+            all_channels:
+              type: array
+              description: All the channels that this role has access to.
+              items:
+                type: string
+  put:
+    tags:
+      - role
+    summary: Creates or updates a role
+    description: This request creates or updates a role in the specified database.
+    parameters:
+      - $ref: '#/parameters/role'
+    responses:
+      200:
+        description: 200 OK – The role was updated successfully
+      201:
+        description: 201 Created – The role was created successfully
+  delete:
+    tags:
+      - role
+    summary: Deletes the role
+    description: This request deletes the role with the specified name in the specified database.
+    responses:
+      200:
+        description: 200 OK – The role was successfully deleted
+/{db}/_session:
+  parameters:
+    - $ref: '#/parameters/db'
+  post:
+    tags:
+      - session
+    summary: Creates a new session
+    description: |
+      If the credentials provided in the request body are valid, the session is created with an idle session timeout of 24 hours. An idle session timeout in the context of Sync Gateway is defined as the following: if 10% or more of the current expiration time has elapsed when a subsequent request with that session id is processed, the session's expiry time is automatically updated to 24 hours from that time.
+    parameters:
+      - in: body
+        name: SessionBody
+        description: The message body is a JSON document that contains the following objects.
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Username of the user the session will be associated to.
+            ttl:
+              description: Default is 24 hours (86400 seconds). The TTL (time-to-live) of the session, in seconds.
+              type: integer
+              default: 86400 
+    responses:
+      200:
+        description: Session successfully created.
+        schema:
+          type: object
+          properties:
+            cookie_name:
+              type: string
+              description: Cookie used for session handling
+            expires:
+              type: string
+              description: Expiration time for session.
+            session_id:
+              type: string
+              description: Session ID.
+/{db}/_session/{sessionid}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/sessionid'
+  get:
+    tags:
+      - session
+    summary: Retrieves information about a session
+    description: |
+      This request retrieves information about a session.
+    responses:
+      200:
+        description: 200 OK – Request completed successfully.
+        schema:
+          type: object
+          properties:
+            authentication_handlers:
+              type: array
+              items:
+                type: object
+                description: List of supported authentication handlers
+            ok:
+              type: boolean
+              description: Success flag
+            userCtx:
+              type: object
+              description: Contains an object with properties channels (the list of channels for the user associated with the session) and name (the user associated with the session)
+  delete:
+    tags:
+      - session
+    summary: Deletes a single session
+    description: |
+      This request deletes a single session.
+    responses:
+      200:
+        description: 200 OK – Request completed successfully. If the session is successfully deleted, the response has an empty message body. If the session is not deleted, the message body contains error information.
+/{db}/_user/{name}/_session:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/name'
+  delete:
+    tags:
+      - session
+    summary: Deletes all user sessions
+    description: This request delete the session for the specified user.
+    responses:
+      200:
+        description: User session deleted.
+/{db}/_user/{name}/_session/{sessionid}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/name'
+    - $ref: '#/parameters/sessionid'
+  delete:
+    tags:
+      - session
+    summary: Deletes a specific user session
+    description: This request delete the specified session for the specified user.
+    responses:
+      200:
+        description: User session deleted.
+/{db}/_user/:
+  parameters:
+    - $ref: '#/parameters/db'
+  get:
+    tags:
+      - user
+    summary: Retrieves all users
+    description: This request returns all the users in the specified database.
+    responses:
+      200:
+        description: The message body contains the list of users in a JSON array. Each element of the array is a string representing the name of a user in the specified database.
+        schema:
+          type: array
+          items:
+            type: string
+            description: username
+  post:
+    tags:
+      - user
+    summary: Creates a new user
+    description: This request creates a new user in the specified database.
+    parameters:
+      - $ref: '#/parameters/user'
+    responses:
+      201:
+        description: 201 OK – The user was created successfully
+      409:
+        description: 409 Conflict – A user with this name already exists
+/{db}/_user/{name}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/name'
+  get:
+    tags:
+      - user
+    summary: Retrieves a specific user
+    description: This request returns information about the specified user.
+    responses:
+      200:
+        description: 200 OK – Returns information about the specified user
+        schema:
+          $ref: '#/definitions/User'
+  put:
+    tags:
+      - user
+    summary: Creates or updates a user
+    description: This request creates or updates a user in the specified database.
+    parameters:
+      - $ref: '#/parameters/user'
+    responses:
+      200:
+        description: 200 OK – The user record was updated successfully
+      201:
+        description: 201 Created – The user record was created successfully
+  delete:
+    tags:
+      - user
+    summary: Deletes a user
+    description: This request deletes the user with the specified name in the specified database.
+    responses:
+      200:
+        description: 200 OK – The user was successfully deleted

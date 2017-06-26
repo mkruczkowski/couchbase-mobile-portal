@@ -1,0 +1,68 @@
+/{db}/{doc}/{attachment}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/doc'
+    - $ref: '#/parameters/attachment'
+  get:
+    tags:
+      - attachment
+    summary: Get attachment
+    description: |
+      This request retrieves a file attachment associated with the document. The raw data of the associated attachment is returned (just as if you were accessing a static file). The Content-Type response header is the same content type set when the document attachment was added to the database.
+    parameters:
+      - $ref: '#/parameters/rev'
+    responses:
+      200:
+        description: The message body contains the attachment, in the format specified in the Content-Type header.
+        schema:
+          type: string
+          format: binary
+      304:
+        description: Not Modified, the attachment wasn't modified if ETag equals the If-None-Match header
+      404:
+        description: Not Found, the specified database, document or attachment was not found.
+  put:
+    tags:
+      - attachment
+    summary: Add or update document
+    description: |
+      This request adds or updates the supplied request content as an attachment to the specified document. The attachment name must be a URL-encoded string (the file name). You must also supply either the rev query parameter or the If-Match HTTP header for validation, and the Content-Type headers (to set the attachment content type).
+
+        When uploading an attachment using an existing attachment name, the corresponding stored content of the database will be updated. Because you must supply the revision information to add an attachment to the document, this serves as validation to update the existing attachment.
+
+        Uploading an attachment updates the corresponding document revision. Revisions are tracked for the parent document, not individual attachments.
+    parameters:
+      - $ref: '#/parameters/rev'
+      - $ref: '#/parameters/body'
+      - $ref: '#/parameters/content_type'
+    responses:
+      200:
+        description: Operation completed successfully
+        schema:
+          $ref: '#/definitions/Success'
+      409:
+        description: Conflict, the document revision wasn't specified or it's not the latest.
+/{db}/_bulk_docs:
+  parameters:
+    - $ref: '#/parameters/db'
+  post:
+    tags:
+      - database
+    summary: Bulk docs
+    description: |
+      This request enables you to add, update, or delete multiple documents to a database in a single request. To add new documents, you can either specify the ID (`_id`) or let the software create an ID. To update existing documents, you must provide the document ID, revision identifier (`_rev`), and new document values. To delete existing documents you must provide the document ID, revision identifier, and the deletion flag (`_deleted`).
+      
+      The JSON returned by the `_bulk_docs` operation consists of an array of JSON structures, one for each document in the original submission. The returned JSON structure should be examined to ensure that all of the documents submitted in the original request were successfully added to the database.
+    parameters:
+      - $ref: '#/parameters/bulkdocs'
+    responses:
+      201:
+        description: Documents have been created or updated. The response object is an array with the status for each document submitted in the original request.
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/Success'
+      409:
+        description: The operation failed with a forbidden error. Probably because the document already exists in the database but a revision number wasn't specified.
+        schema:
+          $ref: '#/definitions/Forbidden'
