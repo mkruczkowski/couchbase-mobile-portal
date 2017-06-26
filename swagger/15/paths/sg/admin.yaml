@@ -373,6 +373,27 @@
             changes:
               type: integer
               description: The number of documents that were successfully updated
+/{db}/_revtree/{doc}:
+  parameters:
+    - $ref: '#/parameters/db'
+    - $ref: '#/parameters/doc'
+  get:
+    produces:
+      - text/plain
+    tags:
+      - document
+    summary: Revision Tree structure in Graphviz Dot format 
+    description: Returns the dot syntax of the revision tree which can be rendered into a PNG image with the [CLI dot tool](http://www.graphviz.org/).
+
+      - Install the dot tool via `brew install graphviz`.
+      
+      - Save the response text to a file (for example, **revtree.dot**).
+      
+      - Render a PNG by calling `dot -Tpng revtree.dot > revtree.png`.
+    
+    responses:
+      200:
+        description: Success and returns the revtree as plain text.
 /{db}/_role:
   parameters:
     - $ref: '#/parameters/db'

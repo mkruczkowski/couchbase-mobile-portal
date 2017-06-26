@@ -303,20 +303,6 @@
         description: hello
         schema:
           $ref: '#/definitions/DocMetadata'
-/{db}/_revtree/{doc}:
-  parameters:
-    - $ref: '#/parameters/db'
-    - $ref: '#/parameters/doc'
-  get:
-    tags:
-      - document
-    summary: Revision Tree structure in Graphviz Dot format 
-    description: Returns dot syntax of the revision tree which can be rendered into a PNG with the CLI dot tool, which can be installed via "brew install dot".  Save the response to revtree.dot, and render a PNG by calling "dot -Tpng revtree.dot"
-    responses:
-      200:
-        description: hello
-        schema:
-          type: string
 /{db}/_resync:
   parameters:
     - $ref: '#/parameters/db'
