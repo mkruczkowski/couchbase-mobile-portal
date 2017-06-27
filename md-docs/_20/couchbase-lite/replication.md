@@ -2,7 +2,7 @@
 permalink: guides/couchbase-lite/native-api/replication/index.html
 ---
 
-<block class="swift objc csharp" />
+<block class="all" />
 
 ## Replication
 
@@ -83,10 +83,31 @@ var config = new ReplicatorConfiguration {
     Target = url
 };
 var replication = new Replicator(config);
+
+replication.StatusChanged += (object sender, ReplicationStatusChangedEventArgs e) => {
+	if (e.Status.Activity == ReplicatorActivityLevel.Stopped) {
+		Console.WriteLine("Replication has completed.");
+	}
+};
+
 replication.Start();
 ```
 
-<block class="swift objc csharp" />
+<block class="java" />
+
+```java
+URI uri = null;
+try {
+	uri = new URI("blip://10.0.2.2:4984/db");
+} catch (URISyntaxException e) {
+	e.printStackTrace();
+}
+ReplicatorConfiguration replConfig = new ReplicatorConfiguration(database, uri);
+Replicator replicator = new Replicator(replConfig);
+replicator.start();
+```
+
+<block class="all" />
 
 The URL scheme for remote database URLs has changed. You should now use `blip:`, or `blips:` for SSL/TLS connections (or the more-standard `ws:` / `wss:` notation).
 
@@ -98,7 +119,7 @@ Performance is hard to quantify because it depends so much on document size, net
 
 > **Troubleshooting:** As always with replication, logging is your friend. The `Sync` tag logs information specific to the replicator, and `WS` logs about the WebSocket. If you have connectivity problems, make sure that any proxy server (like nginx) in front of Sync Gateway supports WebSockets.
 
-<block class="swift objc csharp" />
+<block class="all" />
 
 ### Conflict Handling
 

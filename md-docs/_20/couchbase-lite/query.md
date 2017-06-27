@@ -161,6 +161,35 @@ If the return values of a query include calls to aggregate functions like `count
 
 If you set the query's `groupBy` property, all rows that have the same values of the expressions given in that property will be grouped together. In this case, aggregate functions will operate on the rows in a group, not all the rows of the query.
 
+<block class="csharp java" />
+
+### Live Query
+
+A live query stays active and monitors the database and query index for changes. When there's a change it re-runs itself automatically, and if the query results changed it notifies any observers. The following code monitors query changes and prints the number of rows when a change occurs.
+
+<block class="csharp" />
+
+```csharp
+var liveQuery = query.ToLiveQuery();
+liveQuery.Changed += (sender, e) => {
+	Console.WriteLine($"Number of rows :: {e.Rows.Count}");
+};
+liveQuery.Start();
+```
+
+<block class="java" />
+
+```java
+final LiveQuery liveQuery = query.toLive();
+liveQuery.addChangeListener(new LiveQueryChangeListener() {
+	@Override
+	public void changed(LiveQueryChange change) {
+		Log.d("query", String.format("Number of rows :: %s", change.getRows().toString()));
+	}
+});
+liveQuery.run();
+```
+
 <block class="all" />
 
 ### Query Performance
