@@ -6,7 +6,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 ### Developer build 11
 
-<block class="java objc swift" />
+<block class="java objc swift csharp" />
 
 * LiveQuery
 * Authentication for Replicator 
