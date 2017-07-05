@@ -233,4 +233,6 @@ Before installing Sync Gateway, you should have completed the Getting Started in
 
 2. Run the application where Couchbase Lite is installed. You should then see the documents that were replicated on the admin UI at http://localhost:4985/_admin/.
 
+{% include experimental-label.html %}
+
 <img src="../img/admin-ui-getting-started.png" class=center-image />

@@ -219,7 +219,9 @@ The `CBLAuthenticator` class has static methods for each authentication method s
 
 3. Now login with the credentials saved in the config file previously (**user1/pass**) and create a new list. Open the Sync Gateway Admin UI at [http://localhost:4985/_admin/db/todo](http://localhost:4985/_admin/db/todo), the list document is successfully replicated to Sync Gateway as an authenticated user.
 
-    ![](img/image35.png)
+{% include experimental-label.html %}
+
+<img src="img/image35.png" class=center-image />
 
 <block class="net" />
 
@@ -244,7 +246,9 @@ The `CBLAuthenticator` class has static methods for each authentication method s
 
 <block class="wpf" />
 
-![](img/image35w.png)
+{% include experimental-label.html %}
+
+<img src="img/image35w.png" class=center-image />
 
 <block class="android" />
 
@@ -259,7 +263,9 @@ The `CBLAuthenticator` class has static methods for each authentication method s
 
 3. Now login with the credentials saved in the config file previously (**user1/pass**) and create a new list. Open the Sync Gateway Admin UI at [http://localhost:4985/_admin/db/todo](http://localhost:4985/_admin/db/todo), the list document is successfully replicated to Sync Gateway as an authenticated user.
 
-    ![](img/image35a.png)
+{% include experimental-label.html %}
+
+<img src="img/image35a.png" class=center-image />
 
 <block class="wpf" />
 
