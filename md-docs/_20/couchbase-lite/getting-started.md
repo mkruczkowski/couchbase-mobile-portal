@@ -133,17 +133,17 @@ Your app must call the relevant `Activate()` function inside of the class that i
 
 The API references for the Swift SDK are available [here]({{ site.references.swift }}).
 
-#### Swift Playgrounds
+#### Sample App
 
-The following Swift Playground covers the features that are implemented in the latest developer build.
+The following tutorial is using the latest Developer Build to demonstrate some of the new features in the 2.0 API.
 
 <div class="dp">
 	<div class="tiles">
 		<div class="column size-1of2">
 			<div class="box">
 				<div class="container">
-					<a href="https://cl.ly/0Y2x0P2G0r3I/api-walkthrough.zip" taget="_blank">
-						<p style="text-align: center;">API Walkthrough</p>
+					<a href="http://docs.couchbase.com/tutorials/travel-sample-mobile.html" taget="_blank">
+						<p style="text-align: center;">Travel Sample Mobile</p>
 					</a>
 				</div>
 			</div>
@@ -152,12 +152,6 @@ The following Swift Playground covers the features that are implemented in the l
 </div>
 <br/>
 <br/>
-
-1. Download the playground.
-2. Install Couchbase Lite through Carthage `carthage update --platform ios`
-3. Open **swift-playgrounds.xcworkspace** in Xcode.
-4. Build the **CBL Swift** target.
-5. Follow instructions in the playgrounds.
 
 <block class="objc" />
 

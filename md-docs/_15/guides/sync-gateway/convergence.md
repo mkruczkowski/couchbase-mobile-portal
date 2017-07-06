@@ -3,6 +3,8 @@ title: Convergence
 permalink: whatsnew.html
 ---
 
+{% include landing.html %}
+
 <!--
 
 Plan:
@@ -76,7 +78,27 @@ Ways to tune the Metadata Purge Interval:
 - Bucket settings [on UI](https://developer.couchbase.com/documentation/server/5.0/settings/configure-compact-settings.html)
 - Bucket endpoint [on the REST API](https://developer.couchbase.com/documentation/server/4.6/rest-api/rest-bucket-create.html)
 
-## Try it out
+## Sample App
+
+The following tutorial demonstrates the extended attributes support introduced in Sync Gateway 1.5.
+
+<div class="dp">
+	<div class="tiles">
+		<div class="column size-1of2">
+			<div class="box">
+				<div class="container">
+					<a href="http://docs.couchbase.com/tutorials/travel-sample-mobile.html" taget="_blank">
+						<p style="text-align: center;">Travel Sample Mobile</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br/>
+<br/>
+
+## Getting Started
 
 1. [Download the latest Developer Build](https://www.couchbase.com/downloads) of Couchbase Server 5.0.
 2. [Download Sync Gateway](https://www.couchbase.com/downloads?family=Mobile&product=Couchbase%20Sync%20Gateway&edition=Enterprise%20Edition 
