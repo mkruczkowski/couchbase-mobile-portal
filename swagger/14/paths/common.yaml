@@ -61,7 +61,7 @@
         schema:
           type: array
           items:
-            $ref: '#/definitions/Success'
+            $ref: '#/definitions/BulkDocsSuccess'
       409:
         description: The operation failed with a forbidden error. Probably because the document already exists in the database but a revision number wasn't specified.
         schema:

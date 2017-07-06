@@ -189,6 +189,15 @@ PurgeBody:
        type: string
        description: Only possible value is `"*"`. It permanently removes all revisions for that document ID.
        enum: ["*"]
+BulkDocsSuccess:
+  type: object
+  properties:
+    id:
+      type: string
+      description: Design document identifier
+    rev:
+      type: string
+      description: Revision identifier
 Success:
   type: object
   properties:
