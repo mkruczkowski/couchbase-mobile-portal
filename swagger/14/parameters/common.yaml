@@ -184,7 +184,7 @@ rev_delete:
 revs:
   in: query
   name: revs
-  description: Default is false. Indicates whether to include a _revisions property for each document in the response, which contains a revision history of the document.
+  description: Default is false. Indicates whether to include a _revisions property for each document in the response, which contains a revision history of the document. The length of the returned revision tree can be specified with the `revs_limit` querystring parameter.
   type: boolean
   default: false
 role:

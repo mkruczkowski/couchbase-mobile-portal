@@ -24,6 +24,7 @@
       A body for a document that has attachments will be written as a nested multipart/related body. Its first part will be the document's JSON, and the subsequent parts will be the attachments (each identified by a Content-Disposition header giving its attachment name.)
     parameters:
       - $ref: '#/parameters/revs'
+      - $ref: '#/parameters/revs_limit'
       - $ref: '#/parameters/attachments'
       - $ref: '#/parameters/bulkget'
     responses:

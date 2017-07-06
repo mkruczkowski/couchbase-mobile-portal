@@ -164,6 +164,12 @@ replication:
         type: integer
         description: The maximum number of change entries to pull in each loop of a continuous changes feed.
         default: 50
+revs_limit:
+  in: query
+  name: revs_limit
+  description: The number of revisions to include in the response from the document history. This parameter is only honoured if the `revs=true` querystring parameter is also sent in the request. If `revs=true` is specified and `revs_limit` isn't, the full revision history is returned.
+  type: integer
+  required: false
 show_exp:
   in: query
   name: show_exp
