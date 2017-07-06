@@ -184,10 +184,11 @@ PurgeBody:
   properties:
    a_doc_id:
      type: array
-     description: Passing "*" as an item in the array will remove all the revisions for that document. Removing specific revisions from a document is not supported.
+     description: Only possible value is `["*"]`. It permanently removes all revisions for that document ID.
      items:
        type: string
-       description: Revision ID to delete or "*" to delete all the revisions of the document.
+       description: Only possible value is `"*"`. It permanently removes all revisions for that document ID.
+       enum: ["*"]
 Success:
   type: object
   properties:
