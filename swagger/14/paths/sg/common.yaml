@@ -472,3 +472,31 @@
         description: Bad request.  
       401:
         description: Authentication failed.  Unable to refresh token.
+/{db}/_revs_diff:
+    parameters:
+      - $ref: '#/parameters/db'
+    post:
+      summary: Used by the replicator
+      description: Given a set of document/revision IDs, returns the subset of those that do not correspond to revisions stored in the database.
+      parameters:
+        - in: body
+          name: body
+          description: Request body
+          schema:
+            type: object
+            properties:
+              a_doc_id:
+                type: array
+                description: An array of revision IDs for that document.
+      responses:
+        200:
+          description: The request was successful
+          schema:
+            type: object
+            properties:
+              a_doc_id:
+                type: object
+                properties:
+                  missing:
+                    type: array
+                    description: A list of revision IDs for that document (the ones that are not stored in the database).
