@@ -14,6 +14,8 @@ Raising the maximum number of file descriptors available to Sync Gateway is impo
 
 The following instructions are geared towards CentOS.
 
+#### Global limits
+
 Increase the max number of file descriptors available to **all processes**. To specify the number of system wide file descriptors allowed, open up the `/etc/sysctl.conf` file and add the following line.
 
 ```bash
@@ -25,6 +27,27 @@ Apply the changes and persist them (this will last across reboots) by running th
 ```bash
 $ sysctl -p
 ```
+
+#### Sync Gateway Config Limits
+
+The maximum number of open files descriptors should also be configured in the Sync Gateway configuration file. Refer to the [server section](/documentation/mobile/current/develop/guides/sync-gateway/config-properties/index.html#server-configuration) of the configuration guide and to the example below.
+
+```javascript
+{
+  "maxFileDescriptors": 250000,
+  "databases": {
+    "todo": { ... }
+  }
+}
+```
+
+#### Ulimits systemd config
+
+The `/usr/lib/systemd/system/sync_gateway.service` has a hardcoded limit specified by `LimitNOFILE=65535`.  To increase that, edit the `/sync_gateway.service` file to your desired value and restart the service.
+
+#### Ulimits CLI 
+
+If you are running Sync Gateway outside of systemd, use the following instructions.  If you are using systemd, you can skip this section.
 
 Increase the **ulimit** setting for max number of file descriptors available to a single process. For example, setting it to 250K will allow the Sync Gateway to have 250K connections open at any given time, and leave 250K remaining file descriptors available for the rest of the processes on the machine. These settings are just an example, you will probably want to tune them for your own particular use case.
 
@@ -48,16 +71,7 @@ $ ulimit -n
 
 The value of both commands above should be `250000`.
 
-The maximum number of open files descriptors should also be configured in the Sync Gateway configuration file. Refer to the [server section](/documentation/mobile/current/develop/guides/sync-gateway/config-properties/index.html#server-configuration) of the configuration guide and to the example below.
 
-```javascript
-{
-  "maxFileDescriptors": 250000,
-  "databases": {
-    "todo": { ... }
-  }
-}
-```
 
 ### References
 
