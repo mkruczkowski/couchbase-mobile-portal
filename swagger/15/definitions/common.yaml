@@ -284,16 +284,16 @@ QueryRow:
   properties:
     id: 
       type: string
-      description: The ID of the document
+      description: The ID of the document.
     key:
       type: object
-      description: The key in the output row
+      description: The key in the output row.
     value:
       type: object
-      description: The value in the output row
+      description: The value in the output row.
     doc:
       type: object
-      description: The document
+      description: The document body. This is only returned if `include_docs=true` is specified in the URL.
 Design:
   type: object
   properties:
