@@ -125,3 +125,15 @@ The following tutorial demonstrates the extended attributes support introduced i
 	```
 
 6. On start-up, Sync Gateway will generate the mobile-specific metadata for all the pre-existing documents in the Couchbase Server bucket.  From then on, documents can be inserted on the Server directly (SDKs) or through the Sync Gateway REST API.
+
+## Upgrading
+
+To upgrade Sync Gateway to 1.5, you will need to stop all Sync Gateway instances. This means that mobile applications will not be able to push or pull data to the server during that time. Run the following steps to upgrade an existing deployment.
+
+1. Follow the recommendations in the [Couchbase Server documentation](https://developer.couchbase.com/documentation/server/current/install/upgrade-online.html) to upgrade all instances to 5.0. Note that Sync Gateway 1.4 instances can run with a Couchbase Server cluster that has been upgraded to use 5.0.
+2. Stop all Sync Gateway instances.
+3. If you wish to use Sync Gateway 1.5 with the convergence feature, update the configuration file as shown above.
+4. Start Sync Gateway instances. Note that starting Sync Gateway 1.5 instances with convergence enabled in the configuration file will trigger all existing documents to be re-processed. So it may take a while before Sync Gateway appears online. You may monitor the logs to track the progress of this operation.
+5. Replications with clients (i.e Couchbase Lite) should now resume.
+
+> **Note:** Enabling convergence on your existing deployment (i.e XATTRs) is **not** reversible. It is recommended to test the upgrade on a staging environment before upgrading the production environment.
