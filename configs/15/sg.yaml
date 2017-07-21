@@ -133,7 +133,7 @@ properties:
               wait_for_process:
                 type: string
                 description: Maximum wait time in milliseconds before canceling event processing for an event that is detected when the event queue is full. If you set the value to 0 (zero), then incoming events are discarded immediately if the event queue is full. If you wish to avoid any blocking of standard Sync Gateway processing this may be a desirable value to use. The default value should work well in the majority of cases. You should not need to adjust it to tune performance.
-                default: 5
+                default: 100
           feed_type:
             type: string
             description: Feed type DCP or TAP.
