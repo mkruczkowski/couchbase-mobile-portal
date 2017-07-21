@@ -151,3 +151,15 @@ To upgrade Sync Gateway to 1.5, you will need to stop all Sync Gateway instances
 5. Replications with clients (i.e Couchbase Lite) should now resume.
 
 > **Note:** Enabling convergence on your existing deployment (i.e XATTRs) is **not** reversible. It is recommended to test the upgrade on a staging environment before upgrading the production environment.
+
+## Migrating from Bucket Shadowing
+
+As of Sync Gateway 1.5, the Bucket Shadowing feature is deprecated and no longer supported. The following steps outline a recommended method for migrating from Bucket Shadowing to the latest version with interoperability between Couchbase Server SDKs and Couchbase Mobile.
+
+1. Follow the recommendations in the [Couchbase Server documentation](https://developer.couchbase.com/documentation/server/current/install/upgrade-online.html) to upgrade all instances to 5.0.
+2. Update Couchbase Server SDK applications to read/write documents to the mobile bucket.
+3. Make sure that all documents are present in the mobile bucket, the Sync Function may have rejected some documents based on the access control rules for example. If you are not using a Sync Function you can ignore this verification step.
+4. Delete the shadow bucket from Couchbase Server.
+5. Perform an upgrade of Sync Gateway instances as [detailed above](whatsnew.html#upgrading). This upgrade will incur some application downtime.
+6. Monitor the Sync Gateway logs upon start-up.
+7. Replications with mobile clients (i.e Couchbase Lite) should now resume.
