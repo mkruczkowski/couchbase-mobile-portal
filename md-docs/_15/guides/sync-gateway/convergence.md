@@ -52,14 +52,14 @@ Plan:
 
 ## Overview
 
-With Sync Gateway 1.5 and Couchbase Server 5.0, sharing data between mobile and server applications is easier than ever.  Both mobile and server applications can now read and write data in the same bucket.
+With Sync Gateway 1.5 and Couchbase Server 5.0, sharing data between mobile and server applications is easier than ever. Both mobile and server applications can now read and write data in the same bucket.
 
 ## Compatibility
 
-Note that to use 
+The table below shows the versions of Sync Gateway compatible with Couchbase Server.
 
 |CB/Sync Gateway|SG 1.5|SG 1.5 (XATTRs)|
-|:--------------|:------|:-----|:-----|
+|:--------------|:------|:-----|
 |CB 4.0|✔|✖|
 |CB 4.1|✔|✖|
 |CB 4.5|✔|✖|
