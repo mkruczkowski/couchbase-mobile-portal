@@ -83,6 +83,12 @@ When a non-Sync Gateway write is imported into Sync Gateway, that import is done
 
 Channel assignment and access grants performed by the Sync Function behave as usual during import.  
 
+### Users
+
+The method of [authorizing users](https://developer.couchbase.com/documentation/mobile/current/guides/sync-gateway/authorizing-users/index.html) in Sync Gateway 1.5 is unchanged. As with previous versions, the security rules are defined in the Sync Function. A user is defined with a **name** and **password** in Sync Gateway which Couchbase Lite clients use in replications. However, SDK operations to the same bucket cannot be user authenticated.
+
+For example, let's consider a server application that is using Couchbase SDKs to support a web client. Users may want to access the same data on the web as they would on mobile devices. In this case, the server application must verify the user credentials sent from the web client against the Sync Gateway [/{db}/_session](https://developer.couchbase.com/documentation/mobile/current/references/sync-gateway/rest-api/index.html#!/session/post_db_session) endpoint first before allowing any read/write operation to the bucket.
+
 ### Metadata Purge Interval
 
 Starting in 1.5, tombstones will be purged based on Couchbase Server's Metadata Purge Interval. The default Metadata Purge Interval is set to 3 days which can potentially result in tombstones being purged before all clients have had to chance to get notified of it. For that reason, the Metadata Purge Interval should be increased to the maximum amount of time users are expected to be offline between pull replications.
