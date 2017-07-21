@@ -382,7 +382,7 @@
       - text/plain
     tags:
       - document
-    summary: Revision Tree structure in Graphviz Dot format 
+    summary: Revision Tree structure in Graphviz Dot format | not officially supported
     description: Returns the dot syntax of the revision tree which can be rendered into a PNG image with the [CLI dot tool](http://www.graphviz.org/).
 
       - Install the dot tool via `brew install graphviz`.
@@ -391,6 +391,7 @@
       
       - Render a PNG by calling `dot -Tpng revtree.dot > revtree.png`.
     
+      **Note:** This endpoint is useful for debugging purposes only. It is not officially supported.
     responses:
       200:
         description: Success and returns the revtree as plain text.
