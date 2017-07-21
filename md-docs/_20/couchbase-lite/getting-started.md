@@ -4,7 +4,11 @@ title: API Guide
 permalink: guides/couchbase-lite/index.html
 ---
 
-{% include landing.html %}
+<block class="java" />
+
+⚠ Support in the current Developer Build is for Android only. The SDK cannot be used in Java applications.
+
+<block class="all" />
 
 ## Getting Started
 
