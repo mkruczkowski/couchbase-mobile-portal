@@ -39,28 +39,7 @@ You can define multiple webhook event handlers. For example, you could define we
 
 Sync Gateway raises a `document_changed` event every time it writes a document to a Couchbase Server bucket, such as during a Couchbase Lite push replication session.
 
-### Configuring webhook event handlers
-
-You configure event handlers for webhooks with the `event_handlers` property in the database configuration section of the JSON configuration file.
-
-All event handlers share the following properties:
-
-|Name|Type|Description|Default|
-|:---|:---|:----------|:------|
-|`document_changed`|Key for an array|Type of the event (`document_changed`)|None|
-|`max_processes` (optional)|`integer`|Maximum number of events that can be processed concurrently. No more than `max_processes` processes will be spawned for event handling.|`500`|
-|`wait_for_process` (optional)|`string`|Maximum wait time in milliseconds before canceling event processing for an event that is detected when the event queue is full.|`5`|
-
-The section [Tuning performance](/documentation/mobile/current/develop/guides/sync-gateway/server-integration/index.html#tuning-performance) describes how to use the properties `max_processes` and `wait_for_process`, and the property `timeout` (described below), to tune performance.
-
-Each `webhook` event handler has the following properties:
-
-|Name|Type|Description|Default|
-|:---|:---|:----------|:------|
-|`handler`|string|Type of the event handler, in this case, `webhook`|None|
-|`url`|string|URL to use for the HTTP or HTTPS POST|None|
-|`filter` (optional)|string|A JavaScript function used to determine which documents to post. The filter function accepts the document body as input and returns a boolean value. If the filter function returns true, then Sync Gateway posts the document. If the filter function returns false, then Sync Gateway does not post the document. If no filter function is defined, then Sync Gateway posts all changed documents. Filtering only determines which documents to post. It does not extract specific content from documents and post only that.|None|
-|`timeout` (optional)|integer|Time in seconds to wait for a response to the POST operation. Using a timeout ensures that slow-running POST operations don't cause the webhook event queue to back up. Slow-running POST operations are discarded (if they time out), so that new events can be processed. When the timeout is reached, Sync Gateway stops listening for a response. A value of 0 (zero) means no timeout.|60|
+You can configure event handlers for webhooks with the [event_handlers](../config-properties/index.html#event_handlers) property in the database configuration section of the JSON configuration file.
 
 #### Examples
 
@@ -103,58 +82,6 @@ Following is an example that defines two `webhook` event handlers. The `filter` 
      ]
   }
 ```
-
-### Tuning performance
-
-> **Note:** Default values of the properties `timeout`, `max_processes`, and `wait_for_process` should work well in the majority of cases. You should not need to adjust the values to tune performance.
-
-Webhooks in Sync Gateway are designed to minimize performance impacts on Sync Gateway's regular processing.
-
-Following is some background information about event processing that will help you to understand the properties that you can tune:
-
-- Sync Gateway manages the number of processes that are spawned for webhook event handling, so that slow response times from the HTTP POST operations don't consume available CPU resources on Sync Gateway nodes.
-- When a `webhook` event handler is defined, after Sync Gateway has updated a document, Sync Gateway adds a `document_changed` event to an asynchronous event-processing queue (the event queue). New processes are then spawned to apply the `filter` function to the documents and to perform the HTTP POST operations.
-
-Based on your use case and server capabilities, you can tune the behavior of the webhooks feature. Adjust the value of configuration property `timeout` (described above) and the following properties in the `event_handlers` property in the database configuration section of the JSON configuration file:
-
-|Name|Type|Description|Default|
-|:---|:---|:----------|:------|
-|`max_processes` (optional)|`integer`|Maximum number of events that can be processed concurrently, that is, no more than `max_processes` concurrent processes will be spawned for event handling.|`500`|
-|`wait_for_process` (optional)|`string`|Maximum wait time in milliseconds before canceling event processing for an event that is detected when the event queue is full. If you set the value to 0 (zero), then incoming events are discarded immediately if the event queue is full.|`5`|
-
-Possible configuration scenarios include:
-
-- **Avoid any blocking:** To avoid any blocking of standard Sync Gateway processing, set `wait_for_process` to 0 (zero). If the event queue is full, any incoming events are discarded immediately.
-- **Ensure that most webhook posts are sent:** To ensure that most webhook posts are sent, set `wait_for_process` to a sufficiently high value. POST operations do not guarantee delivery.
-
-#### Example
-
-Following is a sample configuration of event handlers that uses the performance-tuning properties:
-
-```javascript
-"event_handlers": {
-    "max_processes" : 1000,
-    "wait_for_process" : "20",
-    "document_changed": [
-     {"handler": "webhook",
-      "timeout": 90,
-      "url": "http://someurl.com"}
-    ]
- }
-```
-
-In this example:
-
-- Every time a document changes, the document is sent to the URL `http://someurl.com`.
-- The event handler can process a maximum of `1000` events concurrently.
-- The event handler will wait a maximum of `20` milliseconds before canceling event processing for an event that is detected when the event queue is full.
-- The event handler waits `90` seconds for a response to a POST operation.
-
-### Logging
-
-When an event is not added to the event queue, but is instead discarded, a warning message is written the the Sync Gateway log.
-
-You can configure Sync Gateway to log information about event handling, by including either the log key `Event` or `Events+` in the `Log` property in your Sync Gateway configuration file. `Events+` is more verbose.
 
 ## Changes Worker Pattern
 
