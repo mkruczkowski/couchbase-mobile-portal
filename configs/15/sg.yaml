@@ -125,10 +125,12 @@ properties:
                       type: string
               max_processes:
                 type: integer
-                description: Maximum concurrent event handling goroutines. The default is 500.
+                description: Maximum concurrent event handling goroutines.
+                default: 500
               wait_for_process:
                 type: integer
-                description: Maximum wait time in milliseconds when the event queue is full. The default is 5.
+                description: Maximum wait time in milliseconds when the event queue is full.
+                default: 5
           feed_type:
             type: string
             description: Feed type DCP or TAP.
