@@ -506,14 +506,7 @@ database.Changed += (sender, e) => {
 
 ## Database housekeeping
 
-A database of course stores documents, and a document stores multiple revisions of its content; this is part of the MVCC (Multi-Version Concurrency Control) system that manages concurrency and detects replication conflicts. But this also causes the database file to grow over time. Unlike a Git repository, whose history is vital, a database should be periodically compacting to reclaim space. Compaction deletes the following:
-
-- The JSON bodies of non-current revisions of documents (that is, all but the current revision and any unresolved 
-conflicts)
-- The metadata of the oldest revisions (see below for details)
-- Attachments that are no longer used by any document revision
-
-You can tune the maximum revision tree depth parameter (the `Database` object's `maxRevTreeDepth` property). This governs how old a revision must be before its metadata is discarded. It defaults to 20, meaning that each document will remember the history of its latest 20 revisions. Setting this to a smaller value will save storage space, but can result in spurious conflicts if users are making lots of offline changes and then sync. Compaction happens automatically in the background to remove revisions older than the `maxRevTreeDepth` value.
+Refer to the [`Revisions`](../revision/index.html) guide to learn about compaction and pruning to manage the database size.
 
 ## Deleting a database
 

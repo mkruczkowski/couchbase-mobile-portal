@@ -20,6 +20,6 @@ Configuration files have one syntactic feature that is not standard JSON: any te
 ## Configuration Reference
 
 <script>
-	window.configurl = 'https://couchbase-docs.s3.amazonaws.com/mobile/{{ site.version }}/configs/{{ site.configs_last_commit }}/sg.json';
+	window.configurl = 'https://couchbase-docs.s3.amazonaws.com/mobile/{{ site.version }}/configs/sg.{{ site.configs_timestamp }}.json';
 </script>
 <div id="root"></div>
