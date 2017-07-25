@@ -59,6 +59,10 @@ Databases that were created with Couchbase Mobile 1.2 or later can be read using
 
 You can instantiate multiple databases with the same name and directory; these will all share the same storage. This is the recommended approach if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
 
+<!--
+	TODO: "The APIs will be thread safe in an upcoming DB- worth noting that somewhere maybe. So some of this stuff (while still accurate) may have to be revisited."
+-->
+
 <block class="swift" />
 
 The following example opens the database on a background thread and inserts a document.
