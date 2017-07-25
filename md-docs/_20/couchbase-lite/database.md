@@ -51,10 +51,32 @@ Database database = new Database("my-database", config);
 
 Just as before, the database will be created in a default location. Alternatively, the {% st Database(name: Strings, config: DatabaseConfiguration?)|initWithName:options:error:|new Database(string name, DatabaseConfiguration config)|new Database(String name, DatabaseOptions options) %} method can be used to provide specific options (the directory to create the database in, whether it is read-only etc.)
 
-You can instantiate multiple databases with the same name and directory; these will all share the same storage. This is the recommended approach if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
-
 #### Opening 1.x databases
 
 Databases that were created with Couchbase Mobile 1.2 or later can be read using the 2.0 API. Upon detecting it is a 1.x database file format, Couchbase Lite will automatically upgrade it to the new format used in 2.0. This feature is currently only available for the default storage type, SQLite (i.e not for ForestDB databases).
+
+## Threading
+
+You can instantiate multiple databases with the same name and directory; these will all share the same storage. This is the recommended approach if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
+
+<block class="swift" />
+
+The following example opens the database on a background thread and inserts a document.
+
+```swift
+DispatchQueue.global(qos: .background).async {
+	let database: Database
+	do {
+		database = try Database(name: "my-database")
+	} catch let error {
+		print(error.localizedDescription)
+		return
+	}
+	
+	let document = Document()
+	document.set("created on background thread", forKey: "status")
+	try? database.save(document)
+}
+```
 
 {% include refs.html name='database' %}
