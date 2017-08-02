@@ -63,6 +63,8 @@ pull.Continuous = true;
 // Start replicators
 push.Start();
 pull.Start();
+
+Console.ReadKey();
 ```
 
 Build and run. Notice the document ID and property are printed to the console. The document was successfully persisted to the database.
