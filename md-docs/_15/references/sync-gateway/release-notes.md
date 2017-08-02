@@ -28,3 +28,9 @@ __Bugs__
 - [__#2626__](https://github.com/couchbase/sync_gateway/issues/2626) Active changes feeds not notified when deferred sequences get cached
 - [__#2651__](https://github.com/couchbase/sync_gateway/issues/2651) SG gets killed due to excessive memory usage with continuous doc update
 - [__#2677__](https://github.com/couchbase/sync_gateway/issues/2677) Unable to install SG 1.5.0 on Win 10
+
+__Known issues__
+
+- [__#2744__](https://github.com/couchbase/sync_gateway/pull/2744) Failures due to multi operation deletes
+- [__#149__](https://github.com/couchbaselabs/sync-gateway-accel/issues/149) Changes missing on Sync Gateway Accelerator re-shard
+- [__#2068__](https://github.com/couchbase/sync_gateway/issues/2068) Update user doc sequence for access-based channel grants
