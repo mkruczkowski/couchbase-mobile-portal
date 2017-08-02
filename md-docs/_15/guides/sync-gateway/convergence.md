@@ -56,9 +56,11 @@ With Sync Gateway 1.5 and Couchbase Server 5.0, sharing data between mobile and 
 
 ## Compatibility
 
+#### Sync Gateway - Couchbase Server
+
 The table below shows the versions of Sync Gateway compatible with Couchbase Server.
 
-|CB/Sync Gateway|SG 1.5|SG 1.5 (XATTRs)|
+|CB Server/Sync Gateway|SG 1.5|SG 1.5 (XATTRs)|
 |:--------------|:------|:-----|
 |CB 4.0|✔|✖|
 |CB 4.1|✔|✖|
@@ -67,6 +69,14 @@ The table below shows the versions of Sync Gateway compatible with Couchbase Ser
 |CB 5.0|✔|✔|
 
 For all of the above, the [bucket type](https://developer.couchbase.com/documentation/server/5.0/architecture/core-data-access-buckets.html#concept_qqk_4r2_xs) must be Couchbase. Usage of Ephemeral and Memcached buckets with Couchbase Mobile is not supported.
+
+#### Couchbase Lite - Sync Gateway
+
+|CB Lite/Sync Gateway|SG 1.5|SG 1.5 (XATTRs)|
+|:--------------|:------|:-----|
+|CBL 1.3|✔|✔|
+|CBL 1.4|✔|✔|
+|CBL 1.5|✔|✔|
 
 ### Extended Attributes
 
