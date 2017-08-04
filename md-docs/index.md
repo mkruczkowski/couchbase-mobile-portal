@@ -1,5 +1,5 @@
 ---
-layout: ready
+layout: docs
 ---
 
 Hello
