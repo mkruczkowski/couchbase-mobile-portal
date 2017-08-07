@@ -57,7 +57,13 @@ Databases that were created with Couchbase Mobile 1.2 or later can be read using
 
 ## Threading
 
-Couchbase Lite `Database` objects are thread safe so you can instantiate a database object once and use it on multiple threads. All tasks created across threads with the same database instance are processed on a single serial queue.
+<block class="swift objc" />
+
+You can instantiate multiple databases with the same name and directory; these will all share the same storage. This is the recommended approach if you will be calling Couchbase Lite from multiple threads or dispatch queues, since Couchbase Lite objects are not thread-safe and can only be called from one thread/queue. Otherwise, for use on a single thread/queue, it's more efficient to use a single instance.
+
+<block class="java csharp" />
+
+Couchbase Lite `Database` objects are thread safe so you can instantiate a database object once and use it on multiple threads. All tasks created across threads with the same database instance are serialized or executed in order.
 
 In most cases, instantiating a single database instance is the recommended approach. However, if you wish to perform a long running database task in the background it is preferable to create another database instance. By doing so, the long running task will not block the serial queue associated with the first database instance.
 
