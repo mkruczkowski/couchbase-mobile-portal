@@ -143,6 +143,18 @@ replicator.addChangeListener(new ReplicatorChangeListener() {
 });
 ```
 
+<block class="java csharp" />
+
+The following table lists the different activity levels in the API and the meaning of each one.
+
+|State|Meaning|
+|:----|:------|
+|`STOPPED`|The replication is finished or hit a fatal error.|
+|`OFFLINE`|The replicator is offline as the remote host is unreachable.|
+|`CONNECTING`|The replicator is connecting to the remote host.|
+|`IDLE`|The replication is inactive; either waiting for changes or offline as the remote host is unreachable|
+|`BUSY`|The replication is actively transferring data.|
+
 <block class="all" />
 
 ### Conflict Handling
