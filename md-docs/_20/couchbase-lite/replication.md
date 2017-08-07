@@ -152,7 +152,7 @@ The following table lists the different activity levels in the API and the meani
 |`STOPPED`|The replication is finished or hit a fatal error.|
 |`OFFLINE`|The replicator is offline as the remote host is unreachable.|
 |`CONNECTING`|The replicator is connecting to the remote host.|
-|`IDLE`|The replication is inactive; either waiting for changes or offline as the remote host is unreachable|
+|`IDLE`|The replication caught up with all the changes available from the server. The `IDLE` state is only used in continuous replications.|
 |`BUSY`|The replication is actively transferring data.|
 
 <block class="all" />
