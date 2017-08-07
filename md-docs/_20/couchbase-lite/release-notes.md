@@ -3,6 +3,18 @@ id: release-notes
 title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
+### Developer build 14
+
+<block class="net" />
+
+[GH Release Page](https://github.com/couchbase/couchbase-lite-net/releases/tag/2.0.0-db014)
+- Select all properties via `SelectResult.All()`
+- Lots of new functions (Check the `Function` class) for use in querying
+- Collection functions (Any / Every / AnyAndEvery) for running predicates on array items during query
+- Collation API (see `Collation` class) for locale and language based sorting of strings
+- Typed setter functions (`SetString`, `SetInt`, etc) and added `GetFloat` for completion
+- Expanded the replicator statuses
+
 ### Developer build 13
 
 <block class="objc swift" />
