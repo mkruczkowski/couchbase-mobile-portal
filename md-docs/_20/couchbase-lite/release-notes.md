@@ -4,6 +4,13 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 ### Developer build 14
+<block class="objc swift" />
+* Support Select all properties.
+* Support Quantified expression (Any, AnyAndEvery, and Every).
+* Support more Query functions including array, mathematics, string, and type functions.
+* Support type setters on Document, Dictionary, Array, and Query's parameters.
+* Support Int64 getter on Document, Dictionary, Array.
+* Added Connecting and Offline to the Replicator's ActivityLevel status.
 
 <block class="net" />
 
