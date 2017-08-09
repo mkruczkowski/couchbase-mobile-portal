@@ -65,7 +65,7 @@ You can instantiate multiple databases with the same name and directory; these w
 
 Couchbase Lite `Database` objects are thread safe so you can instantiate a database object once and use it on multiple threads. All tasks created across threads with the same database instance are executed atomically.
 
-In most cases, instantiating a single database instance is the recommended approach. However, if you wish to perform a long running database task in the background it is preferable to create another database instance. By doing so, the long running task will not block the serial queue associated with the first database instance.
+As a result, to use Couchbase Lite on different threads, the application code can use a single instance or multiple instances of a `Database`. The choice to use a single instance versus multiple instances depends on the use case. For example, if you wish to perform a long running database task in the background it is preferable to create another database instance. By doing so, the long running task will not block the serial queue associated with the first database instance.
 
 <block class="swift" />
 
