@@ -8,35 +8,30 @@ permalink: guides/couchbase-lite/native-api/query/index.html
 
 <block class="all" />
 
-## Queries
-
 Database queries have changed significantly. Instead of the map/reduce algorithm used in 1.x, they're now based on expressions, of the form "return ____ from documents where \_\_\_\_, ordered by \_\_\_\_", with semantics based on Couchbase Server's N1QL query language. If you've used {% tx Core Data|Core Data|LINQ|LINQ %}, or other query APIs based on SQL, you'll find this familiar.
 
-### Cross Platform Query API
+## SELECT statement
 
-The Query API provides a simple way to construct a query statement from a set of API methods. There will be two API styles (builder and chainable) implemented based on what makes sense for each platform.
+With the SELECT statement, you can query and manipulate JSON data.
 
-<block class="all" />
-
-In the current Developer Build, a builder API has been implemented. You can call one of the select methods in the {% st Query|CBLQuery|Query|Query %} class to build up your query statement.
-
-For example, the `SELECT * FROM type='user' AND admin='false'` statement can be written with the builder API as follows.
+The following example queries the database for users who are not administrators and returns an array with the user's name for each user that satisfies the conditions.
 
 <block class="swift" />
 
 ```swift
 let query = Query
-	.select()
+	.select(SelectResult.expression(Expression.property("name")))
 	.from(DataSource.database(database))
 	.where(
 		Expression.property("type").equalTo("user")
-			.and(Expression.property("admin").equalTo(false))
+		.and(Expression.property("admin").equalTo(false)
 	)
+)
 
 do {
 	let rows = try query.run()
 	for row in rows {
-		print("doc ID :: \(row.documentID)")
+		print("user name :: \(row.string(forKey: "name")!)")
 	}
 } catch let error {
 	print(error.localizedDescription)
@@ -46,7 +41,7 @@ do {
 <block class="objc" />
 
 ```objectivec
-CBLQuery* query = [CBLQuery select:@[]
+CBLQuery* query = [CBLQuery select:@[[CBLQueryExpression property:@"name"]]
                               from:[CBLQueryDataSource database:database]
                              where:[
                                     [[CBLQueryExpression property:@"type"] equalTo:@"user"]
@@ -54,7 +49,7 @@ CBLQuery* query = [CBLQuery select:@[]
 
 NSEnumerator* rows = [query run:&error];
 for (CBLQueryRow *row in rows) {
-	NSLog(@"doc ID :: %@", row.documentID);
+    NSLog(@"user name :: %@", [row stringAtIndex:0]);
 }
 ```
 
@@ -78,30 +73,93 @@ foreach(var row in rows)
 <block class="java" />
 
 ```java
-Query query = Query.select()
+Query query = Query.select(SelectResult.expression(Expression.property("name")))
 		.from(DataSource.database(database))
-		.where(Expression.property("type").equalTo("user").add(Expression.property("admin").equalTo(false)));
+		.where(
+			Expression.property("type").equalTo("user")
+			.and(Expression.property("admin").equalTo(false))
+		);
 
-ResultSet rows = query.run();
-QueryRow row;
+ResultSet rows = null;
+try {
+	rows = query.run();
+} catch (CouchbaseLiteException e) {
+	Log.e("app", "Failed to run query", e);
+}
+Result row;
 while ((row = rows.next()) != null) {
-	Log.d("app", String.format("doc ID :: %s", row.getDocumentID()));
+	Log.d("app", String.format("user name :: %s", row.getString("name")));
 }
 ```
 
 <block class="all" />
 
-The query can be executed by calling the {% st run()|run:|Run()|run() %} method which will return a {% st Enumerator|NSEnumerator|IEnumerable|ResultSet %} instance (enumerator of {% st Query|CBLQueryRow|IQueryRow|QueryRow %} objects). As of the current developer build, joins are not available yet but will be supported in a future release.
+With projections, you retrieve just the fields that you need and not the entire document. This is especially useful when querying for a large dataset as it results in shorter processing times and better performance.
 
 There are several parts to specifying a query:
 
-1. What document criteria to match (corresponding to the “`WHERE …`” clause in N1QL or SQL). If you don't specify criteria, all documents are returned.
-2. What properties (JSON or derived) of the documents to return (“`SELECT …`”). If you don't specify properties to return, you just get the document ID and sequence number.
-3. What criteria to group rows together by (“`GROUP BY …`”). If you don't specify grouping, rows are not grouped.
-4. Which grouped rows to include (“`HAVING …`”). If you don't specify what groups to include, all are included.
-5. The sort order (“`ORDER BY …`”). If you don't specify a sort order, the order is undefined.
+- SELECT: specifies the projection, which is the part of the document that is to be returned.
+- FROM: specifies the database to query the documents from.
+- WHERE: specifies the query criteria that the result must satisfy.
+- GROUP BY: specifies the query criteria to group rows by.
+- ORDER BY: specifies the query criteria to sort the rows in the result.
+
+## JOIN statement
+
+The JOIN clause enables you to create new input objects by combining two or more source objects.
+
+The following example uses a JOIN clause to find the airline details which have routes that start from RIX. This example JOINS the document of type "route" with documents of type "airline" using the document ID (`_id`) on the "airline" document and  `airlineid` on the "route" document.
 
 <block class="swift" />
+
+```swift
+let query = Query.select(
+	SelectResult.expression(Expression.property("name").from("airline")),
+	SelectResult.expression(Expression.property("callsign").from("airline")),
+	SelectResult.expression(Expression.property("destinationairport").from("route")),
+	SelectResult.expression(Expression.property("stops").from("route")),
+	SelectResult.expression(Expression.property("airline").from("route"))
+)
+.from(
+	DataSource.database(database!).as("airline")
+)
+.join(
+	Join.join(DataSource.database(database!).as("route"))
+	.on(
+		Expression.meta().id.from("airline")
+		.equalTo(Expression.property("airlineid").from("route"))
+	)
+)
+.where(
+	Expression.property("type").from("route").equalTo("route")
+	.and(Expression.property("type").from("airline").equalTo("airline"))
+	.and(Expression.property("sourceairport").from("route").equalTo("RIX"))
+)
+```
+
+## GROUPBY statement
+
+You can perform further processing on the data in your result set before the final projection is generated.
+
+The following example looks for the number of airports at an altitude of 300 ft or higher and groups the results by country and timezone.
+
+<block class="swift" />
+
+```swift
+let query = Query.select(
+		SelectResult.expression(Expression.property("country")),
+		SelectResult.expression(Expression.property("tz"))
+	)
+	.from(DataSource.database(database!))
+	.where(
+		Expression.property("type").equalTo("airport")
+		.and(Expression.property("geo.alt").greaterThanOrEqualTo(300))
+	)
+	.groupBy(
+		Expression.property("country"),
+		Expression.property("tz")
+	)
+```
 
 #### Query methods
 
