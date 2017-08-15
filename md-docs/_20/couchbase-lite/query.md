@@ -254,6 +254,38 @@ liveQuery.run();
 
 <block class="all" />
 
+## Collection Operators
+
+Collection operators enable you to evaluate expressions over collections or objects.
+
+### IN operator
+
+The `IN` operator evaluates to `TRUE` if the right-side value is an array and directly contains the left-side value.
+
+The following example uses the `IN` operator to find the airlines that are based in France or the United States.
+
+<block class="swift" />
+
+```swift
+let query = Query.select(
+		SelectResult.expression(Expression.property("name"))
+	)
+	.from(DataSource.database(database!))
+	.where(
+		Expression.property("country").in(countries)
+		.and(Expression.property("type").equalTo("airline"))
+	)
+```
+
+Sometimes the conditions you want to filter need to be applied to the arrays nested inside the document. The `SATISFIES` keyword is used to specify the filter condition.
+
+### ANY operator
+
+### EVERY operator
+
+
+<block class="all" />
+
 ### Query Performance
 
 Queries have to be parsed and compiled into an optimized form for the underlying database to execute. This doesn't take long, but it's best to create a {% st Query|CBLQuery|IQuery|Query %} once and then reuse it, instead of recreating it every time (of course, only reuse a {% st Query|CBLQuery|IQuery|Query %} on the same thread/queue you created it on).
