@@ -96,7 +96,7 @@ doc:
 doc_ids:
   in: query
   name: doc_ids
-  description: A list of document IDs as a valid JSON array. The response will be filtered to only documents with these IDs. (This parameter must be used with the _doc_ids filter parameter; see below.)
+  description: A list of document IDs as a valid JSON array. The response will be filtered to only documents with these IDs. This parameter must be used with the `filter=_doc_ids` and `feed=normal` parameters.
   type: array
   items:
     type: string
