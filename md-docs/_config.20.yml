@@ -4,15 +4,15 @@ collections:
     permalink: /:path:output_ext
 version: '2.0'
 ios_dev_build: '2.0DB014'
-android_dev_build: '2.0.0-DB013'
-dev_build_release_date: 'July 26, 2017'
+android_dev_build: '2.0.0-DB014'
+dev_build_release_date: 'August 16, 2017'
 objc_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB14/couchbase-lite-objc_community_2.0.0-351.zip
 swift_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB14/couchbase-lite-swift_community_2.0.0-351.zip
 references:
   objc: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db014/'
   swift: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db014/'
   csharp: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-net/db014/'
-  java: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/db013/'
+  java: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-java/db014/'
 sg_download_link: 'http://latestbuilds.hq.couchbase.com/couchbase-sync-gateway/1.5.0/1.5.0-477/couchbase-sync-gateway-community_1.5.0-477_x86_64'
 platform_support:
   ios: iOS 9.0+
