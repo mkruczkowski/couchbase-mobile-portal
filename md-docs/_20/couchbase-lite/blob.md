@@ -15,15 +15,15 @@ We've renamed "attachments" to "blobs", for clarity. The new behavior should be 
 <block class="swift" />
 
 ```swift
-let appleImage = UIImage(named: "apple.jpg")
+let appleImage = UIImage(named: "avatar.jpg")!
 let imageData = UIImageJPEGRepresentation(appleImage, 1)!
 
 let blob = Blob(contentType: "image/jpg", data: imageData)
-newTask.set(blob, forKey: "avatar")
-try database.save(newTask)
+newTask.setBlob(blob, forKey: "avatar")
+try? database.save(newTask)
 
 if let taskBlob = newTask.blob(forKey: "image") {
-    UIImage(data: taskBlob.content!)
+	UIImage(data: taskBlob.content!)
 }
 ```
 

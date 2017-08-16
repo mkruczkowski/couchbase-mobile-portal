@@ -71,12 +71,8 @@ CBLReplication *replication = [[CBLReplicator alloc] initWithConfig: config];
 
 ```swift
 let url = URL(string: "blip://localhost:4984/db")!
-var config = ReplicatorConfiguration()
-config.database = db
-config.target = .url(url)
-config.continuous = true
-        
-let replication = Replicator(config: config);
+let replConfig = ReplicatorConfiguration(database: database, targetURL: url)
+let replication = Replicator(config: replConfig)
 replication.start()
 ```
 

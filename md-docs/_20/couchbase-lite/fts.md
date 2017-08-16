@@ -19,9 +19,9 @@ To run a full-text search (FTS) query, you must have created a full-text index o
 let tasks = ["buy groceries", "play chess", "book travels", "buy museum tickets"]
 for task in tasks {
 	let doc = Document()
-	doc.set("task", forKey: "type")
-	doc.set(task, forKey: "name")
-	try database.save(doc)
+	doc.setString("task", forKey: "type")
+	doc.setString(task, forKey: "name")
+	try? database.save(doc)
 }
 
 // Create index
@@ -102,7 +102,7 @@ let ftsQuery = Query.select().from(DataSource.database(database)).where(whereCla
 do {
 	let ftsQueryResult = try ftsQuery.run()
 	for row in ftsQueryResult {
-		print("document properties \(row.document.toDictionary())")
+		print("document properties \(row.string(forKey: "_id"))")
 	}
 } catch let error {
 	print(error.localizedDescription)

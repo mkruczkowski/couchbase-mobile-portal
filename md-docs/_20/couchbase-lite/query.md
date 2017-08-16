@@ -151,18 +151,19 @@ The following example looks for the number of airports at an altitude of 300 ft 
 
 ```swift
 let query = Query.select(
-		SelectResult.expression(Expression.property("country")),
-		SelectResult.expression(Expression.property("tz"))
-	)
-	.from(DataSource.database(database!))
-	.where(
-		Expression.property("type").equalTo("airport")
-		.and(Expression.property("geo.alt").greaterThanOrEqualTo(300))
-	)
-	.groupBy(
-		Expression.property("country"),
-		Expression.property("tz")
-	)
+	SelectResult.expression(Function.count("*")),
+	SelectResult.expression(Expression.property("country")),
+	SelectResult.expression(Expression.property("tz"))
+)
+.from(DataSource.database(database!))
+.where(
+	Expression.property("type").equalTo("airport")
+	.and(Expression.property("geo.alt").greaterThanOrEqualTo(300))
+)
+.groupBy(
+	Expression.property("country"),
+	Expression.property("tz")
+)
 ```
 
 #### Query methods

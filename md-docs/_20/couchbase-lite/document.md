@@ -27,7 +27,7 @@ let dict: [String: Any] = ["type": "task",
                            "owner": "todo",
                            "createdAt": Date()]
 let newTask = Document(dictionary: dict)
-try database.save(newTask)
+try? database.save(newTask)
 ```
 
 <block class="objc" />
@@ -70,8 +70,8 @@ The biggest change is that {% st Document|CBLDocument|Document|Document %} prope
 <block class="swift" />
 
 ```swift
-newTask.set("Apples", forKey:"name")
-try database.save(newTask)
+newTask.setValue("Apples", forKey:"name")
+try? database.save(newTask)
 ```
 
 <block class="objc" />
@@ -108,7 +108,7 @@ In addition, as a convenience we offer {% st Date|NSDate|DateTimeOffset|Date %} 
 <block class="swift" />
 
 ```swift
-newTask.set(Date(), forKey: "createdAt")
+newTask.setValue(Date(), forKey: "createdAt")
 let date = newTask.date(forKey: "createdAt")
 ```
 
@@ -146,8 +146,9 @@ do {
 	try database.inBatch {
 		for i in 0...10 {
 			let doc = Document()
-			doc.set("user", forKey: "type")
-			doc.set("user \(i)", forKey: "name")
+			doc.setValue("user", forKey: "type")
+			doc.setValue("user \(i)", forKey: "name")
+			doc.setBoolean(false, forKey: "admin")
 			try database.save(doc)
 			print("saved user document \(doc.string(forKey: "name"))")
 		}

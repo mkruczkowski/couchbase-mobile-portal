@@ -76,9 +76,9 @@ DispatchQueue.global(qos: .background).async {
 		print(error.localizedDescription)
 		return
 	}
-	
+
 	let document = Document()
-	document.set("created on background thread", forKey: "status")
+	document.setString("created on background thread", forKey: "status")
 	try? database.save(document)
 }
 ```
