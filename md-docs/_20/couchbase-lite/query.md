@@ -104,6 +104,35 @@ There are several parts to specifying a query:
 - GROUP BY: specifies the query criteria to group rows by.
 - ORDER BY: specifies the query criteria to sort the rows in the result.
 
+<block class="all" />
+
+### META function
+
+Meta functions retrieve information about the document (`id` or `sequence` number) to be included in the query result.
+
+<block class="swift" />
+
+The following example uses the `META().id` function to find all the document of type "airline" and returns the document ID for each one.
+
+```swift
+let query = Query.select(
+	SelectResult.expression(Expression.meta().id)
+)
+.from(DataSource.database(database!))
+.where(
+	Expression.property("type").equalTo("airport")
+)
+do {
+	for row in try query.run() {
+		print("\(row.toDictionary()))")
+	}
+} catch let error {
+	print(error.localizedDescription)
+}
+```
+
+<block class="all" />
+
 ## JOIN statement
 
 The JOIN clause enables you to create new input objects by combining two or more source objects.
