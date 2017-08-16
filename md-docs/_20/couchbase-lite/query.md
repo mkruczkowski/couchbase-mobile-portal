@@ -108,9 +108,9 @@ There are several parts to specifying a query:
 
 The JOIN clause enables you to create new input objects by combining two or more source objects.
 
-The following example uses a JOIN clause to find the airline details which have routes that start from RIX. This example JOINS the document of type "route" with documents of type "airline" using the document ID (`_id`) on the "airline" document and  `airlineid` on the "route" document.
-
 <block class="swift" />
+
+The following example uses a JOIN clause to find the airline details which have routes that start from RIX. This example JOINS the document of type "route" with documents of type "airline" using the document ID (`_id`) on the "airline" document and  `airlineid` on the "route" document.
 
 ```swift
 let query = Query.select(
@@ -137,9 +137,13 @@ let query = Query.select(
 )
 ```
 
+<block class="all" />
+
 ## GROUPBY statement
 
 You can perform further processing on the data in your result set before the final projection is generated.
+
+<block class="swift" />
 
 The following example looks for the number of airports at an altitude of 300 ft or higher and groups the results by country and timezone.
 
@@ -262,9 +266,9 @@ Collection operators enable you to evaluate expressions over collections or obje
 
 The `IN` operator evaluates to `TRUE` if the right-side value is an array and directly contains the left-side value.
 
-The following example uses the `IN` operator to find the airlines that are based in France or the United States.
-
 <block class="swift" />
+
+The following example uses the `IN` operator to find the airlines that are based in France or the United States.
 
 ```swift
 let query = Query.select(
@@ -278,11 +282,6 @@ let query = Query.select(
 ```
 
 Sometimes the conditions you want to filter need to be applied to the arrays nested inside the document. The `SATISFIES` keyword is used to specify the filter condition.
-
-### ANY operator
-
-### EVERY operator
-
 
 <block class="all" />
 
