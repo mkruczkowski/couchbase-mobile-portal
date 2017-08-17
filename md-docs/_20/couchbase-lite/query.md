@@ -124,12 +124,15 @@ let query = Query.select(
 )
 do {
 	for row in try query.run() {
-		print("\(row.toDictionary()))")
+		print("Get docID by property name \(row.string(forKey: "id")))")
+		print("Get docID by column number \(row.string(at: 0)))")
 	}
 } catch let error {
 	print(error.localizedDescription)
 }
 ```
+
+The documentID is then retrieved in the query result using the property name getter (`row.string(forKey: "id")`) or projected column getter (`row.string(at: 0)`).
 
 <block class="all" />
 
