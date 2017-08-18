@@ -3,7 +3,14 @@ id: config-properties
 title: Config properties
 permalink: guides/sync-gateway/config-properties/index.html
 noedit: true
+versions:
+  - 1.3
+  - 1.4
+  - 1.5-beta
+  - 1.5-beta2
 ---
+
+<link rel="stylesheet" type="text/css" href="https://couchbase-docs.s3.amazonaws.com/assets/json-config-ui/json-config-ui.css">
 
 A configuration file determines the runtime behavior of Sync Gateway, including server configuration and the database or set of databases with which a Sync Gateway instance can interact.
 
@@ -19,7 +26,24 @@ Configuration files have one syntactic feature that is not standard JSON: any te
 
 ## Configuration Reference
 
+<div id="swagger-ui"></div>
+<div id="json-config-ui"></div>
+<script src="https://couchbase-docs.s3.amazonaws.com/assets/json-config-ui/json-config-ui-bundle.js"></script>
 <script>
-	window.configurl = 'https://couchbase-docs.s3.amazonaws.com/mobile/{{ site.version }}/configs/sg.{{ site.configs_timestamp }}.json';
+	var frontMatter = "{{ page.versions | json | join: ','}}";
+	var versions = frontMatter.split(",");
+	var specsInfo = versions.map(function(version) {
+		return {
+			version: version,
+			url: 'https://couchbase-docs.s3.amazonaws.com/mobile/' + version + '/configs/sg.1504711149319.json'
+		};
+	});
+	setTimeout(function() {
+		const ui = JSONConfigUIBundle({
+  		dom_id: '#json-config-ui',
+  		specs: specsInfo,
+  		current: {{ site.version }}
+  	});
+  	window.ui = ui
+	}, 0);
 </script>
-<div id="root"></div>
