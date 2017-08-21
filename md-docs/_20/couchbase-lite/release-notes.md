@@ -10,6 +10,12 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 * Thread-safe with Database operation. (Other operations will be a thread-safe with next DB release)
 
+<block class="net" />
+
+- Collation API now supported on Linux platforms (Android coming soon)
+- Statically compile, so iOS 9 will work now
+- Add a database copy API (note:  current behavior will replace an existing database, but this may change) to make copies of a database (useful for seeding and/or backup).
+
 <block class="all" />
 
 ### Developer build 14
