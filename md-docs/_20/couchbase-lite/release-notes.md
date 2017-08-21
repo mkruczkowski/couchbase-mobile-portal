@@ -4,6 +4,14 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 
+### Developer build 15
+
+<block class="java" />
+
+* Thread-safe with Database operation. (Other operations will be a thread-safe with next DB release)
+
+<block class="all" />
+
 ### Developer build 14
 
 <block class="objc swift" />
@@ -24,6 +32,14 @@ permalink: references/couchbase-lite/release-notes/index.html
 - Collation API (see `Collation` class) for locale and language based sorting of strings
 - Typed setter functions (`SetString`, `SetInt`, etc) and added `GetFloat` for completion
 - Expanded the replicator statuses
+
+<block class="java" />
+
+* Support Select all properties.
+* Support Quantified expression (Any, AnyAndEvery, and Every).
+* Support Query's isNullOrMissing expression.
+* Support more Query functions including array, mathematics, string, and type functions.
+* Support type setters on Document, Dictionary, Array, and Query's parameters.
 
 <block class="all" />
 
