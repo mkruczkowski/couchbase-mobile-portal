@@ -6,6 +6,12 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 ### Developer build 15
 
+<block class="objc swift" />
+
+- Support Collation Expression.
+- Support database copy to allow to install a canned database.
+- Allow to set logging level.
+
 <block class="java" />
 
 * Thread-safe with Database operation. (Other operations will be a thread-safe with next DB release)
