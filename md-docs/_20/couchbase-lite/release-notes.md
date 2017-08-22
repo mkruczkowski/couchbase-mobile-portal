@@ -9,6 +9,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 <block class="objc swift" />
 
 - Support Collation Expression.
+- Support FTS Ranking Value Expression.
 - Support database copy to allow to install a canned database.
 - Allow to set logging level.
 
