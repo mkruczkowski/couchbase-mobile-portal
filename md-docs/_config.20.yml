@@ -6,8 +6,8 @@ version: '2.0'
 ios_dev_build: '2.0DB015'
 android_dev_build: '2.0.0-DB015'
 dev_build_release_date: 'August 21, 2017'
-objc_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB15/couchbase-lite-objc_community_2.0.0-374.zip
-swift_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB15/couchbase-lite-swift_community_2.0.0-374.zip
+objc_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB15/couchbase-lite-objc_community_2.0.0-375.zip
+swift_dev_build_download_link: https://packages.couchbase.com/releases/couchbase-lite/ios/2.0DB15/couchbase-lite-swift_community_2.0.0-375.zip
 references:
   objc: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-objc/db015/'
   swift: 'http://docs.couchbase.com/mobile/2.0/couchbase-lite-swift/db015/'
