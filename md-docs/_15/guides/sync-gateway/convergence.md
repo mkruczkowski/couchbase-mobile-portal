@@ -76,7 +76,7 @@ For all of the above, the [bucket type](https://developer.couchbase.com/document
 |:--------------|:------|:-----|
 |CBL 1.3|✔|✔|
 |CBL 1.4|✔|✔|
-|CBL 1.5|✔|✔|
+|CBL 2.0|✔|✔|
 
 ### Extended Attributes
 
