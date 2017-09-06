@@ -25,10 +25,4 @@ if [[ ! -z ${2} ]]; then
 	" > push.sh
 	
 	sftp -b push.sh -oIdentityFile=~/.ssh/couchbase_sftp.key couchbaseinc@static.hosting.onehippo.com
-	
-	if [[ ${2} = "acct" ]]; then
-		curl -X POST "http://$JENKINS_USERNAME:$JENKINS_PASSWORD@52.200.81.196:8080/view/Staging%20(Acceptance)%20Content%20Ingestion%20Jobs/job/Ingestion%20Mobile%20-%20ACCT%20ENV/build\?delay\=0sec"
-	elif [[ ${2} = "prod" ]]; then
-		curl -X POST "http://$JENKINS_USERNAME:$JENKINS_PASSWORD@52.200.81.196:8080/job/Ingestion%20Mobile%20-%20PROD%20ENV/build\?delay\=0sec"
-	fi
 fi
