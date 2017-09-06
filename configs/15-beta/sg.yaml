@@ -237,6 +237,14 @@ properties:
             type: string
             description: Sync function, which defines which users can read, update, or delete which documents. The default is a default sync function. For more information, see the section Sync function API.
             default: function(doc, oldDoc) {channel(doc.username, doc.channels)};
+          unsupported:
+            type: object
+            description: Configuration properties for beta/unsupported features.
+            properties:
+              enable_extended_attributes:
+                type: boolean
+                description: Whether to enable the interopability between Couchbase Mobile and Couchbase Server. On start-up, Sync Gateway will generate the mobile-specific metadata for all the pre-existing documents in the Couchbase Server bucket. From then on, documents can be inserted on the Server directly (SDKs) or through the Sync Gateway REST API.
+                default: 'false'
           username:
             type: string
             description: Bucket username for authenticating to Couchbase Server. There is no default.
