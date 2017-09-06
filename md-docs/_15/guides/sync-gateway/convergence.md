@@ -145,9 +145,7 @@ The following tutorial demonstrates the extended attributes support introduced i
 				"username": "my-user",
 				"password": "my-password",
 				"server": "http://localhost:8091",
-				"unsupported": {
-					"enable_extended_attributes": true
-				},
+				"enable_shared_bucket_access": true,
 				"import_docs": "continuous"
 			}
 		}
