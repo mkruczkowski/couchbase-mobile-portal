@@ -21,7 +21,7 @@ properties:
     properties:
       Origin:
         type: array
-        description: Comma-separated list of allowed origins; use an asterisk (*) to allow access from everywhere.
+        description: Comma-separated list of allowed origins; use an asterisk (*) to allow access from everywhere. Note that the asterisk (*) cannot be used if you plan to authenticate users as well (by using the `withCredentials` flag on the client side). In this case, the explicit domain(s) must be specified in the `Origin` and `LoginOrigin` properties of the configuration file.
         items:
           type: string
       LoginOrigin:
@@ -55,6 +55,11 @@ properties:
           bucket:
             type: string
             description: Bucket name on Couchbase Server or a Walrus bucket. The default is the database name.
+            default: the database name
+          import_docs:
+            type: boolean
+            description: If set to `true`, causes the Sync Gateway to scan the bucket on startup looking for documents that have no `_sync` metadata, and adding that metadata. You only want to have this on when you do the first import, because it will slow down the startup of the Sync Gateway. You also only want to run a single Sync Gateway while in this mode, otherwise they'll step on each other's toes tying to generate the `_sync` metadata at the same time.
+            default: false
           cache:
             type: object
             description: Database cache configuration.
@@ -89,6 +94,7 @@ properties:
                 default: 60
           event_handlers:
             type: object
+            description: Webhooks in Sync Gateway are designed to minimize performance impacts on Sync Gateway's regular processing. Sync Gateway manages the number of processes that are spawned for webhook event handling, so that slow response times from the HTTP POST operations don't consume available CPU resources on Sync Gateway nodes. When a `webhook` event handler is defined, after Sync Gateway has updated a document, Sync Gateway adds a `document_changed` event to an asynchronous event-processing queue (the event queue). New processes are then spawned to apply the `filter` function to the documents and to perform the HTTP POST operations. When an event is not added to the event queue, but is instead discarded, a warning message is written to the the Sync Gateway log. You can configure Sync Gateway to log information about event handling, by including either the log key `Event` or `Events+` in the `Log` property in your Sync Gateway configuration file. `Events+` is more verbose.
             properties:
               document_changed:
                 description: The configuraton for the action to perform when a document change is detected.
@@ -97,24 +103,28 @@ properties:
                   type: object
                   properties:
                     filter:
-                      description: Filter function to determine which documents to post (for a webhook event handler).
+                      description: A JavaScript function used to determine which documents to post. The filter function accepts the document body as input and returns a boolean value. If the filter function returns true, then Sync Gateway posts the document. If the filter function returns false, then Sync Gateway does not post the document. If no filter function is defined, then Sync Gateway posts all changed documents. Filtering only determines which documents to post. It does not extract specific content from documents and post only that.
                       type: string
+                      required: true
                     handler:
-                      description: Handler type. The must be webhook.
+                      description: Type of the event handler. This must be `"webhook"` (only 1 possible value currently).
                       type: string
                     timeout:
-                      description: Timeout in seconds (for a webhook event handler).
+                      description: Time in seconds to wait for a response to the POST operation. Using a timeout ensures that slow-running POST operations don't cause the webhook event queue to back up. Slow-running POST operations are discarded (if they time out), so that new events can be processed. When the timeout is reached, Sync Gateway stops listening for a response. A value of 0 (zero) means no timeout. The default value should work well in the majority of cases. You should not need to adjust it to tune performance.
                       type: integer
                       default: 60
                     url:
                       description: URL to which to post documents (for a webhook event handler).
                       type: string
+                      required: true
               max_processes:
                 type: integer
-                description: Maximum concurrent event handling goroutines. The default is 500.
+                description: Maximum number of events that can be processed concurrently, that is, no more than `max_processes` concurrent processes will be spawned for event handling. The default value should work well in the majority of cases. You should not need to adjust it to tune performance. However, if you wish to ensure that most webhook posts are sent, you can set it to sufficiently high value.
+                default: 500
               wait_for_process:
-                type: integer
-                description: Maximum wait time in milliseconds when the event queue is full. The default is 5.
+                type: string
+                description: Maximum wait time in milliseconds before canceling event processing for an event that is detected when the event queue is full. If you set the value to 0 (zero), then incoming events are discarded immediately if the event queue is full. If you wish to avoid any blocking of standard Sync Gateway processing this may be a desirable value to use. The default value should work well in the majority of cases. You should not need to adjust it to tune performance.
+                default: 100
           feed_type:
             type: string
             description: Feed type DCP or TAP.
@@ -337,6 +347,8 @@ properties:
           description: Specifies whether the replication should be in continuous mode.
         changes_feed_limit:
           type: string
+          description: The maximum number of change entries to pull in each loop of a continous changes feed.
+          default: 50
         filter:
           type: string
           description: Indicates that the documents should be filtered using the specified filter function name. A common value used when replicating from Sync Gateway is sync_gateway/bychannel to limit the pull replication to a set of channels.
