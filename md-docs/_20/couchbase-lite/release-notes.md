@@ -4,6 +4,32 @@ title: Release notes
 permalink: references/couchbase-lite/release-notes/index.html
 ---
 
+<block class="all" />
+
+### Developer build 16
+
+<block class="objc swift" />
+
+- Support Database Encryption
+- Implement a new index API
+- Move FTS.rank expression to Function.rank()
+- Make Replicator's User-Agent header that includes information about library version and platform.
+
+<block class="java" />
+
+* Thread-safe with Database operation. (Other operations will be a thread-safe with next DB release)
+
+<block class="net" />
+
+- Collation API now supported on Android
+- Redid Index API (indexes are now identified by name).  See the new `Index` class documentation.
+- Encryption is now supported.  Encryption keys can be added onto the `DatabaseConfiguration` class.  This will encrypt database files and attachments.
+- Added in a `rank()` function for `IExpression` to order by FTS ranking result
+- Made a consistent User-Agent string that gets info on which platform is running
+- Changed the default Collation locale to be the one currently running on device
+
+<block class="all" />
+
 ### Developer build 15
 
 <block class="objc swift" />
