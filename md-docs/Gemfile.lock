@@ -1,5 +1,6 @@
-PATH
-  remote: ../../docs-style-guide/jekyll-theme
+GIT
+  remote: git://github.com/couchbaselabs/docs-style-guide.git
+  revision: 2ec525045821323f0ce0cde2c69d490efc82989e
   specs:
     couchbase-theme (0.1.0)
       jekyll (~> 3.3)
