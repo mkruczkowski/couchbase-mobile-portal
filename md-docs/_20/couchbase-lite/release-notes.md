@@ -14,6 +14,10 @@ permalink: references/couchbase-lite/release-notes/index.html
 - Overhaul logging, API change from setting levels via `Log.Domains` to `Database.SetLogLevels` and flags.  Domains reduced.
 - No text logging by default.  Text logging (to a default location depending on platform) can be enabled by calling `EnableTextLogging()` inside of the relevant support class (e.g. Couchbase.Lite.Support.UWP).  All logging will go to a binary file in the default directory for a given platform (as determined by `IDefaultDirectoryResolver`).
 
+<block class="java" />
+
+- Bug fixes
+
 <block class="all" />
 
 ### Developer build 16
@@ -27,7 +31,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 <block class="java" />
 
-* Thread-safe with Database operation. (Other operations will be a thread-safe with next DB release)
+- Thread-safe with Database operation. (Other operations will be a thread-safe with next DB release)
 
 <block class="net" />
 
