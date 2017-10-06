@@ -6,6 +6,15 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 <block class="all" />
 
+### Developer build 18
+
+<block class="java" />
+
+- Bug fixes
+
+<block class="all" />
+
+
 ### Developer build 17
 
 <block class="net" />
