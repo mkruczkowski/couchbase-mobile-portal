@@ -12,6 +12,13 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 - Bug fixes
 
+<block class="net" />
+
+- Slight refactor to `ReplicatorConfiguration` (Put `Options` properties directly into the configuration) to bring it inline with other platforms
+- Fix a bug in `SelectResult.All()` which would cause invalid queries if a `From` clause was added
+- LiteCore bug fixes
+- Bug fixes: [907](https://github.com/couchbase/couchbase-lite-net/issues/907) [912](https://github.com/couchbase/couchbase-lite-net/issues/912) [916](https://github.com/couchbase/couchbase-lite-net/issues/916)
+
 <block class="all" />
 
 
