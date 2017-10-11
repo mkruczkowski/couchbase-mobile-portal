@@ -9,6 +9,7 @@ permalink: references/couchbase-lite/release-notes/index.html
 ### Developer build 18
 
 <block class="objc swift" />
+
 - Added headers property to ReplicatorConfiguration for adding additional HTTP headers when sending HTTP requests to a remote server.
 - Fixed invalid CFBundleShortVersionString.
 - Updated Lite Core to uptake the following fixes:
