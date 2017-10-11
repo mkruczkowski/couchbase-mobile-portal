@@ -8,6 +8,14 @@ permalink: references/couchbase-lite/release-notes/index.html
 
 ### Developer build 18
 
+<block class="objc swift" />
+- Added headers property to ReplicatorConfiguration for adding additional HTTP headers when sending HTTP requests to a remote server.
+- Fixed invalid CFBundleShortVersionString.
+- Updated Lite Core to uptake the following fixes:
+    - Fixed replicator crashes when stopping replicator immediately after starting.
+    - Fixed replicator staying in BUSY status after finish replicating.
+    - Allowed MATCH operator nested inside multiple ANDs.
+
 <block class="java" />
 
 - Bug fixes
