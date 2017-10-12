@@ -390,13 +390,19 @@ parameters:
     in: query
     name: level
     description: |
-      Verbosity of the logging. The default value is 1 which is regular logging. level=2 enables warnings and 
+      Verbosity of the logging. The default value is 1 which is regular logging. level=2 enables warnings and
       panics logging and level=3 will log panics only.
     type: integer
   name:
     in: path
     name: name
-    description: User's name
+    description: |
+       User's name, may contain contain any combination of the characters [a-z A-Z 0-9 - + . @ %], when creating
+      a user any other characters must be percent encoded, see: https://en.wikipedia.org/wiki/Percent-encoding.
+      When passing a user name in a URL path it must be escaped again using percent encoding e.g. if a user is
+      created with the name "0|59", the '|' character must first be percent-encoded resulting in "0%7C59". When using
+      the same user name in a URL path it must be percent-encoded a second time resulting in "0%257C59"
+
     type: string
     required: true
   replication:
@@ -456,7 +462,12 @@ parameters:
       properties:
         name:
           type: string
-          description: Name of the user that will be created
+          description: description: |
+            Name of the user that will be created, may contain contain any combination of the characters [a-z A-Z 0-9 - + . @ %], when creating
+            a user any other characters must be percent encoded, see: https://en.wikipedia.org/wiki/Percent-encoding.
+            When passing a user name in a URL path it must be escaped again using percent encoding e.g. if a user is
+            created with the name "0|59", the '|' character must first be percent-encoded resulting in "0%7C59". When using
+            the same user name in a URL path it must be percent-encoded a second time resulting in "0%257C59"
         password:
           type: string
           description: Password of the user that will be created. Required, unless the `allow_empty_password` Sync Gateway per-database configuration value is set to true, in which case the password can be omitted. All active sessions for the user are invalidated when the password is changed.
@@ -511,9 +522,9 @@ paths:
       summary: Add or update document
       description: |
         This request adds or updates the supplied request content as an attachment to the specified document. The attachment name must be a URL-encoded string (the file name). You must also supply either the rev query parameter or the If-Match HTTP header for validation, and the Content-Type headers (to set the attachment content type).
-  
+
           When uploading an attachment using an existing attachment name, the corresponding stored content of the database will be updated. Because you must supply the revision information to add an attachment to the document, this serves as validation to update the existing attachment.
-  
+
           Uploading an attachment updates the corresponding document revision. Revisions are tracked for the parent document, not individual attachments.
       parameters:
         - $ref: '#/parameters/rev'
@@ -535,7 +546,7 @@ paths:
       summary: Bulk docs
       description: |
         This request enables you to add, update, or delete multiple documents to a database in a single request. To add new documents, you can either specify the ID (`_id`) or let the software create an ID. To update existing documents, you must provide the document ID, revision identifier (`_rev`), and new document values. To delete existing documents you must provide the document ID, revision identifier, and the deletion flag (`_deleted`).
-        
+
         The JSON returned by the `_bulk_docs` operation consists of an array of JSON structures, one for each document in the original submission. The returned JSON structure should be examined to ensure that all of the documents submitted in the original request were successfully added to the database.
       parameters:
         - $ref: '#/parameters/bulkdocs'
@@ -718,7 +729,7 @@ paths:
       description: |
         This request creates a new document or creates a new revision of an existing document. It enables you to specify the identifier for a new document rather than letting the software create an identifier. If you want to create a new document and let the software create an identifier, use the POST /db request.
         If the document specified by doc does not exist, a new document is created and assigned the identifier specified in doc. If the document already exists, the document is updated with the JSON document in the message body and given a new revision.
-        
+
         Since Sync Gateway 1.3, an expiry property (`_exp`) can also be specified to purge the document after a given time. If **convergence** is enabled (introduced in Sync Gateway 1.5), the behaviour of the expiry feature changes in the following way: when the expiry value is reached, instead of getting purged, the **active** revision of the document is tombstoned. If there is another non-tombstoned revision for this document (i.e a conflict) it will become the active revision. The tombstoned revision will be purged when the server's metadata purge interval is reached.
       responses:
         200:
@@ -867,7 +878,7 @@ paths:
           name: body
           description: Request body
           schema:
-            $ref: '#/definitions/AllDocs'      
+            $ref: '#/definitions/AllDocs'
       responses:
         200:
           description: Query results
@@ -881,7 +892,7 @@ paths:
         - auth
       summary: OpenID Connect Authentication.
       description: |
-        Called by clients to initiate the OIDC Authorization Code flow. 
+        Called by clients to initiate the OIDC Authorization Code flow.
       parameters:
         - in: query
           name: offline
@@ -899,7 +910,7 @@ paths:
         400:
           description: Bad request.  Reason is returned as "OpenID Connect not configured for database default".  If a provider was specified in the request, that provider was not defined in the Sync Gateway config.  If no provider was specified, OpenID Connect is not configured in the Sync Gateway config.
         500:
-          description: Server Error.  Sync Gateway is unable to connect and validate the OpenID Connect provider requested.  
+          description: Server Error.  Sync Gateway is unable to connect and validate the OpenID Connect provider requested.
   /{db}/_oidc_callback:
     parameters:
       - $ref: '#/parameters/db'
@@ -908,11 +919,11 @@ paths:
         - auth
       summary: OpenID Connect Authentication callback.
       description: |
-        Sync Gateway callback URL that clients are redirected to by the OpenID Connect provider. 
+        Sync Gateway callback URL that clients are redirected to by the OpenID Connect provider.
       parameters:
         - in: query
           name: code
-          description: OpenID Connect Authorization code. 
+          description: OpenID Connect Authorization code.
           type: string
           required: true
         - in: query
@@ -926,7 +937,7 @@ paths:
           schema:
             type: object
             properties:
-              id_token: 
+              id_token:
                 type: string
                 description: OpenID Connect ID token
               refresh_token:
@@ -935,9 +946,9 @@ paths:
               session_id:
                 type: string
                 description: Sync Gateway session token
-              name: 
+              name:
                 type: string
-                description: Sync Gateway username 
+                description: Sync Gateway username
               access_token:
                 type: string
                 description: OpenID Connect access token
@@ -948,7 +959,7 @@ paths:
                 type: number
                 description: TTL for id_token
         400:
-          description: Bad request.  
+          description: Bad request.
         401:
           description: Authentication failed.  Reason returned in the response body.
   /{db}/_oidc_challenge:
@@ -959,7 +970,7 @@ paths:
         - auth
       summary: OpenID Connect Authentication.
       description: |
-        Called by clients to initiate the OIDC Authorization Code flow. 
+        Called by clients to initiate the OIDC Authorization Code flow.
       parameters:
         - in: query
           name: offline
@@ -977,7 +988,7 @@ paths:
         400:
           description: Bad request.  Reason is returned as "OpenID Connect not configured for database default".  If a provider was specified in the request, that provider was not defined in the Sync Gateway config.  If no provider was specified, OpenID Connect is not configured in the Sync Gateway config.
         500:
-          description: Server Error.  Sync Gateway is unable to connect and validate the OpenID Connect provider requested. 
+          description: Server Error.  Sync Gateway is unable to connect and validate the OpenID Connect provider requested.
   /{db}/_oidc_refresh:
     parameters:
       - $ref: '#/parameters/db'
@@ -990,7 +1001,7 @@ paths:
       parameters:
         - in: query
           name: refresh_token
-          description: OpenID Connect refresh token. 
+          description: OpenID Connect refresh token.
           type: string
           required: true
         - in: query
@@ -1004,15 +1015,15 @@ paths:
           schema:
             type: object
             properties:
-              id_token: 
+              id_token:
                 type: string
                 description: OpenID Connect ID token
               session_id:
                 type: string
                 description: Sync Gateway session token
-              name: 
+              name:
                 type: string
-                description: Sync Gateway username 
+                description: Sync Gateway username
               access_token:
                 type: string
                 description: OpenID Connect access token
@@ -1023,7 +1034,7 @@ paths:
                 type: number
                 description: TTL for id_token
         400:
-          description: Bad request.  
+          description: Bad request.
         401:
           description: Authentication failed.  Unable to refresh token.
   /{db}/_revs_diff:
@@ -1060,7 +1071,7 @@ paths:
         - server
       summary: Server configuration
       description: |
-        Returns the Sync Gateway configuration of the running instance. This is a good method to check if a 
+        Returns the Sync Gateway configuration of the running instance. This is a good method to check if a
         particular key was set correctly on the config file.
       responses:
         200:
@@ -1085,7 +1096,7 @@ paths:
         Get logging tags of running instance.
       responses:
         200:
-          description: | 
+          description: |
             The response is a set of key-value pairs. The key is a log tag and the value is a boolean to indicate whether this tag is enabled.
           schema:
             $ref: '#/definitions/LogTags'
@@ -1095,7 +1106,7 @@ paths:
       summary: Set all logging tags
       description: |
         Enabling logging for a tag provides additional diagnostic information for that logging area.
-        
+
         The PUT request replaces all existing logging tags with the ones specified in the request body.
       parameters:
         - $ref: '#/parameters/loglevel'
@@ -1109,7 +1120,7 @@ paths:
       summary: Set individual logging tags
       description: |
         Enabling logging for a tag provides additional diagnostic information for that logging area.
-        
+
         The POST request only updates the tags specified in the request body.
       parameters:
         - $ref: '#/parameters/loglevel'
@@ -1124,7 +1135,7 @@ paths:
       summary: Starts or cancels a database replication operation
       description: |
         This request starts or cancels a database replication operation.
-        
+
         You can cancel continuous replications by adding the cancel field to the JSON request object and setting the value to true. Note that the structure of the request must be identical to the original for the cancellation request to be honoured. For example, if you requested continuous replication, the cancellation request must also contain the continuous field.
       parameters:
         - $ref: '#/parameters/replication'
@@ -1175,9 +1186,9 @@ paths:
       summary: Create database
       description: >
         This request creates a database.
-        
+
         You can optionally pass the database config as the JSON body. For example:
-        
+
           {
             "server":"http://localhost:8091",
             "bucket": "todo_app",
@@ -1185,9 +1196,9 @@ paths:
               "john": {"password": "pass", "admin_channels": ["*"]}
             }
           }
-        
+
         Note that if you pass the entire config file it won't work, it must be the database portion only (the database name is specified in the URL path). If the parameters passed are invalid it will create a walrus-backed database with all values set to default.
-        
+
         By default, the database that is created is brought online immediately. To create the database and keep it offline, include the configuration property `offline` with the value `true` in the database configuration properties for the database that you are posting in the request body.
       responses:
         201:
@@ -1211,11 +1222,11 @@ paths:
       summary: Compact the database
       description: |
         Triggers a compaction process. Compaction is defined as the process of purging the JSON bodies of non-leaf revisions. As shown on the diagram below, only properties with a leading underscore (`_` is the character to denote properties reserved for Couchbase) are kept to construct the revision tree.
-        
+
           ![](https://cl.ly/1Q1F0i3f2i3n/compaction.gif)
-        
+
         Note that compaction on Sync Gateway is running periodically in the background (every 5 minutes). So calling this endpoint manually on the Admin REST API is not necessary.
-        
+
         The compaction process does not remove JSON bodies of leaf nodes (conflicting branches). Hence, it is important to resolve conflicts in your application in order to re-claim disk space when the compaction process is executed.
       responses:
         200:
@@ -1312,19 +1323,19 @@ paths:
       summary: This request takes the specified database offline.
       description: |
         An offline database is not accessible through Sync Gateway's Public REST API. However, some commands can be given to Sync Gateway through the Admin REST API.
-        
+
         Taking a database offline will:
-        
+
         - Cleanly closes all active `_changes` feeds for this database.
         - Rejects all access to the database through the Public REST API (503 Service Unavailable).
         - Rejects most Admin API requests (503 Service Unavailable). A specific, short list of Admin REST API requests remain available (`GET /{db}`, `PUT /{db}/_config`, `POST /{db}/_resync`).
         - Stops webhook event handlers.
         - Does not take the backing Couchbase Server bucket offline. The bucket remains available and Sync Gateway keeps its connection to the bucket.
-        
+
         When a database is offline, you can load configuration properties for the database, without stopping and re-starting the Sync Gateway instance. The new configuration properties are applied when the database is brought online.
-        
+
         Taking a database offline that is in the progress of coming online will take the database offline after it comes online.
-        
+
         For more information about taking a database offline and bringing it back online, see [this guide](../../../guides/sync-gateway/database-offline/index.html).
       responses:
         200:
@@ -1338,19 +1349,19 @@ paths:
       summary: Bring a database online.
       description: |
         When a database is online, Sync Gateway serves both Public and Admin REST API requests for the database. This request brings the specified database online, either immediately or after a specified delay.
-        
+
         Bringing a database online:
-        
+
         - Closes the datbases connection to the backing Couchbase Server bucket.
         - Reloads the databse configuration, and connects to the backing Cocuhbase Server bucket.
         - Re-establishes access to the database from the Public REST API.
         - Accepts all Admin API requests.
-        
+
         You can bring an offline database online after a specific delay. Uses for this include:
-        
+
         - Making a database available for Couchbase Mobile clients at a specific time.
         - Making databases on several Sync Gateway instances available at the same time.
-        
+
         For more information about taking a database offline and bringing it back online, see [this guide](../../../guides/sync-gateway/database-offline/index.html).
       parameters:
         - in: body
@@ -1377,7 +1388,7 @@ paths:
      summary: Purge document
      description: |
        The purge command provides a way to remove a document from the bucket itself. The operation removes all the revisions (active and tombstones) for the specified document(s). A common usage of this endpoint is to remove tombstone documents that are no longer needed, thus recovering storage space and reducing data replicated to clients. Other clients are not notified when a revision has been purged; so in order to purge a revision from the system it must be done from all databases (on Couchbase Lite and Sync Gateway).
-       
+
        When **convergence** is enabled (introduced in Sync Gateway 1.5), this endpoint removes the document and its associated extended attributes.
      parameters:
        - in: body
@@ -1421,11 +1432,11 @@ paths:
       summary: Reprocess all documents by the database in the sync function.
       description: |
         This request causes all documents to be reprocessed by the database sync function. The _resync operation should be called if the sync function for a databse has been modified in such a way that the channel or access mappings for any existing document would change as a result.
-        
+
         When the sync function is invoked by _resync, the requireUser() and requireRole() calls will always return 'true'.
-        
+
         A _resync operation on a database that is not in the offline state will be rejected (503 Service Unavailable).
-        
+
         A _resync operation will block until all documents in the database have been processed.
       responses:
         200:
@@ -1449,11 +1460,11 @@ paths:
       summary: Revision Tree structure in Graphviz Dot format | not officially supported
       description: |
         Returns the dot syntax of the revision tree which can be rendered into a PNG image with the [CLI dot tool](http://www.graphviz.org/).
-  
+
         - Install the dot tool via `brew install graphviz`.
         - Save the response text to a file (for example, **revtree.dot**).
         - Render a PNG by calling `dot -Tpng revtree.dot > revtree.png`.
-      
+
         **Note:** This endpoint is useful for debugging purposes only. It is not officially supported.
       responses:
         200:
@@ -1506,7 +1517,7 @@ paths:
               admin_channels:
                 type: array
                 description: |
-                  The admin channels that this role has granted access to. Admin channels are the ones which were 
+                  The admin channels that this role has granted access to. Admin channels are the ones which were
                   granted access to in the config file or via the Admin REST API.
                 items:
                   type: string
@@ -1557,7 +1568,7 @@ paths:
               ttl:
                 description: Default is 24 hours (86400 seconds). The TTL (time-to-live) of the session, in seconds.
                 type: integer
-                default: 86400 
+                default: 86400
       responses:
         200:
           description: Session successfully created.
@@ -1994,7 +2005,7 @@ definitions:
   QueryRow:
     type: object
     properties:
-      id: 
+      id:
         type: string
         description: The ID of the document.
       key:
@@ -2078,7 +2089,7 @@ definitions:
         type: string
         description: |
           Expiry time after which the document will be purged. The expiration time is set and managed on the Couchbase Server document (TTL is not supported for databases in walrus mode). The value can be specified in two ways; in ISO-8601 format, for example the 6th of July 2016 at 17:00 in the BST timezone would be 2016-07-06T17:00:00+01:00; it can also be specified as a numeric Couchbase Server expiry value. Couchbase Server expiries are specified as Unix time, and if the desired TTL is below 30 days then it can also represent an interval in seconds from the current time (for example, a value of 5 will remove the document 5 seconds after it is written to Couchbase Server). The document expiration time is returned in the response of GET /{db}/{doc} when show_exp=true is included in the querystring.
-          
+
           As with the existing explicit purge mechanism, this applies only to the local database; it has nothing to do with replication. This expiration time is not propagated when the document is replicated. The purge of the document does not cause it to be deleted on any other database.
       _revisions:
         type: object
