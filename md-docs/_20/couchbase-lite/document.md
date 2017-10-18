@@ -55,9 +55,9 @@ database.Save(newTask);
 
 ```java
 Document newTask = new Document();
-newTask.set("type", "task");
-newTask.set("owner", "todo");
-newTask.set("createdAt", new Date());
+newTask.setObject("type", "task");
+newTask.setObject("owner", "todo");
+newTask.setObject("createdAt", new Date());
 database.save(newTask);
 ```
 
@@ -91,7 +91,7 @@ database.Save(newTask)
 <block class="java" />
 
 ```java
-newTask.set("name", "Apples");
+newTask.setObject("name", "Apples");
 database.save(newTask);
 ```
 
@@ -129,7 +129,7 @@ var date = newTask.GetDate("createdAt");
 <block class="java" />
 
 ```java
-newTask.set("createdAt", new Date());
+newTask.setObject("createdAt", new Date());
 Date date = newTask.getDate("createdAt");
 ```
 
@@ -200,8 +200,8 @@ database.inBatch(new TimerTask() {
 	public void run() {
 		for (int i = 0; i < 10; i++) {
 			Document doc = new Document()
-			doc.set("type", "user");
-			doc.set("name", String.format("user %s", i));
+			doc.setObject("type", "user");
+			doc.setObject("name", String.format("user %s", i));
 			database.save(doc);
 			Log.d("app", String.format("saved user document %s", doc.getString("name")));
 		}
